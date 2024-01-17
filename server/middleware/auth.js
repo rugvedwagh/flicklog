@@ -4,7 +4,7 @@ const secret = 'test';
 
 const auth = async (req, res, next) => {
     try {
-        
+        //  'req.header.authorization' was set in api.js in client
         const authorizationHeader = req.headers.authorization;
         
         if (!authorizationHeader) {

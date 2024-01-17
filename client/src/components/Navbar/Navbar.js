@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import './styles.css';
 
-const Navbar = () => {
 
+const Navbar = () => {
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
+    
     const logout = () => {
         dispatch({ type: actionType.LOGOUT })
         navigate('/')
@@ -28,7 +29,7 @@ const Navbar = () => {
 
         if (token) {
             const decodedToken = jwtDecode(token)
-            // time is in miliseconds thats why x1000
+            //  Time is in miliseconds thats why x1000
             if (decodedToken.exp * 1000 < new Date().getTime()) {
                 logout();
             }
@@ -40,7 +41,6 @@ const Navbar = () => {
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Typography component={Link} to="/" className="heading" variant="h2" align="center" fontSize={30}>Memories</Typography>
-                    {/* <img style={{height:'40px', width:'40px',marginLeft:'5px'}} src={memories}/> */}
                 </div>
                 <Toolbar className='toolbar'>
                     {user?.result ? (
