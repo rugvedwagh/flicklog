@@ -8,7 +8,6 @@ const auth = async (req, res, next) => {
         const authorizationHeader = req.headers.authorization;
         
         if (!authorizationHeader) {
-            // Handle the case where authorization header is missing
             return res.status(401).json({ message: 'Authorization header is missing.' });
         }
 

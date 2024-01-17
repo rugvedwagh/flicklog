@@ -1,12 +1,11 @@
-import { AppBar, Avatar, Toolbar, Typography, Button } from '@mui/material'
+import { AppBar, Avatar, Toolbar, Typography, Button } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes';
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { jwtDecode } from 'jwt-decode'
-import './styles.css'
-// import memories from '../../images/memories.png'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import './styles.css';
 
 const Navbar = () => {
 
@@ -35,6 +34,7 @@ const Navbar = () => {
             }
         }
     }, [location])
+
     return (
         <AppBar className="appBar" position="static" color="inherit">
             <div className='navbar'>

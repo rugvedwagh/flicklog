@@ -1,5 +1,6 @@
-import * as api from '../api'   // we import everything as acitons form the api
 import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE } from '../constants/actionTypes';
+import * as api from '../api'   // we import everything as acitons form the api
+
 // Action Creators
 // these are functions that return actions
 export const getPosts = () => async (dispatch) => {

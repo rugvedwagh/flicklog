@@ -1,11 +1,11 @@
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material'
+import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
 import { likePost, deletePost } from '../../../actions/posts';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
-import moment from 'moment'
-import React from 'react'
+import moment from 'moment';
+import React from 'react';
 import './styles.css';
 
 const Post = ({ post, setCurrentId }) => {

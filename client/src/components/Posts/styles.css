@@ -1,18 +1,12 @@
-/* styles.css */
-
-/* Styles for the main container with flex display and center-aligned items */
 .mainContainer {
     display: flex;
     align-items: center;
 }
 
-/* Styles for small margin */
 .smMargin {
     margin: 8px;
-    /* Adjust margin as needed */
 }
 
-/* Styles for an action div with center-aligned text */
 .actionDiv {
     text-align: center;
 }

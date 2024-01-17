@@ -1,14 +1,14 @@
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { signin, signup } from '../../actions/auth';
+import { AUTH } from '../../constants/actionTypes';
 import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import Input from './Input';
-import { useDispatch } from 'react-redux'
-import Icon from './icon'
-import { AUTH } from '../../constants/actionTypes';
-import { useNavigate } from 'react-router-dom'
-import { signin, signup } from '../../actions/auth'
-import './styles.css'
+import Icon from './icon';
+import './styles.css';
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -59,7 +59,7 @@ const SignUp = () => {
                 <Avatar className='avatar'>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{margin:"0 0 16px 0"}}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0" }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {isSignup && (
@@ -72,7 +72,7 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" color="primary" className='submit' style={{margin:"16px 0"}}>
+                    <Button type="submit" fullWidth variant="contained" color="primary" className='submit' style={{ margin: "16px 0" }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <GoogleLogin

@@ -5,7 +5,6 @@ import Auth from './components/Auth/Auth';
 import { Container } from '@mui/material';
 import React from 'react';
 import './App.css';
-import './index.css';
 
 const App = () => {
     const user = JSON.parse(localStorage.getItem('profile'))
@@ -15,11 +14,10 @@ const App = () => {
             <Container maxWidth="xl">
                 <Navbar />
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    {/* <Route path="/auth" element={<Auth />} /> */}
                     <Route path="/auth" element={user ? <Navigate to="/" /> : <Auth />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<Home />} />
+                    <Route path="/" element={<Home />} />
                 </Routes>
             </Container>
         </BrowserRouter>

@@ -1,11 +1,11 @@
+import { Container, Grow, Grid, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Container, Grow, Grid, Paper } from '@mui/material'
-import Posts from '../Posts/Posts'
-import Form from '../Form/Form'
-import { useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts';
-import Paginate from '../Paginate';
 import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Posts from '../Posts/Posts';
+import Paginate from '../Paginate';
+import Form from '../Form/Form';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -16,8 +16,9 @@ const Home = () => {
     const [currentId, setCurrentId] = useState(null);
     const dispatch = useDispatch();
 
-    const query = useQuery();//usequery will search in the url 
+    const query = useQuery();   //usequery will search in the url 
     const page = query.get('page') || 1;
+    
     useEffect(() => {
         dispatch(getPosts());
     }, [currentId, dispatch])
