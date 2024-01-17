@@ -1,10 +1,9 @@
 import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE } from '../constants/actionTypes';
-import * as api from '../api'   // we import everything as acitons form the api
+import * as api from '../api'   // we import everything as actions from the api
 
 // Action Creators
 // these are functions that return actions
 export const getPosts = () => async (dispatch) => {
-    // console.log('all posts')
     try {
         const { data } = await api.fetchPosts();
         dispatch({ type: FETCH_ALL, payload: data })
@@ -16,8 +15,6 @@ export const getPosts = () => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
     try {
         const { data } = await api.createPost(post);
-        console.log('done\n')
-        console.log(data)
         dispatch({ type: CREATE, payload: data })
     } catch (error) {
         console.log(error)
