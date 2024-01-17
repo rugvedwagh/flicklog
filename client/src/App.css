@@ -1,0 +1,20 @@
+
+.heading {
+    color: rgba(0, 183, 255, 1);
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 767px) {
+    .mainContainer {
+        /* Add specific styles for mobile devices here */
+        /* For example: */
+        display: flex;
+        flex-direction:column-reverse;
+        /* background-color: red; */
+    }
+}
