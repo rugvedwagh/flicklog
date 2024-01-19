@@ -1,11 +1,12 @@
-import { Container, Grow, Grid, Paper } from '@mui/material';
+import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@mui/material';
+import { getPosts, getPostsBySearch } from '../../actions/posts';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { getPosts } from '../../actions/posts';
-import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Posts from '../Posts/Posts';
 import Paginate from '../Paginate';
 import Form from '../Form/Form';
+import './styles.css'
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -14,26 +15,69 @@ function useQuery() {
 const Home = () => {
 
     const [currentId, setCurrentId] = useState(null);
+    const [search, setSearch] = useState('');
+    const [tags, setTags] = useState('');
     const dispatch = useDispatch();
-
     const query = useQuery();   //usequery will search in the url 
     const page = query.get('page') || 1;
-    
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [currentId, dispatch])
+    const searchQuery = query.get('serchQuery')
+    const navigate = useNavigate();
+
+
+
+    const searchPost = () => {
+        if (search.trim() || tags) {
+            console.log(tags)
+            dispatch(getPostsBySearch({ search, tags }))
+            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags}`);
+        }
+        else {
+            navigate('/');
+        }
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.keyCode === 13) {
+            searchPost();
+        }
+    }
 
     return (
         <Grow in>
-            <Container>
-                <Grid className="mainContainer" container justify="space-between" alignItems="stretch" spacing={3}>
-                    <Grid item xs={12} sm={6}>
+            <Container maxWidth='xl'>
+                <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
+                    <Grid item xs={12} sm={6} md={9}>
                         <Posts setCurrentId={setCurrentId} />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <Paper className='paginatio' elevation={6}>
-                            <Paginate page={page} />
-                        </Paper>
+                    <Grid item xs={12} sm={4} md={3}>
+                        <AppBar className='appBarSearch' position='static' color='inherit'>
+                            <TextField
+                                style={{ margin: '10px 0 0 0' }}
+                                name='search'
+                                variant='outlined'
+                                label='Search Memories'
+                                onKeyPress={handleKeyPress}
+                                fullWidth
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                            <TextField
+                                style={{ margin: '10px 0' }}
+                                name='search'
+                                variant='outlined'
+                                label='Search Tags'
+                                onKeyPress={handleKeyPress}
+                                fullWidth
+                                value={tags}
+                                onChange={(e) => setTags(e.target.value)}
+                            />
+                            <Button onClick={searchPost} className='searchButton' style={{ backgroundColor: 'black' }} variant='contained'>Search</Button>
+                        </AppBar>
+                        {(!searchQuery && !tags.length) && (
+                            <Paper elevation={6}>
+                                <Paginate page={page} />
+                            </Paper>
+                        )}
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                     </Grid>
                 </Grid>

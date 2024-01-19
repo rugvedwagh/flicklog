@@ -17,9 +17,13 @@
 }
 
 .heading {
-    color: rgba(0, 183, 255, 1);
+    color : black;
     text-decoration: none;
     margin-right: auto;
+}
+
+.userName{
+    padding : 0 0 5px 0;
 }
 
 .image {
@@ -28,18 +32,18 @@
 
 .toolbar {
     margin-left: auto;
+    display: flex;
 }
 
 .profile {
     display: flex;
     align-items: flex-end;
 }
-
+/* 
 .userName {
     display: flex;
-    align-items: center;    
     margin: 0 10px;
-}
+} */
 
 .purple {
     color: #fff;

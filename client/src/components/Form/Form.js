@@ -11,7 +11,7 @@ const Form = ({ currentId, setCurrentId }) => {
         title: '', message: '', tags: '', selectedfile: '',
     })
 
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+    const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'))
 
@@ -51,7 +51,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper className='paper'>
+        <Paper className='paper' elevation={6}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
                 <Typography variant="h6" style={{ marginBottom: '7px' }}>{currentId ? 'Editing' : 'Creating a memory'}</Typography>
                 <TextField

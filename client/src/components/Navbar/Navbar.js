@@ -9,11 +9,11 @@ import './styles.css';
 
 
 const Navbar = () => {
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    
+
     const logout = () => {
         dispatch({ type: actionType.LOGOUT })
         navigate('/')
@@ -23,10 +23,8 @@ const Navbar = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('profile')))
-
         const token = user?.token;
-
+        
         if (token) {
             const decodedToken = jwtDecode(token)
             //  Time is in miliseconds thats why x1000
@@ -34,23 +32,24 @@ const Navbar = () => {
                 logout();
             }
         }
+        setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
-
+    
     return (
         <AppBar className="appBar" position="static" color="inherit">
             <div className='navbar'>
                 <div className='brandContainer'>
-                    <Typography component={Link} to="/" className="heading" variant="h2" align="center" fontSize={30}>Memories</Typography>
+                    <Typography component={Link} fontSize={35} to="/" className="heading" variant="h2" align="center">Memories</Typography>
                 </div>
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>
                             <Avatar className='purple' alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
                             <Typography className='userName' variant="h6">{user?.result.name}</Typography>
-                            <Button variant="contained" className='logout' style={{ margin: "0 10px", color: "white" }} onClick={logout}>Logout</Button>
+                            <Button variant="contained" className='logout' style={{ margin: "0 10px", color: "white", backgroundColor: 'black' }} onClick={logout}>Logout</Button>
                         </div>
                     ) : (
-                        <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+                        <Button component={Link} to="/auth" variant="contained" style={{ backgroundColor: 'black' }}>Sign In</Button>
                     )}
                 </Toolbar>
             </div>

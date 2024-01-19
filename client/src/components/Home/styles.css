@@ -1,0 +1,19 @@
+.appBarSearch {
+    border-radius: 4;
+    display: flex;
+    padding: 16px;
+    border-radius: 5px;
+  }
+  
+  .gridContainer {
+    /* Responsive styling using media query */
+    flex-direction: row;
+  }
+  
+  /* Media query for xs breakpoint */
+  @media (max-width: 600px) {
+    .gridContainer {
+      flex-direction: column-reverse;
+    }
+  }
+  

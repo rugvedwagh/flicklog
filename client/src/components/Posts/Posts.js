@@ -6,13 +6,14 @@ import './styles.css';
 
 const Posts = ({ setCurrentId }) => {
 
-    const posts = useSelector((state) => state.posts)
+    const { posts, isLoading } = useSelector((state) => state.posts)
 
+    if(!posts?.length && !isLoading) return 'No posts'
     return (
-        !posts.length ? <CircularProgress style={{ margin: '180px 50%', height: '75px', width: '75px' }} /> : (
+        isLoading ? <CircularProgress style={{ margin: '180px 50%', height: '75px', width: '75px' }} /> : (
             <Grid className='container' container alignItems="stretch" spacing={3}>
                 {posts.map((post) => (
-                    <Grid key={post._id} item xs={12} sm={6}>
+                    <Grid key={post._id} item xs={12} sm={6} lg={3}>
                         <Post post={post} setCurrentId={setCurrentId} />
                     </Grid>
                 ))}
