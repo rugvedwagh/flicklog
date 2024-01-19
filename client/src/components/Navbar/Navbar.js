@@ -22,6 +22,10 @@ const Navbar = () => {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
+    const openUser = () => {
+        navigate(`/posts/${user.result._id}`)
+    }
+
     useEffect(() => {
         const token = user?.token;
 
@@ -44,7 +48,7 @@ const Navbar = () => {
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>
-                            <Avatar className='purple' style={{ backgroundColor: 'grey' }} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+                            <Avatar onClick={openUser} className='purple' style={{ backgroundColor: 'grey' }} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
                             <Typography className='userName' variant="h6" style={{ fontSize: '18px' }}>{user?.result.name}</Typography>
                             <Button className='logout' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }} onClick={logout}>Logout</Button>
                         </div>

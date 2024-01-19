@@ -37,8 +37,7 @@ const Post = ({ post, setCurrentId }) => {
                         <MoreHorizIcon fontSize='default' />
                     </Button>
                 </div>
-            )
-            }
+            )}
             <div className="details">
                 <Typography variant="body2" color="textSecondary">
                     {post.tags.map((tag) => `#${tag} `)}
@@ -47,19 +46,20 @@ const Post = ({ post, setCurrentId }) => {
             <Typography className='title' variant="h5" gutterBottom>{post.title}
             </Typography>
             <CardContent>
-                <Typography color='textSecondary' variant="body2" component="p">{post.message}
+                <Typography color='textSecondary' variant="body2" component="p">
+                    {post.message.slice(0, 52)}...
                 </Typography>
             </CardContent>
             <CardActions className='cardActions'>
-                <Button size="small" style={{color:'grey'}} color="primary" onClick={() => dispatch(likePost(post._id))}>
-                    <ThumbUpAltIcon fontSize='small' style={{color:'grey'}}/>
+                <Button size="small" style={{ color: 'grey' }} color="primary" onClick={() => dispatch(likePost(post._id))}>
+                    <ThumbUpAltIcon fontSize='small' style={{ color: 'grey' }} />
                     &nbsp; Like &nbsp;
                     {/* // For leaving space after and before the like */}
                     {post?.likes.length}
                 </Button>
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                    <Button size="small" style={{color:'grey'}} onClick={() => dispatch(deletePost(post._id))}>
-                        <DeleteIcon fontSize='small' style={{color:'grey'}} />
+                    <Button size="small" style={{ color: 'grey' }} onClick={() => dispatch(deletePost(post._id))}>
+                        <DeleteIcon fontSize='small' style={{ color: 'grey' }} />
                         Delete
                     </Button>
                 )}

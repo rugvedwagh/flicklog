@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PostDetails from './components/PostDetails/PostDetails';
+import NotFound from './components/Notfound/NotFound';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
@@ -15,11 +16,12 @@ const App = () => {
             <Container maxWidth="xl">
                 <Navbar />
                 <Routes>
-                    <Route path="/" exact component={() => <Navigate to="/posts" />} />
+                    <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts" element={<Home />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>
         </BrowserRouter>

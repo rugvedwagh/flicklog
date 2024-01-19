@@ -19,27 +19,26 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <Paper elevation={6} className='loadingPaper'>
-                <CircularProgress size='7em' style={{ margin: '100px 45%', color: 'grey' }} />
-            </Paper>
+            <div className='loading'>
+                <CircularProgress size='7em' style={{ color: 'grey' }} />
+            </div>
         );
     }
 
     return (
-        <Paper style={{ borderRadius: '15px', padding: '10px' }} elevation={6}>
-            <div className='card'>
-                <div className='section'>
-                    <Typography variant="h3" component="h2">{post.title}</Typography>
-                    <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
-                    <Typography gutterBottom variant="body1" component="p">{post.message}</Typography>
-                    <Typography variant="h6">Created by: {post.name}</Typography>
-                    <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
-                </div>
-                <div className='imageSection'>
-                    <img className='imag' src={post.selectedfile} alt='' />
-                </div>
+        <div className='main' >
+            <div className='first'>
+                <Typography variant="h3" component="h2">{post.title}</Typography>
+                <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+                <hr />
+                <Typography gutterBottom variant="body1" component="p" style={{overflow:'hidden',textAlign:'left'}}>{post.message}</Typography>
+                <Typography variant="h6">Created by: {post.name}</Typography>
+                <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
             </div>
-        </Paper>
+            <div className='second'>
+                <img className='imag' src={post.selectedfile} alt='' />
+            </div>
+        </div>
     );
 }
 

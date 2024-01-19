@@ -6,17 +6,15 @@ import { useEffect } from 'react';
 import React from 'react';
 
 const Paginate = ({ page }) => {
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (page) dispatch(getPosts(page))
     }, [page, dispatch]);
 
-    // useEffect(() => {
-    //     dispatch(getPosts());
-    // }, [currentId, dispatch])
-
     const { numberOfPages } = useSelector((state) => state.posts)
-    
+
     return (
         <Pagination
             count={numberOfPages}

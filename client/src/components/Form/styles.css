@@ -1,23 +1,19 @@
 
 .paper {
     padding: 16px;
-    /* Adjust padding as needed */
 }
 
-/* Styles for the form container */
 .form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-/* Styles for the file input */
 .fileInput {
     width: 97%;
     margin: 10px 0;
 }
 
-/* Styles for the submit button */
 .buttonSubmit {
     margin-bottom: 10px;
 }
