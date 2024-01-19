@@ -2,7 +2,7 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/materia
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import { signin, signup } from '../../actions/auth';
 import { AUTH } from '../../constants/actionTypes';
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
@@ -75,7 +75,7 @@ const SignUp = () => {
                     <Button type="submit" fullWidth variant="contained" className='submit' color='primary' style={{ margin: "16px 0" }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId="491019220912-1rmr9lhh8tgf4emm9o91dpvakd820bfb.apps.googleusercontent.com"
                         render={(renderProps) => (
                             <Button className='googleButton' color='primary'fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
@@ -85,7 +85,7 @@ const SignUp = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleError}
                         cookiePolicy="single_host_origin"
-                    />
+                    /> */}
                     <Grid style={{margin:'16px 0'}}container justify="flex-end">
                         <Grid item>
                             <Button onClick={switchMode}>
