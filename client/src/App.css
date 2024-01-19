@@ -5,11 +5,6 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
-.heading {
-    /* color: rgba(0, 183, 255, 1); */
-    color: black;
-    font-size: 15px;
-}
 
 .mainContainer {
     display: flex;
