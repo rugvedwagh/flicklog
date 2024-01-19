@@ -1,5 +1,5 @@
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import { signin, signup } from '../../actions/auth';
 import { AUTH } from '../../constants/actionTypes';
 import { GoogleLogin } from 'react-google-login';
@@ -57,7 +57,7 @@ const SignUp = () => {
         <Container component="main" maxWidth="xs">
             <Paper className='paper' elevation={3}>
                 <Avatar className='avatar'>
-                    <LockOutlinedIcon />
+                    <LockRoundedIcon color="action"/>
                 </Avatar>
                 <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0" }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
                 <form className='form' onSubmit={handleSubmit}>
@@ -72,13 +72,13 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" color="primary" className='submit' style={{ margin: "16px 0" }}>
+                    <Button type="submit" fullWidth variant="contained" className='submit' color='primary' style={{ margin: "16px 0" }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <GoogleLogin
                         clientId="491019220912-1rmr9lhh8tgf4emm9o91dpvakd820bfb.apps.googleusercontent.com"
                         render={(renderProps) => (
-                            <Button className='googleButton' color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
+                            <Button className='googleButton' color='primary'fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                                 Google Sign In
                             </Button>
                         )}
@@ -86,7 +86,7 @@ const SignUp = () => {
                         onFailure={googleError}
                         cookiePolicy="single_host_origin"
                     />
-                    <Grid container justify="flex-end">
+                    <Grid style={{margin:'16px 0'}}container justify="flex-end">
                         <Grid item>
                             <Button onClick={switchMode}>
                                 {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up"}

@@ -71,7 +71,7 @@ const Home = () => {
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
                             />
-                            <Button onClick={searchPost} className='searchButton' style={{ backgroundColor: 'black' }} variant='contained'>Search</Button>
+                            <Button onClick={searchPost} className='searchButton' style={{ margin: "0 10px", color: "black", backgroundColor:'transparent', border : '1px solid grey' }}>Search</Button>
                         </AppBar>
                         {(!searchQuery && !tags.length) && (
                             <Paper elevation={6}>

@@ -24,11 +24,8 @@
 
 
 .googleButton {
-    margin: 16px 0;
     background-color: #4285f4;
-    /* Choose your desired color for the Google button */
-    color: #fff;
-    /* Choose your desired text color for the Google button */
+    color: white;
 }
 
 /* Responsive styles */

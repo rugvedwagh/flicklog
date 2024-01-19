@@ -2,7 +2,13 @@ import PostMessage from "../models/postMessage.js"
 import mongoose from "mongoose";
 
 export const getPost = async (req, res) => {
-
+    const {id} = req.params;
+    try {
+        const post = await PostMessage.findById(id);
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(404).json({message : error.message})
+    }
 }
 
 export const getPosts = async (req, res) => {
@@ -13,9 +19,6 @@ export const getPosts = async (req, res) => {
         const total = await PostMessage.countDocuments({})
 
         const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
-
-        console.log('\nPosts loaded123!')
-        console.log(Number(page), Math.ceil(total / LIMIT));
         res.status(200).json({ data: posts, currentPage: Number(page), NumberOfPages: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message })

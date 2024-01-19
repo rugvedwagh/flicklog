@@ -7,23 +7,28 @@
     align-items: center;
 }
 
+.logout:hover {
+    opacity: 0.5;
+    transition: 0.3s ease-in-out;
+}
+
 .navbar {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     padding: 5px 0;
-    padding-left: 15px;
+    padding-left: 20px;
 }
 
 .heading {
-    color : black;
+    color: grey;
     text-decoration: none;
     margin-right: auto;
 }
 
-.userName{
-    padding : 0 0 5px 0;
+.userName {
+    padding: 0 0 5px 0;
 }
 
 .image {
@@ -39,6 +44,7 @@
     display: flex;
     align-items: flex-end;
 }
+
 /* 
 .userName {
     display: flex;

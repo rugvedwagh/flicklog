@@ -1,0 +1,11 @@
+.imag{
+    width: 500px;
+    height: 281px;
+    border-radius: 5px;
+}
+
+.card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
