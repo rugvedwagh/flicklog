@@ -48,7 +48,11 @@ const Navbar = () => {
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>
-                            <Avatar onClick={openUser} className='purple' style={{ backgroundColor: 'grey' }} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+                            <span className='avatarcontainer'>
+                            <Avatar onClick={openUser} className='purple' style={{ backgroundColor: 'grey' }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                {user?.result.name.charAt(0)}
+                            </Avatar>
+                            </span>
                             <Typography className='userName' variant="h6" style={{ fontSize: '18px' }}>{user?.result.name}</Typography>
                             <Button className='logout' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }} onClick={logout}>Logout</Button>
                         </div>

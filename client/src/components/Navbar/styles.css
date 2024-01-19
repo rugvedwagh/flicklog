@@ -48,7 +48,6 @@
 
 .purple {
     color: #fff;
-    background-color: #673ab7;
     margin: 0 10px;
 }
 
@@ -59,13 +58,24 @@
     }
 
     .heading {
-        margin-right: 0;
+        margin-right: 0px;
         margin-bottom: 10px;
     }
 
     .toolbar {
-        margin-left: 55px;
         margin-top: 10px;
     }
-
+    .logout{
+        margin: 0px;
+    }
+    .userName{
+        display: none;
+    }
+    .navbar{
+        padding: 0;
+    }
+    .avatarcontainer{
+        display: none;
+    }
 }
+
