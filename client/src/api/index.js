@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const API = axios.create({ baseURL: 'http://localhost:5000' })
-const API = axios.create({ baseURL: 'https://memoriesbackend-jc46.onrender.com' })
+// const API = axios.create({ baseURL: 'http://localhost:5000/api/' })
+const API = axios.create({ baseURL: 'https://memoriesbackend-jc46.onrender.com/api/' })
 
 // Sending the Token back to our backend for it to verify it
 API.interceptors.request.use((req) => {

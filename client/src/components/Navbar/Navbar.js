@@ -43,7 +43,7 @@ const Navbar = () => {
         <AppBar className="appBar" position="static" color="inherit">
             <div className='navbar'>
                 <div className='brandContainer'>
-                    <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">Memories</Typography>
+                    <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">reminisce-now</Typography>
                 </div>
                 <Toolbar className='toolbar'>
                     {user?.result ? (
