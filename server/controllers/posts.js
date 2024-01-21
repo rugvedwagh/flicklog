@@ -14,12 +14,11 @@ export const getPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     const { page } = req.query;
     try {
-        const LIMIT = 8;
+        const LIMIT = 6;
         const startIndex = (Number(page) - 1) * LIMIT;
         const total = await PostMessage.countDocuments({})
 
         const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
-        console.log("posts loaded")
         res.status(200).json({ data: posts, currentPage: Number(page), NumberOfPages: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -40,7 +39,6 @@ export const getPostsBySearch = async (req, res) => {
             ]
         });
 
-        console.log(tagsArray);
         res.json({ data: posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -54,8 +52,6 @@ export const createPost = async (req, res) => {
 
     try {
         await newPost.save();
-        console.log('Post Created!')
-        console.log(newPost)
         res.status(201).json(newPost);
 
     } catch (error) {
@@ -64,14 +60,12 @@ export const createPost = async (req, res) => {
 }
 
 export const updatePost = async (req, res) => {
-    const { id: _id } = req.params  // renaming
+    const { id: _id } = req.params  
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No posts with this id')
 
     const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true })
-
-    console.log('\nPost updated!')
 
     res.json(updatedPost)
 }
@@ -83,7 +77,6 @@ export const deletePost = async (req, res) => {
 
     await PostMessage.findByIdAndDelete(id);
 
-    console.log('\nPost deleted!')
 
     res.json({ message: 'Post deleted successfully!' })
 }
@@ -101,11 +94,9 @@ export const likePost = async (req, res) => {
 
     if (index === -1) {
         post.likes.push(req.userId);
-        console.log('\nPost Liked!')
     }
     else {
         post.likes = post.likes.filter((id) => id !== String(req.userId));
-        console.log('\nPost UnLiked!')
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })

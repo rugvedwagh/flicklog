@@ -10,6 +10,7 @@ import './styles.css';
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
+
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
     const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const SignUp = () => {
                 <Avatar className='avatar'>
                     <LockRoundedIcon color="action" />
                 </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0" }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'grey' }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {isSignup && (
@@ -56,7 +57,7 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" className='submit' color='primary' style={{ margin: "16px 0" }}>
+                    <Button type="submit" fullWidth className='submit' style={{ margin: "16px 0", border: '1px solid grey', color: 'grey' }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <Grid style={{ margin: '16px 0' }} container justify="flex-end">

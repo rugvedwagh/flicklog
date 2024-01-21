@@ -8,7 +8,10 @@ import './styles.css';
 const Form = ({ currentId, setCurrentId }) => {
 
     const [postData, setPostData] = useState({
-        title: '', message: '', tags: '', selectedfile: '',
+        title: '',
+        message: '',
+        tags: '',
+        selectedfile: '',
     })
 
     const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
@@ -36,15 +39,14 @@ const Form = ({ currentId, setCurrentId }) => {
             dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
             clear()
         }
-
     }
 
 
     if (!user?.result?.name) {
         return (
-            <Paper className='paper'>
+            <Paper className='paper' elevation={6}>
                 <Typography variant="h6" align="center">
-                        Sign in to create your post!
+                    Sign in to create and interact.
                 </Typography>
             </Paper>
         )

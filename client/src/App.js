@@ -9,7 +9,9 @@ import React from 'react';
 import './App.css';
 
 const App = () => {
-    const user = JSON.parse(localStorage.getItem('profile'))
+
+    // const [user, setUser] = useState(null);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
         <BrowserRouter>
@@ -20,7 +22,7 @@ const App = () => {
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth />} />
+                    <Route path="/auth" element={<Auth />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>

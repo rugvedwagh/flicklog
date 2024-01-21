@@ -4,6 +4,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import React from 'react';
@@ -32,10 +33,12 @@ const Post = ({ post, setCurrentId }) => {
             </div>
             {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
                 <div className='overlay2'>
-                    <Button style={{ color: 'white' }}
-                        size="small" onClick={() => setCurrentId(post._id)}>
-                        <MoreHorizIcon fontSize='default' />
-                    </Button>
+                    <Tooltip title="Edit" arrow placement='top'>
+                        <Button style={{ color: 'white', marginRight: '-25px' }}
+                            size="small" onClick={() => setCurrentId(post._id)}>
+                            <MoreHorizIcon fontSize='default' />
+                        </Button>
+                    </Tooltip>
                 </div>
             )}
             <div className="details">
@@ -51,17 +54,20 @@ const Post = ({ post, setCurrentId }) => {
                 </Typography>
             </CardContent>
             <CardActions className='cardActions'>
-                <Button size="small" style={{ color: 'grey' }} color="primary" onClick={() => dispatch(likePost(post._id))}>
-                    <ThumbUpAltIcon fontSize='small' style={{ color: 'grey' }} />
-                    &nbsp; Like &nbsp;
-                    {/* // For leaving space after and before the like */}
-                    {post?.likes.length}
-                </Button>
-                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                    <Button size="small" style={{ color: 'grey' }} onClick={() => dispatch(deletePost(post._id))}>
-                        <DeleteIcon fontSize='small' style={{ color: 'grey' }} />
-                        Delete
+                <Tooltip title="Like" arrow placement='top'>
+                    <Button size="small" style={{ color: 'grey' }} color="primary" onClick={() => dispatch(likePost(post._id))}>
+                        <ThumbUpAltIcon fontSize='small' style={{ color: 'grey' }} />
+                        &nbsp; &nbsp;
+                        {/* // For leaving space after and before the like */}
+                        {post?.likes.length}
                     </Button>
+                </Tooltip>
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <Tooltip title="Delete" arrow placement='top'>
+                        <Button size="small" style={{ color: 'grey', marginRight: '-15px' }} onClick={() => dispatch(deletePost(post._id))}>
+                            <DeleteIcon fontSize='small' style={{ color: 'grey' }} />
+                        </Button>
+                    </Tooltip>
                 )}
             </CardActions>
         </Card>

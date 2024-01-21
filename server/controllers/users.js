@@ -33,7 +33,6 @@ export const signup = async (req, res) => {
         if (oldUser) return res.status(400).json({ message: "User already exists" });
         
         if (!password) {
-            console.log('Im in here')
             return res.status(400).json({ message: "Password is required" });
         }
         
@@ -47,8 +46,7 @@ export const signup = async (req, res) => {
         
         await result.save();
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
-        console.log(email);
-        console.log(token);
+    
         res.status(201).json({ result, token });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });

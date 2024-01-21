@@ -23,8 +23,6 @@ const Home = () => {
     const searchQuery = query.get('serchQuery')
     const navigate = useNavigate();
 
-
-
     const searchPost = () => {
         if (search.trim() || tags) {
             console.log(tags)
@@ -71,7 +69,9 @@ const Home = () => {
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
                             />
-                            <Button onClick={searchPost} className='searchButton' fullWidth style={{ margin: "0 10px", color: "black", backgroundColor:'transparent', border : '1px solid grey' }}>Search</Button>
+                            <Button onClick={searchPost} className='searchButton' fullWidth style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }}>
+                                Search
+                            </Button>
                         </AppBar>
                         {(!searchQuery && !tags.length) && (
                             <Paper elevation={6}>

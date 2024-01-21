@@ -10,3 +10,10 @@
 .actionDiv {
     text-align: center;
 }
+
+.noposts {
+    margin: 240px 40%;
+    font-family: 'Robot', sans-serif;
+    color: grey;
+    font-size: 30px;
+}
