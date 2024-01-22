@@ -5,6 +5,7 @@ import { getPost } from '../../actions/posts'
 import React, { useEffect } from 'react'
 import moment from 'moment'
 import './postdetail.css'
+import CommentsSection from './CommentsSection'
 
 const PostDetails = () => {
 
@@ -40,8 +41,9 @@ const PostDetails = () => {
                 <hr />
                 <Typography gutterBottom variant="body1" component="p" style={{ overflow: 'hidden', textAlign: 'left' }}>{post.message}</Typography>
                 <hr />
-                <Typography variant="h6" style={{ color: 'grey' }}>Posted by: {post.name}</Typography>
+                <Typography variant="h6"><span style={{color:'grey'}}>Posted by</span>: {post.name}</Typography>
                 <Typography variant="body1" style={{ color: 'grey' }}>{moment(post.createdAt).fromNow()}</Typography>
+                <CommentsSection post={post}/>
             </div>
             <div className='second'>
                 <img className='imag' src={post.selectedfile} alt='' />

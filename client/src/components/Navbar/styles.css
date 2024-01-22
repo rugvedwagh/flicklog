@@ -1,11 +1,11 @@
 .appBar {
-    border-radius: 5px;
+    border-radius: 7px;
     margin: 30px 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-}   
+}
 
 .logout:hover {
     opacity: 0.5;
@@ -25,6 +25,11 @@
     color: grey;
     text-decoration: none;
     margin-right: auto;
+    /* change to below */
+    color: white;
+    margin-right: auto;
+    text-decoration: none;
+    text-shadow: 1px 2px 1px rgb(255, 0, 128);
 }
 
 .userName {
@@ -53,6 +58,19 @@
     cursor: pointer;
 }
 
+.myposts {
+    text-decoration: none;
+    color: grey;
+    margin-left: 3rem;
+    font-size: 18px;
+}
+
+.brandContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 
 @media (max-width: 600px) {
     .appBar {
@@ -68,17 +86,80 @@
     .toolbar {
         margin-top: 10px;
     }
-    .logout{
+
+    .logout {
         margin: 0px;
     }
-    .userName{
+
+    .userName {
         display: none;
     }
-    .navbar{
+
+    .navbar {
         padding: 0;
     }
-    .avatarcontainer{
+
+    .avatarcontainer {
         display: none;
     }
 }
 
+/* ********** */
+
+.card {
+    display: flex;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .card {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+}
+
+.section {
+    border-radius: 20px;
+    margin: 10px;
+    flex: 1;
+}
+
+.imageSection {
+    margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+    .imageSection {
+        margin-left: 0;
+    }
+}
+
+.recommendedPosts {
+    display: flex;
+}
+
+@media (max-width: 600px) {
+    .recommendedPosts {
+        flex-direction: column;
+    }
+}
+
+.loadingPaper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    height: 39vh;
+}
+
+.commentsOuterContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentsInnerContainer {
+    height: 200px;
+    overflow-y: auto;
+    margin-right: 30px;
+} 
