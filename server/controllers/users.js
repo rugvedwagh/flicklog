@@ -25,31 +25,40 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-    
     try {
         const { email, password, firstName, lastName } = req.body;
         const oldUser = await UserModel.findOne({ email });
-        
+
         if (oldUser) return res.status(400).json({ message: "User already exists" });
-        
+
         if (!password) {
             return res.status(400).json({ message: "Password is required" });
         }
-        
+
         const hashedPassword = await bcrypt.hash(password, 12);
-        
+
         const result = new UserModel({
             email,
             password: hashedPassword,
             name: `${firstName} ${lastName}`
         });
-        
+
         await result.save();
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
-    
+
         res.status(201).json({ result, token });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
     }
 };
+
+export const getUserData = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await UserModel.findById(id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}

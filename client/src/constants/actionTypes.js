@@ -11,5 +11,6 @@ export const START_LOADING = 'START_LOADING'
 export const END_LOADING = 'END_LOADING'
 
 // Auth actions
+export const USER_INFO = 'USER_INFO'
 export const LOGOUT = 'LOGOUT';
 export const AUTH = 'AUTH';

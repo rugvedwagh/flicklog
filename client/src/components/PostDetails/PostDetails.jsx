@@ -7,6 +7,7 @@ import moment from 'moment'
 import './postdetail.css'
 
 const PostDetails = () => {
+
     const { post, isLoading } = useSelector((state) => state.posts)
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -38,8 +39,9 @@ const PostDetails = () => {
                 <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
                 <hr />
                 <Typography gutterBottom variant="body1" component="p" style={{ overflow: 'hidden', textAlign: 'left' }}>{post.message}</Typography>
-                <Typography variant="h6">Created by: {post.name}</Typography>
-                <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
+                <hr />
+                <Typography variant="h6" style={{ color: 'grey' }}>Posted by: {post.name}</Typography>
+                <Typography variant="body1" style={{ color: 'grey' }}>{moment(post.createdAt).fromNow()}</Typography>
             </div>
             <div className='second'>
                 <img className='imag' src={post.selectedfile} alt='' />

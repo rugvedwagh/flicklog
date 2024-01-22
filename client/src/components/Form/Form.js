@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
-import FileBase from 'react-file-base64';
-import { useDispatch, useSelector } from 'react-redux';
 import { createPost, updatePost } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import FileBase from 'react-file-base64';
 import './styles.css';
 
 const Form = ({ currentId, setCurrentId }) => {
@@ -14,8 +14,11 @@ const Form = ({ currentId, setCurrentId }) => {
         selectedfile: '',
     })
 
-    const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
+    // In line below the state has two stores 'posts' and 'authReducer' so in the 'posts'
+    // we have the posts array that's why we apply the find function
+
     const dispatch = useDispatch();
+    const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
     const user = JSON.parse(localStorage.getItem('profile'))
 
     useEffect(() => {
@@ -45,7 +48,7 @@ const Form = ({ currentId, setCurrentId }) => {
     if (!user?.result?.name) {
         return (
             <Paper className='paper' elevation={6}>
-                <Typography variant="h6" align="center">
+                <Typography variant="h6" align="center" className='signintointeract'>
                     Sign in to create and interact.
                 </Typography>
             </Paper>

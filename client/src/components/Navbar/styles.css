@@ -49,7 +49,10 @@
 .purple {
     color: #fff;
     margin: 0 10px;
+    background-color: pink;
+    cursor: pointer;
 }
+
 
 @media (max-width: 600px) {
     .appBar {

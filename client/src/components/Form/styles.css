@@ -1,4 +1,3 @@
-
 .paper {
     padding: 16px;
 }
@@ -16,4 +15,8 @@
 
 .buttonSubmit {
     margin-bottom: 10px;
+}
+
+.signintointeract{
+    color: grey;
 }

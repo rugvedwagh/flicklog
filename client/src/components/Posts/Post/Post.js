@@ -36,7 +36,7 @@ const Post = ({ post, setCurrentId }) => {
                     <Tooltip title="Edit" arrow placement='top'>
                         <Button style={{ color: 'white', marginRight: '-25px' }}
                             size="small" onClick={() => setCurrentId(post._id)}>
-                            <MoreHorizIcon fontSize='default' />
+                            <MoreHorizIcon fontSize='medium' />
                         </Button>
                     </Tooltip>
                 </div>
@@ -50,7 +50,7 @@ const Post = ({ post, setCurrentId }) => {
             </Typography>
             <CardContent>
                 <Typography color='textSecondary' variant="body2" component="p">
-                    {post.message.slice(0, 52)}...
+                    {post.message.slice(0, 80)}...
                 </Typography>
             </CardContent>
             <CardActions className='cardActions'>

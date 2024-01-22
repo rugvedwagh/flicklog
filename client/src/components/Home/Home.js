@@ -1,7 +1,7 @@
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@mui/material';
-import { getPosts, getPostsBySearch } from '../../actions/posts';
+import { getPostsBySearch } from '../../actions/posts';
 import { useNavigate, useLocation } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Posts from '../Posts/Posts';
 import Paginate from '../Paginate';

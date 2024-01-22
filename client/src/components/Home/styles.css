@@ -1,30 +1,30 @@
 .appBarSearch {
-  border-radius: 4;
-  display: flex;
-  padding: 16px;
-  border-radius: 5px;
-  align-items: center;
+    border-radius: 4;
+    display: flex;
+    padding: 16px;
+    border-radius: 5px;
+    align-items: center;
 }
 
 .gridContainer {
-  flex-direction: row;
+    flex-direction: row;
 }
 
 @media (max-width: 600px) {
-  .gridContainer {
-    flex-direction: column-reverse;
-  }
+    .gridContainer {
+        flex-direction: column-reverse;
+    }
 }
 
 .searchButton {
-  border: 1px solid grey;
-  margin: 0 10px;
-  color: black;
-  background-color: transparent;
-  border: 1px solid grey;
+    border: 1px solid grey;
+    margin: 0 10px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid grey;
 }
 
 .searchButton:hover {
-  opacity: 0.5;
-  transition: 0.3s;
+    opacity: 0.5;
+    transition: 0.3s;
 }

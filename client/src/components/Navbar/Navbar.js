@@ -23,7 +23,7 @@ const Navbar = () => {
     }
     
     const openUser = () => {
-        navigate(`/posts/${user.result._id}`)
+        navigate(`/user/info/${user.result._id}`)
     }
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const Navbar = () => {
                     {user?.result ? (
                         <div className='profile'>
                             <span className='avatarcontainer'>
-                                <Avatar onClick={openUser} className='purple' style={{ backgroundColor: 'grey' }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                <Avatar onClick={openUser} className='purple' style={{ backgroundColor: '#ff00ae' }} alt={user?.result.name} src={user?.result.imageUrl}>
                                     {user?.result.name.charAt(0)}
                                 </Avatar>
                             </span>
