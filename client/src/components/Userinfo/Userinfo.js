@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { userData } from '../../actions/auth';
-import React, { useEffect } from 'react'
-import './userstyle.css'
+import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import { userData } from '../../actions/auth';
+import React, { useEffect } from 'react';
+import './userstyle.css';
 
 const Userinfo = () => {
 

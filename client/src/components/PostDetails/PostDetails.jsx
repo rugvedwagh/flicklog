@@ -21,15 +21,7 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress style={{
-                width: '75px',
-                height: '75px',
-                position: 'absolute',
-                top: '43%',
-                left: '48%',
-                transform: 'translate(-43%, -48%)',
-                color: 'grey',
-            }} />
+            <CircularProgress className='loader' color='grey' size='4rem'/>
         );
     }
 
@@ -43,6 +35,7 @@ const PostDetails = () => {
                 <hr />
                 <Typography variant="h6"><span style={{color:'grey'}}>Posted by</span>: {post.name}</Typography>
                 <Typography variant="body1" style={{ color: 'grey' }}>{moment(post.createdAt).fromNow()}</Typography>
+                <hr />
                 <CommentsSection post={post}/>
             </div>
             <div className='second'>

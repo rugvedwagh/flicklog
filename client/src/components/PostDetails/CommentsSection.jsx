@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
-import { Typography, TextField, Button } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import { commentPost } from '../../actions/posts'
+import { Typography, TextField, Button } from '@mui/material';
+import { commentPost } from '../../actions/posts';
+import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 
 const CommentsSection = ({ post }) => {
     const [comments, setComments] = useState(post?.comments)
@@ -22,25 +22,22 @@ const CommentsSection = ({ post }) => {
         <div className="commentsOuterContainer">
             <div className="commentsInnerContainer">
                 <Typography gutterBottom variant='h6'>Comments</Typography>
-                {/* {comments.map((comment, i) => (
-                    <Typography key={i} gutterBottom variant='subtitle1'>
-                        {comment}
-                    </Typography>
-                ))} */}
                 {comments.map((comment, i) => {
                     // Split the comment into user's name and comment text
                     const [name, text] = comment.split(': ');
 
                     return (
                         <Typography key={i} gutterBottom variant='subtitle1'>
-                            <span style={{ color: 'grey' }}>{name}:</span> <span>{text}</span>
+                            <span style={{ color: 'black', fontWeight: 'bold' }}>{name} :</span> <span>{text}</span>
                         </Typography>
                     );
                 })}
             </div>
             {user?.result?.name && (
-                <div style={{ width: '50%' }}>
-                    <Typography gutterBottom variant='h6' style={{ color: 'grey' }}>Write a Comment</Typography>
+                <div className='write-comment'>
+                    <Typography gutterBottom variant='h6' style={{ color: 'grey' }}>
+                        Write a Comment
+                    </Typography>
                     <TextField
                         fullWidth
                         rows={3}
@@ -50,7 +47,9 @@ const CommentsSection = ({ post }) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                     />
-                    <Button style={{ marginTop: '10px', border: '1px solid grey', color: 'black' }} fullWidth
+                    <Button
+                        style={{ marginTop: '10px', border: '1px solid grey', color: 'black' }}
+                        fullWidth
                         disabled={!comment}
                         onClick={handleClick}
                     >

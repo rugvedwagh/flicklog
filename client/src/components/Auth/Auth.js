@@ -39,8 +39,8 @@ const SignUp = () => {
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
-        <Container component="main" maxWidth="xs">
-            <Paper className='paper' elevation={3}>
+        <Container component="main" maxWidth="xs" >
+            <Paper className='paper' elevation={3} style={{borderRadius:'10px'}}>
                 <Avatar className='avatar'>
                     <LockRoundedIcon color="action" />
                 </Avatar>

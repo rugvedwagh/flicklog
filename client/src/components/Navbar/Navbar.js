@@ -13,15 +13,15 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    
+
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-    
+
     const Logout = () => {
         dispatch({ type: actionType.LOGOUT })
         navigate('/')
         setUser(null)
     }
-    
+
     const openUser = () => {
         navigate(`/user/info/${user.result._id}`)
     }
@@ -44,7 +44,10 @@ const Navbar = () => {
         <AppBar className="appBar" position="static" color="inherit">
             <div className='navbar'>
                 <div className='brandContainer'>
-                    <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">reminisce</Typography>
+                    <Link to="/posts" className='headingcontainer'>
+                        <div className="heading" align="center" style={{textAlign:'center   '}}>reminisce</div>
+                    </Link>
+                    {/* <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">reminisce</Typography> */}
                 </div>
                 <Toolbar className='toolbar'>
                     {user?.result ? (

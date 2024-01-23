@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     background-color: white;
-    border-radius: 7px;
+    border-radius: 10px;
     padding: 20px;
     font-family: 'Roboto', sans-serif;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -27,13 +27,13 @@
     height: auto;
 }
 
-.body1{
+.body1 {
     color: grey;
 }
 
 @media only screen and (max-width: 600px) {
     .main {
-        flex-direction: column;
+        flex-direction: column-reverse;
         padding: 10px;
     }
 
@@ -47,14 +47,35 @@
         max-width: 100%;
         border-radius: 8px;
     }
+
+    .commentsOuterContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .commentsInnerContainer {
+        margin-top: 10px;
+        width: 90%;
+    }
+
+    .writeCommentContainer {
+        width: 90%;
+    }
+
+    .write-comment {
+        width: 100%;
+        margin-top: 10px;
+    }
 }
 
-.loading {
+.loader {
+    width: 10%;
+    max-width: 75px;
+    height: auto;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 45%;
+    left: 48%;
+    transform: translate(-45%, -48%);
+    color: grey;
 }

@@ -21,7 +21,7 @@ const Post = ({ post, setCurrentId }) => {
     }
 
     return (
-        <Card className='card' raised elevation={6}>
+        <Card className='card' raised elevation={6} style={{borderRadius:'10px'}}>
             <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
             <div className='overlay'>
                 <Typography variant="h6">
