@@ -69,7 +69,7 @@ const Home = () => {
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
                             />
-                            <Button onClick={searchPost} className='searchButton' fullWidth style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }}>
+                            <Button onClick={searchPost} variant='contained' className='searchButton' fullWidth style={{ margin: "0 10px" }}>
                                 Search
                             </Button>
                         </AppBar>

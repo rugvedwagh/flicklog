@@ -18,8 +18,17 @@
     width: 10%;
     max-width: 75px;
     position: relative;
-    top: 40%;
+    top: 35%;
     left: 48%;
-    transform: translate(-40%, -48%);    
-    color: grey;
+    transform: translate(-35%, -48%);
+    color: black;
+}
+
+@media (max-width: 600px) {
+    .loading {
+        margin-bottom: 800px;
+        top: 40%;
+        left: 44%;
+        transform: translate(-30%, -44%);
+    }
 }

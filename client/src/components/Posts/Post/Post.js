@@ -83,7 +83,7 @@ const Post = ({ post, setCurrentId }) => {
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: 'rgba(0, 0, 0, 0.800)' }} color="primary" onClick={handleLike}>
+                    <Button size="small" style={{ color: 'rgba(0, 0, 0, 0.800)' }} disabled={!user?.result} color="primary" onClick={handleLike}>
                         <Likes />
                     </Button>
                 </Tooltip>

@@ -11,8 +11,6 @@ import './App.css';
 
 const App = () => {
 
-    const user = JSON.parse(localStorage.getItem('profile'));
-
     return (
         <BrowserRouter>
             <Container maxWidth="xl">

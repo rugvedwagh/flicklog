@@ -40,7 +40,7 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="xs" >
-            <Paper className='paper' elevation={3} style={{ borderRadius: '10px' }}>
+            <Paper className='paper' elevation={6} style={{ borderRadius: '10px' }}>
                 <Avatar className='avatar'>
                     <LockRoundedIcon color="action" />
                 </Avatar>

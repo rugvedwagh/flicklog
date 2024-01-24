@@ -60,12 +60,12 @@ const Navbar = () => {
                             <Typography className='userName' variant="h6" style={{ fontSize: '18px' }}>
                                 {user?.result.name}
                             </Typography>
-                            <Button className='logout' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }} onClick={Logout}>
+                            <Button className='logout' variant='contained' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent'}} onClick={Logout}>
                                 Logout
                             </Button>
                         </div>
                     ) : (
-                        <Button className='logout' component={Link} to="/auth" style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent', border: '1px solid grey' }}>
+                        <Button className='logout' component={Link} to="/auth" variant='contained' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent' }}>
                             Sign In
                         </Button>
                     )}

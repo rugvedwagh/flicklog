@@ -62,8 +62,8 @@
     }
 
     .commentsInnerContainer {
-        margin-top: 10px;
-        width: 90%;
+        margin: 10px 25px;
+        width: 100%;
     }
 
     .writeCommentContainer {
@@ -91,5 +91,14 @@
     top: 45%;
     left: 48%;
     transform: translate(-45%, -48%);
-    color: grey;
+    color: black;
+}
+
+@media (max-width: 600px) {
+    .loader {
+        /* margin-bottom: 800px; */
+        top: 30%;
+        left: 44%;
+        transform: translate(-30%, -44%);
+    }
 }
