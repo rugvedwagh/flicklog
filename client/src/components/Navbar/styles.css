@@ -20,12 +20,12 @@
     align-items: center;
     width: 100%;
     padding: 5px 0;
-    padding-left: 20px;
 }
 
 .headingcontainer {
     text-decoration: none;
     padding: 0px;
+    margin-left: 10px;
 }
 
 .heading {
@@ -92,7 +92,7 @@
     }
 
     .toolbar {
-        margin-top: 5px;
+        /* margin-top: 5px; */
     }
 
     .userName {

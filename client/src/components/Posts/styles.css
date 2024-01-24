@@ -3,10 +3,6 @@
     align-items: center;
 }
 
-.smMargin {
-    margin: 8px;
-}
-
 .actionDiv {
     text-align: center;
 }
@@ -19,13 +15,11 @@
 }
 
 .loading {
-    color: grey;
     width: 10%;
     max-width: 75px;
-    height: auto;
-    position: absolute;
-    top: 45%;
-    left: 49%;
-    transform: translate(-45%, -49%);
+    position: relative;
+    top: 40%;
+    left: 48%;
+    transform: translate(-40%, -48%);    
     color: grey;
 }

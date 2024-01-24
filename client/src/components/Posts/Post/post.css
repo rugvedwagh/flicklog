@@ -54,3 +54,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+body{
+  background-color: rgba(0, 0, 0, 0.548);
+}

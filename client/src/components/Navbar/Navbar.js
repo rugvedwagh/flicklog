@@ -45,7 +45,7 @@ const Navbar = () => {
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Link to="/posts" className='headingcontainer'>
-                        <div className="heading" align="center" style={{textAlign:'center   '}}>reminisce</div>
+                        <div className="heading" align="center" style={{textAlign:'center'}}>reminisce</div>
                     </Link>
                     {/* <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">reminisce</Typography> */}
                 </div>

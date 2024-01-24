@@ -28,7 +28,8 @@ const PostDetails = () => {
     return (
         <div className='main' >
             <div className='first'>
-                <Typography variant="h3" component="h2">{post.title}</Typography>
+                {/* <Typography variant="h3" component="h2">{post.title}</Typography> */}
+                <h2 className='posttitle'>{post.title}</h2>
                 <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
                 <hr />
                 <Typography gutterBottom variant="body1" component="p" style={{ overflow: 'hidden', textAlign: 'left' }}>{post.message}</Typography>

@@ -22,16 +22,12 @@ const CommentsSection = ({ post }) => {
         <div className="commentsOuterContainer">
             <div className="commentsInnerContainer">
                 <Typography gutterBottom variant='h6'>Comments</Typography>
-                {comments.map((comment, i) => {
-                    // Split the comment into user's name and comment text
-                    const [name, text] = comment.split(': ');
-
-                    return (
-                        <Typography key={i} gutterBottom variant='subtitle1'>
-                            <span style={{ color: 'black', fontWeight: 'bold' }}>{name} :</span> <span>{text}</span>
-                        </Typography>
-                    );
-                })}
+                {comments.length && comments?.slice(0).reverse().map((comment, index) => (
+                    <Typography key={index} gutterBottom variant='subtitle1'>
+                        <strong>{comment.split(': ')[0]} : </strong>
+                        {comment.split(':')[1]}
+                    </Typography>
+                ))}
             </div>
             {user?.result?.name && (
                 <div className='write-comment'>

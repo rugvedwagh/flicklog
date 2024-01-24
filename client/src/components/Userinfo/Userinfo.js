@@ -16,13 +16,13 @@ const Userinfo = () => {
 
     const { clientData, isLoading } = useSelector((state) => state.authReducer)
 
-    if(!clientData){
+    if (!clientData) {
         return null;
     }
 
     if (isLoading) {
         return (
-            <CircularProgress/>
+            <CircularProgress className='loading' size='4rem' color='grey' />
         );
     }
 

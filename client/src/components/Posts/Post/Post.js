@@ -1,4 +1,5 @@
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import { likePost, deletePost } from '../../../actions/posts';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -6,8 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import moment from 'moment';
-import React from 'react';
 import './post.css';
 
 const Post = ({ post, setCurrentId }) => {
@@ -15,13 +16,40 @@ const Post = ({ post, setCurrentId }) => {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'))
     const navigate = useNavigate();
+    const [likes, setLikes] = useState(post?.likes)
+
+    const userId = user?.result.googleId || user?.result?._id;
+    const hasLikedPost = post.likes.find((like) => like === userId);
+
+    const handleLike = async () => {
+        dispatch(likePost(post._id));
+
+        if (hasLikedPost) {
+            setLikes(post.likes.filter((id) => id !== userId));
+        } else {
+            setLikes([...post.likes, userId]);
+        }
+    };
+
+    const Likes = () => {
+        if (likes.length > 0) {
+            return likes.find((like) => like === userId)
+                ? (
+                    <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}</>
+                ) : (
+                    <><ThumbUpAltOutlinedIcon fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
+                );
+        }
+
+        return <><ThumbUpAltOutlinedIcon fontSize="small" />&nbsp;Like</>;
+    };
 
     const openPost = () => {
         navigate(`/posts/${post._id}`)
     }
 
     return (
-        <Card className='card' raised elevation={6} style={{borderRadius:'10px'}}>
+        <Card className='card' raised elevation={6} style={{ borderRadius: '10px' }}>
             <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
             <div className='overlay'>
                 <Typography variant="h6">
@@ -55,11 +83,8 @@ const Post = ({ post, setCurrentId }) => {
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: 'grey' }} color="primary" onClick={() => dispatch(likePost(post._id))}>
-                        <ThumbUpAltIcon fontSize='small' style={{ color: 'grey' }} />
-                        &nbsp; &nbsp;
-                        {/* // For leaving space after and before the like */}
-                        {post?.likes.length}
+                    <Button size="small" style={{ color: 'rgba(0, 0, 0, 0.800)' }} color="primary" onClick={handleLike}>
+                        <Likes />
                     </Button>
                 </Tooltip>
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
