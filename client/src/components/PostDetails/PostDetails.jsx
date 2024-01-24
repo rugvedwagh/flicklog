@@ -21,7 +21,7 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress className='loader' color='grey' size='4rem'/>
+            <CircularProgress className='loader' color='grey' size='4rem' />
         );
     }
 
@@ -31,10 +31,10 @@ const PostDetails = () => {
                 <h2 className='posttitle'>{post.title}</h2>
                 <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
                 <Typography gutterBottom variant="body1" component="p" style={{ overflow: 'hidden' }}>{post.message}</Typography>
-                <Typography variant="h6"><span style={{color:'grey'}}>Posted by</span>: {post.name}</Typography>
+                <Typography variant="h6"><span style={{ color: 'grey' }}>Posted by</span>: {post.name}</Typography>
                 <Typography variant="body1" style={{ color: 'grey' }}>{moment(post.createdAt).fromNow()}</Typography>
                 <hr />
-                <CommentsSection post={post}/>
+                <CommentsSection post={post} />
             </div>
             <div className='second'>
                 <img className='imag' src={post.selectedfile} alt='' />

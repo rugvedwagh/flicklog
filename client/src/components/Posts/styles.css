@@ -21,7 +21,7 @@
     top: 35%;
     left: 48%;
     transform: translate(-35%, -48%);
-    color: black;
+    color: rgb(69, 69, 69);
 }
 
 @media (max-width: 600px) {
