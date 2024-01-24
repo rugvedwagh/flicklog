@@ -26,6 +26,7 @@
 
 @media (max-width: 600px) {
     .loading {
+        margin-top: -100px;
         margin-bottom: 800px;
         top: 40%;
         left: 44%;
