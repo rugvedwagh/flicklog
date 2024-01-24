@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-    baseURL: 'http://localhost:3000'
-    // baseURL: 'https://memoriesbackend-jc46.onrender.com'
+    baseURL: 'https://memoriesbackend-jc46.onrender.com'
 })
 
 // Sending the Token back to our backend for it to verify it
