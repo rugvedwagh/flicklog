@@ -60,7 +60,7 @@ const Home = () => {
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                             <TextField
-                                style={{ margin: '10px 0' }}
+                                style={{ margin: '10px 0 10px 0' }}
                                 name='search'
                                 variant='outlined'
                                 label='Search Tags'
@@ -74,7 +74,7 @@ const Home = () => {
                             </Button>
                         </AppBar>
                         {(!searchQuery && !tags.length) && (
-                            <Paper elevation={6}>
+                            <Paper elevation={6} >
                                 <Paginate page={page} />
                             </Paper>
                         )}

@@ -44,7 +44,8 @@ const CommentsSection = ({ post }) => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                     <Button
-                        style={{ marginTop: '10px', border: '1px solid grey', color: 'black' }}
+                        style={{ marginTop: '10px', color:'white' }}
+                        variant='contained'
                         fullWidth
                         disabled={!comment}
                         onClick={handleClick}

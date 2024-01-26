@@ -57,7 +57,7 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth className='submit' style={{ margin: "16px 0", border: '1px solid grey', color: 'grey' }}>
+                    <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0" }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <Grid style={{ margin: '16px 0' }} container justify="flex-end">
