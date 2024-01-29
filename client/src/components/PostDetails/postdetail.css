@@ -102,3 +102,22 @@
         transform: translate(-30%, -44%);
     }
 }
+
+.sect{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    margin : 10px 0px;
+    padding : 10px;
+}
+
+.recimg:hover{
+    transform: scale(0.95);
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+
+.recpost{
+    margin: 20px;
+    cursor: pointer;
+}
