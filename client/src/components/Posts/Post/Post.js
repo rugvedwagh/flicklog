@@ -21,6 +21,10 @@ const Post = ({ post, setCurrentId }) => {
     const userId = user?.result.googleId || user?.result?._id;
     const hasLikedPost = post.likes.find((like) => like === userId);
 
+    const openPost = () => {
+        navigate(`/posts/${post._id}`)
+    }
+
     const handleLike = async () => {
         dispatch(likePost(post._id));
 
@@ -40,16 +44,11 @@ const Post = ({ post, setCurrentId }) => {
                     <><ThumbUpAltOutlinedIcon fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
                 );
         }
-
         return <><ThumbUpAltOutlinedIcon fontSize="small" />&nbsp;Like</>;
     };
 
-    const openPost = () => {
-        navigate(`/posts/${post._id}`)
-    }
-
     return (
-        <Card className='card' raised elevation={6} style={{ borderRadius: '10px' }}>
+        <Card className='card' raised elevation={6} style={{ borderRadius: '10px', backgroundColor:'#f3eff1' }}>
             <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
             <div className='overlay'>
                 <Typography variant="h6">

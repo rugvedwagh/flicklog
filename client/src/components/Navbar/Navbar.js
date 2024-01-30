@@ -45,9 +45,8 @@ const Navbar = () => {
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Link to="/posts" className='headingcontainer'>
-                        <div className="heading" align="center" style={{textAlign:'center'}}>reminisce</div>
+                        <div className="heading" align="center" style={{ textAlign: 'center' }}>reminisce</div>
                     </Link>
-                    {/* <Typography component={Link} fontSize={35} to="/posts" className="heading" variant="h2" align="center">reminisce</Typography> */}
                 </div>
                 <Toolbar className='toolbar'>
                     {user?.result ? (
@@ -60,12 +59,12 @@ const Navbar = () => {
                             <Typography className='userName' variant="h6" style={{ fontSize: '18px' }}>
                                 {user?.result.name}
                             </Typography>
-                            <Button className='logout' variant='contained' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent'}} onClick={Logout}>
+                            <Button className='logout' variant='contained' style={{ margin: "0 10px", color: "#da719b", backgroundColor: 'white' }} onClick={Logout}>
                                 Logout
                             </Button>
                         </div>
                     ) : (
-                        <Button className='logout' component={Link} to="/auth" variant='contained' style={{ margin: "0 10px", color: "black", backgroundColor: 'transparent' }}>
+                        <Button className='logout' component={Link} to="/auth" variant='contained' style={{ margin: "0 10px", color: "#da719b", backgroundColor: 'white' }}>
                             Sign In
                         </Button>
                     )}

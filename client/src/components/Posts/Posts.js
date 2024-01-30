@@ -10,7 +10,7 @@ const Posts = ({ setCurrentId }) => {
 
     if (!posts?.length && !isLoading) return (
         <div className='noposts'>
-            No Posts available!
+            No posts available!
         </div>
     )
     

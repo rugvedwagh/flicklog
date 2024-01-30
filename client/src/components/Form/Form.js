@@ -96,7 +96,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     />
                 </div>
 
-                <Button className='buttonSubmit' variant='contained' color='primary' size='large' type='submit' fullWidth style={{ marginBottom: '10px' }} >
+                <Button className='buttonSubmit' variant='contained' color='primary' size='large' type='submit' fullWidth style={{ marginBottom: '10px', backgroundColor:'#da719b' }} >
                     Post
                 </Button>
                 <Button color='secondary' variant='contained' size='small' onClick={clear} fullWidth>

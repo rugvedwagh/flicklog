@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import { userData } from '../../actions/auth';
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import './userstyle.css';
 
 const Userinfo = () => {

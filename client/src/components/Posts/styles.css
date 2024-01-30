@@ -27,7 +27,7 @@
 @media (max-width: 600px) {
     .loading {
         margin-top: -40px;
-        margin-bottom: 800px;
+        margin-bottom: 400px;
         top: 40%;
         left: 44%;
         transform: translate(-30%, -44%);

@@ -92,3 +92,11 @@ export const commentPost = (value, id) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const myposts = () => async (dispatch) => {
+    try {
+
+    } catch (error) {
+
+    }
+}

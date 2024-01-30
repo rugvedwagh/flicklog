@@ -1,4 +1,4 @@
-import { Typography, CircularProgress, Divider } from '@mui/material'
+import { Typography, CircularProgress, Divider, Card, CardMedia } from '@mui/material'
 import { getPost, getPostsBySearch } from '../../actions/posts'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,23 +53,22 @@ const PostDetails = () => {
                 </div>
             </div>
             {!!recommendedPosts.length && (
-                <div className='sect'>
-                    <Typography gutterBottom variant="h5">You might also like:</Typography>
+    <div className='sect'>
+        <Typography gutterBottom variant="h5">You might also like:</Typography>
+        <Divider />
+        <div className='recommendedPosts'>
+            {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
+                <Card class='recpost' onClick={() => openPost(_id)} key={_id}>
+                    <Typography gutterBottom variant="h6">{title}</Typography>
                     <Divider />
-                    <div className='recommendedPosts'>
-                        {recommendedPosts.map(({ title, name, message, likes, selectedfile, _id }) => (
-                            <div class='recpost' onClick={() => openPost(_id)} key={_id}>
-                                <Typography gutterBottom variant="h6">{title}</Typography>
-                                <Divider />
-                                <Typography gutterBottom variant="subtitle2">{name}</Typography>
-                                <Typography gutterBottom variant="subtitle2">{message.slice(0,20)}...</Typography>
-                                <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
-                                <img src={selectedfile} class='recimg' width="200px" style={{ borderRadius: '5px' }} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
+                    <img src={selectedfile} class='recimg' width="200px" style={{ borderRadius: '5px' }} />
+                    <Typography gutterBottom variant="subtitle1">{likes.length} likes</Typography>
+                </Card>
+            ))}
+        </div>
+    </div>
+)}
+
         </div>
     );
 }
