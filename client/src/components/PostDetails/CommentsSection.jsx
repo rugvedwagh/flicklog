@@ -21,8 +21,7 @@ const CommentsSection = ({ post }) => {
     return (
         <div className="commentsOuterContainer">
             <div className="commentsInnerContainer">
-                <Typography gutterBottom variant='h6' color='#C7102E'>Comments</Typography>
-                <Divider color='#C7102E'/>
+                <Typography gutterBottom variant='h6' color='white' style={{ backgroundColor: '#c8102e', paddingLeft: '5px', borderRadius: '5px' }}>Comments</Typography>
                 {comments.length && comments?.slice(0).reverse().map((comment, index) => (
                     <Typography key={index} gutterBottom variant='subtitle1'>
                         <strong>{comment.split(': ')[0]} : </strong>
@@ -45,7 +44,7 @@ const CommentsSection = ({ post }) => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                     <Button
-                        style={{ marginTop: '10px', color:'white', backgroundColor:'#c8102e' }}
+                        style={{ marginTop: '10px', color: 'white', backgroundColor: '#c8102e' }}
                         variant='contained'
                         fullWidth
                         disabled={!comment}

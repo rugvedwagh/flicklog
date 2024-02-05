@@ -44,7 +44,7 @@ const SignUp = () => {
                 <Avatar className='avatar'>
                     <LockRoundedIcon color="action" />
                 </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'grey' }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: '#C8102E' }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {isSignup && (

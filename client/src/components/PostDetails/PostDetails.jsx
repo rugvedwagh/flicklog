@@ -1,4 +1,4 @@
-import { Typography, CircularProgress, Divider, Card, CardMedia } from '@mui/material';
+import { Typography, CircularProgress, Divider, Card } from '@mui/material';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ const PostDetails = () => {
         if (post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
         }
-    }, [post]);
+    }, [post, dispatch]);
 
     if (!post) return null;
 
@@ -55,7 +55,7 @@ const PostDetails = () => {
                     <Typography variant='body1' style={{ color: 'textSecondary' }}>
                         {moment(post.createdAt).fromNow()}
                     </Typography>
-                    <Divider color='#c8102e' style={{ marginTop: '15px' }} />
+                    {/* <Divider color='#c8102e' style={{ marginTop: '15px' }} /> */}
                     <CommentsSection post={post} />
                 </div>
                 <div className='second'>
@@ -80,8 +80,6 @@ const PostDetails = () => {
                                 <img
                                     src={selectedfile}
                                     class='recimg'
-                                    width='200px'
-                                    style={{ borderRadius: '5px' }}
                                     onClick={() => openPost(_id)}
                                 />
                                 <Typography gutterBottom variant='subtitle1'>{likes.length} likes</Typography>
