@@ -39,7 +39,7 @@ const Post = ({ post, setCurrentId }) => {
         if (likes.length > 0) {
             return likes.find((like) => like === userId)
                 ? (
-                    <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}</>
+                    <><ThumbUpAltIcon fontSize="small" /><span style={{ textTransform: 'none' }}>&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}</span></>
                 ) : (
                     <><ThumbUpAltOutlinedIcon fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
                 );
@@ -48,7 +48,7 @@ const Post = ({ post, setCurrentId }) => {
     };
 
     return (
-        <Card className='card' raised elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
+        <Card className='card' raised elevation={6} >
             <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
             <div className='overlay'>
                 <Typography variant="h6">
@@ -82,7 +82,7 @@ const Post = ({ post, setCurrentId }) => {
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} color="primary" onClick={handleLike}>
+                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} onClick={handleLike}>
                         <Likes />
                     </Button>
                 </Tooltip>

@@ -19,13 +19,14 @@
 }
 
 .card {
+    position: relative;
     display: flex;
-    background-color: white;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
-    position: relative;
+    background-color: white;
     color: white;
+    border-radius: 5px;
+    height: 100%;
 }
 
 .overlay {

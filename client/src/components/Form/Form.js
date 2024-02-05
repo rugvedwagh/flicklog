@@ -99,7 +99,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <Button className='buttonSubmit' variant='contained' color='primary' size='large' type='submit' fullWidth style={{ marginBottom: '10px', backgroundColor:'#c8102e' }} >
                     Post
                 </Button>
-                <Button color='secondary' variant='contained' size='small' onClick={clear} fullWidth>
+                <Button variant='outlined' size='small' onClick={clear} fullWidth style={{backgroundCOlor:'white', color:'#c8102e'}}>
                     Clear
                 </Button>
             </form>
