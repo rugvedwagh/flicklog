@@ -142,9 +142,8 @@
 
 .commentsOuterContainer {
     margin-top: 10px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border: 1px solid red;
-    /* border-top: none; */
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
