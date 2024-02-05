@@ -41,7 +41,7 @@ const Navbar = () => {
     }, [location])
 
     return (
-        <AppBar className="appBar" position="static" color="inherit">
+        <AppBar className="appBar" position="static" color="">
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Link to="/posts" className='headingcontainer'>
