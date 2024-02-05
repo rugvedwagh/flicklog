@@ -1,7 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
 :root {
-    --navbar-color: white;
+    --pinkvar: #eb24d0;
+    --forestred: #c8102e;
+    --bodyvar: #131a26;
+    --loadingvar: white;
 }
 
 .appBar {
@@ -14,13 +19,12 @@
 }
 
 .navbar {
-    background-color: #da719b;
+    background-color: var(--forestred);
     border-radius: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
-    padding: 5px 0;
 }
 
 .headingcontainer {
@@ -34,23 +38,17 @@
     color: white;
     text-decoration: none;
     padding: 0px;
-    font-family: 'Roboto', sans-serif;
     justify-content: center;
     text-align: center;
 }
 
 .myposts {
     color: #1565c0;
-    font-family: 'Roboto', sans-serif;
     text-decoration: none;
-    /* padding: 0px;
-    justify-content: center;
-    text-align: center; */
 }
 
 .userName {
     padding: 0 0 5px 0;
-    /* color: rgba(0, 0, 0, 0.642); */
     color: white;
 }
 
@@ -75,13 +73,6 @@
     cursor: pointer;
 }
 
-.myposts {
-    text-decoration: none;
-    color: grey;
-    margin-left: 3rem;
-    font-size: 18px;
-}
-
 .brandContainer {
     display: flex;
     flex-direction: row;
@@ -99,10 +90,6 @@
         margin-right: 0px;
         font-size: 24px;
         margin-left: 10px;
-    }
-
-    .toolbar {
-        /* margin-top: 5px; */
     }
 
     .userName {

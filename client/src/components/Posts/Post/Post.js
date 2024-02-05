@@ -48,7 +48,7 @@ const Post = ({ post, setCurrentId }) => {
     };
 
     return (
-        <Card className='card' raised elevation={6} style={{ borderRadius: '10px', backgroundColor:'#f3eff1' }}>
+        <Card className='card' raised elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
             <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
             <div className='overlay'>
                 <Typography variant="h6">
@@ -82,7 +82,7 @@ const Post = ({ post, setCurrentId }) => {
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: 'rgba(0, 0, 0, 0.800)' }} disabled={!user?.result} color="primary" onClick={handleLike}>
+                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} color="primary" onClick={handleLike}>
                         <Likes />
                     </Button>
                 </Tooltip>

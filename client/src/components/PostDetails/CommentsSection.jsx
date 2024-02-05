@@ -1,4 +1,4 @@
-import { Typography, TextField, Button } from '@mui/material';
+import { Typography, TextField, Button, Divider } from '@mui/material';
 import { commentPost } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
@@ -21,7 +21,8 @@ const CommentsSection = ({ post }) => {
     return (
         <div className="commentsOuterContainer">
             <div className="commentsInnerContainer">
-                <Typography gutterBottom variant='h6'>Comments</Typography>
+                <Typography gutterBottom variant='h6' color='#C7102E'>Comments</Typography>
+                <Divider color='#C7102E'/>
                 {comments.length && comments?.slice(0).reverse().map((comment, index) => (
                     <Typography key={index} gutterBottom variant='subtitle1'>
                         <strong>{comment.split(': ')[0]} : </strong>
@@ -44,7 +45,7 @@ const CommentsSection = ({ post }) => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                     <Button
-                        style={{ marginTop: '10px', color:'white' }}
+                        style={{ marginTop: '10px', color:'white', backgroundColor:'#c8102e' }}
                         variant='contained'
                         fullWidth
                         disabled={!comment}
