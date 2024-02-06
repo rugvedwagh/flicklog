@@ -59,6 +59,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Paper className='paper' elevation={6}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
                 <Typography variant="h6" style={{ marginBottom: '7px', color:'#c8102e' }}>{currentId ? 'Edit' : 'Post'}</Typography>
+                
                 <TextField
                     name='title'
                     variant='outlined'
@@ -99,11 +100,10 @@ const Form = ({ currentId, setCurrentId }) => {
                 <Button className='buttonSubmit' variant='contained' color='primary' size='large' type='submit' fullWidth style={{ marginBottom: '10px', backgroundColor:'#c8102e' }} >
                     Post
                 </Button>
-                <Button variant='outlined' size='small' onClick={clear} fullWidth style={{backgroundCOlor:'white', color:'#c8102e'}}>
+                <Button variant='outlined' size='small' onClick={clear} fullWidth style={{backgroundColor:'white', color:'#c8102e'}}>
                     Clear
                 </Button>
             </form>
-
         </Paper>
     )
 }

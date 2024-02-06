@@ -12,9 +12,9 @@
 }
 
 .first {
-    color: #0f0f0f;
     flex: 1;
-    padding-right: 20px;
+    padding-left: 20px;
+    word-spacing: 1px;
 }
 
 .second {
@@ -33,9 +33,10 @@
 }
 
 .posttitle {
-    font-size: 48px;
+    /* font-size: 48px; */
+    font-size: 3rem;
     font-weight: lighter;
-    margin: 5px 0;
+    margin: 0px 0;
     padding: 0;
 }
 
@@ -45,14 +46,14 @@
     }
 
     .main {
-        flex-direction: column-reverse;
+        flex-direction: column;
         padding: 10px;
     }
 
     .first,
     .second {
         flex: 1;
-        padding-right: 0;
+        padding-left: 0;
     }
 
     .imag {
@@ -146,7 +147,6 @@
 
 .commentsOuterContainer {
     margin-top: 10px;
-    /* margin-left: 10px; */
     border: 1px solid red;
     padding: 0.5rem 1rem;
     border-radius: 5px;

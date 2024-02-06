@@ -37,9 +37,9 @@ const Userinfo = () => {
                     {clientData.name.charAt(0)}
                 </div>
                 <ul>
-                    <li><span>UserName</span> : {clientData.name}</li>
-                    <li><span>Email</span> : {clientData.email}</li>
-                    <li><span>ID</span> : {clientData._id}</li>
+                    <li><strong>UserName</strong> : {clientData.name}</li>
+                    <li><strong>Email</strong> : {clientData.email}</li>
+                    <li><strong>ID</strong> : {clientData._id}</li>
                 </ul>
             </div>
         </div>

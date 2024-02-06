@@ -2,8 +2,8 @@ import { Typography, CircularProgress, Divider, Card } from '@mui/material';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import CommentsSection from './CommentsSection';
 import React, { useEffect, useState } from 'react';
+import CommentsSection from './CommentsSection';
 import moment from 'moment';
 import './postdetail.css';
 
@@ -41,6 +41,14 @@ const PostDetails = () => {
     return (
         <div className='cont'>
             <div className='main'>
+                <div className='second'>
+                    <img
+                        className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
+                        src={post.selectedfile}
+                        alt=''
+                        onClick={handleImageClick}
+                    />
+                </div>
                 <div className='first'>
                     <h2 className='posttitle'>{post.title}</h2>
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
@@ -55,16 +63,7 @@ const PostDetails = () => {
                     <Typography variant='body1' style={{ color: 'textSecondary' }}>
                         {moment(post.createdAt).fromNow()}
                     </Typography>
-                    {/* <Divider color='#c8102e' style={{ marginTop: '15px' }} /> */}
                     <CommentsSection post={post} />
-                </div>
-                <div className='second'>
-                    <img
-                        className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
-                        src={post.selectedfile}
-                        alt=''
-                        onClick={handleImageClick}
-                    />
                 </div>
             </div>
             {!!recommendedPosts.length && (
