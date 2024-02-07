@@ -20,6 +20,17 @@
 .second {
     flex: 1;
     flex-shrink: 0;
+} 
+
+.main.altview{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3eff1;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .imag {
@@ -85,7 +96,17 @@
         font-size: 30px;
         font-weight: light;
     }
+    .verticalbutton{
+        display: none;
+    }
+}
 
+.verticalbutton{
+    color: #C8102E;
+    cursor: pointer;
+    text-decoration: underline;
+    border: none;
+    border-radius: 4px;
 }
 
 .loader {
@@ -143,6 +164,7 @@
 
 .commentsInnerContainer {
     padding-right: 10px;
+    width: 100%;
 }
 
 .commentsOuterContainer {

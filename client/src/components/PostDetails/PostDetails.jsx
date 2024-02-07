@@ -13,6 +13,7 @@ const PostDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const [vertical, setVertical] = useState(false);
 
     useEffect(() => {
         dispatch(getPost(id));
@@ -28,6 +29,10 @@ const PostDetails = () => {
 
     const openPost = (_id) => navigate(`/posts/${_id}`);
 
+    const verticalView = () => {
+        setVertical(!vertical);
+    }
+
     const handleImageClick = () => {
         setIsFullScreen(!isFullScreen);
     };
@@ -36,20 +41,25 @@ const PostDetails = () => {
         return <CircularProgress className='loader' color='grey' size='4rem' />;
     }
 
-    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
+    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
 
     return (
         <div className='cont'>
-            <div className='main'>
-                <div className='second'>
+            <div className={`main ${vertical ? 'altview' : ''}`}>
+                <div className={`second ${vertical ? '1' : ''}`}>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
                         src={post.selectedfile}
                         alt=''
                         onClick={handleImageClick}
                     />
+                    <button onClick={verticalView}
+                        class='verticalbutton'
+                    >
+                        toggle view
+                    </button>
                 </div>
-                <div className='first'>
+                <div className={`first ${vertical ? '1' : ''}`}>
                     <h2 className='posttitle'>{post.title}</h2>
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
                         {post.tags.map((tag) => `#${tag} `)}
@@ -66,6 +76,7 @@ const PostDetails = () => {
                     <CommentsSection post={post} />
                 </div>
             </div>
+
             {!!recommendedPosts.length && (
                 <div className='sect'>
                     <Typography gutterBottom variant='h5' style={{ color: '#c8102e' }}>

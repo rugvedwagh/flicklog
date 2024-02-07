@@ -10,7 +10,6 @@ import React from 'react';
 import './App.css';
 
 const App = () => {
-
     return (
         <BrowserRouter>
             <Container maxWidth="xl">

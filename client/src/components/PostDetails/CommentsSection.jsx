@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 const CommentsSection = ({ post }) => {
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState('');
+
     const user = JSON.parse(localStorage.getItem('profile'))
     const dispatch = useDispatch();
 
@@ -17,6 +18,8 @@ const CommentsSection = ({ post }) => {
         setComments(newComments);
         setComment('');
     }
+
+    
 
     return (
         <div className="commentsOuterContainer">
