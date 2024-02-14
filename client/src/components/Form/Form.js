@@ -1,12 +1,9 @@
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { createPost, updatePost } from '../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import React, { useState, useEffect } from 'react';
 import FileBase from 'react-file-base64';
-import ReactQuill from 'react-quill';
 import './styles.css';
-import JoditEditor from 'jodit-react';
 
 
 const Form = ({ currentId, setCurrentId }) => {
