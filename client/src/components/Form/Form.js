@@ -1,11 +1,13 @@
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { createPost, updatePost } from '../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
 import './styles.css';
+import JoditEditor from 'jodit-react';
+
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
@@ -55,6 +57,8 @@ const Form = ({ currentId, setCurrentId }) => {
         );
     }
 
+
+
     return (
         <Paper className='paper' elevation={6}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
@@ -72,27 +76,9 @@ const Form = ({ currentId, setCurrentId }) => {
                     style={{ marginBottom: '7px', fontSize: '18px' }}
                 />
 
-                <ReactQuill
+                <JoditEditor
                     value={postData.message}
-                    className='messageinput'
-                    onChange={(e) => setPostData({ ...postData, message: e })}
-                    modules={{
-                        toolbar: [
-                            [{ header: [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                            ['link', 'image'],
-                            ['clean'],
-                        ],
-                    }}
-                    formats={[
-                        'header',
-                        'bold', 'italic', 'underline', 'strike', 'blockquote',
-                        'list', 'bullet', 'indent',
-                        'link', 'image',
-                    ]}
-                    placeholder="Message"
-                    theme="snow"
+                    onChange={(content) => setPostData({ ...postData, message: content })}
                 />
 
                 <TextField
