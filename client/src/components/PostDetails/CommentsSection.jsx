@@ -19,7 +19,7 @@ const CommentsSection = ({ post }) => {
         setComment('');
     }
 
-    
+
 
     return (
         <div className="commentsOuterContainer">

@@ -76,9 +76,14 @@ const Form = ({ currentId, setCurrentId }) => {
                     style={{ marginBottom: '7px', fontSize: '18px' }}
                 />
 
-                <JoditEditor
+                <TextField
+                    name='Message'
+                    variant='outlined'
+                    label="Message"
+                    fullWidth
                     value={postData.message}
-                    onChange={(content) => setPostData({ ...postData, message: content })}
+                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
+                    style={{ marginBottom: '7px'}}
                 />
 
                 <TextField
