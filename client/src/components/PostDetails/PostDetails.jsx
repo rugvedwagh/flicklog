@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import CommentsSection from './CommentsSection';
+import ReactHtmlParser from 'react-html-parser';
 import moment from 'moment';
 import './postdetail.css';
 
@@ -65,7 +66,8 @@ const PostDetails = () => {
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
                     <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden' }}>
-                        {post.message}
+                        {/* {post.message} */}
+                        {ReactHtmlParser(post.message)}
                     </Typography>
                     <Typography variant='h6' color='textSecondary'>
                         Posted by: {post.name}

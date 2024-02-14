@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import moment from 'moment';
 import './post.css';
 
@@ -77,7 +78,8 @@ const Post = ({ post, setCurrentId }) => {
             </Typography>
             <CardContent>
                 <Typography color='textSecondary' variant="body2" component="p">
-                    {post.message.slice(0, 80)}...
+                    {/* {post.message.slice(0, 80)}... */}
+                    {ReactHtmlParser(post.message.slice(0, 80))}
                 </Typography>
             </CardContent>
             <CardActions className='cardActions'>

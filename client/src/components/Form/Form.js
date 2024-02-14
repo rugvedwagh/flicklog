@@ -2,48 +2,48 @@ import { TextField, Button, Typography, Paper } from '@mui/material';
 import { createPost, updatePost } from '../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
+import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
+import ReactQuill from 'react-quill';
 import './styles.css';
 
 const Form = ({ currentId, setCurrentId }) => {
-
     const [postData, setPostData] = useState({
         title: '',
         message: '',
         tags: '',
         selectedfile: '',
-    })
-
-    // In line below the state has two stores 'posts' and 'authReducer' so in the 'posts'
-    // we have the posts array that's why we apply the find function
+    });
 
     const dispatch = useDispatch();
     const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
-    const user = JSON.parse(localStorage.getItem('profile'))
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
-        if (post) setPostData(post);
-    }, [post])   // Run when the post value changes from nothing to the actual posts
+        if (post) {
+            console.log("Post data:", post);
+            setPostData(post);
+        }
+    }, [post]);
+
 
     const clear = () => {
         setCurrentId(0);
-        setPostData({ title: '', message: '', tags: '', selectedfile: '' })
-    }
+        setPostData({ title: '', message: '', tags: '', selectedfile: '' });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (currentId === 0) {
-            dispatch(createPost({ ...postData, name: user?.result?.name }))
-            clear()
+            dispatch(createPost({ ...postData, name: user?.result?.name }));
+            clear();
+        } else {
+            console.log(user?.result?.name);
+            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+            clear();
         }
-        else {
-            console.log(user?.result?.name)
-            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
-            clear()
-        }
-    }
-
+    };
 
     if (!user?.result?.name) {
         return (
@@ -52,14 +52,16 @@ const Form = ({ currentId, setCurrentId }) => {
                     Sign in to create and interact.
                 </Typography>
             </Paper>
-        )
+        );
     }
 
     return (
         <Paper className='paper' elevation={6}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
-                <Typography variant="h6" style={{ marginBottom: '7px', color:'#c8102e' }}>{currentId ? 'Edit' : 'Post'}</Typography>
-                
+                <Typography variant="h6" style={{ marginBottom: '7px', color: '#c8102e' }}>
+                    {currentId ? 'Edit' : 'Post'}
+                </Typography>
+
                 <TextField
                     name='title'
                     variant='outlined'
@@ -67,17 +69,30 @@ const Form = ({ currentId, setCurrentId }) => {
                     fullWidth
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-                    style={{ marginBottom: '7px' }}
+                    style={{ marginBottom: '7px', fontSize: '18px' }}
                 />
 
-                <TextField
-                    name='message'
-                    variant='outlined'
-                    label="Message"
-                    fullWidth
+                <ReactQuill
                     value={postData.message}
-                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
-                    style={{ marginBottom: '7px' }}
+                    className='messageinput'
+                    onChange={(e) => setPostData({ ...postData, message: e })}
+                    modules={{
+                        toolbar: [
+                            [{ header: [1, 2, false] }],
+                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                            ['link', 'image'],
+                            ['clean'],
+                        ],
+                    }}
+                    formats={[
+                        'header',
+                        'bold', 'italic', 'underline', 'strike', 'blockquote',
+                        'list', 'bullet', 'indent',
+                        'link', 'image',
+                    ]}
+                    placeholder="Message"
+                    theme="snow"
                 />
 
                 <TextField
@@ -97,15 +112,29 @@ const Form = ({ currentId, setCurrentId }) => {
                     />
                 </div>
 
-                <Button className='buttonSubmit' variant='contained' color='primary' size='large' type='submit' fullWidth style={{ marginBottom: '10px', backgroundColor:'#c8102e' }} >
+                <Button
+                    className='buttonSubmit'
+                    variant='contained'
+                    color='primary'
+                    size='large'
+                    type='submit'
+                    fullWidth
+                    style={{ marginBottom: '10px', backgroundColor: '#c8102e' }}
+                >
                     Post
                 </Button>
-                <Button variant='outlined' size='small' onClick={clear} fullWidth style={{backgroundColor:'white', color:'#c8102e'}}>
+                <Button
+                    variant='outlined'
+                    size='small'
+                    onClick={clear}
+                    fullWidth
+                    style={{ backgroundColor: 'white', color: '#c8102e' }}
+                >
                     Clear
                 </Button>
             </form>
         </Paper>
-    )
-}
+    );
+};
 
-export default Form
+export default Form;

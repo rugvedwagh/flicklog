@@ -1,0 +1,248 @@
+[33mcommit b18f968374173bec2a84a59484515c401eea6077[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Feb 7 18:56:26 2024 +0530
+
+    added alternative view to the postdetails page
+
+[33mcommit a5936626d767d883d29886d56c117afc32c85a41[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Tue Feb 6 11:29:14 2024 +0530
+
+    changed bg
+
+[33mcommit d842000b4b7c7c40820e3043537b8aa4fd4f80f6[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Feb 5 13:51:57 2024 +0530
+
+    same as previous
+
+[33mcommit 10e1c40ac26e1d022093ab7a4a495498c4b46560[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Feb 5 12:55:48 2024 +0530
+
+    same as previous
+
+[33mcommit 659090f1f89d4dcf938ec5f3df813484518e94fe[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Feb 5 12:54:06 2024 +0530
+
+    same as previous
+
+[33mcommit 2f1849492aa779724329db0b0b17212d81941943[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Feb 5 12:24:27 2024 +0530
+
+    Added click on image to enlarge
+
+[33mcommit 75148a098b82ced224a51b25e0f185cbe66be13f[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Feb 5 12:14:55 2024 +0530
+
+    ui changed
+
+[33mcommit 1b9c54ad340ca45a98889deb915ed5c128d832ba[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Tue Jan 30 22:53:06 2024 +0530
+
+    ui
+
+[33mcommit 26bb5e557e4aec1259896761d3e850b4dbeecb1b[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Jan 29 15:54:55 2024 +0530
+
+    Added recommended posts
+
+[33mcommit 368c96140262b8c61d9ae3a2df7dd8cdd0b68cc6[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 26 11:59:25 2024 +0530
+
+    made changes
+
+[33mcommit 24b7d526cb8a81b04d007b2989b9c3081a44858a[m
+Merge: 8e3e59c e67839d
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 24 19:08:56 2024 +0530
+
+    Merge branch 'master' of https://github.com/Rugved76/memories_app
+
+[33mcommit 8e3e59c2e43b3d93b3d424ec71e1cb3c0b72871f[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 24 19:08:38 2024 +0530
+
+    loader
+
+[33mcommit e67839dd8d4dfdbe90566cd4b4863daf55c747fc[m
+Author: Rugved Wagh <89897353+Rugved76@users.noreply.github.com>
+Date:   Wed Jan 24 18:04:28 2024 +0530
+
+    Update styles.css
+
+[33mcommit 5130381c3f6aa922999ea0f7d828ee28de124b8a[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 24 16:03:23 2024 +0530
+
+    changed bg and responsiveness
+
+[33mcommit 2a351e8a85f7c3d02f2a12ba936b53c1000bb638[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 24 16:02:47 2024 +0530
+
+    changed bg and responsiveness
+
+[33mcommit c295cd8fda238c99bf032d6f3410a134b9a57b8e[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 24 11:34:56 2024 +0530
+
+    Changed the like button
+
+[33mcommit dd757694d1dcc7dc198f97c731ba3e09e1179781[m
+Merge: deb0866 4fbc25a
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Tue Jan 23 13:35:05 2024 +0530
+
+    temporary maybe
+
+[33mcommit deb086644b614276d90251694b541349d9a19e88[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Tue Jan 23 13:34:02 2024 +0530
+
+    temporary maybe
+
+[33mcommit 4fbc25af5f327a65d1b7ba94ac4b0413dd0ae816[m
+Author: Rugved Wagh <89897353+Rugved76@users.noreply.github.com>
+Date:   Tue Jan 23 13:29:17 2024 +0530
+
+    Update index.js
+
+[33mcommit 323d1ed1b5722f8f65a21de9d536d34c63a00fa7[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Tue Jan 23 12:46:20 2024 +0530
+
+    made comments responsive
+
+[33mcommit 1c17749f728f7b797ecfd997286180892299f7bd[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Jan 22 22:18:59 2024 +0530
+
+    Added comments feature
+
+[33mcommit 5e67960ce0ffbc12bbc017536d9719bdb67656a3[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Mon Jan 22 12:25:29 2024 +0530
+
+    added userinfo page
+
+[33mcommit dcd3fbb1eab6eda491ecd67ed39a4b0170852a81[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Sun Jan 21 12:02:45 2024 +0530
+
+    fixed reloading and ui
+
+[33mcommit 44a794034fe2581f632e84e90f5b83f08228e1c1[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Sat Jan 20 13:07:26 2024 +0530
+
+    solved errors
+
+[33mcommit 91b1d0b05bd0570bb363b4bc3b891d75ad79bd27[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 17:53:30 2024 +0530
+
+    made navbar responsive
+
+[33mcommit 388eee57ad982feb0147a4c498e95e7bc9e0c984[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 17:00:50 2024 +0530
+
+    deleted image
+
+[33mcommit 62cca028b04a60e50ab0443972bdc3234d7eed19[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 16:58:34 2024 +0530
+
+    changed page details css and added not found page
+
+[33mcommit 367bf1af4ebf4c5021196cc79bdcb8463ac02ab5[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 15:12:36 2024 +0530
+
+    removed unnecessary google and other things
+
+[33mcommit ed0b51c8127df97ab759ee021d0e10396c169b24[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 14:49:50 2024 +0530
+
+    removed the google component from the Auth.js
+
+[33mcommit c9585bf6a9fd41eefb8ee02cdc436cb16ebade83[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 14:46:02 2024 +0530
+
+    removed all the google dependencies
+
+[33mcommit bf2422142f3a1d81fb393ab5c9286b2622fa658c[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 13:28:20 2024 +0530
+
+    same as before
+
+[33mcommit 517528b42472c60f1d992df5b374cc8049e540e0[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 13:25:29 2024 +0530
+
+    same as before
+
+[33mcommit 3c19dcb492689e236ab0e8fff2ee2be0736a4bfd[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 13:18:38 2024 +0530
+
+    added page details and other ui changes
+
+[33mcommit ed2ec968ab89e4390c444f60879899ae166871e2[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Fri Jan 19 09:13:35 2024 +0530
+
+    added pagination and search
+
+[33mcommit 62934598cfc677f5a501449abb1df87ae7669512[m
+Merge: 82d948e 812e6e0
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 21:40:51 2024 +0530
+
+    changes
+
+[33mcommit 82d948ed3453f132b352cb982e4f959366b041d4[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 21:35:52 2024 +0530
+
+    made some changes
+
+[33mcommit 73dad1916686e6df287efe041ae3c8118e866c3f[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 21:34:44 2024 +0530
+
+    made some changes
+
+[33mcommit 812e6e0e39669535a568757b89e9e5c5a89d4236[m
+Author: Rugved Wagh <89897353+Rugved76@users.noreply.github.com>
+Date:   Wed Jan 17 21:26:38 2024 +0530
+
+    Delete .gitignore
+
+[33mcommit d4a2665e2cf033f20ddc9d8d76e192971c5ef83a[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 21:25:44 2024 +0530
+
+    made some changes
+
+[33mcommit a7ab28347b62997db84a33f08bcfe2829a815026[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 21:01:02 2024 +0530
+
+    Made some changes and deleted unneccesary files
+
+[33mcommit 276d0955d22b6ae75b3b549b6923e506b5332a69[m
+Author: rugvedwagh <rugvedwagh02@gmail.com>
+Date:   Wed Jan 17 18:48:55 2024 +0530
+
+    First commit
