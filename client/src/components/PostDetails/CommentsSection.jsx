@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 
 const CommentsSection = ({ post }) => {
+
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState('');
 
@@ -12,14 +13,10 @@ const CommentsSection = ({ post }) => {
 
     const handleClick = async () => {
         const finalComment = `${user.result.name}: ${comment}`
-
         const newComments = await dispatch(commentPost(finalComment, post._id));
-
         setComments(newComments);
         setComment('');
     }
-
-
 
     return (
         <div className="commentsOuterContainer">

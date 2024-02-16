@@ -73,12 +73,13 @@ const Post = ({ post, setCurrentId }) => {
                     {post.tags.map((tag) => `#${tag} `)}
                 </Typography>
             </div>
-            <Typography className='title' variant="h5" gutterBottom>{post.title}
+            <Typography className='title' variant="h5" gutterBottom>
+                {post.title}
             </Typography>
             <CardContent>
-                <Typography color='textSecondary' variant="body2" component="p">
-                    {post.message.slice(0, 80)}...
-                </Typography>
+                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 80) }} />
+                {/* {post.message.slice(0, 80)}... */}
+                {/* </Typography> */}
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>

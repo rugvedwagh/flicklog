@@ -8,12 +8,13 @@ import moment from 'moment';
 import './postdetail.css';
 
 const PostDetails = () => {
+
     const { post, posts, isLoading } = useSelector((state) => state.posts);
-    const dispatch = useDispatch();
     const { id } = useParams();
-    const navigate = useNavigate();
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [vertical, setVertical] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getPost(id));
@@ -28,20 +29,13 @@ const PostDetails = () => {
     if (!post) return null;
 
     const openPost = (_id) => navigate(`/posts/${_id}`);
-
-    const verticalView = () => {
-        setVertical(!vertical);
-    }
-
-    const handleImageClick = () => {
-        setIsFullScreen(!isFullScreen);
-    };
+    const verticalView = () => setVertical(!vertical);
+    const handleImageClick = () => setIsFullScreen(!isFullScreen);
+    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
 
     if (isLoading) {
         return <CircularProgress className='loader' color='grey' size='4rem' />;
     }
-
-    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
 
     return (
         <div className='cont'>
@@ -64,9 +58,7 @@ const PostDetails = () => {
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden' }}>
-                        {post.message}
-                    </Typography>
+                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden' }} dangerouslySetInnerHTML={{ __html: post.message }} />
                     <Typography variant='h6' color='textSecondary'>
                         Posted by: {post.name}
                     </Typography>

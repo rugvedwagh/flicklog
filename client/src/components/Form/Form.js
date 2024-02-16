@@ -3,10 +3,13 @@ import { createPost, updatePost } from '../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import FileBase from 'react-file-base64';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './styles.css';
 
 
 const Form = ({ currentId, setCurrentId }) => {
+
     const [postData, setPostData] = useState({
         title: '',
         message: '',
@@ -20,12 +23,16 @@ const Form = ({ currentId, setCurrentId }) => {
 
     useEffect(() => {
         if (post) {
-            console.log("Post data:", post);
-            setPostData(post);
+            setPostData({
+                title: post.title || '',
+                // message: post.message || '',            // Not setting message becaues this one gives error and ruins the rest also
+                tags: post.tags || '',
+                selectedfile: post.selectedfile || '',
+            });
+            console.log("Post data:", postData);
         }
     }, [post]);
-
-
+    
     const clear = () => {
         setCurrentId(0);
         setPostData({ title: '', message: '', tags: '', selectedfile: '' });
@@ -73,16 +80,39 @@ const Form = ({ currentId, setCurrentId }) => {
                     style={{ marginBottom: '7px', fontSize: '18px' }}
                 />
 
-                <TextField
+                {/* <TextField
                     name='Message'
                     variant='outlined'
                     label="Message"
                     fullWidth
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
-                    style={{ marginBottom: '7px'}}
-                />
+                    style={{ marginBottom: '7px' }}
+                /> */}
+                <ReactQuill
+                    name='message'
+                    value={postData.message}
+                    onChange={(e) => setPostData({ ...postData, message: e })}
+                    modules={{
+                        toolbar: [
+                            [{ header: [1, 2, false] }],
+                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                            ['link', 'image'],
+                            ['clean'],
+                        ],
+                    }}
+                    formats={[
+                        'header',
+                        'bold', 'italic', 'underline', 'strike', 'blockquote',
+                        'list', 'bullet', 'indent',
+                        'link', 'image',
+                    ]}
 
+                    placeholder='Description : Note
+                    Please copy paste the message elsewhere before editing!'
+                    style={{ marginBottom: '75px', minHeight: '200px' }}
+                />
                 <TextField
                     name='tags'
                     variant='outlined'
