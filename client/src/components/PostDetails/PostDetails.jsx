@@ -1,4 +1,4 @@
-import { Typography, CircularProgress, Divider, Card } from '@mui/material';
+import { Typography, CircularProgress, Divider, Card, Button } from '@mui/material';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,6 +39,11 @@ const PostDetails = () => {
 
     return (
         <div className='cont'>
+            <Button onClick={verticalView}
+                class='verticalbutton'
+            >
+                toggle <br /> view
+            </Button>
             <div className={`main ${vertical ? 'altview' : ''}`}>
                 <div className={`second ${vertical ? '1' : ''}`}>
                     <img
@@ -47,11 +52,6 @@ const PostDetails = () => {
                         alt=''
                         onClick={handleImageClick}
                     />
-                    <button onClick={verticalView}
-                        class='verticalbutton'
-                    >
-                        toggle view
-                    </button>
                 </div>
                 <div className={`first ${vertical ? '1' : ''}`}>
                     <h2 className='posttitle'>{post.title}</h2>

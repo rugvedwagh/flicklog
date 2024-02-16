@@ -102,10 +102,13 @@
 }
 
 .verticalbutton{
-    color: #C8102E;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    transform: translate(10px,600px);
+    z-index: 1000;
+    color: black;
     cursor: pointer;
-    text-decoration: underline;
-    border: none;
+    border: 1px solid black;
     border-radius: 4px;
 }
 
