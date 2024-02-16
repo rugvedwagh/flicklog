@@ -25,7 +25,7 @@ const Form = ({ currentId, setCurrentId }) => {
         if (post) {
             setPostData({
                 title: post.title || '',
-                // message: post.message || '',            // Not setting message becaues this one gives error and ruins the rest also
+                // message: post.message || '',            // Not setting message for now because it gives error and ruins the rest also
                 tags: post.tags || '',
                 selectedfile: post.selectedfile || '',
             });
@@ -61,8 +61,6 @@ const Form = ({ currentId, setCurrentId }) => {
         );
     }
 
-
-
     return (
         <Paper className='paper' elevation={6}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
@@ -80,15 +78,6 @@ const Form = ({ currentId, setCurrentId }) => {
                     style={{ marginBottom: '7px', fontSize: '18px' }}
                 />
 
-                {/* <TextField
-                    name='Message'
-                    variant='outlined'
-                    label="Message"
-                    fullWidth
-                    value={postData.message}
-                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
-                    style={{ marginBottom: '7px' }}
-                /> */}
                 <ReactQuill
                     name='message'
                     value={postData.message}
@@ -113,6 +102,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     Please copy paste the message elsewhere before editing!'
                     style={{ marginBottom: '75px', minHeight: '200px' }}
                 />
+
                 <TextField
                     name='tags'
                     variant='outlined'
@@ -141,6 +131,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 >
                     Post
                 </Button>
+
                 <Button
                     variant='outlined'
                     size='small'

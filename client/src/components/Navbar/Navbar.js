@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import './styles.css';
 
-
 const Navbar = () => {
 
     const dispatch = useDispatch();

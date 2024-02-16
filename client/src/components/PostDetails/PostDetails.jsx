@@ -58,7 +58,7 @@ const PostDetails = () => {
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden', fontSize:'17px' }} dangerouslySetInnerHTML={{ __html: post.message }} />
+                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden', fontSize: '17px' }} dangerouslySetInnerHTML={{ __html: post.message }} />
                     <Typography variant='h6' color='textSecondary'>
                         Posted by: {post.name}
                     </Typography>

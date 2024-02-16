@@ -77,7 +77,7 @@ const Post = ({ post, setCurrentId }) => {
                 {post.title}
             </Typography>
             <CardContent>
-                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 100) }} />
+                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 45) + ' ...' }} />
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
