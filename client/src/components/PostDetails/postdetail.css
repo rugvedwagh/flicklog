@@ -20,9 +20,9 @@
 .second {
     flex: 1;
     flex-shrink: 0;
-} 
+}
 
-.main.altview{
+.main.altview {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,6 +31,10 @@
     border-radius: 5px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.first.alt {
+    margin-top: 30px;
 }
 
 .imag {
@@ -44,7 +48,6 @@
 }
 
 .posttitle {
-    /* font-size: 48px; */
     font-size: 3rem;
     font-weight: lighter;
     margin: 0px 0;
@@ -52,6 +55,11 @@
 }
 
 @media only screen and (max-width: 600px) {
+
+    .first {
+        margin-top: 10px;
+    }
+
     .posttitle {
         font-weight: light;
     }
@@ -96,15 +104,16 @@
         font-size: 30px;
         font-weight: light;
     }
-    .verticalbutton{
+
+    .verticalbutton {
         display: none;
     }
 }
 
-.verticalbutton{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.verticalbutton {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: fixed;
-    transform: translate(10px,600px);
+    transform: translate(10px, 600px);
     z-index: 1000;
     color: black;
     cursor: pointer;

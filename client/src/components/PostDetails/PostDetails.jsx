@@ -45,7 +45,7 @@ const PostDetails = () => {
                 toggle <br /> view
             </Button>
             <div className={`main ${vertical ? 'altview' : ''}`}>
-                <div className={`second ${vertical ? '1' : ''}`}>
+                <div className={`second ${vertical ? 'alt' : ''}`}>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
                         src={post.selectedfile}
@@ -53,12 +53,12 @@ const PostDetails = () => {
                         onClick={handleImageClick}
                     />
                 </div>
-                <div className={`first ${vertical ? '1' : ''}`}>
+                <div className={`first ${vertical ? 'alt' : ''}`}>
                     <h2 className='posttitle'>{post.title}</h2>
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden' }} dangerouslySetInnerHTML={{ __html: post.message }} />
+                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden', fontSize:'17px' }} dangerouslySetInnerHTML={{ __html: post.message }} />
                     <Typography variant='h6' color='textSecondary'>
                         Posted by: {post.name}
                     </Typography>
