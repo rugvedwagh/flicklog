@@ -1,9 +1,10 @@
 import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DensityMediumOutlinedIcon from '@mui/icons-material/DensityMediumOutlined';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes';
-import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
@@ -64,27 +65,28 @@ const Navbar = () => {
                     {user?.result ? (
                         <div className='profile'>
                             <span className='avatarcontainer'>
-                                <Avatar className='purple' sx={{ bgcolor: 'white', color: '#C8102E' }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                <Avatar onClick={handleMenuClick} className='purple' sx={{ bgcolor: 'white', color: '#C8102E' }} alt={user?.result.name} src={user?.result.imageUrl}>
                                     {user?.result.name.charAt(0)}
                                 </Avatar>
                             </span>
-                            <Typography className='userName' variant="h6" style={{ fontSize: '18px' }}>
-                                {user?.result.name}
-                            </Typography>
-                            <div className='logout'>
-                                <DensityMediumOutlinedIcon
-                                    onClick={handleMenuClick}
-                                />
-                            </div>
                             <Menu
+                                sx={{right : 50}}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
+                                className='menu'
                             >
-                                <MenuItem >Your posts</MenuItem>
-                                <MenuItem onClick={openUser}>Your account &nbsp; <AccountCircleRoundedIcon /></MenuItem>
-                                {/* <MenuItem onClick={setOpenDialog(true)}>Logout &nbsp; <LogoutIcon /></MenuItem> */}
-                                <MenuItem onClick={() => setOpenDialog(true)}>Logout &nbsp; <LogoutIcon /></MenuItem>
+                                <MenuItem>
+                                    <Avatar className='purple' color="primary" sx={{ bgcolor: '#212121', color: 'white', width: 30, height: 30 }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                        {user?.result.name.charAt(0)}
+                                    </Avatar>
+                                    <span>
+                                        {user?.result.name}
+                                    </span>
+                                </MenuItem>
+                                <MenuItem > <EditNoteRoundedIcon />&nbsp; Your posts</MenuItem>
+                                <MenuItem onClick={openUser}> <AccountCircleRoundedIcon />&nbsp; Your account</MenuItem>
+                                <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Logout</MenuItem>
                             </Menu>
                         </div>
                     ) : (

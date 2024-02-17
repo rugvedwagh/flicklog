@@ -1,3 +1,14 @@
+@keyframes flower {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .main-cont {
     display: flex;
     flex-direction: column;
@@ -8,6 +19,7 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 15px;
     border-radius: 10px;
+    animation : flower 0.6s ease;
 }
 
 .lower-div {
@@ -38,7 +50,7 @@
 }
 
 .lower-div ul li {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .lower-div ul li span {

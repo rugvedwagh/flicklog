@@ -1,8 +1,20 @@
+@keyframes flower {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .appBarSearch {
     display: flex;
     padding: 16px;
     border-radius: 5px;
     align-items: center;
+    animation : flower 0.6s ease;
 }
 
 .gridContainer {
@@ -14,4 +26,3 @@
         flex-direction: column-reverse;
     }
 }
-

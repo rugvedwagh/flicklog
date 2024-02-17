@@ -29,3 +29,8 @@ mongoose.connect(process.env.DB_URL).then(() => {
 }).catch((err) => {
     console.log(err.message);
 });
+
+/*
+    Loc : 2348
+    
+*/
