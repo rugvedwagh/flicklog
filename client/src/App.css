@@ -27,10 +27,9 @@ body {
     transition: 0.3s ease-in;
     background-color: white;
     color: #c8102e;
-    border: 1px solid #c8102e;
     cursor: pointer;
     border-radius: 50%;
-    padding : 10px;
+    padding: 10px;
 }
 
 .scrollup.show {
