@@ -19,19 +19,16 @@ const Navbar = () => {
     const [openDialog, setOpenDialog] = useState(false);
 
     const Logout = () => {
-        setOpenDialog(true);
-    };
-    const openUser = () => {
-        navigate(`/user/info/${user.result._id}`);
-        handleMenuClose();
-    };
-
-    const handleLogoutConfirmed = () => {
         dispatch({ type: actionType.LOGOUT });
         navigate('/');
         setUser(null);
         handleMenuClose();
         setOpenDialog(false);
+    }
+
+    const openUser = () => {
+        navigate(`/user/info/${user.result._id}`);
+        handleMenuClose();
     };
 
     const handleMenuClick = (event) => {
@@ -86,7 +83,8 @@ const Navbar = () => {
                             >
                                 <MenuItem >Your posts</MenuItem>
                                 <MenuItem onClick={openUser}>Your account &nbsp; <AccountCircleRoundedIcon /></MenuItem>
-                                <MenuItem onClick={Logout}>Logout &nbsp; <LogoutIcon /></MenuItem>
+                                {/* <MenuItem onClick={setOpenDialog(true)}>Logout &nbsp; <LogoutIcon /></MenuItem> */}
+                                <MenuItem onClick={() => setOpenDialog(true)}>Logout &nbsp; <LogoutIcon /></MenuItem>
                             </Menu>
                         </div>
                     ) : (
@@ -114,10 +112,10 @@ const Navbar = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={() => setOpenDialog(false)} style={{ color: '#C8102E', backgroundColor: 'transparent' }}>
+                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: '#C8102E', backgroundColor: 'transparent' }}>
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={handleLogoutConfirmed} style={{ color: '#C8102E', backgroundColor: 'transparent' }} autoFocus>
+                        <Button variant="contained" onClick={Logout} style={{ color: '#C8102E', backgroundColor: 'transparent' }} autoFocus>
                             Logout
                         </Button>
                     </DialogActions>
