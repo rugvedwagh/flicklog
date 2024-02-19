@@ -98,8 +98,8 @@ const Form = ({ currentId, setCurrentId }) => {
                         'link', 'image',
                     ]}
 
-                    placeholder='Description : Note
-                    Please copy paste the message elsewhere before editing!'
+                    placeholder='Description : 
+                        Note : Please copy paste the message elsewhere before editing!'
                     style={{ marginBottom: '75px', minHeight: '200px' }}
                 />
 

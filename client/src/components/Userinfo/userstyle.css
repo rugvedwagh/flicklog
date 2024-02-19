@@ -57,10 +57,6 @@
     color: grey;
 }
 
-.upper-div {
-    color: grey;
-}
-
 @media (max-width: 600px) {
     .main-cont {
         width: 90%;

@@ -1,5 +1,4 @@
-import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import DensityMediumOutlinedIcon from '@mui/icons-material/DensityMediumOutlined';
+import { AppBar, Avatar, Toolbar, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
@@ -54,7 +53,7 @@ const Navbar = () => {
     }, [location]);
 
     return (
-        <AppBar className="appBar" position="static" color="">
+        <AppBar className="appBar" position="static">
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Link to="/posts" className='headingcontainer'>
@@ -70,22 +69,24 @@ const Navbar = () => {
                                 </Avatar>
                             </span>
                             <Menu
-                                sx={{right : 50}}
+                                sx={{ right: 150 }}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
                                 className='menu'
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                                transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                             >
                                 <MenuItem>
-                                    <Avatar className='purple' color="primary" sx={{ bgcolor: '#212121', color: 'white', width: 30, height: 30 }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                    <Avatar className='purple' color="primary" sx={{ bgcolor: '#212121', color: 'white', width: 28, height: 28 }} alt={user?.result.name} src={user?.result.imageUrl}>
                                         {user?.result.name.charAt(0)}
                                     </Avatar>
                                     <span>
                                         {user?.result.name}
                                     </span>
                                 </MenuItem>
-                                <MenuItem > <EditNoteRoundedIcon />&nbsp; Your posts</MenuItem>
                                 <MenuItem onClick={openUser}> <AccountCircleRoundedIcon />&nbsp; Your account</MenuItem>
+                                <MenuItem > <EditNoteRoundedIcon />&nbsp; Your posts</MenuItem>
                                 <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Logout</MenuItem>
                             </Menu>
                         </div>

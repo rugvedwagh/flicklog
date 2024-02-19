@@ -3,7 +3,9 @@
     display: flex;
     align-items: center;
 }
-
+.container{
+    margin-top: 100px;
+}
 .actionDiv {
     text-align: center;
 }
@@ -18,9 +20,9 @@
     width: 10%;
     max-width: 75px;
     position: relative;
-    top: 40%;
+    top: 28%;
     left: 48%;
-    transform: translate(-35%, -48%);
+    transform: translate(-28%, -48%);
     color: white;
 }
 
@@ -28,7 +30,7 @@
     .loading {
         margin-top: -40px;
         margin-bottom: 400px;
-        top: 40%;
+        top: 30%;
         left: 42%;
         transform: translate(-30%, -42%);
     }

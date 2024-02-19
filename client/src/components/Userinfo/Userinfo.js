@@ -29,7 +29,7 @@ const Userinfo = () => {
     return (
         <div className="main-cont">
             <div className="upper-div">
-                User info
+                <strong>User Info</strong>
             </div>
             <div className="lower-div">
                 <div className='avatar'>
@@ -38,7 +38,8 @@ const Userinfo = () => {
                 <ul>
                     <li><strong>UserName</strong> : {clientData.name}</li>
                     <li><strong>Email</strong> : {clientData.email}</li>
-                    <li><strong>ID</strong> : {clientData._id}</li>
+                    <li><strong>version</strong> : {clientData.__v}</li>
+                    <li><strong>Id</strong> : {clientData._id}</li>
                 </ul>
             </div>
         </div>

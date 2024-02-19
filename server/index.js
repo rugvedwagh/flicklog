@@ -28,9 +28,8 @@ mongoose.connect(process.env.DB_URL).then(() => {
     });
 }).catch((err) => {
     console.log(err.message);
-});
+}); 
 
 /*
-    Loc : 2348
-    
+    Lines of code : 2348
 */

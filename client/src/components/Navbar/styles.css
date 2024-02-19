@@ -38,6 +38,7 @@
     padding: 0px;
     justify-content: center;
     text-align: center;
+    text-shadow : 2px 2px 5px black
 }
 
 .myposts {
@@ -64,6 +65,7 @@
     color: #C8102E;
     margin-right: 10px;
     cursor: pointer;
+    font-size: 18px;
 }
 
 .brandContainer {
