@@ -115,10 +115,10 @@ const Navbar = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: '#C8102E', backgroundColor: 'transparent' }}>
+                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: 'white', backgroundColor: '#C8102E' }} >
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={Logout} style={{ color: '#C8102E', backgroundColor: 'transparent' }} autoFocus>
+                        <Button variant="contained" onClick={Logout} style={{ color: 'white', backgroundColor: '#C8102E' }} autoFocus>
                             Logout
                         </Button>
                     </DialogActions>

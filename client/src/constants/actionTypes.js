@@ -15,3 +15,4 @@ export const END_LOADING = 'END_LOADING'
 export const USER_INFO = 'USER_INFO'
 export const LOGOUT = 'LOGOUT';
 export const AUTH = 'AUTH';
+export const ERROR = 'ERROR'

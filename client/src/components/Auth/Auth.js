@@ -1,8 +1,8 @@
-import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
+import { Avatar, Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import { signin, signup } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import Input from './Input';
 import './styles.css';
@@ -18,6 +18,7 @@ const SignUp = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => setShowPassword(!showPassword);
+    const {errorMessage}  = useSelector((state) => state.authReducer);
 
     const switchMode = () => {
         setForm(initialState);
@@ -40,11 +41,12 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper className='paper' elevation={6} style={{ borderRadius: '10px', backgroundColor:'white' }}>
+            <Paper className='paper' elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
                 <Avatar className='avatar'>
-                    <LockRoundedIcon color="action" />
+                    <LockRoundedIcon color="white"/>
                 </Avatar>
                 <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: '#C8102E' }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
+                {errorMessage?.length && <Alert severity="error" style={{ margin: '10px 0' }}>{errorMessage}</Alert>}
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {isSignup && (
@@ -57,7 +59,7 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0", backgroundColor:'#C8102E' }}>
+                    <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0", backgroundColor: '#C8102E' }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <Grid style={{ margin: '16px 0' }} container justify="flex-end">

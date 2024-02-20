@@ -1,4 +1,4 @@
-import { AUTH, START_LOADING, USER_INFO, END_LOADING } from '../constants/actionTypes';
+import { AUTH, ERROR, START_LOADING, USER_INFO, END_LOADING } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const signin = (formData, navigate) => async (dispatch) => {
@@ -7,6 +7,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
 };
@@ -17,6 +18,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
         dispatch({ type: AUTH, payload: data });
         navigate('/posts')
     } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
 };

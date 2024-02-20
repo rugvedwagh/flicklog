@@ -1,6 +1,6 @@
-import { AUTH, LOGOUT, USER_INFO, START_LOADING, END_LOADING } from '../constants/actionTypes';
+import { AUTH, LOGOUT, USER_INFO, START_LOADING, END_LOADING, ERROR } from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null, clientData: null, isLoading: true }, action) => {
+const authReducer = (state = { authData: null, clientData: null, isLoading: true, errorMessage : null }, action) => {
     switch (action.type) {
         case AUTH:
             localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
@@ -10,6 +10,9 @@ const authReducer = (state = { authData: null, clientData: null, isLoading: true
             return { ...state, authData: null };
         case USER_INFO:
             return { ...state, clientData: action.payload };
+        case ERROR:
+            console.log(action?.payload);
+            return { ...state, errorMessage: action.payload };
         case START_LOADING:
             return { ...state, isLoading: true }
         case END_LOADING:

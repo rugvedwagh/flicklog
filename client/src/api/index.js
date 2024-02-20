@@ -4,7 +4,7 @@ const API = axios.create({
     baseURL: 'https://memoriesbackend-jc46.onrender.com'
 })
 
-// Sending the Token back to our backend for it to verify it
+//  Sending the Token back to our backend for it to verify it
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
@@ -24,4 +24,3 @@ export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { val
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 export const userinfo = (id) => API.get(`/user/info/${id}`);
-

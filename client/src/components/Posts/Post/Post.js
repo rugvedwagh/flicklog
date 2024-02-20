@@ -118,15 +118,15 @@ const Post = ({ post, setCurrentId }) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleDeleteDialogClose} variant="contained" style={{ color: '#C8102E', backgroundColor: 'transparent' }}>
+                    <Button onClick={handleDeleteDialogClose} variant="contained" style={{ color: 'white', backgroundColor: '#C8102E' }}>
                         Cancel
                     </Button>
-                    <Button onClick={handleDeletePost} variant="contained" style={{ color: '#C8102E', backgroundColor: 'transparent' }} autoFocus>
+                    <Button onClick={handleDeletePost} variant="contained" style={{ color: 'white', backgroundColor: '#C8102E' }} autoFocus>
                         Delete
                     </Button>
                 </DialogActions>
-            </Dialog>
-        </Card>
+            </Dialog >
+        </Card >
     );
 };
 
