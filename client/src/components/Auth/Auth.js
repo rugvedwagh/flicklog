@@ -18,7 +18,7 @@ const SignUp = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => setShowPassword(!showPassword);
-    const {errorMessage}  = useSelector((state) => state.authReducer);
+    const { errorMessage } = useSelector((state) => state.authReducer);
 
     const switchMode = () => {
         setForm(initialState);
@@ -43,9 +43,9 @@ const SignUp = () => {
         <Container component="main" maxWidth="xs">
             <Paper className='paper' elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
                 <Avatar className='avatar'>
-                    <LockRoundedIcon color="white"/>
+                    <LockRoundedIcon color="white" />
                 </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: '#C8102E' }}>{isSignup ? 'Sign up' : 'Sign in'}</Typography>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: '#C8102E' }}>{isSignup ? 'Sign up' : 'Log in'}</Typography>
                 {errorMessage?.length && <Alert severity="error" style={{ margin: '10px 0' }}>{errorMessage}</Alert>}
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
@@ -60,13 +60,13 @@ const SignUp = () => {
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
                     <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0", backgroundColor: '#C8102E' }}>
-                        {isSignup ? 'Sign Up' : 'Sign In'}
+                        {isSignup ? 'Sign Up' : 'Log In'}
                     </Button>
                     <Grid style={{ margin: '16px 0' }} container justify="flex-end">
                         <Grid item>
-                            <Button onClick={switchMode}>
-                                {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up"}
-                            </Button>
+                            <div onClick={switchMode} style={{ color: '#2f8ddf', cursor: 'pointer' }}>
+                                {isSignup ? 'Already have an account? Log in' : "Don't have an account? Sign Up"}
+                            </div>
                         </Grid>
                     </Grid>
                 </form>

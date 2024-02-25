@@ -98,7 +98,7 @@ const Navbar = () => {
                             variant='contained'
                             style={{ margin: "0 10px", color: "#C8102E", backgroundColor: 'white' }}
                         >
-                            Sign In
+                            Log in
                         </Button>
                     )}
                 </Toolbar>

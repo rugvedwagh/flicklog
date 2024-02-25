@@ -24,7 +24,7 @@ const Paginate = ({ page }) => {
             renderItem={(item) => (
                 <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`} />
             )}
-            style={{ borderRadius: '4', margin: '10px 0px', padding: '16px', justifyContent: 'space-around' }}
+            style={{ borderRadius: '4', margin: '10px 0px', padding: '16px' }}
         />
     );
 };

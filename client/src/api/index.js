@@ -4,7 +4,7 @@ const API = axios.create({
     baseURL: 'https://memoriesbackend-jc46.onrender.com'
 })
 
-//  Sending the Token back to our backend for it to verify it
+//  Sending the Token back to our backend for it to verify 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;

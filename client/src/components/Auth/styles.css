@@ -31,12 +31,6 @@
     margin: 16px 0;
 }
 
-@media (max-width: 600px) {
-    .paper {
-        padding: 10px;
-    }
-}
-
 .typography {
     margin: 15px 0;
 }
