@@ -7,7 +7,6 @@ export const getPost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.fetchPost(id);
-
         dispatch({ type: FETCH_POST, payload: data })
         dispatch({ type: END_LOADING })
     } catch (error) {
@@ -19,7 +18,6 @@ export const getPosts = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
         const { data: { data, currentPage, NumberOfPages } } = await api.fetchPosts(page);
-        console.log("getposts action")
         dispatch({ type: FETCH_ALL, payload: { data, currentPage, NumberOfPages } })
         dispatch({ type: END_LOADING })
     } catch (error) {
@@ -92,11 +90,3 @@ export const commentPost = (value, id) => async (dispatch) => {
         console.log(error);
     }
 };
-
-export const myposts = () => async (dispatch) => {
-    try {
-
-    } catch (error) {
-
-    }
-}

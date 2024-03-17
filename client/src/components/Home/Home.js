@@ -1,6 +1,6 @@
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@mui/material';
-import { getPostsBySearch } from '../../actions/posts';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getPostsBySearch } from '../../actions/posts';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Posts from '../Posts/Posts';
@@ -34,12 +34,6 @@ const Home = () => {
         }
     }
 
-    const handleKeyPress = (e) => {
-        if (e.keyCode === 13) {
-            searchPost();
-        }
-    }
-
     return (
         <Grow in>
             <Container maxWidth='xl'>
@@ -54,7 +48,6 @@ const Home = () => {
                                 name='search'
                                 variant='outlined'
                                 label='Search Memories'
-                                onKeyPress={handleKeyPress}
                                 fullWidth
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -64,7 +57,6 @@ const Home = () => {
                                 name='search'
                                 variant='outlined'
                                 label='Search Tags'
-                                onKeyPress={handleKeyPress}
                                 fullWidth
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
@@ -73,11 +65,9 @@ const Home = () => {
                                 Search
                             </Button>
                         </AppBar>
-                        {(!searchQuery && !tags.length) && (
-                            <Paper elevation={6} >
-                                <Paginate page={page} />
-                            </Paper>
-                        )}
+                        <Paper elevation={6} >
+                            <Paginate page={page} />
+                        </Paper>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                     </Grid>
                 </Grid>

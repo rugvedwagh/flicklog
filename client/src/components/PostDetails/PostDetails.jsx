@@ -20,11 +20,11 @@ const PostDetails = () => {
         dispatch(getPost(id));
     }, [id, dispatch]);
 
-    useEffect(() => {
-        if (post) {
-            dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
-        }
-    }, [post, dispatch]);
+    // useEffect(() => {
+    //     if (post) {
+    //         dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
+    //     }
+    // }, [post, dispatch]);
 
     if (!post) return null;
 
@@ -82,6 +82,7 @@ const PostDetails = () => {
                                 <img
                                     src={selectedfile}
                                     class='recimg'
+                                    alt='alt.img'
                                     onClick={() => openPost(_id)}
                                 />
                                 <Typography gutterBottom variant='subtitle1'>{likes.length} likes</Typography>

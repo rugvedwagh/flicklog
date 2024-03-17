@@ -8,10 +8,10 @@ const Userinfo = () => {
 
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'))
-    const id = user.result._id;
+    const userId = user.result._id;
 
     useEffect(() => {
-        dispatch(userData(id))
+        dispatch(userData(userId))
     }, [])
 
     const { clientData, isLoading } = useSelector((state) => state.authReducer)
