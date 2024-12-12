@@ -46,11 +46,16 @@
 }
 
 .title {
-    padding: 0 16px;
+    padding: 0px 0 0 16px;
+    color: black;
 }
 
 .cardActions {
     padding: 0 16px 8px 16px;
     display: flex;
     justify-content: space-between;
+}
+
+.msg {
+    padding: 0 16px;
 }

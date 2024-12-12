@@ -35,3 +35,15 @@
         transform: translate(-30%, -42%);
     }
 }
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-container .MuiToggleButtonGroup-root {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}

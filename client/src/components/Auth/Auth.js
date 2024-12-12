@@ -1,5 +1,5 @@
 import { Avatar, Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { signin, signup } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,10 +42,10 @@ const SignUp = () => {
     return (
         <Container component="main" maxWidth="xs">
             <Paper className='paper' elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
-                <Avatar className='avatar'>
-                    <LockRoundedIcon color="white" />
-                </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'black' }}>{isSignup ? 'Sign up' : 'Log in'}</Typography>
+                <LockOutlinedIcon />
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'black' }}>
+                    {isSignup ? 'Sign up' : 'Log in'}
+                </Typography>
                 {errorMessage?.length && <Alert severity="error" style={{ margin: '10px 0' }}>{errorMessage}</Alert>}
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>

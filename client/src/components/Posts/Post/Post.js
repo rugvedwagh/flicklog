@@ -80,20 +80,18 @@ const Post = ({ post, setCurrentId }) => {
                     </Tooltip>
                 </div>
             )}
-            <div className="details">
-                <Typography variant="body2" color="textSecondary">
-                    {post.tags.map((tag) => `#${tag} `)}
-                </Typography>
-            </div>
+            <Typography variant="body2" color="textSecondary" style={{padding:'5px 16px 0px 16px'}}>
+                {post.tags.map((tag) => `#${tag} `)}
+            </Typography>
             <Typography className='title' variant="h5" gutterBottom>
                 {post.title}
             </Typography>
-            <CardContent>
-                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 45) + ' ...' }} />
-            </CardContent>
+            <div className='msg'>
+                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+            </div>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: 'black' }} disabled={!user?.result} onClick={handleLike}>
+                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} onClick={handleLike}>
                         <Likes />
                     </Button>
                 </Tooltip>

@@ -5,16 +5,16 @@ import React, { useEffect } from 'react';
 import './userstyle.css';
 
 const Userinfo = () => {
-
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('profile'))
+    const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user.result._id;
 
     useEffect(() => {
-        dispatch(userData(userId))
-    }, [])
+        dispatch(userData(userId));
+    }, [dispatch, userId]);
 
-    const { clientData, isLoading } = useSelector((state) => state.authReducer)
+    const { clientData, isLoading } = useSelector((state) => state.authReducer);
+    const { posts } = useSelector((state) => state.posts);
 
     if (!clientData) {
         return null;
@@ -22,28 +22,41 @@ const Userinfo = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress className='loading' size='4rem' color='grey' />
+            <div className="loading-container">
+                <CircularProgress className="loading" size="4rem" color="primary" />
+            </div>
         );
     }
 
     return (
         <div className="main-cont">
             <div className="upper-div">
-                <strong>User Info</strong>
+                <h2>User Info</h2>
             </div>
             <div className="lower-div">
-                <div className='avatar'>
-                    {clientData.name.charAt(0)}
+                <div className="avatar">
+                    {clientData.name.charAt(0).toUpperCase()}
                 </div>
                 <ul>
-                    <li><strong>UserName</strong> : {clientData.name}</li>
-                    <li><strong>Email</strong> : {clientData.email}</li>
-                    <li><strong>version</strong> : {clientData.__v}</li>
-                    <li><strong>Id</strong> : {clientData._id}</li>
+                    <li>
+                        <strong>Username:</strong> <span>{clientData.name}</span>
+                    </li>
+                    <li>
+                        <strong>Email:</strong> <span>{clientData.email}</span>
+                    </li>
+                    <li>
+                        <strong>Posts:</strong> <span>{posts.filter((post) => post.creator === clientData._id).length}</span>
+                    </li>
+                    <li>
+                        <strong>User ID:</strong> <span>{clientData._id}</span>
+                    </li>
+                    <li>
+                        <strong>Version:</strong> <span>{clientData.__v}</span>
+                    </li>
                 </ul>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Userinfo;

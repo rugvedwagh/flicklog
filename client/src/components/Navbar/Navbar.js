@@ -39,6 +39,7 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
+
     useEffect(() => {
         const token = user?.token;
 
@@ -63,13 +64,32 @@ const Navbar = () => {
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>
-                            <span className='avatarcontainer'>
-                                <Avatar onClick={handleMenuClick} className='purple' sx={{ bgcolor: 'white', color: 'black' }} alt={user?.result.name} src={user?.result.imageUrl}>
+                            <span className="avatarContainer">
+                                <Avatar
+                                    onClick={handleMenuClick}
+                                    className="profileAvatar"
+                                    sx={{
+                                        width: 45,
+                                        height: 45,
+                                        bgcolor: 'white',
+                                        color: 'black',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                                        textTransform : 'uppercase',
+                                        '&:hover': {
+                                            transform: 'scale(1.1)',
+                                            boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.3)',
+                                        },
+                                    }}
+                                    alt={user?.result.name}
+                                    src={user?.result.imageUrl}
+                                >
                                     {user?.result.name.charAt(0)}
                                 </Avatar>
                             </span>
+
                             <Menu
-                                sx={{ left : -10, top : 10 }}
+                                sx={{ left: -10, top: 10 }}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
@@ -77,14 +97,6 @@ const Navbar = () => {
                                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                             >
-                                <MenuItem>
-                                    <Avatar className='purple' color="primary" sx={{ bgcolor: '#212121', color: 'white', width: 28, height: 28 }} alt={user?.result.name} src={user?.result.imageUrl}>
-                                        {user?.result.name.charAt(0)}
-                                    </Avatar>
-                                    <span>
-                                        {user?.result.name}
-                                    </span>
-                                </MenuItem>
                                 <MenuItem onClick={openUser}> <AccountCircleRoundedIcon />&nbsp; Your account</MenuItem>
                                 <MenuItem > <EditNoteRoundedIcon />&nbsp; Your posts</MenuItem>
                                 <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Logout</MenuItem>
