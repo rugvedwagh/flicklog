@@ -32,3 +32,11 @@
 .signintointeract{
     color: grey;
 }
+
+.close{
+    position: relative;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(220%, -50%); /* Adjust position to center */
+    cursor: pointer;
+}

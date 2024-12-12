@@ -6,8 +6,10 @@ const API = axios.create({
 
 //  Sending the Token back to our backend for it to verify 
 API.interceptors.request.use((req) => {
-    if (localStorage.getItem('profile')) {
-        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+    const profile = localStorage.getItem('profile');
+    if (profile) {
+        const token = JSON.parse(profile).token; // Safely parse the token
+        req.headers.Authorization = `Bearer ${token}`;
     }
     return req;
 });

@@ -1,6 +1,6 @@
 :root {
     --pinkvar: #eb24d0;
-    --forestred: #c8102e;
+    --black: #000000;
     --bodyvar: #131a26;
     --loadingvar: white;
 }
@@ -13,11 +13,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--forestred);
+    background-color: var(--black);
+    /* border: 1px solid white; */
 }
 
 .navbar {
-    background-color: var(--forestred);
+    background-color: var(--black);
     border-radius: 5px;
     display: flex;
     flex-direction: row;
@@ -174,5 +175,6 @@
 }
 
 .menu{
+    width: 25rem;
     animation: dropdownanim 0.6s ease;
 }

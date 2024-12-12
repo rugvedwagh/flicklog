@@ -93,7 +93,7 @@ const Post = ({ post, setCurrentId }) => {
             </CardContent>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} onClick={handleLike}>
+                    <Button size="small" style={{ color: 'black' }} disabled={!user?.result} onClick={handleLike}>
                         <Likes />
                     </Button>
                 </Tooltip>
@@ -118,10 +118,10 @@ const Post = ({ post, setCurrentId }) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleDeleteDialogClose} variant="contained" style={{ color: 'white', backgroundColor: '#C8102E' }}>
+                    <Button onClick={handleDeleteDialogClose} variant="contained" style={{ color: 'white', backgroundColor: 'black' }}>
                         Cancel
                     </Button>
-                    <Button onClick={handleDeletePost} variant="contained" style={{ color: 'white', backgroundColor: '#C8102E' }} autoFocus>
+                    <Button onClick={handleDeletePost} variant="contained" style={{ color: 'white', backgroundColor: 'black' }} autoFocus>
                         Delete
                     </Button>
                 </DialogActions>

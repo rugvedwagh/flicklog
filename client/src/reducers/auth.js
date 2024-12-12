@@ -11,7 +11,6 @@ const authReducer = (state = { authData: null, clientData: null, isLoading: true
         case USER_INFO:
             return { ...state, clientData: action.payload };
         case ERROR:
-            console.log(action?.payload);
             return { ...state, errorMessage: action.payload };
         case START_LOADING:
             return { ...state, isLoading: true }

@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import './styles.css';
 
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     const [postData, setPostData] = useState({
         title: '',
@@ -38,6 +38,10 @@ const Form = ({ currentId, setCurrentId }) => {
         setPostData({ title: '', message: '', tags: '', selectedfile: '' });
     };
 
+    const toggleForm = () => {
+        setformOpen(false);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -62,9 +66,10 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper className='paper' elevation={6}>
+        <Paper className='paper' elevation={6} >
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
-                <Typography variant="h6" style={{ marginBottom: '7px', color: '#c8102e' }}>
+                <div className='close' onClick={toggleForm}>X</div>
+                <Typography variant="h6" style={{ marginBottom: '7px', color: 'black' }} onClick={toggleForm}>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
 
@@ -127,7 +132,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     size='large'
                     type='submit'
                     fullWidth
-                    style={{ marginBottom: '10px', backgroundColor: '#c8102e' }}
+                    style={{ marginBottom: '10px', backgroundColor: 'black' }}
                 >
                     Post
                 </Button>
@@ -137,7 +142,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     size='small'
                     onClick={clear}
                     fullWidth
-                    style={{ backgroundColor: 'white', color: '#c8102e' }}
+                    style={{ backgroundColor: 'white', color: 'black' }}
                 >
                     Clear
                 </Button>

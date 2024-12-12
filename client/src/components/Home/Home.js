@@ -17,15 +17,20 @@ const Home = () => {
     const [currentId, setCurrentId] = useState(null);
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState('');
+    const [formOpen, setformOpen] = useState(false);
     const dispatch = useDispatch();
     const query = useQuery();   //usequery will search in the url 
     const page = query.get('page') || 1;
     const searchQuery = query.get('serchQuery')
+    const user = JSON.parse(localStorage.getItem('profile'))
     const navigate = useNavigate();
+
+    const handleDrop = () => {
+        setformOpen(true);
+    }
 
     const searchPost = () => {
         if (search.trim() || tags) {
-            console.log(tags)
             dispatch(getPostsBySearch({ search, tags }))
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags}`);
         }
@@ -61,14 +66,20 @@ const Home = () => {
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
                             />
-                            <Button onClick={searchPost} variant='contained' className='searchButton' fullWidth style={{ margin: "0 10px", backgroundColor: '#c8102e' }}>
+                            <Button onClick={searchPost} variant='contained' className='searchButton' fullWidth style={{ margin: "0 10px", backgroundColor: 'black' }}>
                                 Search
                             </Button>
                         </AppBar>
                         <Paper elevation={6} >
                             <Paginate page={page} />
                         </Paper>
-                        <Form currentId={currentId} setCurrentId={setCurrentId} />
+                        {!formOpen && user ? (
+                            <div className='temp' onClick={handleDrop}>
+                                Want to share something?
+                            </div>
+                        ) : (
+                            <Form currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                        )}
                     </Grid>
                 </Grid>
             </Container>

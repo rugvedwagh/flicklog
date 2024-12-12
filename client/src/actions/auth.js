@@ -14,8 +14,10 @@ export const signin = (formData, navigate) => async (dispatch) => {
 
 export const signup = (formData, navigate) => async (dispatch) => {
     try {
+        dispatch({ type: START_LOADING })
         const { data } = await api.signUp(formData);
         dispatch({ type: AUTH, payload: data });
+        dispatch({type : END_LOADING})
         navigate('/posts')
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -23,12 +25,13 @@ export const signup = (formData, navigate) => async (dispatch) => {
     }
 };
 
-export const userData = (id) => async (dispatch) => {
+export const userData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.userinfo(id);
         dispatch({ type: USER_INFO, payload: data });
         dispatch({ type: END_LOADING })
+        navigate(`/user/info/${id}`)
     } catch (error) {
         console.log(error);
     }

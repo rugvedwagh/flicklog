@@ -45,7 +45,7 @@ const SignUp = () => {
                 <Avatar className='avatar'>
                     <LockRoundedIcon color="white" />
                 </Avatar>
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: '#C8102E' }}>{isSignup ? 'Sign up' : 'Log in'}</Typography>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'black' }}>{isSignup ? 'Sign up' : 'Log in'}</Typography>
                 {errorMessage?.length && <Alert severity="error" style={{ margin: '10px 0' }}>{errorMessage}</Alert>}
                 <form className='form' onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
@@ -59,7 +59,7 @@ const SignUp = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
-                    <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0", backgroundColor: '#C8102E' }}>
+                    <Button type="submit" fullWidth className='submit' variant='contained' style={{ margin: "16px 0", backgroundColor: 'black' }}>
                         {isSignup ? 'Sign Up' : 'Log In'}
                     </Button>
                     <Grid style={{ margin: '16px 0' }} container justify="flex-end">

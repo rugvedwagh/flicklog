@@ -64,12 +64,12 @@ const Navbar = () => {
                     {user?.result ? (
                         <div className='profile'>
                             <span className='avatarcontainer'>
-                                <Avatar onClick={handleMenuClick} className='purple' sx={{ bgcolor: 'white', color: '#C8102E' }} alt={user?.result.name} src={user?.result.imageUrl}>
+                                <Avatar onClick={handleMenuClick} className='purple' sx={{ bgcolor: 'white', color: 'black' }} alt={user?.result.name} src={user?.result.imageUrl}>
                                     {user?.result.name.charAt(0)}
                                 </Avatar>
                             </span>
                             <Menu
-                                sx={{ right: 150 }}
+                                sx={{ left : -10, top : 10 }}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
@@ -96,7 +96,7 @@ const Navbar = () => {
                             component={Link}
                             to="/auth"
                             variant='contained'
-                            style={{ margin: "0 10px", color: "#C8102E", backgroundColor: 'white' }}
+                            style={{ margin: "0 10px", color: "black", backgroundColor: 'white' }}
                         >
                             Log in
                         </Button>
@@ -115,10 +115,10 @@ const Navbar = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: 'white', backgroundColor: '#C8102E' }} >
+                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: 'white', backgroundColor: 'black' }} >
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={Logout} style={{ color: 'white', backgroundColor: '#C8102E' }} autoFocus>
+                        <Button variant="contained" onClick={Logout} style={{ color: 'white', backgroundColor: 'black' }} autoFocus>
                             Logout
                         </Button>
                     </DialogActions>
