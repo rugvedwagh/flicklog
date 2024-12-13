@@ -7,7 +7,9 @@ export const getPost = async (req, res) => {
         const post = await PostMessage.findById(id);
         res.status(200).json(post);
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(404).json({
+            message: error.message
+        })
     }
 }
 
@@ -30,7 +32,9 @@ export const getPosts = async (req, res) => {
             numberOfPages: Math.ceil(total / LIMIT), // Corrected key name for consistency
         });
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({
+            message: error.message
+        });
     }
 };
 
@@ -44,82 +48,157 @@ export const getPostsBySearch = async (req, res) => {
 
         const posts = await PostMessage.find({
             $or: [
-                { title },
-                { tags: { $in: tagsArray } } // Use the tagsArray in $in operator
+                {
+                    title
+                },
+                {
+                    tags:
+                    {
+                        $in: tagsArray
+                    }
+                } 
             ]
         });
 
-        res.json({ data: posts });
+        res.json({
+            data: posts
+        });
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({
+            message: error.message
+        });
     }
 };
 
 export const createPost = async (req, res) => {
     const post = req.body;
-    const newPost = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() });
+    const newPost = new PostMessage({
+        ...post,
+        creator: req.userId,
+        createdAt: new Date().toISOString()
+    });
 
     try {
         await newPost.save();
         res.status(201).json(newPost);
 
     } catch (error) {
-        res.status(409).json({ message: error.message })
+        res.status(409).json({
+            message: error.message
+        })
     }
 }
 
 export const updatePost = async (req, res) => {
-    const { id: _id } = req.params
+    const { id: _id } = req.params;
     const post = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No posts with this id')
+    try {
+        // Check if the provided ID is valid
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(404).send('No post with this id');
+        }
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true })
+        // Attempt to update the post
+        const updatedPost = await PostMessage.findByIdAndUpdate(
+            _id, { ...post, _id }, { new: true }
+        );
 
-    res.json(updatedPost)
-}
+        // If no post is found, respond with a 404 error
+        if (!updatedPost) {
+            return res.status(404).send('No post found');
+        }
+
+        // Respond with the updated post
+        res.json(updatedPost);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong. Please try again later.'
+        });
+    }
+};
 
 export const deletePost = async (req, res) => {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No posts with this id')
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).send('No post with this id');
+        }
 
-    await PostMessage.findByIdAndDelete(id);
+        await PostMessage.findByIdAndDelete(id);
 
-
-    res.json({ message: 'Post deleted successfully!' })
-}
+        res.json({
+            message: 'Post deleted successfully!'
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong. Please try again later.'
+        });
+    }
+};
 
 export const likePost = async (req, res) => {
-
     const { id } = req.params;
 
-    if (!req.userId) return res.json({ message: 'Unauthernticated' })
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id')
+    try {
+        if (!req.userId) {
+            return res.status(401).json({
+                message: 'Unauthenticated'
+            });
+        }
 
-    const post = await PostMessage.findById(id);
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).send('No post with this id');
+        }
 
-    const index = post.likes.findIndex((id) => id === String(req.userId));
+        const post = await PostMessage.findById(id);
 
-    if (index === -1) {
-        post.likes.push(req.userId);
+        if (!post) {
+            return res.status(404).send('No post found');
+        }
+
+        const index = post.likes.findIndex((id) => id === String(req.userId));
+
+        if (index === -1) {
+            post.likes.push(req.userId);
+        } else {
+            post.likes = post.likes.filter((id) => id !== String(req.userId));
+        }
+
+        const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+        res.json(updatedPost);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong. Please try again later.'
+        });
     }
-    else {
-        post.likes = post.likes.filter((id) => id !== String(req.userId));
-    }
-
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
-    res.json(updatedPost);
-}
+};
 
 export const commentPost = async (req, res) => {
     const { id } = req.params;
     const { value } = req.body;
 
-    const post = await PostMessage.findById(id);
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).send('No post with this id');
+        }
 
-    post.comments.push(value);
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
+        const post = await PostMessage.findById(id);
 
-    res.json(updatedPost);
-}
+        if (!post) {
+            return res.status(404).send('No post found');
+        }
+
+        post.comments.push(value);
+
+        const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+        res.json(updatedPost);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong. Please try again later.'
+        });
+    }
+};
