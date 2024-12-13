@@ -1,18 +1,19 @@
-
 .mainContainer {
     display: flex;
     align-items: center;
 }
-.container{
+
+.container {
     margin-top: 100px;
 }
+
 .actionDiv {
     text-align: center;
 }
 
 .noposts {
     margin: 240px 40%;
-    color: #c8102e;
+    color: white;
     font-size: 30px;
 }
 
@@ -46,4 +47,8 @@
     background: white;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}   
+
+::-webkit-scrollbar {
+    display: none;
 }

@@ -57,7 +57,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     if (!user?.result?.name) {
         return (
-            <Paper className='paper' elevation={6}>
+            <Paper className='paper' elevation={6} style={{marginTop:'10px'}}>
                 <Typography variant="h6" align="center" className='signintointeract'>
                     Sign in to create and interact.
                 </Typography>
@@ -66,7 +66,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     }
 
     return (
-        <Paper className='paper' elevation={6} >
+        <Paper className='paper' elevation={6} style={{marginTop : '10px'}}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
                 <div className='close' onClick={toggleForm}>X</div>
                 <Typography variant="h6" style={{ marginBottom: '7px', color: 'black' }} onClick={toggleForm}>

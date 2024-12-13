@@ -5,7 +5,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import Posts from '../Posts/Posts';
-import Paginate from '../Paginate';
 import Form from '../Form/Form';
 import './styles.css';
 
@@ -73,23 +72,11 @@ const Home = () => {
                                 variant='outlined'
                                 label='Search Posts'
                                 fullWidth
-                                value={search || tags}
+                                value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 size="small"  
-                                sx={{
-                                    '& .MuiInputBase-root': {
-                                        padding: '4px 10px',  
-                                    },
-                                    '& .MuiOutlinedInput-root': {
-                                        height: '40px', 
-                                    },
-                                }}
                             />
                             <SearchIcon onClick={searchPost} className="searchlogo" sx={{ fontSize: 32 }} />
-                        </Paper>
-
-                        <Paper elevation={6}>
-                            <Paginate page={page} />
                         </Paper>
                         {!formOpen && user ? (
                             <Paper className='temp' onClick={handleDrop}>

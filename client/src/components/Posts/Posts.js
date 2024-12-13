@@ -1,40 +1,59 @@
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Grid, CircularProgress } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { getPosts } from '../../actions/posts';
 import Post from './Post/Post';
-import React from 'react';
 import './styles.css';
 
 const Posts = ({ setCurrentId, Myposts }) => {
-    const { posts, isLoading } = useSelector((state) => state.posts);
+    const dispatch = useDispatch();
+    const { posts, isLoading, numberOfPages } = useSelector((state) => state.posts);
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
-    
-    console.log(user)
-    // Check if user is available before attempting to filter posts
+
+    const [currentPage, setCurrentPage] = useState(1);
+
     const userPosts = user && Myposts
         ? posts?.filter((post) => post.creator === userId)
         : posts;
 
-    if (isLoading) {
-        return <CircularProgress className='loading' size='4rem' color='grey' />;
-    }
+    useEffect(() => {
+        dispatch(getPosts(currentPage));
+    }, [currentPage, dispatch]);
 
-    if (!userPosts?.length) {
-        return (
-            <div className='noposts'>
-                No posts available!
-            </div>
-        );
-    }
+    const fetchMorePosts = () => {
+        if (currentPage < numberOfPages) {
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
+    };
 
     return (
-        <Grid className='container' container alignItems="stretch" spacing={4}>
-            {userPosts.map((post) => (
-                <Grid key={post._id} item xs={12} sm={6} lg={4}>
-                    <Post post={post} setCurrentId={setCurrentId} />
-                </Grid>
-            ))}
-        </Grid>
+        <div className='postscont'>
+            {isLoading && currentPage === 1 ? (
+                <CircularProgress className="loading" size="3rem" color="grey" />
+            ) : (
+                <InfiniteScroll
+                    dataLength={userPosts.length}
+                    next={fetchMorePosts}
+                    hasMore={currentPage < numberOfPages}
+                    loader={<CircularProgress size="3rem" style={{margin:'10px 50%', color:'white'}}/>}
+                    endMessage={
+                        <div style={{ textAlign: 'center', margin: '20px 0', color : 'white' }}>
+                            <b>You're all caught up!</b>
+                        </div>
+                    }
+                >
+                    <Grid className="container" container alignItems="stretch" spacing={4}>
+                        {userPosts.map((post) => (
+                            <Grid key={post._id} item xs={12} sm={6} lg={4}>
+                                <Post post={post} setCurrentId={setCurrentId} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </InfiniteScroll>
+            )}
+        </div>
     );
 };
 

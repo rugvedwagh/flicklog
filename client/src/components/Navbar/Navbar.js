@@ -75,7 +75,7 @@ const Navbar = () => {
                                         color: 'black',
                                         cursor: 'pointer',
                                         transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-                                        textTransform : 'uppercase',
+                                        textTransform: 'uppercase',
                                         '&:hover': {
                                             transform: 'scale(1.1)',
                                             boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.3)',

@@ -25,15 +25,18 @@ body {
     z-index: 999;
     transition: 0.3s ease-in;
     background-color: white;
-    color: #c8102e;
     cursor: pointer;
     border-radius: 50%;
-    padding: 10px;
+    transition: 0.3s ease-in;
 }
 
 .scrollup.show {
     transition: 0.3s ease-in;
+    color: black;
+    padding: 10px;
     display: block;
+    height: 50px;
+    width: 50px;
 }
 
 .scrollup.hide {

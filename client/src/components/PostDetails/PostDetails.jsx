@@ -71,10 +71,10 @@ const PostDetails = () => {
 
             {!!recommendedPosts.length && (
                 <div className='sect'>
-                    <Typography gutterBottom variant='h5' style={{ color: '#c8102e' }}>
+                    <Typography gutterBottom variant='h5' style={{ color: 'black' }}>
                         You might also like
                     </Typography>
-                    <Divider color='#c8102e' />
+                    <Divider color='black' />
                     <div className='recommendedPosts'>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
                             <Card class='recpost' onClick={() => openPost(_id)} key={_id}>

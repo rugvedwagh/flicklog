@@ -1,5 +1,6 @@
 * {
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
 }
 
 @keyframes slideImage {
@@ -26,7 +27,7 @@
     }
 }
 
-@keyframes grow{
+@keyframes grow {
     0% {
         transform: scale(0);
         opacity: 0;
@@ -41,17 +42,20 @@
 .main {
     display: flex;
     justify-content: space-between;
-    background-color: #f3eff1;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
     animation: bloom 0.8s ease;
 }
 
 .first {
     flex: 1;
-    padding-left: 20px;
+    padding-left: 30px;
     word-spacing: 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .second {
@@ -65,70 +69,48 @@
 
 .imag {
     max-width: 100%;
-    border-radius: 5px;
+    border-radius: 12px;
     height: auto;
+    transition: transform 0.3s ease;
 }
 
-.body1 {
-    color: grey;
+.imag:hover {
+    transform: scale(1.05);
 }
 
 .posttitle {
     font-size: 3rem;
-    font-weight: lighter;
-    margin: 0px 0;
+    font-weight: 600;
+    margin: 0;
     padding: 0;
+    color: #333;
+    line-height: 1.3;
+}
+
+.posttitle + .MuiTypography-root {
+    color: #777;
 }
 
 @media only screen and (max-width: 600px) {
-
-    .first {
-        margin-top: 10px;
-    }
-
-    .posttitle {
-        font-weight: light;
-    }
-
     .main {
         flex-direction: column;
-        padding: 10px;
+        padding: 20px;
     }
 
-    .first,
-    .second {
+    .first, .second {
         flex: 1;
         padding-left: 0;
     }
 
     .imag {
         max-width: 100%;
-        border-radius: 5px;
+        border-radius: 12px;
     }
 
     .commentsOuterContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
-
-    .commentsInnerContainer {
-        margin: 10px 25px;
-        width: 100%;
-    }
-
-    .writeCommentContainer {
-        width: 90%;
-    }
-
-    .write-comment {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .posttitle {
-        font-size: 30px;
-        font-weight: light;
     }
 
     .verticalbutton {
@@ -141,18 +123,37 @@
     z-index: 1000;
     left: 3vw;
     top: 75vh;
-    color: black;
-    background-color: rgb(223, 223, 223);
-    cursor: pointer;
+    background-color: #444;
+    color: white;
     border: none;
-    border-radius: 4px;
-    opacity: 0.5;
+    border-radius: 25px; /* rounded corners for a more modern look */
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
 }
 
-.verticalbutton:hover{
+.verticalbutton:hover {
     opacity: 1;
-    transition: 0.3s ease-in;
+    background-color: #666; /* lighter shade on hover */
+    transform: scale(1.05); /* subtle scale effect */
 }
+
+.verticalbutton:focus {
+    outline: none; /* Remove outline on focus for cleaner look */
+}
+
+@media (max-width: 600px) {
+    .verticalbutton {
+        left: 5vw; /* adjust for smaller screens */
+        top: 80vh;
+        font-size: 0.9rem; /* adjust font size on smaller screens */
+        padding: 8px 18px; /* adjust padding */
+    }
+}
+
 .loader {
     width: 10%;
     max-width: 75px;
@@ -161,7 +162,7 @@
     top: 45%;
     left: 48%;
     transform: translate(-45%, -48%);
-    color: white;
+    color: #fff;
 }
 
 @media (max-width: 600px) {
@@ -173,49 +174,98 @@
 }
 
 .sect {
-    background-color: #f3eff1;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 5px;
-    margin: 2rem 0px;
-    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+    border-radius: 12px;
+    margin: 3rem 0;
+    padding: 20px;
 }
 
 .recpost {
-    margin: 20px;
-    padding: 10px 20px;
+    margin: 10px;
+    padding: 15px 20px;
     cursor: pointer;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
 }
 
 .recpost:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 30px;
-    transition: 0.3s ease-in-out;
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 15px;
 }
 
 .recommendedPosts {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
 }
 
 .recimg {
+    width: 100%;
+    height: 150px;
     object-fit: cover;
-    height: 130px;
-    width: 100%;
-    border-radius: 5px;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
 }
 
-.commentsInnerContainer {
-    padding-right: 10px;
-    width: 100%;
+.recpost .post-details {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.commentsOuterContainer {
-    margin-top: 10px;
-    border: 1px solid black;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+.recpost .post-details h6 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recpost .post-details p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.sect h5 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .recimg {
+        height: 120px;
+    }
+
+    .recpost .post-details h6 {
+        font-size: 1rem;
+    }
+
+    .recpost .post-details p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sect {
+        padding: 20px;
+    }
+
+    .recommendedPosts {
+        grid-template-columns: 1fr;
+    }
 }
 
 .imag.fullscreen {
@@ -237,8 +287,98 @@
     justify-content: center;
     align-items: center;
     background-color: #f3eff1;
-    border-radius: 5px;
+    border-radius: 12px;
     padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
     animation: slideImage 0.8s ease;
+}
+
+
+.commentsOuterContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    max-width: 100%;
+}
+
+.commentsInnerContainer {
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+}
+
+.commentsInnerContainer .MuiTypography-h6 {
+    font-size: 1.1rem;
+    color: #333;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 {
+    margin-top: 8px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 strong {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Write comment section styling */
+.write-comment {
+    margin-top: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+}
+
+.write-comment .MuiTypography-h6 {
+    color: #444;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.write-comment .MuiTextField-root {
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.write-comment button {
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 5px;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.write-comment button:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    .commentsOuterContainer {
+        padding: 10px;
+    }
+
+    .write-comment {
+        padding: 15px;
+    }
+
+    .commentsInnerContainer {
+        padding: 8px;
+    }
 }

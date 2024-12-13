@@ -35,8 +35,8 @@
 
 .close{
     position: relative;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(220%, -50%); /* Adjust position to center */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(220%, -50%);
     cursor: pointer;
 }

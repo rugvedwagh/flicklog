@@ -1,5 +1,5 @@
 import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST, COMMENT } from '../constants/actionTypes';
-import * as api from '../api'   // we import everything as actions from the api
+import * as api from '../api'   
 
 // Action Creators
 // these are functions that return actions
@@ -16,14 +16,14 @@ export const getPost = (id) => async (dispatch) => {
 
 export const getPosts = (page) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING })
-        const { data: { data, currentPage, NumberOfPages } } = await api.fetchPosts(page);
-        dispatch({ type: FETCH_ALL, payload: { data, currentPage, NumberOfPages } })
-        dispatch({ type: END_LOADING })
+        dispatch({ type: START_LOADING });
+        const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
+        dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
+        dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
-}
+};
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
