@@ -13,17 +13,27 @@ export const getPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     const { page } = req.query;
+
     try {
         const LIMIT = 6;
-        const startIndex = (Number(page) - 1) * LIMIT;
-        const total = await PostMessage.countDocuments({})
+        const startIndex = (Number(page) - 1) * LIMIT; // Calculate the starting index for the query
+        const total = await PostMessage.countDocuments({}); // Total number of documents in the collection
 
-        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
-        res.status(200).json({ data: posts, currentPage: Number(page), NumberOfPages: Math.ceil(total / LIMIT) });
+        const posts = await PostMessage.find()
+            .sort({ _id: -1 }) // Sort by newest posts first
+            .limit(LIMIT)
+            .skip(startIndex);
+
+        res.status(200).json({
+            data: posts,
+            currentPage: Number(page),
+            numberOfPages: Math.ceil(total / LIMIT), // Corrected key name for consistency
+        });
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(404).json({ message: error.message });
     }
-}
+};
+
 
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
