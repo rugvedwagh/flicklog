@@ -1,5 +1,6 @@
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { createPost, updatePost } from '../../actions/posts';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import FileBase from 'react-file-base64';
@@ -68,7 +69,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     return (
         <Paper className='paper' elevation={6} style={{marginTop : '10px'}}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
-                <div className='close' onClick={toggleForm}>X</div>
+                <div className='close' onClick={toggleForm}><CloseOutlinedIcon color='black'/></div>
                 <Typography variant="h6" style={{ marginBottom: '7px', color: 'black' }} onClick={toggleForm}>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>

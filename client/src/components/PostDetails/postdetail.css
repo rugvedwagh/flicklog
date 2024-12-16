@@ -55,12 +55,14 @@
     word-spacing: 1px;
     display: flex;
     flex-direction: column;
+    width: 60%;
     gap: 10px;
 }
 
 .second {
     flex: 1;
     flex-shrink: 0;
+    width: 60%;
 }
 
 .first.alt {
@@ -72,10 +74,6 @@
     border-radius: 12px;
     height: auto;
     transition: transform 0.3s ease;
-}
-
-.imag:hover {
-    transform: scale(1.05);
 }
 
 .posttitle {
@@ -122,7 +120,7 @@
     position: fixed;
     z-index: 1000;
     left: 3vw;
-    top: 75vh;
+    top: 90vh;
     background-color: #444;
     color: white;
     border: none;
@@ -131,7 +129,7 @@
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.3;
     transition: all 0.3s ease;
 }
 

@@ -21,6 +21,11 @@
     height: 100%;
 }
 
+.card:hover{
+    box-shadow: rgb(255, 255, 255) 0px 5px 15px;
+    
+}
+
 .overlay {
     position: absolute;
     top: 20px;
@@ -47,15 +52,17 @@
 
 .title {
     padding: 0px 0 0 16px;
+    margin-bottom: 0;
     color: black;
 }
 
 .cardActions {
     padding: 0 16px 8px 16px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .msg {
     padding: 0 16px;
+    margin-top: 0;
 }

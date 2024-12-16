@@ -1,4 +1,4 @@
-import { Container, Grow, Grid, Paper, AppBar, TextField, Button, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Container, Grow, Grid, Paper, TextField, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getPostsBySearch } from '../../actions/posts';
 import SearchIcon from '@mui/icons-material/Search';
@@ -20,7 +20,6 @@ const Home = () => {
     const [myposts, setMyposts] = useState(false);
     const dispatch = useDispatch();
     const query = useQuery();   //usequery will search in the url 
-    const page = query.get('page') || 1;
     const searchQuery = query.get('searchQuery');
     const user = JSON.parse(localStorage.getItem('profile'));
     const navigate = useNavigate();

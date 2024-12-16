@@ -3,12 +3,11 @@ import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import CommentsSection from './CommentsSection';
+import CommentsSection from '../Comments/CommentsSection';
 import moment from 'moment';
 import './postdetail.css';
 
 const PostDetails = () => {
-
     const { post, posts, isLoading } = useSelector((state) => state.posts);
     const { id } = useParams();
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -17,31 +16,23 @@ const PostDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getPost(id));
+        dispatch(getPost(id)); // Fetch post data
     }, [id, dispatch]);
 
-    // useEffect(() => {
-    //     if (post) {
-    //         dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
-    //     }
-    // }, [post, dispatch]);
+    if (isLoading) {
+        return <CircularProgress className='loader' color='grey' size='4rem' />;
+    }
 
-    if (!post) return null;
+    if (!post) return null; 
 
     const openPost = (_id) => navigate(`/posts/${_id}`);
     const verticalView = () => setVertical(!vertical);
     const handleImageClick = () => setIsFullScreen(!isFullScreen);
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
 
-    if (isLoading) {
-        return <CircularProgress className='loader' color='grey' size='4rem' />;
-    }
-
     return (
         <div className='cont'>
-            <Button onClick={verticalView}
-                class='verticalbutton'
-            >
+            <Button onClick={verticalView} class='verticalbutton'>
                 toggle <br /> view
             </Button>
             <div className={`main ${vertical ? 'altview' : ''}`}>

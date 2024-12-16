@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Grid, CircularProgress } from '@mui/material';
 import { getPosts } from '../../actions/posts';
-import Post from './Post/Post';
+import Post from '../Post/Post.js'
 import './styles.css';
 
 const Posts = ({ setCurrentId, Myposts }) => {
@@ -43,6 +43,7 @@ const Posts = ({ setCurrentId, Myposts }) => {
                             <b>You're all caught up!</b>
                         </div>
                     }
+                    style={{overflowX:'hidden'}}
                 >
                     <Grid className="container" container alignItems="stretch" spacing={4}>
                         {userPosts.map((post) => (

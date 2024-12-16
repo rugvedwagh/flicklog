@@ -1,5 +1,4 @@
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-import { Toolbar, AppBar, Typography } from '@mui/material';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PostDetails from './components/PostDetails/PostDetails';
 import NotFound from './components/Notfound/NotFound';

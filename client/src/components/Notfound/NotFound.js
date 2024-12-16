@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css'; // Import your CSS file for styling
-import patrick from './patrick.png'
+import patrick from '../../assets/patrick.png'
 
 const NotFound = () => {
     return (
