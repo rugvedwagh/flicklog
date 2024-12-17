@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-    baseURL: 'https://tempback-1zo9.onrender.com'
+    baseURL: 'http://localhost:5000'
 })
 
 //  Sending the Token back to our backend for it to verify 
@@ -18,7 +18,16 @@ export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updated
 export const createPost = (newPost) => API.post('/posts', newPost);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
-export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const fetchPostsBySearch = (searchQuery) => {
+    try {
+        console.log(searchQuery.search);
+        console.log(`/posts/search?searchQuery=${searchQuery.search}`);
+        API.get(`/posts/search?searchQuery=${searchQuery.search}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { value });

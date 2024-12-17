@@ -73,15 +73,15 @@ const Post = ({ post, setCurrentId }) => {
             </div>
             <CardActions className='cardActions'>
                 <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: '#c8102e' }} disabled={!user?.result} onClick={handleLike}>
+                    <Button size="small" style={{ color: 'black' }} disabled={!user?.result} onClick={handleLike}>
                         <Likes likes={likes} id={userId} />
                     </Button>
                 </Tooltip>
                 <Tooltip title="Comments" arrow placement='top'>
                     <Tooltip title="Comments" arrow placement='top'>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={comment} style={{ height: '25px' }} alt='comment icon' />
-                            <span style={{fontSize : '15px'}}>
+                            <img src={comment} style={{ height: '23px' }} alt='comment icon' />
+                            <span style={{fontSize : '13px'}}>
                                 &nbsp;{post?.comments?.length}
                             </span>
                         </div>
