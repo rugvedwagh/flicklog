@@ -306,6 +306,7 @@
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    width: 90%;
 }
 
 .commentsInnerContainer .MuiTypography-h6 {
@@ -330,7 +331,6 @@
 
 /* Write comment section styling */
 .write-comment {
-    margin-top: 15px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;

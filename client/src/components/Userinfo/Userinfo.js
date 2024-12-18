@@ -22,7 +22,9 @@ const Userinfo = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress size="3rem" style={{color:'white', marginLeft:'50%', marginTop:'10%'}}/>
+            <div className="loading-container">
+                <CircularProgress className="loading" size="4rem" color="primary" />
+            </div>
         );
     }
 

@@ -10,6 +10,7 @@
     }
 }
 
+/* Main Container */
 .main-cont {
     display: flex;
     flex-direction: column;
@@ -54,6 +55,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Lower Section */
 .lower-div {
     width: 100%;
     text-align: left;
@@ -81,6 +83,20 @@
     font-weight: normal;
 }
 
+/* Loading Spinner */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.loading {
+    color: #007bff;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .main-cont {
         width: 80%;

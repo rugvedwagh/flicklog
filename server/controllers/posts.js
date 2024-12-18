@@ -38,43 +38,26 @@ export const getPosts = async (req, res) => {
     }
 };
 
+
 export const getPostsBySearch = async (req, res) => {
-    const { searchQuery } = req.query;
+    const { searchQuery, tags } = req.query;
+
     try {
-        if (!searchQuery || searchQuery.trim() === '') {
-            return res.status(400).json({ message: 'Search query is required' });
-        }
+        const title = new RegExp(searchQuery, 'i');
+        const tagsArray = tags.split(',').map(tag => tag.trim()); // Split and trim tags
 
-        const titleRegex = new RegExp(searchQuery, 'i');
-        const posts = await PostMessage.find({ title: titleRegex });
+        const posts = await PostMessage.find({
+            $or: [
+                { title },
+                { tags: { $in: tagsArray } } // Use the tagsArray in $in operator
+            ]
+        });
 
-        // Return response in the expected structure
-        res.status(200).json({ data: posts });
+        res.json({ data: posts });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(404).json({ message: error.message });
     }
 };
-
-// export const getPostsBySearch = async (req, res) => {
-//     const { search, tags } = req.query;
-
-//     try {
-//         const title = new RegExp(search, 'i');
-//         const tagsArray = tags.split(',').map(tag => tag.trim()); // Split and trim tags
-
-//         const posts = await PostMessage.find({
-//             $or: [
-//                 { title },
-//                 { tags: { $in: tagsArray } } // Use the tagsArray in $in operator
-//             ]
-//         });
-
-//         console.log(tagsArray);
-//         res.json({ data: posts });
-//     } catch (error) {
-//         res.status(404).json({ message: error.message });
-//     }
-// };
 
 export const createPost = async (req, res) => {
     const post = req.body;

@@ -17,7 +17,7 @@ app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
-    res.send(`<h1>Server is running...</h1>`)
+    res.send(`Server is running...`)
 })
 
 const PORT = process.env.PORT || 5000;
@@ -29,3 +29,7 @@ mongoose.connect('mongodb+srv://rugvedwagh02:rugved76@cluster0.dqbaczp.mongodb.n
 }).catch((err) => { 
     console.log(err);
 }); 
+
+/*
+    Lines of code : 2348
+*/

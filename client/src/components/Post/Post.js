@@ -80,8 +80,8 @@ const Post = ({ post, setCurrentId }) => {
                 <Tooltip title="Comments" arrow placement='top'>
                     <Tooltip title="Comments" arrow placement='top'>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={comment} style={{ height: '23px' }} alt='comment icon' />
-                            <span style={{fontSize : '13px'}}>
+                            <img src={comment} style={{ height: '25px' }} alt='comment icon' />
+                            <span style={{fontSize : '15px'}}>
                                 &nbsp;{post?.comments?.length}
                             </span>
                         </div>

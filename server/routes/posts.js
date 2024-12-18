@@ -14,12 +14,12 @@ import express from 'express'
 
 const router = express.Router();
 
+router.get('/search', getPostsBySearch);    // the position matters, if i push this line down the search does not work!
 router.get('/', getPosts);
 router.get('/:id', getPost);
 router.post('/', auth, createPost);
 router.patch('/:id', auth, updatePost);
 router.delete('/:id', auth, deletePost);
-router.get('/search/', getPostsBySearch);
 router.patch('/:id/likePost', auth, likePost);
 router.post('/:id/commentPost', auth, commentPost);
 

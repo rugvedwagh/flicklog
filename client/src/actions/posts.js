@@ -1,5 +1,5 @@
 import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST, COMMENT } from '../constants/actionTypes';
-import * as api from '../api'
+import * as api from '../api'   
 
 // Action Creators
 // these are functions that return actions
@@ -23,32 +23,18 @@ export const getPosts = (page) => async (dispatch) => {
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING });
-
-        // Make the API call to fetch posts by search query
-        const response = await api.fetchPostsBySearch(searchQuery);
-        console.log('API response:', response);  // Log the entire response
-
-        const { data } = response;  // Destructure the 'data' property
-
-        // Log the data to check if it's in the correct structure
-        console.log('Fetched posts:', data);
-
-        // Dispatch action to store the data in the Redux state
-        dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
-
-        dispatch({ type: END_LOADING });
+        dispatch({ type: START_LOADING })
+        const { data: { data } } = await api.fetchPostsBySearch(searchQuery)
+        dispatch({ type: FETCH_BY_SEARCH, payload: data })
+        dispatch({ type: END_LOADING })
     } catch (error) {
-        console.error('Error fetching posts:', error.message);
-        dispatch({ type: END_LOADING });
+        console.log(error)
     }
-};
-
-
+}
 
 export const createPost = (post) => async (dispatch) => {
     try {
@@ -96,7 +82,9 @@ export const likePost = (id) => async (dispatch) => {
 export const commentPost = (value, id) => async (dispatch) => {
     try {
         const { data } = await api.comment(value, id);
+        console.log(data)
         dispatch({ type: COMMENT, payload: data });
+
         return data.comments;
     } catch (error) {
         console.log(error);
