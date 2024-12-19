@@ -29,13 +29,14 @@
 }
 
 .signintointeract{
-    color: grey;
+    color: #1a1a1a;
+    opacity: 0.8;
 }
 
 .close{
     position: relative;
     top: 50%; 
-    left: 40%; 
-    transform: translate(220%, -50%);
+    left: 50%; 
+    transform: translate(100%, -60%);
     cursor: pointer;
 }

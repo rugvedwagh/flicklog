@@ -1,5 +1,5 @@
 import { Typography, CircularProgress, Divider, Card, Button } from '@mui/material';
-import { getPost, getPostsBySearch } from '../../actions/posts';
+import { getPost } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
@@ -16,14 +16,14 @@ const PostDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getPost(id)); // Fetch post data
+        dispatch(getPost(id)); 
     }, [id, dispatch]);
 
     if (isLoading) {
-        return <CircularProgress className='loader' color='grey' size='4rem' />;
+        return <CircularProgress className='loader' color='grey' size='3rem' />;
     }
 
-    if (!post) return null; 
+    if (!post) return null;
 
     const openPost = (_id) => navigate(`/posts/${_id}`);
     const verticalView = () => setVertical(!vertical);

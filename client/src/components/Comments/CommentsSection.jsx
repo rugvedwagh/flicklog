@@ -1,4 +1,4 @@
-import { Typography, TextField, Button, Divider } from '@mui/material';
+import { Typography, TextField, Button } from '@mui/material';
 import { commentPost } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
@@ -11,9 +11,9 @@ const CommentsSection = ({ post }) => {
     const user = JSON.parse(localStorage.getItem('profile'))
     const dispatch = useDispatch();
 
-    const handleClick = async () => {
+    const postComment = async () => {
         const finalComment = `${user.result.name}: ${comment}`
-        const newComments = await dispatch(commentPost(finalComment, post._id));
+        const newComments = await dispatch(commentPost(finalComment, post._id));    // await is needed here 
         setComments(newComments);
         setComment('');
     }
@@ -48,7 +48,7 @@ const CommentsSection = ({ post }) => {
                         variant='contained'
                         fullWidth
                         disabled={!comment}
-                        onClick={handleClick}
+                        onClick={postComment}
                     >
                         Comment
                     </Button>

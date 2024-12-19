@@ -53,6 +53,7 @@
     border-radius: 50%;
     margin: 20px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    user-select: none;
 }
 
 /* Lower Section */
@@ -83,7 +84,6 @@
     font-weight: normal;
 }
 
-/* Loading Spinner */
 .loading-container {
     display: flex;
     justify-content: center;
@@ -93,6 +93,7 @@
 }
 
 .loading {
+    margin-top: 10%;
     color: #007bff;
 }
 

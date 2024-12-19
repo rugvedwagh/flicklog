@@ -1,5 +1,5 @@
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PostDetails from './components/PostDetails/PostDetails';
 import NotFound from './components/Notfound/NotFound';
 import Userinfo from './components/Userinfo/Userinfo';
@@ -12,6 +12,7 @@ import './App.css';
 
 const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const location = useLocation(); // Get the current location
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,8 +40,19 @@ const App = () => {
         });
     };
 
+    const backgroundClass = (() => {
+        switch (location.pathname) {
+            case '/posts':
+                return 'posts-background';
+            case '/auth':
+                return 'auth-background';
+            default:
+                return 'user-background';
+        }
+    })();
+
     return (
-        <BrowserRouter>
+        <div className={backgroundClass}>
             <Container maxWidth="xl">
                 <ArrowUpwardRoundedIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
                 <Navbar />
@@ -50,12 +62,12 @@ const App = () => {
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
                     <Route path="/auth" element={<Auth />} />
-                    <Route path="/user/info/:id" element={<Userinfo />} />
+                    <Route path="/user/i/:id" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>
-        </BrowserRouter>
+        </div>
     );
-}
+};
 
 export default App;

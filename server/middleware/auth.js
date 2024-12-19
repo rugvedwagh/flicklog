@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const secret = 'test';
 
-const auth = async (req, res, next) => {
+const authMiddleWare = async (req, res, next) => {
     try {
         //  'req.header.authorization' was set in api.js in client
         const authorizationHeader = req.headers.authorization;
@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
         if (!authorizationHeader) {
             return res.status(401).json({ message: 'Authorization header is missing.' });
         }
-                                        
+
         const token = authorizationHeader.split(" ")[1];
         const isCustomAuth = token.length < 500;
 
@@ -25,9 +25,8 @@ const auth = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        console.log(error);
         return res.status(401).json({ message: 'Token verification failed.' });
     }
 };
 
-export default auth;
+export default authMiddleWare;

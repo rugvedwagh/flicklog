@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import Likes from '../Likes/Likes'
 import moment from 'moment';
+import defimg from '../../assets/defimg.jpg'
 import './post.css';
 
 const Post = ({ post, setCurrentId }) => {
@@ -43,7 +44,12 @@ const Post = ({ post, setCurrentId }) => {
 
     return (
         <Card className='card' raised elevation={6} >
-            <CardMedia onClick={openPost} className='media' image={post.selectedfile} title={post.title} />
+            <CardMedia
+                onClick={openPost}
+                className="media"
+                image={post.selectedfile || defimg}
+                title={post.title || "Default Title"}
+            />
             <div className='overlay'>
                 <Typography variant="h6">
                     {post.name}
@@ -53,11 +59,14 @@ const Post = ({ post, setCurrentId }) => {
                 </Typography>
             </div>
             {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                <div className='overlay2'>
-                    <Tooltip title="Edit" arrow placement='top'>
-                        <Button style={{ color: 'white', marginRight: '-25px' }}
-                            size="small" onClick={() => setCurrentId(post._id)}>
-                            <MoreHorizIcon fontSize='medium' />
+                <div className="overlay2">
+                    <Tooltip title="Edit" arrow placement="top">
+                        <Button
+                            style={{ color: 'white', marginRight: '-25px' }}
+                            size="small"
+                            onClick={() => setCurrentId(post._id)}
+                        >
+                            <MoreHorizIcon fontSize="medium" />
                         </Button>
                     </Tooltip>
                 </div>
@@ -66,33 +75,43 @@ const Post = ({ post, setCurrentId }) => {
                 {post.tags.map((tag) => `#${tag} `)}
             </Typography>
             <Typography className='title' variant="h5" gutterBottom>
-                {post.title}
+                {post.title.slice(0, 43)}
             </Typography>
             <div className='msg'>
-                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }}/>
+                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
             </div>
             <CardActions className='cardActions'>
-                <Tooltip title="Like" arrow placement='top'>
-                    <Button size="small" style={{ color: 'black' }} disabled={!user?.result} onClick={handleLike}>
+                <Tooltip title="Like" arrow placement="top">                            
+                    <Button
+                        size="small"
+                        style={{ color: 'black' }}
+                        disabled={!user?.result}
+                        onClick={handleLike}
+                    >
                         <Likes likes={likes} id={userId} />
                     </Button>
                 </Tooltip>
-                <Tooltip title="Comments" arrow placement='top'>
-                    <Tooltip title="Comments" arrow placement='top'>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={comment} style={{ height: '25px' }} alt='comment icon' />
-                            <span style={{fontSize : '15px'}}>
-                                &nbsp;{post?.comments?.length}
-                            </span>
-                        </div>
-                    </Tooltip>
+
+                <Tooltip title="Comments" arrow placement="top">
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <img src={comment} style={{ height: '23px' }} alt="comment icon" />
+                        <span style={{ fontSize: '15px', color: 'black' }}>
+                            &nbsp;{post?.comments?.length}
+                        </span>
+                    </div>
                 </Tooltip>
+
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                    <Tooltip title="Delete" arrow placement='top'>
-                        <Button size="small" style={{ color: 'grey', marginRight: '-15px' }} onClick={toggleDeleteDialog}>
-                            <DeleteIcon fontSize='small' style={{ color: 'grey' }} />
+                    <Tooltip title="Delete" arrow placement="top">
+                        <Button
+                            size="small"
+                            style={{ color: 'grey', marginRight: '-15px' }}
+                            onClick={toggleDeleteDialog}
+                        >
+                            <DeleteIcon fontSize="small" titleAccess="" />
                         </Button>
                     </Tooltip>
+
                 )}
             </CardActions>
             <Dialog

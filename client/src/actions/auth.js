@@ -1,9 +1,10 @@
 import { AUTH, ERROR, START_LOADING, USER_INFO, END_LOADING } from '../constants/actionTypes';
-import * as api from '../api/index.js';
+import { signIn, signUp, userinfo } from '../api/userApi';
+
 
 export const signin = (formData, navigate) => async (dispatch) => {
     try {
-        const { data } = await api.signIn(formData);
+        const { data } = await signIn(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -15,7 +16,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
 export const signup = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await api.signUp(formData);
+        const { data } = await signUp(formData);
         dispatch({ type: AUTH, payload: data });
         dispatch({type : END_LOADING})
         navigate('/posts')
@@ -28,10 +29,10 @@ export const signup = (formData, navigate) => async (dispatch) => {
 export const userData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await api.userinfo(id);
+        const { data } = await userinfo(id);
         dispatch({ type: USER_INFO, payload: data });
         dispatch({ type: END_LOADING })
-        navigate(`/user/info/${id}`)
+        navigate(`/user/i/${id}`)
     } catch (error) {
         console.log(error);
     }

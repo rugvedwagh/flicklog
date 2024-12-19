@@ -1,16 +1,12 @@
-import { Container, Grow, Grid, Paper, TextField, AppBar, Button, ToggleButtonGroup, ToggleButton } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Container, Grow, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../../actions/posts';
-import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import './styles.css';
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
 
 const Home = () => {
     const [currentId, setCurrentId] = useState(null);
@@ -19,10 +15,8 @@ const Home = () => {
     const [formOpen, setformOpen] = useState(false);
     const [myposts, setMyposts] = useState(false);
     const dispatch = useDispatch();
-    const query = useQuery();   //usequery will search in the url 
-    const searchQuery = query.get('searchQuery');
-    const user = JSON.parse(localStorage.getItem('profile'));
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const handleDrop = () => {
         setformOpen(true);
@@ -31,7 +25,7 @@ const Home = () => {
     const searchPost = () => {
         if (search.trim() || tags) {
             dispatch(getPostsBySearch({ search, tags }))
-            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags}`);
+            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
         }
         else {
             navigate('/');
@@ -65,28 +59,24 @@ const Home = () => {
                         <Posts setCurrentId={setCurrentId} Myposts={myposts} />
                     </Grid>
                     <Grid item xs={12} sm={4} md={3}>
-                    <AppBar className='appBarSearch' position='static' color='inherit'>
+                        <AppBar className='appBarSearch' position='static' color='inherit'>
                             <TextField
-                                style={{ margin: '10px 0 0 0' }}
                                 name='search'
-                                variant='outlined'
+                                variant='filled'
                                 label='Search Memories'
-                                fullWidth
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                             <TextField
-                                style={{ margin: '10px 0 10px 0' }}
                                 name='search'
-                                variant='outlined'
+                                variant='filled'
                                 label='Search Tags'
-                                fullWidth
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
                             />
-                            <Button onClick={searchPost} variant='contained' className='searchButton' fullWidth style={{ margin: "0 10px", backgroundColor: 'black' }}>
-                                Search
-                            </Button>
+                            <button className='button-28' onClick={searchPost}>
+                                <SearchOutlinedIcon />
+                            </button>
                         </AppBar>
                         {!formOpen && user ? (
                             <Paper className='temp' onClick={handleDrop}>

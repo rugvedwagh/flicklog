@@ -1,3 +1,4 @@
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -29,7 +30,7 @@ const Posts = ({ setCurrentId, Myposts }) => {
     };
 
     return (
-        <div className='postscont'>
+        <div>
             {isLoading && currentPage === 1 ? (
                 <CircularProgress className="loading" size="3rem" color="grey" />
             ) : (
@@ -37,13 +38,12 @@ const Posts = ({ setCurrentId, Myposts }) => {
                     dataLength={userPosts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
-                    loader={<CircularProgress size="3rem" style={{margin:'10px 50%', color:'white'}}/>}
+                    loader={<CircularProgress size="3rem" style={{ margin: '30px 50%', color: 'white' }} />}
                     endMessage={
-                        <div style={{ textAlign: 'center', margin: '20px 0', color : 'white' }}>
-                            <b>You're all caught up!</b>
+                        <div className='endmessage'>
+                            <b style={{ display: 'flex', alignItems: 'center' }}>You're all caught up!&nbsp; <CheckCircleOutlineOutlinedIcon /></b>
                         </div>
                     }
-                    style={{overflowX:'hidden'}}
                 >
                     <Grid className="container" container alignItems="stretch" spacing={4}>
                         {userPosts.map((post) => (

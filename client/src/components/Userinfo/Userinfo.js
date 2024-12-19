@@ -7,25 +7,23 @@ import './userstyle.css';
 const Userinfo = () => {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const { clientData, isLoading } = useSelector((state) => state.authReducer);
+    const { posts } = useSelector((state) => state.posts);
     const userId = user.result._id;
 
     useEffect(() => {
         dispatch(userData(userId));
     }, [dispatch, userId]);
 
-    const { clientData, isLoading } = useSelector((state) => state.authReducer);
-    const { posts } = useSelector((state) => state.posts);
-
-    if (!clientData) {
-        return null;
-    }
 
     if (isLoading) {
         return (
-            <div className="loading-container">
-                <CircularProgress className="loading" size="4rem" color="primary" />
-            </div>
+            <CircularProgress className="loading" size="3rem" color="grey" />
         );
+    }
+
+    if (!clientData) {
+        return null;
     }
 
     return (

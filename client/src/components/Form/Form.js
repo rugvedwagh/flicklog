@@ -26,15 +26,14 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
         if (post) {
             setPostData({
                 title: post.title || '',
-                // message: post.message || '',            // Not setting message for now because it gives error and ruins the rest also
+                message: post.message || '',            // Not setting message for now because it gives error and ruins the rest also
                 tags: post.tags || '',
                 selectedfile: post.selectedfile || '',
             });
-            console.log("Post data:", postData);
         }
     }, [post]);
-    
-    const clear = () => {
+
+    const clearForm = () => {
         setCurrentId(0);
         setPostData({ title: '', message: '', tags: '', selectedfile: '' });
     };
@@ -48,28 +47,27 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
         if (currentId === 0) {
             dispatch(createPost({ ...postData, name: user?.result?.name }));
-            clear();
+            clearForm();
         } else {
-            console.log(user?.result?.name);
             dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
-            clear();
+            clearForm();
         }
     };
 
     if (!user?.result?.name) {
         return (
-            <Paper className='paper' elevation={6} style={{marginTop:'10px'}}>
+            <Paper className='paper' elevation={6} style={{ marginTop: '10px' }}>
                 <Typography variant="h6" align="center" className='signintointeract'>
-                    Sign in to create and interact.
+                    Sign in to post
                 </Typography>
             </Paper>
         );
     }
 
     return (
-        <Paper className='paper' elevation={6} style={{marginTop : '10px'}}>
+        <Paper className='paper' elevation={6} style={{ marginTop: '10px' }}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
-                <div className='close' onClick={toggleForm}><CloseOutlinedIcon color='black'/></div>
+                <div className='close' onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
                 <Typography variant="h6" style={{ marginBottom: '7px', color: 'black' }} onClick={toggleForm}>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
@@ -104,8 +102,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                         'link', 'image',
                     ]}
 
-                    placeholder='Description : 
-                        Note : Please copy paste the message elsewhere before editing!'
+                    placeholder='Description'
                     style={{ marginBottom: '75px', minHeight: '200px' }}
                 />
 
@@ -141,11 +138,11 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                 <Button
                     variant='outlined'
                     size='small'
-                    onClick={clear}
+                    onClick={clearForm}
                     fullWidth
                     style={{ backgroundColor: 'white', color: 'black' }}
                 >
-                    Clear
+                    clear
                 </Button>
             </form>
         </Paper>

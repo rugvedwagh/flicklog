@@ -22,8 +22,7 @@
 }
 
 .card:hover{
-    box-shadow: rgb(255, 255, 255) 0px 5px 15px;
-    
+    box-shadow: white 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .overlay {
@@ -53,7 +52,8 @@
 .title {
     padding: 0px 0 0 16px;
     margin-bottom: 0;
-    color: black;
+    color: #1a1a1a;
+    opacity: 0.9;
 }
 
 .cardActions {

@@ -1,4 +1,4 @@
-import { Avatar, Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
+import { Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { signin, signup } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
@@ -41,9 +41,9 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper className='paper' elevation={6} style={{ borderRadius: '10px', backgroundColor: 'white' }}>
+            <Paper className='paper' elevation={6} style={{ borderRadius: '5px', backgroundColor: 'white' }}>
                 <LockOutlinedIcon />
-                <Typography className='typography' component="h1" variant="h5" style={{ margin: "0 0 16px 0", color: 'black' }}>
+                <Typography className='typography' component="h1" variant="h5" style={{ margin: "16px 0 16px 0", color: 'black' }}>
                     {isSignup ? 'Sign up' : 'Log in'}
                 </Typography>
                 {errorMessage?.length && <Alert severity="error" style={{ margin: '10px 0' }}>{errorMessage}</Alert>}

@@ -5,6 +5,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes';
 import React, { useState, useEffect } from 'react';
+import { userData } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './styles.css';
@@ -27,7 +28,8 @@ const Navbar = () => {
     }
 
     const openUser = () => {
-        navigate(`/user/info/${user.result._id}`);
+        
+        navigate(`/user/i/${user.result._id}`);
         handleMenuClose();
     };
 
@@ -108,9 +110,9 @@ const Navbar = () => {
                             component={Link}
                             to="/auth"
                             variant='contained'
-                            style={{ margin: "0 10px", color: "black", backgroundColor: 'white' }}
+                            style={{ margin: "0 10px", color: "black", backgroundColor: 'white', borderRadius:'10px', textTransform:'none' }}
                         >
-                            Log in
+                            Log in 
                         </Button>
                     )}
                 </Toolbar>

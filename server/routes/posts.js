@@ -14,7 +14,7 @@ import express from 'express'
 
 const router = express.Router();
 
-router.get('/search', getPostsBySearch);    // the position matters, if i push this line down the search does not work!
+router.get('/search', getPostsBySearch);    // the position matters, if I push this line down the search does not work!
 router.get('/', getPosts);
 router.get('/:id', getPost);
 router.post('/', auth, createPost);
