@@ -31,7 +31,7 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
 
     return (
-        <div className='cont'>
+        <div >
             <Button onClick={verticalView} class='verticalbutton'>
                 toggle <br /> view
             </Button>

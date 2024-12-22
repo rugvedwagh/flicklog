@@ -3,9 +3,9 @@ import { createPost, updatePost } from '../../actions/posts';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
+import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import './styles.css';
 
 
@@ -103,7 +103,10 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     ]}
 
                     placeholder='Description'
-                    style={{ marginBottom: '75px', minHeight: '200px' }}
+                    style={{
+                        marginBottom: '75px',
+                        minHeight: '200px'
+                    }}
                 />
 
                 <TextField
@@ -130,7 +133,10 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     size='large'
                     type='submit'
                     fullWidth
-                    style={{ marginBottom: '10px', backgroundColor: 'black' }}
+                    style={{
+                        marginBottom: '10px',
+                        backgroundColor: 'black'
+                    }}
                 >
                     Post
                 </Button>
@@ -140,7 +146,10 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     size='small'
                     onClick={clearForm}
                     fullWidth
-                    style={{ backgroundColor: 'white', color: 'black' }}
+                    style={{
+                        backgroundColor: 'white',
+                        color: 'black'
+                    }}
                 >
                     clear
                 </Button>

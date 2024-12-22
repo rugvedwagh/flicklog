@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css'; // Import your CSS file for styling
+import './styles.css';
 import patrick from '../../assets/patrick.png'
 
 const NotFound = () => {

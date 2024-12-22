@@ -3,9 +3,8 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import * as actionType from '../../constants/actionTypes';
-import React, { useState, useEffect } from 'react';
-import { userData } from '../../actions/auth';
+import React, { useState, useEffect, useCallback } from 'react';
+import { userData, Logout } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './styles.css';
@@ -19,25 +18,25 @@ const Navbar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
 
-    const Logout = () => {
-        dispatch({ type: actionType.LOGOUT });
-        navigate('/');
+    const userId = user?.result?._id
+
+    const handleLogout = useCallback(() => {
+        dispatch(Logout(navigate));
         setUser(null);
-        handleMenuClose();
+        closeMenu();
         setOpenDialog(false);
-    }
+    }, [dispatch, navigate]);
 
     const openUser = () => {
-        
-        navigate(`/user/i/${user.result._id}`);
-        handleMenuClose();
+        dispatch(userData(userId, navigate));
+        closeMenu();
     };
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuClose = () => {
+    const closeMenu = () => {
         setAnchorEl(null);
     };
 
@@ -45,22 +44,30 @@ const Navbar = () => {
     useEffect(() => {
         const token = user?.token;
 
-        if (token) {
-            const decodedToken = jwtDecode(token);
+        const checkTokenExpiry = () => {
+            if (token) {
+                const decodedToken = jwtDecode(token);
 
-            if (decodedToken.exp * 1000 < new Date().getTime()) {
-                Logout();
+                if (decodedToken.exp * 1000 < new Date().getTime()) {
+                    handleLogout(); // Safe to call because it's memoized.
+                }
             }
-        }
+        };
+
+        checkTokenExpiry();
         setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [location]);
+    }, [handleLogout, user?.token, location]);
 
     return (
         <AppBar className="appBar" position="static">
             <div className='navbar'>
                 <div className='brandContainer'>
                     <Link to="/posts" className='headingcontainer'>
-                        <div className="heading" align="center" style={{ textAlign: 'center' }}>reminisce</div>
+                        <div className="heading" align="center" style={{
+                            textAlign: 'center'
+                        }}>
+                            reminisce
+                        </div>
                     </Link>
                 </div>
                 <Toolbar className='toolbar'>
@@ -94,7 +101,7 @@ const Navbar = () => {
                                 sx={{ left: -10, top: 10 }}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
-                                onClose={handleMenuClose}
+                                onClose={closeMenu}
                                 className='menu'
                                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -110,9 +117,15 @@ const Navbar = () => {
                             component={Link}
                             to="/auth"
                             variant='contained'
-                            style={{ margin: "0 10px", color: "black", backgroundColor: 'white', borderRadius:'10px', textTransform:'none' }}
+                            style={{
+                                margin: "0 10px",
+                                color: "black",
+                                backgroundColor: 'white',
+                                borderRadius: '3px',
+                                textTransform: 'none'
+                            }}
                         >
-                            Log in 
+                            Log in
                         </Button>
                     )}
                 </Toolbar>
@@ -129,10 +142,16 @@ const Navbar = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={() => { setOpenDialog(false); handleMenuClose() }} style={{ color: 'white', backgroundColor: 'black' }} >
+                        <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }} style={{
+                            color: 'white',
+                            backgroundColor: 'black'
+                        }} >
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={Logout} style={{ color: 'white', backgroundColor: 'black' }} autoFocus>
+                        <Button variant="contained" onClick={handleLogout} style={{
+                            color: 'white',
+                            backgroundColor: 'black'
+                        }} autoFocus>
                             Logout
                         </Button>
                     </DialogActions>

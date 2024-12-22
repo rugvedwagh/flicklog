@@ -21,6 +21,10 @@ const Home = () => {
     const handleDrop = () => {
         setformOpen(true);
     }
+    
+    const handleSwitch = () => {
+        setMyposts(!myposts);
+    }
 
     const searchPost = () => {
         if (search.trim() || tags) {
@@ -30,10 +34,6 @@ const Home = () => {
         else {
             navigate('/');
         }
-    }
-
-    const handleSwitch = () => {
-        setMyposts(!myposts);
     }
 
     return (
@@ -49,15 +49,18 @@ const Home = () => {
                         <ToggleButton value="allPosts" aria-label="all posts">
                             <strong>All Posts</strong>
                         </ToggleButton>
+
                         <ToggleButton value="myPosts" aria-label="my posts">
                             <strong>My Posts</strong>
                         </ToggleButton>
+
                     </ToggleButtonGroup>
                 </div>
                 <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                     <Grid item xs={12} sm={6} md={9}>
                         <Posts setCurrentId={setCurrentId} Myposts={myposts} />
                     </Grid>
+
                     <Grid item xs={12} sm={4} md={3}>
                         <AppBar className='appBarSearch' position='static' color='inherit'>
                             <TextField
@@ -86,6 +89,7 @@ const Home = () => {
                             <Form currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                         )}
                     </Grid>
+
                 </Grid>
             </Container>
         </Grow>

@@ -13,6 +13,8 @@ export const END_LOADING = 'END_LOADING'
 
 // Auth actions
 export const USER_INFO = 'USER_INFO'
-export const LOGOUT = 'LOGOUT';
-export const AUTH = 'AUTH';
+export const LOGOUT = 'LOGOUT'
+export const AUTH = 'AUTH'
 export const ERROR = 'ERROR'
+export const BOOKMARK_POST = 'BOOKMARK_POST'
+export const UPDATE_USER_BOOKMARKS = 'UPDATE_USER_BOOKMARKS'

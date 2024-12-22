@@ -61,6 +61,7 @@ export const getPostsBySearch = async (req, res) => {
 
 export const createPost = async (req, res) => {
     const post = req.body;
+
     const newPost = new PostMessage({
         ...post,
         creator: req.userId,
@@ -70,7 +71,6 @@ export const createPost = async (req, res) => {
     try {
         await newPost.save();
         res.status(201).json(newPost);
-
     } catch (error) {
         res.status(409).json({
             message: error.message
@@ -88,17 +88,14 @@ export const updatePost = async (req, res) => {
             return res.status(404).send('No post with this id');
         }
 
-        // Attempt to update the post
         const updatedPost = await PostMessage.findByIdAndUpdate(
             _id, { ...post, _id }, { new: true }
         );
 
-        // If no post is found, respond with a 404 error
         if (!updatedPost) {
             return res.status(404).send('No post found');
         }
 
-        // Respond with the updated post
         res.json(updatedPost);
     } catch (error) {
         res.status(500).json({

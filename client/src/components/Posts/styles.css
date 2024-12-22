@@ -1,20 +1,16 @@
 .mainContainer {
     display: flex;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .container {
     margin-top: 100px;
+    overflow-x: hidden;
 }
 
 .actionDiv {
     text-align: center;
-}
-
-.noposts {
-    margin: 240px 40%;
-    color: white;
-    font-size: 30px;
 }
 
 .loading {
@@ -56,4 +52,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

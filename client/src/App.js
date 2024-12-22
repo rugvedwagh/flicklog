@@ -9,6 +9,7 @@ import { Container } from '@mui/material';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import './App.css';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
@@ -65,6 +66,7 @@ const App = () => {
                     <Route path="/user/i/:id" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+                <Footer/>
             </Container>
         </div>
     );

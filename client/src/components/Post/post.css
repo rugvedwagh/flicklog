@@ -4,6 +4,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
     cursor: pointer;
+    border-radius: 3px;
 }
 
 .border {
@@ -17,7 +18,7 @@
     justify-content: space-between;
     background-color: white;
     color: white;
-    border-radius: 5px;
+    border-radius: 3px;
     height: 100%;
 }
 
@@ -54,6 +55,7 @@
     margin-bottom: 0;
     color: #1a1a1a;
     opacity: 0.9;
+    user-select: none;
 }
 
 .cardActions {
@@ -65,4 +67,6 @@
 .msg {
     padding: 0 16px;
     margin-top: 0;
+    user-select: none;
 }
+

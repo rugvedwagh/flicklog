@@ -30,7 +30,7 @@ const Posts = ({ setCurrentId, Myposts }) => {
     };
 
     return (
-        <div>
+        <div style={{overflowX:'hidden'}}>
             {isLoading && currentPage === 1 ? (
                 <CircularProgress className="loading" size="3rem" color="grey" />
             ) : (

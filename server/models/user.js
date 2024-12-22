@@ -16,6 +16,12 @@ const userSchema = mongoose.Schema({
     id: {
         type: String
     },
+    bookmarks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PostMesssage" 
+        }
+    ]
 });
 
 export default mongoose.model("User", userSchema);

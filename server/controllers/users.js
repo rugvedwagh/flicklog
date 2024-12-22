@@ -63,3 +63,28 @@ export const getUserData = async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 }
+
+export const bookmarkPost = async (req, res) => {
+    const { postId, userId } = req.body;
+
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        const isAlreadyBookmarked = user.bookmarks.includes(postId);
+
+        if (isAlreadyBookmarked) {
+
+            user.bookmarks = user.bookmarks.filter(id => id.toString() !== postId);
+            await user.save();
+            res.status(200).json({ message: 'Bookmark removed successfully', bookmarks: user.bookmarks });
+        } else {
+
+            user.bookmarks.push(postId);
+            await user.save();
+            res.status(200).json({ message: 'Bookmark added successfully', bookmarks: user.bookmarks });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating bookmarks' });
+    }
+};

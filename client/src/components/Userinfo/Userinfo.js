@@ -1,20 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-import { userData } from '../../actions/auth';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import navigate hook
 import './userstyle.css';
 
 const Userinfo = () => {
-    const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('profile'));
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
     const { posts } = useSelector((state) => state.posts);
-    const userId = user.result._id;
-
-    useEffect(() => {
-        dispatch(userData(userId));
-    }, [dispatch, userId]);
-
+    const navigate = useNavigate(); // Use navigate hook for navigation
+    const [showBm, setShowbm] = useState(false);
 
     if (isLoading) {
         return (
@@ -23,8 +17,16 @@ const Userinfo = () => {
     }
 
     if (!clientData) {
-        return null;
+        return (
+            <h2>User does not exist!</h2>
+        );
     }
+
+    const bookmarkedPosts = posts.filter(post => clientData.bookmarks?.includes(post._id));
+
+    const openPost = (postId) => {
+        navigate(`/posts/${postId}`);
+    };
 
     return (
         <div className="main-cont">
@@ -45,13 +47,40 @@ const Userinfo = () => {
                     <li>
                         <strong>Posts:</strong> <span>{posts.filter((post) => post.creator === clientData._id).length}</span>
                     </li>
-                    <li>
+                    {/* <li>
                         <strong>User ID:</strong> <span>{clientData._id}</span>
-                    </li>
+                    </li> */}
                     <li>
                         <strong>Version:</strong> <span>{clientData.__v}</span>
                     </li>
+                    <li>
+                        <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
+                    </li>
+                    <li onClick={() => setShowbm(!showBm)}> {/* Toggle the state */}
+                        {showBm ? <span>hide</span> : <span>show</span>} {/* Conditional rendering */}
+                    </li>
                 </ul>
+
+                {/* Display Bookmarked Posts */}
+                {bookmarkedPosts.length > 0 && showBm ? (
+                    <div className="bookmarked-posts">
+                        <hr></hr>
+                        <h3>Bookmarked Posts</h3>
+                        <div className="bookmarked-list">
+                            {bookmarkedPosts.map((post) => (
+                                <div
+                                    key={post._id}
+                                    className="bookmarked-post"
+                                    onClick={() => openPost(post._id)} // Navigate to post detail
+                                >
+                                    <strong>{post.title}</strong>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     );
