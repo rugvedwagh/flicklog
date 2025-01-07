@@ -1,40 +1,93 @@
-import { AUTH, LOGOUT, USER_INFO, START_LOADING, END_LOADING, ERROR, BOOKMARK_POST, UPDATE_USER_BOOKMARKS } from '../constants/actionTypes';
+import {
+    AUTH,
+    LOGOUT,
+    USER_INFO,
+    START_LOADING,
+    END_LOADING,
+    ERROR,
+    BOOKMARK_POST,
+    UPDATE_USER
+} from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null, clientData: null, isLoading: true, errorMessage: null }, action) => {
+const userReducer = (state = {
+    authData: null,
+    clientData: null,
+    isLoading: true,
+    errorMessage: null
+}, action) => {
     switch (action.type) {
+
         case AUTH:
             localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
-            return { ...state, authData: action?.payload };
+            return {
+                ...state,
+                authData: action?.payload
+            };
+
         case LOGOUT:
             localStorage.removeItem('profile');
-            return { ...state, authData: null, clientData: null };
+            return {
+                ...state,
+                authData: null,
+                clientData: null
+            };
+
         case USER_INFO:
-            return { ...state, clientData: action.payload };
+            return {
+                ...state,
+                clientData: action.payload
+            };
+
         case BOOKMARK_POST:
             return {
                 ...state,
                 clientData: {
-                    ...state.clientData || {}, // Fallback to an empty object if clientData is null/undefined
+                    ...state.clientData,
                     bookmarks: action.payload.bookmarks,
                 },
             };
-        case UPDATE_USER_BOOKMARKS:
+
+        case UPDATE_USER:
+            const updatedClientData = {
+                ...state.clientData,
+                ...action.payload
+            };
+
+            if (state.authData) {
+                const updatedAuthData = {
+                    ...state.authData,
+                    result: updatedClientData
+                };
+                localStorage.setItem('profile', JSON.stringify(updatedAuthData));
+            }
+
             return {
                 ...state,
-                clientData: {
-                    ...state.clientData,
-                    bookmarks: action.payload, // Update bookmarks in Redux store
-                },
+                clientData: updatedClientData,
+                errorMessage: null
             };
+
         case ERROR:
-            return { ...state, errorMessage: action.payload };
+            return {
+                ...state,
+                errorMessage: action.payload
+            };
+
         case START_LOADING:
-            return { ...state, isLoading: true };
+            return {
+                ...state,
+                isLoading: true
+            };
+
         case END_LOADING:
-            return { ...state, isLoading: false };
+            return {
+                ...state,
+                isLoading: false
+            };
+
         default:
             return state;
     }
 };
 
-export default authReducer;
+export default userReducer;

@@ -62,7 +62,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div className="col social">
+                <div className="col">
                     <h1>Social</h1>
                     <ul>
                         <li>
@@ -70,7 +70,6 @@ const Footer = () => {
                                 src={fblogo}
                                 alt="Facebook"
                                 width="32"
-                                style={{ width: '32px' }}
                             />
                         </li>
                         <li>
@@ -78,7 +77,6 @@ const Footer = () => {
                                 src={twitterlogo}
                                 alt="Twitter"
                                 width="32"
-                                style={{ width: '32px' }}
                             />
                         </li>
                         <li>
@@ -86,7 +84,6 @@ const Footer = () => {
                                 src={instalogo}
                                 alt="Instagram"
                                 width="32"
-                                style={{ width: '32px' }}
                             />
                         </li>
                     </ul>

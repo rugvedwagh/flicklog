@@ -18,6 +18,18 @@ body {
     }
 }
 
+@keyframes flower {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .scrollup {
     position: fixed;
     bottom: 25px;
@@ -28,6 +40,7 @@ body {
     cursor: pointer;
     border-radius: 50%;
     transition: 0.3s ease-in;
+    animation: flower 0.6s ease-in-out;
     padding: 10px;
 }
 
@@ -119,6 +132,7 @@ body {
     background: #1A1A1D;
     background-size: cover;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .user-background {
@@ -127,6 +141,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     min-height: 98vh;
+    overflow-x: hidden;
 }
 
 .auth-background {
@@ -135,5 +150,8 @@ body {
     background-attachment: fixed;
     background-size: cover;
     min-height: 98vh;
+    width: 100%;
     box-shadow: 0px 0px 55px rgb(0, 0, 0);
+    overflow-x: hidden;
 }
+

@@ -1,40 +1,51 @@
 import { Typography, CircularProgress, Divider, Card, Button } from '@mui/material';
-import { getPost } from '../../actions/posts';
+import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import CommentsSection from '../Comments/CommentsSection';
 import moment from 'moment';
 import './postdetail.css';
 
 const PostDetails = () => {
-    const { post, posts, isLoading } = useSelector((state) => state.posts);
+    
     const { id } = useParams();
-    const [isFullScreen, setIsFullScreen] = useState(false);
-    const [vertical, setVertical] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [vertical, setVertical] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
+
+    const toggleView = useCallback(() => setVertical(prev => !prev), []);
+    const openPost = useCallback((_id) => navigate(`/posts/${_id}`), [navigate]);
+    const handleImageClick = useCallback(() => setIsFullScreen(prev => !prev), []);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         dispatch(getPost(id)); 
     }, [id, dispatch]);
 
+    useEffect(() => {
+        if (post) {
+            dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
+        }
+    }, [post]);
+
     if (isLoading) {
-        return <CircularProgress className='loader' color='grey' size='3rem' />;
+        return <CircularProgress className='loader' color='grey' size='4rem' />;
     }
 
     if (!post) return null;
 
-    const openPost = (_id) => navigate(`/posts/${_id}`);
-    const verticalView = () => setVertical(!vertical);
-    const handleImageClick = () => setIsFullScreen(!isFullScreen);
-    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id).slice(0, 3);
+    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
     return (
-        <div >
-            <Button onClick={verticalView} class='verticalbutton'>
+        <div style={{paddingTop:'1.75rem'}}>
+
+            <Button onClick={toggleView} class='verticalbutton'>
                 toggle <br /> view
             </Button>
+
             <div className={`main ${vertical ? 'altview' : ''}`}>
                 <div className={`second ${vertical ? 'alt' : ''}`}>
                     <img
@@ -44,31 +55,40 @@ const PostDetails = () => {
                         onClick={handleImageClick}
                     />
                 </div>
+
                 <div className={`first ${vertical ? 'alt' : ''}`}>
-                    <h2 className='posttitle'>{post.title}</h2>
+
+                    <Typography variant='h3' style={{fontWeight:'700'}}color="#333">
+                        {post.title}
+                    </Typography>
+                    
                     <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    <Typography gutterBottom variant='body1' component='p' style={{ overflow: 'hidden', fontSize: '17px' }} dangerouslySetInnerHTML={{ __html: post.message }} />
+                    
+                    <Typography gutterBottom component='p' className='postmessage' sx={{fontSize:'23px'}} dangerouslySetInnerHTML={{ __html: post.message }} />
+                    
                     <Typography variant='h6' color='textSecondary'>
                         Posted by: {post.name}
                     </Typography>
-                    <Typography variant='body1' style={{ color: 'textSecondary' }}>
+                    
+                    <Typography variant='h6' color='textSecondary'>
                         {moment(post.createdAt).fromNow()}
                     </Typography>
+                    
                     <CommentsSection post={post} />
                 </div>
             </div>
 
-            {!!recommendedPosts.length && (
+            {recommendedPosts.length ? (
                 <div className='sect'>
-                    <Typography gutterBottom variant='h5' style={{ color: 'black' }}>
+                    <Typography gutterBottom variant='h5' style={{ color: '#333' }}>
                         You might also like
                     </Typography>
                     <Divider color='black' />
-                    <div className='recommendedPosts'>
+                    <div className='recommended-posts'>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
-                            <Card class='recpost' onClick={() => openPost(_id)} key={_id}>
+                            <Card className='recommended-post' onClick={() => openPost(_id)} key={_id}>
                                 <Typography gutterBottom variant='h6'>{title}</Typography>
                                 <img
                                     src={selectedfile}
@@ -81,6 +101,8 @@ const PostDetails = () => {
                         ))}
                     </div>
                 </div>
+            ) : (
+                <h3 style={{color:'white'}}>No related posts</h3>
             )}
         </div>
     );

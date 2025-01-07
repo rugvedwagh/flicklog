@@ -2,6 +2,7 @@ import { Typography, TextField, Button } from '@mui/material';
 import { commentPost } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
+import './comments.css';
 
 const CommentsSection = ({ post }) => {
 
@@ -12,7 +13,7 @@ const CommentsSection = ({ post }) => {
     const dispatch = useDispatch();
 
     const postComment = async () => {
-        const finalComment = `${user.result.name}: ${comment}`
+        const finalComment = `${user.result.name}: ${comment}`;
         const newComments = await dispatch(commentPost(finalComment, post._id));    // await is needed here 
         setComments(newComments);
         setComment('');
@@ -21,19 +22,26 @@ const CommentsSection = ({ post }) => {
     return (
         <div className="commentsOuterContainer">
             <div className="commentsInnerContainer">
-                <Typography gutterBottom variant='h6' color='white' style={{ backgroundColor: 'black', paddingLeft: '5px', borderRadius: '5px' }}>Comments</Typography>
-                {comments.length && comments?.slice(0).reverse().map((comment, index) => (
-                    <Typography key={index} gutterBottom variant='subtitle1'>
-                        <strong>{comment.split(': ')[0]} : </strong>
-                        {comment.split(':')[1]}
-                    </Typography>
-                ))}
+                <Typography gutterBottom variant='h6'>Comments</Typography>
+                {comments.length ?
+                    comments?.slice(0).reverse().map((comment, index) => (
+
+                        <Typography key={index} gutterBottom variant='subtitle1'>
+                            <strong>{comment.split(': ')[0]} : </strong> <span style={{ color: '#1a1a1d' }}>{comment.split(':')[1]}</span>
+                        </Typography>
+
+                    )) :
+                    (
+                        <></>
+                    )}
             </div>
             {user?.result?.name && (
                 <div className='write-comment'>
-                    <Typography gutterBottom variant='h6' style={{ color: 'grey' }}>
+
+                    <Typography gutterBottom variant='h6'>
                         Write a Comment
                     </Typography>
+
                     <TextField
                         fullWidth
                         rows={3}
@@ -43,11 +51,12 @@ const CommentsSection = ({ post }) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                     />
+
                     <Button
-                        style={{ marginTop: '10px', color: 'white', backgroundColor: 'black' }}
+                        style={{ marginTop: '10px' }}
                         variant='contained'
                         fullWidth
-                        disabled={!comment}
+                        disabled={!comment.trim()}
                         onClick={postComment}
                     >
                         Comment

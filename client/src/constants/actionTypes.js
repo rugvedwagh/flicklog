@@ -8,6 +8,7 @@ export const UPDATE = 'UPDATE'
 export const DELETE = 'DELETE'
 export const LIKE = 'LIKE'
 
+// Loading actions
 export const START_LOADING = 'START_LOADING'
 export const END_LOADING = 'END_LOADING'
 
@@ -17,4 +18,4 @@ export const LOGOUT = 'LOGOUT'
 export const AUTH = 'AUTH'
 export const ERROR = 'ERROR'
 export const BOOKMARK_POST = 'BOOKMARK_POST'
-export const UPDATE_USER_BOOKMARKS = 'UPDATE_USER_BOOKMARKS'
+export const UPDATE_USER = 'UPDATE_USER'

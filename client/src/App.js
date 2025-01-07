@@ -13,7 +13,8 @@ import Footer from './components/Footer/Footer';
 
 const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const location = useLocation(); // Get the current location
+    const user = JSON.parse(localStorage.getItem('profile'));
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,7 +54,7 @@ const App = () => {
     })();
 
     return (
-        <div className={backgroundClass}>
+        <div className={backgroundClass} style={{overflowX:'hidden'}}>
             <Container maxWidth="xl">
                 <ArrowUpwardRoundedIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
                 <Navbar />
@@ -62,12 +63,12 @@ const App = () => {
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/user/i/:id" element={<Userinfo />} />
+                    <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth />} />
+                    <Route path="/user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
-                <Footer/>
             </Container>
+            <Footer />
         </div>
     );
 };

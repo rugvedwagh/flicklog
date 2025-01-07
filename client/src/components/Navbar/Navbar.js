@@ -17,6 +17,7 @@ const Navbar = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorEl, setAnchorEl] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
+    const [navclass, setNavclass] = useState('appBar')
 
     const userId = user?.result?._id
 
@@ -40,6 +41,18 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY) {
+            setNavclass('appBar-blur')
+        } else if (currentScrollY < lastScrollY) {
+            setNavclass('appBar')
+        }
+        lastScrollY = currentScrollY;
+    });
 
     useEffect(() => {
         const token = user?.token;
@@ -59,10 +72,10 @@ const Navbar = () => {
     }, [handleLogout, user?.token, location]);
 
     return (
-        <AppBar className="appBar" position="static">
+        <AppBar className={navclass}>
             <div className='navbar'>
                 <div className='brandContainer'>
-                    <Link to="/posts" className='headingcontainer'>
+                    <Link to="/posts" className='heading-container'>
                         <div className="heading" align="center" style={{
                             textAlign: 'center'
                         }}>
@@ -73,7 +86,7 @@ const Navbar = () => {
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>
-                            <span className="avatarContainer">
+                            <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
                                     className="profileAvatar"

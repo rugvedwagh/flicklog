@@ -1,36 +1,38 @@
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid, CircularProgress, Typography } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts';
-import Post from '../Post/Post.js'
+import Post from '../Post/Post.js';
 import './styles.css';
 
 const Posts = ({ setCurrentId, Myposts }) => {
-    const dispatch = useDispatch();
-    const { posts, isLoading, numberOfPages } = useSelector((state) => state.posts);
+    
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
-
+    const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
-
-    const userPosts = user && Myposts
-        ? posts?.filter((post) => post.creator === userId)
-        : posts;
+    const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
 
     useEffect(() => {
         dispatch(getPosts(currentPage));
     }, [currentPage, dispatch]);
 
-    const fetchMorePosts = () => {
+    const userPosts = useMemo(() => {
+        if (user && Myposts) {
+            return posts?.filter((post) => post.creator === userId);
+        }
+        return posts;
+    }, [user, Myposts, posts, userId]);
+
+    const fetchMorePosts = useCallback(() => {
         if (currentPage < numberOfPages) {
             setCurrentPage((prevPage) => prevPage + 1);
         }
-    };
+    }, [currentPage, numberOfPages]);
 
     return (
-        <div style={{overflowX:'hidden'}}>
+        <div style={{ overflow: 'hidden' }}>
             {isLoading && currentPage === 1 ? (
                 <CircularProgress className="loading" size="3rem" color="grey" />
             ) : (
@@ -38,12 +40,11 @@ const Posts = ({ setCurrentId, Myposts }) => {
                     dataLength={userPosts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
-                    loader={<CircularProgress size="3rem" style={{ margin: '30px 50%', color: 'white' }} />}
+                    loader={<CircularProgress size="3rem" style={{ margin: '3rem 50%', color: 'white' }} />}
                     endMessage={
-                        <div className='endmessage'>
-                            <b style={{ display: 'flex', alignItems: 'center' }}>You're all caught up!&nbsp; <CheckCircleOutlineOutlinedIcon /></b>
-                        </div>
+                            <Typography variant='h5' color="white" align='center' > No more posts!</Typography>
                     }
+                    style={{ overflowX: 'hidden' }}
                 >
                     <Grid className="container" container alignItems="stretch" spacing={4}>
                         {userPosts.map((post) => (

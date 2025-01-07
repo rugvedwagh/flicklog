@@ -16,12 +16,10 @@
     align-items: center;
     padding: 20px;
     animation: slideleft 0.6s ease;
-    margin-top: 30%;
 }
 
 .form {
-    width: 100%;
-    margin-top: 8px;
+    width: 100%;    
 }
 
 .submit {
@@ -70,6 +68,6 @@
 
 @media (max-width: 899px) {
     .image-container {
-        display: none; /* Hide the image on small screens */
+        display: none; 
     }
 }

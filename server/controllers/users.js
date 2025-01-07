@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 const secret = 'test';
 
-export const signin = async (req, res) => {
+export const logIn = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -24,7 +24,7 @@ export const signin = async (req, res) => {
     }
 };
 
-export const signup = async (req, res) => {
+export const signUp = async (req, res) => {
     try {
         const { email, password, confirmPassword, firstName, lastName } = req.body;
         const oldUser = await UserModel.findOne({ email });
@@ -86,5 +86,33 @@ export const bookmarkPost = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Error updating bookmarks' });
+    }
+};
+
+
+export const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { name, email } = req.body;
+
+    if (!req.userId) {
+        return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    try {
+        // Update the user details
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            id,
+            { name, email },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
     }
 };

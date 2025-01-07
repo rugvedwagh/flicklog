@@ -1,12 +1,12 @@
-import { Container, Grow, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Container, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-import './styles.css';
+import './home.css';
 
 const Home = () => {
     const [currentId, setCurrentId] = useState(null);
@@ -16,17 +16,22 @@ const Home = () => {
     const [myposts, setMyposts] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const user = JSON.parse(localStorage.getItem('profile'));
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     const handleDrop = () => {
         setformOpen(true);
     }
-    
+
     const handleSwitch = () => {
         setMyposts(!myposts);
     }
 
-    const searchPost = () => {
+    const handleSearchPost = () => {
         if (search.trim() || tags) {
             dispatch(getPostsBySearch({ search, tags }))
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
@@ -37,62 +42,63 @@ const Home = () => {
     }
 
     return (
-        <Grow in>
-            <Container maxWidth='xl'>
-                <div className='toggle-container'>
-                    <ToggleButtonGroup
-                        value={myposts ? "myPosts" : "allPosts"}
-                        exclusive
-                        onChange={handleSwitch}
-                        aria-label="post toggle"
-                    >
-                        <ToggleButton value="allPosts" aria-label="all posts">
-                            <strong>All Posts</strong>
-                        </ToggleButton>
+        <Container maxWidth='xl' style={{ marginTop: '7rem' }}>
 
-                        <ToggleButton value="myPosts" aria-label="my posts">
-                            <strong>My Posts</strong>
-                        </ToggleButton>
+            <ToggleButtonGroup
+                value={myposts ? "myPosts" : "allPosts"}
+                exclusive
+                onChange={handleSwitch}
+                aria-label="post toggle"
+            >
+                <ToggleButton value="allPosts" aria-label="all posts">
+                    <strong>All Posts</strong>
+                </ToggleButton>
 
-                    </ToggleButtonGroup>
-                </div>
-                <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
-                    <Grid item xs={12} sm={6} md={9}>
-                        <Posts setCurrentId={setCurrentId} Myposts={myposts} />
-                    </Grid>
+                <ToggleButton value="myPosts" aria-label="my posts">
+                    <strong>My Posts</strong>
+                </ToggleButton>
 
-                    <Grid item xs={12} sm={4} md={3}>
-                        <AppBar className='appBarSearch' position='static' color='inherit'>
-                            <TextField
-                                name='search'
-                                variant='filled'
-                                label='Search Memories'
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                            <TextField
-                                name='search'
-                                variant='filled'
-                                label='Search Tags'
-                                value={tags}
-                                onChange={(e) => setTags(e.target.value)}
-                            />
-                            <button className='button-28' onClick={searchPost}>
-                                <SearchOutlinedIcon />
-                            </button>
-                        </AppBar>
-                        {!formOpen && user ? (
-                            <Paper className='temp' onClick={handleDrop}>
-                                Want to share something?
-                            </Paper>
-                        ) : (
-                            <Form currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
-                        )}
-                    </Grid>
+            </ToggleButtonGroup>
+
+            <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
+                <Grid item xs={12} sm={6} md={9}>
+                    <Posts setCurrentId={setCurrentId} Myposts={myposts} />
+                </Grid>
+
+                <Grid item xs={12} sm={4} md={3}>
+                    <AppBar className='appBarSearch' position='static' color='inherit'>
+                        <TextField
+                            name='search'
+                            variant='filled'
+                            label='Search Memories'
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <TextField
+                            name='search'
+                            variant='filled'
+                            label='Search Tags'
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
+                        />
+                        <button className='button-28' onClick={handleSearchPost}>
+                            <SearchOutlinedIcon />
+                        </button>
+                    </AppBar>
+
+                    {!formOpen && user ? (
+                        <Paper className='form-heading' onClick={handleDrop}>
+                            <h4>Want to share something?</h4>
+                        </Paper>
+                    ) : (
+
+                        <Form className='form' currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                    )}
 
                 </Grid>
-            </Container>
-        </Grow>
+
+            </Grid>
+        </Container>
     )
 }
 

@@ -1,0 +1,92 @@
+.commentsOuterContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    max-width: 100%;
+}
+
+.commentsInnerContainer {
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    width: 100%;
+}
+
+.commentsInnerContainer .MuiTypography-h6 {
+    font-size: 1.1rem;
+    color: #333;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 3px;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 {
+    margin-top: 8px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 strong {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Write comment section styling */
+.write-comment {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+}
+
+.write-comment .MuiTypography-h6 {
+    color: #444;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.write-comment .MuiTextField-root {
+    /* margin-bottom: 15px; */
+    background-color: #f9f9f9;
+    border-radius: 3px;
+}
+
+.write-comment button {
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 3px;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.write-comment button:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    .commentsOuterContainer {
+        padding: 10px;
+    }
+
+    .write-comment {
+        margin-top: 1rem;
+        width: 90%;
+        padding: 15px;
+    }
+
+    .commentsInnerContainer {
+        width: 100%;
+        margin: 0px auto;
+        /* padding : 10px 5px; */
+    }
+}

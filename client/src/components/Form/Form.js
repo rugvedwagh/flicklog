@@ -10,6 +10,10 @@ import './styles.css';
 
 
 const Form = ({ currentId, setCurrentId, setformOpen }) => {
+    
+    const dispatch = useDispatch();
+    const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const [postData, setPostData] = useState({
         title: '',
@@ -17,10 +21,6 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
         tags: '',
         selectedfile: '',
     });
-
-    const dispatch = useDispatch();
-    const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
-    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if (post) {
@@ -56,7 +56,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     if (!user?.result?.name) {
         return (
-            <Paper className='paper' elevation={6} style={{ marginTop: '10px' }}>
+            <Paper className='paper' elevation={6}>
                 <Typography variant="h6" align="center" className='signintointeract'>
                     Sign in to post
                 </Typography>
@@ -68,7 +68,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
         <Paper className='paper' elevation={6} style={{ marginTop: '10px' }}>
             <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
                 <div className='close' onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
-                <Typography variant="h6" style={{ marginBottom: '7px', color: 'black' }} onClick={toggleForm}>
+                <Typography variant="h6" onClick={toggleForm}>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
 
@@ -95,6 +95,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                             ['clean'],
                         ],
                     }}
+
                     formats={[
                         'header',
                         'bold', 'italic', 'underline', 'strike', 'blockquote',
@@ -103,6 +104,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     ]}
 
                     placeholder='Description'
+
                     style={{
                         marginBottom: '75px',
                         minHeight: '200px'

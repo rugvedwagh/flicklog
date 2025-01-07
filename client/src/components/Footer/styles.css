@@ -1,21 +1,11 @@
-
-.dummy_page {
-    height: 200px;
-    width: 100%;
-    background-color: #f0f0f0;
-    text-align: center;
-    box-sizing: border-box;
-    padding: 60px 0px;
-}
-
-/* STYLES SPECIFIC TO FOOTER  */
 .footer {
-    border-top: 1px solid white;
-    width: 100%;
-    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.349);
+    width: 100vw;
+    position: inherit;
     height: auto;
     background-color: #1a1a1d;
-    margin-top: 40vh;
+    margin-top: 100vh;
+    height: 30vh;
 }
 
 .footer .col {

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import authReducer from "./auth";
-import posts from './posts'
+import userReducer from "./auth";
+import postsReducer from "./posts";
 
 export const reducers = combineReducers(
     {
-        posts,
-        authReducer
+        postsReducer,
+        userReducer
     }
 );

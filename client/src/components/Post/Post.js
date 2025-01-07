@@ -7,24 +7,25 @@ import { bookmarkPost } from '../../actions/auth';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import defimg from '../../assets/defimg.jpg'
+import defimg from '../../assets/defimg.jpg';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, useEffect } from 'react';
-import Likes from '../Likes/Likes'
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import Likes from '../Likes/Likes';
 import moment from 'moment';
 import './post.css';
 
 const Post = ({ post, setCurrentId }) => {
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('profile'));
-    const { clientData } = useSelector((state) => state.authReducer);
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('profile'));
+    const userId = user?.result?._id;
     const [likes, setLikes] = useState(post?.likes);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const [isbookmarked, setIsBookmarked] = useState(false)
+    const [isbookmarked, setIsBookmarked] = useState(false);
 
-    const userId = user?.result.googleId || user?.result?._id;
-    const hasLikedPost = post.likes.find((like) => like === userId);
+    const { clientData } = useSelector((state) => state.userReducer);
+
+    const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]); 
 
     useEffect(() => {
         if (clientData?.bookmarks?.includes(post._id)) {
@@ -34,24 +35,25 @@ const Post = ({ post, setCurrentId }) => {
         }
     }, [clientData, post._id]);
 
-    const openPost = () => {
+    const openPost = useCallback(() => {
         navigate(`/posts/${post._id}`);
-    };
+    }, [navigate, post._id]);
 
-    const toggleDeleteDialog = () => setOpenDeleteDialog((prev) => !prev);
+    const toggleDeleteDialog = useCallback(() => {
+        setOpenDeleteDialog((prev) => !prev);
+    }, []);
 
-    const handleDeletePost = () => {
+    const handleDeletePost = useCallback(() => {
         dispatch(deletePost(post._id));
         toggleDeleteDialog();
-    };
+    }, [dispatch, post._id, toggleDeleteDialog]);
 
-    const handleBookmarkToggle = () => {
+    const handleBookmarkToggle = useCallback(() => {
         dispatch(bookmarkPost(post._id, clientData?._id));
         setIsBookmarked((prev) => !prev);
-    };
+    }, [dispatch, post._id, clientData?._id]);
 
-
-    const handleLike = async () => {
+    const handleLike = useCallback(async () => {
         dispatch(likePost(post._id));
 
         if (hasLikedPost) {
@@ -59,10 +61,10 @@ const Post = ({ post, setCurrentId }) => {
         } else {
             setLikes([...post.likes, userId]);
         }
-    };
+    }, [dispatch, post._id, hasLikedPost, userId, post.likes]);
 
     return (
-        <Card className='card' raised elevation={6} >
+        <Card className="card" raised elevation={6}>
             <CardMedia
                 onClick={openPost}
                 className="media"
@@ -70,17 +72,12 @@ const Post = ({ post, setCurrentId }) => {
                 title={post.title || "Default Title"}
             />
 
-            <div className='overlay'>
-                <Typography variant="h6">
-                    {post.name}
-                </Typography>
-
-                <Typography variant="body">
-                    {moment(post.createdAt).fromNow()}
-                </Typography>
+            <div className="overlay">
+                <Typography variant="h6">{post.name}</Typography>
+                <Typography variant="body">{moment(post.createdAt).fromNow()}</Typography>
             </div>
 
-            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+            {userId === post?.creator && (
                 <div className="overlay2">
                     <Tooltip title="Edit" arrow placement="top">
                         <Button
@@ -94,21 +91,19 @@ const Post = ({ post, setCurrentId }) => {
                 </div>
             )}
 
-            <Typography variant="body2" color="textSecondary" style={{
-                padding: '5px 16px 0px 16px'
-            }}>
+            <Typography variant="body2" color="textSecondary" style={{ padding: '5px 16px 0px 16px' }}>
                 {post.tags.map((tag) => `#${tag} `)}
             </Typography>
 
-            <Typography className='title' variant="h5" gutterBottom>
+            <Typography className="title" variant="h5" gutterBottom>
                 {post.title.slice(0, 43)}
             </Typography>
 
-            <div className='msg'>
-                <Typography color='textSecondary' variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+            <div className="msg">
+                <Typography color="textSecondary" variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
             </div>
 
-            <CardActions className='cardActions'>
+            <CardActions className="cardActions">
                 <Tooltip title="Like" arrow placement="top">
                     <Button
                         size="small"
@@ -121,38 +116,38 @@ const Post = ({ post, setCurrentId }) => {
                 </Tooltip>
 
                 <Tooltip title="Comments" arrow placement="top">
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <CommentOutlinedIcon fontSize='small' />
-                        <span style={{
-                            fontSize: '14px',
-                            color: 'black',
-                            opacity : '0.8'
-                        }}>
-                            &nbsp;{post?.comments?.length}
-                        </span>
-                        &nbsp;&nbsp;&nbsp;
-                        {isbookmarked ? (
-                            <BookmarkIcon onClick={handleBookmarkToggle} fontSize='small' />
-                        ) : (
-                            <BookmarkBorderOutlinedIcon onClick={handleBookmarkToggle} fontSize='small' />
-                        )}
-                    </div>
+                    <Button style={{ color: 'black' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <CommentOutlinedIcon fontSize="small" />
+                            <span style={{ fontSize: '15px', color: 'black', opacity: '0.8' }}>
+                                &nbsp;{post?.comments?.length}
+                            </span>
+                        </div>
+                    </Button>
                 </Tooltip>
 
-                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                {userId && (
+                    <Tooltip title="Bookmark" arrow placement="top">
+                        <Button style={{ color: 'black' }}>
+                            {isbookmarked ? (
+                                <BookmarkIcon onClick={handleBookmarkToggle} fontSize="small" />
+                            ) : (
+                                <BookmarkBorderOutlinedIcon onClick={handleBookmarkToggle} fontSize="small" />
+                            )}
+                        </Button>
+                    </Tooltip>
+                )}
+
+                {userId === post?.creator && (
                     <Tooltip title="Delete" arrow placement="top">
                         <Button
                             size="small"
-                            style={{
-                                color: 'grey',
-                                marginRight: '-15px'
-                            }}
+                            style={{ color: 'grey', marginRight: '-15px' }}
                             onClick={toggleDeleteDialog}
                         >
                             <DeleteIcon fontSize="small" titleAccess="" />
                         </Button>
                     </Tooltip>
-
                 )}
             </CardActions>
 
@@ -164,32 +159,20 @@ const Post = ({ post, setCurrentId }) => {
             >
                 <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this post?"}</DialogTitle>
                 <DialogContent>
-
                     <DialogContentText id="alert-dialog-description">
                         This action cannot be undone.
                     </DialogContentText>
-
                 </DialogContent>
                 <DialogActions>
-
-                    <Button onClick={toggleDeleteDialog} variant="contained" style={{
-                        color: 'white',
-                        backgroundColor: 'black'
-                    }}>
+                    <Button onClick={toggleDeleteDialog} variant="contained" style={{ color: 'white', backgroundColor: 'black' }}>
                         Cancel
                     </Button>
-
-                    <Button onClick={handleDeletePost} variant="contained" style={{
-                        color: 'white',
-                        backgroundColor: 'black'
-                    }}>
+                    <Button onClick={handleDeletePost} variant="contained" style={{ color: 'white', backgroundColor: 'black' }}>
                         Delete
                     </Button>
-
                 </DialogActions>
-
             </Dialog>
-        </Card >
+        </Card>
     );
 };
 
