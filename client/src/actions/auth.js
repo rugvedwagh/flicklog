@@ -52,6 +52,7 @@ export const Logout = (navigate) => (dispatch) => {
         dispatch({ type: START_LOADING });
 
         localStorage.removeItem('profile');
+        localStorage.removeItem('postsData')
         navigate('/')
         dispatch({ type: LOGOUT });
 

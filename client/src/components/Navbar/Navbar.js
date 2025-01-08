@@ -28,6 +28,24 @@ const Navbar = () => {
         setOpenDialog(false);
     }, [dispatch, navigate]);
 
+    useEffect(() => {
+        const token = user?.token;
+
+        const checkTokenExpiry = () => {
+            if (token) {
+                const decodedToken = jwtDecode(token);
+
+                if (decodedToken.exp * 1000 < new Date().getTime()) {
+                    handleLogout(); 
+                }
+            }
+        };
+
+        checkTokenExpiry();
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [handleLogout, user?.token, location]);
+
+
     const openUser = () => {
         dispatch(userData(userId, navigate));
         closeMenu();
@@ -42,38 +60,24 @@ const Navbar = () => {
     };
 
     let lastScrollY = window.scrollY;
+    const scrollThreshold = 300;
 
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
-        if (currentScrollY > lastScrollY) {
-            setNavclass('appBar-blur')
+        if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+            setNavclass('appBar-blur');
         } else if (currentScrollY < lastScrollY) {
-            setNavclass('appBar')
+            setNavclass('appBar');
         }
+
         lastScrollY = currentScrollY;
     });
-
-    useEffect(() => {
-        const token = user?.token;
-
-        const checkTokenExpiry = () => {
-            if (token) {
-                const decodedToken = jwtDecode(token);
-
-                if (decodedToken.exp * 1000 < new Date().getTime()) {
-                    handleLogout(); // Safe to call because it's memoized.
-                }
-            }
-        };
-
-        checkTokenExpiry();
-        setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [handleLogout, user?.token, location]);
 
     return (
         <AppBar className={navclass}>
             <div className='navbar'>
+
                 <div className='brandContainer'>
                     <Link to="/posts" className='heading-container'>
                         <div className="heading" align="center" style={{
@@ -83,6 +87,7 @@ const Navbar = () => {
                         </div>
                     </Link>
                 </div>
+
                 <Toolbar className='toolbar'>
                     {user?.result ? (
                         <div className='profile'>

@@ -26,6 +26,7 @@ const userReducer = (state = {
 
         case LOGOUT:
             localStorage.removeItem('profile');
+            localStorage.removeItem('postsData')
             return {
                 ...state,
                 authData: null,

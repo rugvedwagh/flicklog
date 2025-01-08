@@ -20,50 +20,63 @@ export const getPosts = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const cachedPosts = JSON.parse(localStorage.getItem('postsData'));
+        // Ensure cachedPosts structure is initialized properly
+        const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || { posts: [], pages: {}, numberOfPages: 0 };
 
-        if (cachedPosts && cachedPosts.page === page) {
-
+        if (cachedPosts.pages[page]) {
+            // Use cached data if the current page exists in the cache
             dispatch({
                 type: FETCH_ALL,
                 payload: {
                     data: cachedPosts.posts,
-                    currentPage: cachedPosts.page,
-                    numberOfPages: cachedPosts.numberOfPages
-                }
+                    currentPage: page,
+                    numberOfPages: cachedPosts.numberOfPages,
+                },
             });
-            dispatch({ type: END_LOADING });
         } else {
+            // Fetch new posts if not cached
             const { data: { data, currentPage, numberOfPages } } = await fetchPosts(page);
 
-            localStorage.setItem('postsData', JSON.stringify({
-                page: currentPage,
-                posts: data,
-                numberOfPages
-            }));
+            // Append new posts to the existing cached posts
+            const updatedPosts = [...cachedPosts.posts, ...data];
 
+            // Mark the current page as cached
+            const updatedPages = { ...cachedPosts.pages, [page]: true };
+
+            // Update localStorage with the new data
+            localStorage.setItem(
+                'postsData',
+                JSON.stringify({
+                    posts: updatedPosts,
+                    pages: updatedPages,
+                    numberOfPages,
+                })
+            );
+
+            // Dispatch the updated data
             dispatch({
                 type: FETCH_ALL,
-                payload: { data, currentPage, numberOfPages }
+                payload: { data: updatedPosts, currentPage, numberOfPages },
             });
-            dispatch({ type: END_LOADING });
         }
 
+        dispatch({ type: END_LOADING });
     } catch (error) {
         dispatch({
             type: ERROR,
-            payload: error?.response?.data?.message || 'An error occurred'
+            payload: error?.response?.data?.message || 'An error occurred',
         });
-        console.log(error);
+        console.error(error);
     }
 };
-
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
+
         const { data: { data } } = await fetchPostsBySearch(searchQuery)
         dispatch({ type: FETCH_BY_SEARCH, payload: data })
+        
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });

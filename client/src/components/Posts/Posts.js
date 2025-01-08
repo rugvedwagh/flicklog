@@ -40,9 +40,9 @@ const Posts = ({ setCurrentId, Myposts }) => {
                     dataLength={userPosts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
-                    loader={<CircularProgress size="3rem" style={{ margin: '3rem 50%', color: 'white' }} />}
+                    loader={<CircularProgress className='infloader' sx={{color:'white'}} size="3rem" />}
                     endMessage={
-                            <Typography variant='h5' color="white" align='center' > No more posts!</Typography>
+                            <Typography variant='h5' color="white" align='center' sx={{mt:'2rem'}} > No more posts!</Typography>
                     }
                     style={{ overflowX: 'hidden' }}
                 >

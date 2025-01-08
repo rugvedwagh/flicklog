@@ -1,11 +1,19 @@
+:root {
+    --pinkvar: #eb24d0;
+    --black: #1a1a1a;
+    --borderColor : #404040;
+    --loadingvar: white;
+    --white : white
+}
+
 .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.349);
+    border-top: 1px solid var(--borderColor);
     width: 100vw;
     position: inherit;
     height: auto;
-    background-color: #1a1a1d;
+    background-color: #1a1a1a;
     margin-top: 100vh;
-    height: 30vh;
+    height: 50vh;
 }
 
 .footer .col {
@@ -42,7 +50,7 @@
     font-size: 14px;
     font-family: inherit;
     font-weight: bold;
-    padding: 5px 0px 5px 0px;
+    padding: 1rem 0px 1rem 0px;
     cursor: pointer;
     transition: .2s;
     -webkit-transition: .2s;
@@ -80,6 +88,12 @@
 
     .social h1 {
         margin: 0px;
+    }
+}
+@media only screen and (max-width: 748px) {
+    .footer{
+        height: 100%;
+        margin-top: 40vh;
     }
 }
 

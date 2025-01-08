@@ -3,6 +3,15 @@
     box-sizing: border-box;
 }
 
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #f9f9f9;
+    --subtextColor: #f2f2f2bb;
+}
+
 @keyframes slideImage {
     0% {
         transform: translateY(-100%);
@@ -27,39 +36,44 @@
     }
 }
 
-@keyframes bloom {
+@keyframes btow {
     0% {
-        transform: translateX(100%);
-        opacity: 0;
+        backdrop-filter: blur(10px);
+        background-color: var(--black);
     }
-
+    
     100% {
-        transform: translateX(0);
-        opacity: 1;
+        backdrop-filter: blur(0px);
     }
 }
 
 @keyframes grow {
     0% {
-        transform: scale(0);
-        opacity: 0;
+        backdrop-filter: blur(10px);
+        background-color: var(--antiFlashWhite);
     }
 
     100% {
-        transform: scale(1);
-        opacity: 1;
+        backdrop-filter: blur(0px);
     }
 }
 
 .main {
     margin-top: 6%;
     display: flex;
-    justify-content: space-between;
-    background-color: #f9f9f9;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
     border-radius: 3px;
-    padding: 30px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
-    animation: bloom 0.8s ease;
+    background-color: var(--antiFlashWhite);
+    animation: btow 0.2s ease-in;
+}
+
+.main.altview {
+    color: var(--antiFlashWhite);
+    background-color: var(--black);
+    animation: grow 0.2s ease-in;
 }
 
 .first {
@@ -73,14 +87,13 @@
 }
 
 .second {
-    flex: 1;
-    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
     width: 60%;
-    animation: grow 0.8s ease;    
-}
-
-.first.alt {
-    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+    animation: grow 0.8s ease;
+    margin-bottom: 1em;
 }
 
 .imag {
@@ -90,17 +103,17 @@
     transition: transform 0.3s ease;
 }
 
-.post-title {
-    font-size: 3rem;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    line-height: 1.3;
-}
-
-.post-title+.MuiTypography-root {
-    color: #777;
+.imag.fullscreen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    object-fit: contain;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.8);
+    cursor: zoom-out;
+    animation: grow 0.6s ease;
 }
 
 @media only screen and (max-width: 600px) {
@@ -119,7 +132,7 @@
 
     .imag {
         max-width: 100%;
-        border-radius: 12px;
+        border-radius: 3px;
     }
 
     .commentsOuterContainer {
@@ -128,9 +141,6 @@
         align-items: center;
     }
 
-    .verticalbutton {
-        display: none;
-    }
 }
 
 .verticalbutton {
@@ -138,8 +148,8 @@
     z-index: 1000;
     left: 3vw;
     top: 90vh;
-    background-color: #444;
-    color: white;
+    background-color: #333;
+    color: var(--white);
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
@@ -163,8 +173,8 @@
 @media (max-width: 600px) {
     .verticalbutton {
         left: 5vw;
-        top: 80vh;
-        font-size: 0.9rem;
+        top: 90vh;
+        font-size: 0.8rem;
         padding: 8px 18px;
     }
 }
@@ -174,7 +184,7 @@
     max-width: 75px;
     height: auto;
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
@@ -182,9 +192,10 @@
 
 @media (max-width: 600px) {
     .loader {
-        top: 30%;
+        top: 50%;
         left: 40%;
         transform: translate(-50%, -50%);
+        margin-bottom: 15em !important;
     }
 }
 
@@ -263,6 +274,22 @@
     margin-bottom: 20px;
 }
 
+.postmessage {
+    font-size: 23px !important;
+    font-weight: lighter !important;
+    overflow-x: hidden;
+}
+
+.posttitle {
+    color: var(--black);
+    font-weight: 600 !important;
+    font-size: 42px !important;
+}
+
+.posttitle.alt{
+    color: var(--antiFlashWhite);
+}
+
 @media (max-width: 768px) {
     .recimg {
         height: 120px;
@@ -275,6 +302,16 @@
     .recpost .post-details p {
         font-size: 0.8rem;
     }
+
+    .postmessage {
+        font-size: 20px !important;
+        font-weight: 300 !important;    
+        /* confused between font weight 400/300 both look good */
+    }
+
+    .posttitle {
+        font-size: 31px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -285,29 +322,13 @@
     .recommendedPosts {
         grid-template-columns: 1fr;
     }
+
 }
 
-.imag.fullscreen {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    object-fit: contain;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.8);
-    cursor: zoom-out;
-    animation: grow 0.6s ease;
+.post-meta {
+    color: var(--black);
 }
 
-.main.altview {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #f3eff1;
-    border-radius: 3px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
-    animation: slideImage 0.8s ease;
+.post-meta.dark {
+    color: var(--subtextColor);
 }

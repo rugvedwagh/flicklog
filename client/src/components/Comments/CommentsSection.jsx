@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './comments.css';
 
-const CommentsSection = ({ post }) => {
+const CommentsSection = ({ post, darkmode }) => {
 
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState('');
@@ -20,14 +20,16 @@ const CommentsSection = ({ post }) => {
     }
 
     return (
-        <div className="commentsOuterContainer">
-            <div className="commentsInnerContainer">
+        <div className={`commentsOuterContainer ${darkmode ? 'dark' : ''}`}>
+            <div className={`commentsInnerContainer ${darkmode ? 'dark' : ''}`}>
                 <Typography gutterBottom variant='h6'>Comments</Typography>
                 {comments.length ?
                     comments?.slice(0).reverse().map((comment, index) => (
 
-                        <Typography key={index} gutterBottom variant='subtitle1'>
-                            <strong>{comment.split(': ')[0]} : </strong> <span style={{ color: '#1a1a1d' }}>{comment.split(':')[1]}</span>
+                        <Typography className={`comments-data ${darkmode ? 'dark' : ''}`} key={index} variant='subtitle1'>
+                            <strong className={`users-name ${darkmode ? 'dark' : ''}`}>{comment.split(': ')[0]}
+                                :
+                            </strong> <span className={`comment-data ${darkmode ? 'dark' : ''}`}>{comment.split(':')[1]}</span>
                         </Typography>
 
                     )) :
@@ -36,7 +38,7 @@ const CommentsSection = ({ post }) => {
                     )}
             </div>
             {user?.result?.name && (
-                <div className='write-comment'>
+                <div className={`write-comment ${darkmode ? 'dark' : ''}`}>
 
                     <Typography gutterBottom variant='h6'>
                         Write a Comment

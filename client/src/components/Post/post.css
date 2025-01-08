@@ -4,7 +4,8 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
     cursor: pointer;
-    border-radius: 3px;
+    border-top-left-radius: 3px; /* Top-left corner */
+    border-top-right-radius: 3px;
 }
 
 .border {
@@ -58,6 +59,10 @@
     user-select: none;
 }
 
+.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom.title.css-h93ljk-MuiTypography-root{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
 .cardActions {
     padding: 0 16px 8px 16px;
     display: flex;

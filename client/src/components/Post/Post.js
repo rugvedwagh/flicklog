@@ -1,27 +1,30 @@
 import { Card, CardActions, CardMedia, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import { likePost, deletePost } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { bookmarkPost } from '../../actions/auth';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Likes from '../Likes/Likes';
 import moment from 'moment';
 import './post.css';
 
 const Post = ({ post, setCurrentId }) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
+
     const [likes, setLikes] = useState(post?.likes);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [isbookmarked, setIsBookmarked] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const { clientData } = useSelector((state) => state.userReducer);
 
@@ -108,7 +111,6 @@ const Post = ({ post, setCurrentId }) => {
                     <Button
                         size="small"
                         style={{ color: 'black' }}
-                        disabled={!user?.result}
                         onClick={handleLike}
                     >
                         <Likes likes={likes} id={userId} />

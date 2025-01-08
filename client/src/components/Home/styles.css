@@ -10,26 +10,6 @@
     }
 }
 
-@keyframes slideImage {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.form{
-    animation: slideImage 0.7s ease-in-out;
-}
-
-.form-heading{
-    animation: slideImage 0.4s ease-in-out;
-}
-
 .searchlogo {
     color: rgb(107, 107, 107);
     cursor: pointer;
@@ -54,31 +34,20 @@
     margin-right: 10px;
 }
 
+
 .gridContainer {
     flex-direction: row;
-}
-
-.MuiToggleButtonGroup-root {
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
 }
 
 @media (max-width: 600px) {
     .gridContainer {
         flex-direction: column-reverse;
     }
-    .MuiToggleButtonGroup-root {
-        width: 9em;
-        height: 3em;
-    }
 }
 
-.form-heading {
+.temp {
     display: flex;
     background-color: white;
-    color: #1a1a1a;
     border-radius: 3px;
     height: 50px;
     align-items: center;
@@ -88,6 +57,17 @@
     cursor: pointer;
 }
 
+.toggle-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.toggle-container .MuiToggleButtonGroup-root {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 .togandsearch {
     display: flex;

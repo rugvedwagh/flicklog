@@ -8,30 +8,34 @@ import moment from 'moment';
 import './postdetail.css';
 
 const PostDetails = () => {
-    
+
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [vertical, setVertical] = useState(false);
-    const [isFullScreen, setIsFullScreen] = useState(false);
-    const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
 
-    const toggleView = useCallback(() => setVertical(prev => !prev), []);
-    const openPost = useCallback((_id) => navigate(`/posts/${_id}`), [navigate]);
-    const handleImageClick = useCallback(() => setIsFullScreen(prev => !prev), []);
+    const [vertical, setVertical] = useState(true);
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    const [postLoaded, setPostLoaded] = useState(false);
+
+    const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(getPost(id)); 
+        dispatch(getPost(id));
     }, [id, dispatch]);
 
     useEffect(() => {
         if (post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
+            setPostLoaded(true);
         }
     }, [post]);
 
-    if (isLoading) {
+    const toggleView = useCallback(() => setVertical(prev => !prev), console.log(vertical), []);
+    const openPost = useCallback((_id) => navigate(`/posts/${_id}`), [navigate]);
+    const handleImageClick = useCallback(() => setIsFullScreen(prev => !prev), []);
+
+    if (!isLoading && !postLoaded) {
         return <CircularProgress className='loader' color='grey' size='4rem' />;
     }
 
@@ -40,14 +44,14 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
     return (
-        <div style={{paddingTop:'1.75rem'}}>
+        <div sx={{ paddingTop: '1.25rem' }}>
 
             <Button onClick={toggleView} class='verticalbutton'>
                 toggle <br /> view
             </Button>
 
             <div className={`main ${vertical ? 'altview' : ''}`}>
-                <div className={`second ${vertical ? 'alt' : ''}`}>
+                <div className='second'>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
                         src={post.selectedfile}
@@ -57,32 +61,31 @@ const PostDetails = () => {
                 </div>
 
                 <div className={`first ${vertical ? 'alt' : ''}`}>
-
-                    <Typography variant='h3' style={{fontWeight:'700'}}color="#333">
+                    <Typography className={`posttitle ${vertical ? 'alt' : ''}`} >
                         {post.title}
                     </Typography>
-                    
-                    <Typography gutterBottom variant='h6' color='textSecondary' component='h2'>
+
+                    <Typography variant='subtitle1' className={`post-meta ${vertical ? 'dark' : ''}`}>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    
-                    <Typography gutterBottom component='p' className='postmessage' sx={{fontSize:'23px'}} dangerouslySetInnerHTML={{ __html: post.message }} />
-                    
-                    <Typography variant='h6' color='textSecondary'>
+
+                    <Typography component='p' className='postmessage' dangerouslySetInnerHTML={{ __html: post.message }} />
+
+                    <Typography variant='body1' className={`post-meta ${vertical ? 'dark' : ''}`}>
                         Posted by: {post.name}
                     </Typography>
-                    
-                    <Typography variant='h6' color='textSecondary'>
+
+                    <Typography variant='body1' className={`post-meta ${vertical ? 'dark' : ''}`}>
                         {moment(post.createdAt).fromNow()}
                     </Typography>
-                    
-                    <CommentsSection post={post} />
+
+                    <CommentsSection darkmode={vertical} post={post} />
                 </div>
             </div>
 
             {recommendedPosts.length ? (
                 <div className='sect'>
-                    <Typography gutterBottom variant='h5' style={{ color: '#333' }}>
+                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a' }}>
                         You might also like
                     </Typography>
                     <Divider color='black' />
@@ -102,7 +105,14 @@ const PostDetails = () => {
                     </div>
                 </div>
             ) : (
-                <h3 style={{color:'white'}}>No related posts</h3>
+
+                isLoading
+                    ? (
+                        <CircularProgress className='loader' color='grey' size='4rem' />
+                    ) :
+                    (
+                        <Typography variant='h5' color="white" align='center' sx={{ mt: '2rem' }} > No related posts!</Typography>
+                    )
             )}
         </div>
     );

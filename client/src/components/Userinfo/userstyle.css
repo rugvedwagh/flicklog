@@ -27,7 +27,7 @@
     flex-direction: column;
     align-items: center;
     width: 30%;
-    margin: 5rem auto;
+    margin:6rem auto;
     background-color: #f9f9f9;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
     padding: 2rem;
@@ -162,7 +162,7 @@
 }
 
 .bookmarked-post {
-    color: #1a1a1d;
+    color: #1a1a1a;
     display: flex;
     flex-direction: row;
     align-items: center;

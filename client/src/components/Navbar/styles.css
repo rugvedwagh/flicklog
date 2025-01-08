@@ -1,8 +1,9 @@
 :root {
     --pinkvar: #eb24d0;
-    --black: #000000;
-    --bodyvar: #131a26;
+    --black: #1a1a1a;
+    --borderColor : #404040;
     --loadingvar: white;
+    --white : white
 }
 
 @keyframes slideDown {
@@ -35,6 +36,7 @@
     align-items: center;
     background-color: var(--black);
     animation: slideDown 0.3s ease-in;
+    border-bottom: 1px solid var(--borderColor);
 }
 
 .appBar-blur{
@@ -59,18 +61,13 @@
 
 .heading {
     font-size: 30px;
-    color: white;
+    color: var(--white);
     text-decoration: none;
     padding: 0px;
     justify-content: center;
     text-align: center;
-    text-shadow : 2px 2px 5px grey;
+    /* text-shadow : 2px 2px 5px grey; */
     user-select: none;
-}
-
-.myposts {
-    color: #1565c0;
-    text-decoration: none;
 }
 
 .image {

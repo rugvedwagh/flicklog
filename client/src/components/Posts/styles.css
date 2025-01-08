@@ -16,9 +16,11 @@
     text-align: center;
 }
 
+.infloader{
+    margin: 3rem 50%;
+}
+
 .loading {
-    width: 10%;
-    max-width: 75px;
     position: relative;
     top: 50%;
     left: 50%;
@@ -32,6 +34,9 @@
         top: 50%;
         left: 40%;
         transform: translate(-50%,-50%);
+    }
+    .infloader{
+        margin: 2rem 40%;
     }
 }
 
@@ -50,3 +55,6 @@
 .container ::-webkit-scrollbar {
     display: none;
 }
+
+
+

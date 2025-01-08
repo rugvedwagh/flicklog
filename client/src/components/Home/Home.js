@@ -42,7 +42,7 @@ const Home = () => {
     }
 
     return (
-        <Container maxWidth='xl' style={{ marginTop: '7rem' }}>
+        <Container maxWidth='xl' style={{ marginTop: '5.5rem' }}>
 
             <ToggleButtonGroup
                 value={myposts ? "myPosts" : "allPosts"}

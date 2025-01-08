@@ -19,7 +19,7 @@
 }
 
 .form {
-    width: 100%;    
+    width: 100%;
 }
 
 .submit {
@@ -68,6 +68,6 @@
 
 @media (max-width: 899px) {
     .image-container {
-        display: none; 
-    }
+        display: none;
+    }   
 }
