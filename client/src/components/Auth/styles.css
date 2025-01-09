@@ -1,3 +1,12 @@
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
+}
+
 @keyframes slideleft {
     0% {
         transform: scale(0);
@@ -14,7 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    background-color: var(--white) !important;
     animation: slideleft 0.6s ease;
 }
 
@@ -27,7 +36,8 @@
 }
 
 .typography {
-    margin: 15px 0;
+    margin: 16px 0px 16px 0px !important;
+    color: var(--black) !important;
 }
 
 .cont {
@@ -44,10 +54,11 @@
 .paper-container {
     display: flex;
     overflow: hidden;
+    width: 100% !important;
 }
 
 .image-container {
-    background-color: #f0f0f0;
+    background-color: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;

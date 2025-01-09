@@ -8,7 +8,7 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import './home.css';
 
-const Home = () => {
+const Home = ({darkMode}) => {
     const [currentId, setCurrentId] = useState(null);
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState('');
@@ -62,11 +62,11 @@ const Home = () => {
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                 <Grid item xs={12} sm={6} md={9}>
-                    <Posts setCurrentId={setCurrentId} Myposts={myposts} />
+                    <Posts setCurrentId={setCurrentId} Myposts={myposts} darkMode={darkMode} />
                 </Grid>
 
                 <Grid item xs={12} sm={4} md={3}>
-                    <AppBar className='appBarSearch' position='static' color='inherit'>
+                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} position='static'>
                         <TextField
                             name='search'
                             variant='filled'
@@ -74,6 +74,7 @@ const Home = () => {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
+
                         <TextField
                             name='search'
                             variant='filled'
@@ -81,23 +82,24 @@ const Home = () => {
                             value={tags}
                             onChange={(e) => setTags(e.target.value)}
                         />
-                        <button className='button-28' onClick={handleSearchPost}>
+                        
+                        <button className={`button-28 ${darkMode ? 'dark' : ''}`} onClick={handleSearchPost}>
                             <SearchOutlinedIcon />
                         </button>
                     </AppBar>
 
                     {!formOpen && user ? (
-                        <Paper className='form-heading' onClick={handleDrop}>
+                        <Paper className={`form-heading ${darkMode ? 'dark' : ''}`} onClick={handleDrop}>
                             <h4>Want to share something?</h4>
                         </Paper>
                     ) : (
 
-                        <Form className='form' currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                        <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                     )}
 
                 </Grid>
-
             </Grid>
+
         </Container>
     )
 }

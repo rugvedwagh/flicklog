@@ -1,14 +1,16 @@
-* {
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-}
+/* * {
+    font-family: "EB Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+} */
 
 :root {
     --black: #1a1a1a;
     --borderColor: #404040;
     --loadingvar: white;
     --white: white;
-    --antiFlashWhite: #F2F3F4;
+    --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
 }
 
@@ -41,7 +43,7 @@
         backdrop-filter: blur(10px);
         background-color: var(--black);
     }
-    
+
     100% {
         backdrop-filter: blur(0px);
     }
@@ -78,12 +80,10 @@
 
 .first {
     flex: 1;
-    padding-left: 30px;
     word-spacing: 1px;
     display: flex;
     flex-direction: column;
-    width: 60%;
-    gap: 10px;
+    width: 47%;
 }
 
 .second {
@@ -143,51 +143,16 @@
 
 }
 
-.verticalbutton {
-    position: fixed;
-    z-index: 1000;
-    left: 3vw;
-    top: 90vh;
-    background-color: #333;
-    color: var(--white);
-    border: none;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.3;
-    transition: all 0.3s ease;
-}
-
-.verticalbutton:hover {
-    opacity: 1;
-    background-color: #666;
-    transform: scale(1.05);
-}
-
-.verticalbutton:focus {
-    outline: none;
-}
-
-@media (max-width: 600px) {
-    .verticalbutton {
-        left: 5vw;
-        top: 90vh;
-        font-size: 0.8rem;
-        padding: 8px 18px;
-    }
-}
-
 .loader {
     width: 10%;
     max-width: 75px;
     height: auto;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: 47%;
     transform: translate(-50%, -50%);
     color: #fff;
+    z-index: 1000;
 }
 
 @media (max-width: 600px) {
@@ -207,6 +172,10 @@
     padding: 20px;
 }
 
+.sect.dark {
+    background-color: var(--black);
+}
+
 .recommended-post {
     margin: 10px;
     padding: 15px 20px;
@@ -214,15 +183,19 @@
     max-width: 30rem;
     max-height: 80%;
     border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fff;
+    background-color: var(--antiFlashWhite)
 }
 
 .recommended-post:hover {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
     transform: translateY(-5px);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 15px;
+}
+.recommended-post.dark {
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
 }
 
 .recommended-posts {
@@ -233,6 +206,9 @@
     padding: 20px 0;
 }
 
+.recommended-posts.dark {
+    background-color: var(--black);
+}
 .recimg {
     width: 100%;
     height: 50%;
@@ -275,18 +251,23 @@
 }
 
 .postmessage {
+    font-family: "EB Garamond", serif !important;
+    font-optical-sizing: auto;
     font-size: 23px !important;
-    font-weight: lighter !important;
+    font-weight: 0 !important;
     overflow-x: hidden;
 }
 
 .posttitle {
+    font-family: "EB Garamond", serif !important;
+    font-optical-sizing: auto;
+    font-style: normal;
     color: var(--black);
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     font-size: 42px !important;
 }
 
-.posttitle.alt{
+.posttitle.alt {
     color: var(--antiFlashWhite);
 }
 
@@ -305,7 +286,7 @@
 
     .postmessage {
         font-size: 20px !important;
-        font-weight: 300 !important;    
+        font-weight: 300 !important;
         /* confused between font weight 400/300 both look good */
     }
 
@@ -327,8 +308,14 @@
 
 .post-meta {
     color: var(--black);
+    font-weight: 100 !important;
 }
 
 .post-meta.dark {
     color: var(--subtextColor);
+    font-weight: 100 !important;
+}
+
+.endmessage {
+    color: var(--antiFlashWhite);
 }

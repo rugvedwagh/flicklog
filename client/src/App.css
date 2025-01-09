@@ -1,5 +1,14 @@
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
+}
+
 body {
-    background-color: #1a1a1a;
+    background-color: var(--black);
     background-attachment: fixed;
     background-size: cover;
 }
@@ -36,7 +45,7 @@ body {
     right: 25px;
     z-index: 999;
     transition: 0.3s ease-in;
-    background-color: white;
+    background-color: var(--antiFlashWhite);
     cursor: pointer;
     border-radius: 50%;
     transition: 0.3s ease-in;
@@ -45,16 +54,16 @@ body {
 }
 
 .scrollup.show {
-    height: 60px;
-    width: 60px;
+    height: 2em;
+    width: 2em;
     transition: 0.3s ease-in;
-    color: black;
+    color: var(--black);
 }
 
 @media (max-width: 600px) {
     .scrollup.show {
-        height: 50px;
-        width: 50px;
+        height: 1.75em;
+        width: 1.75em;
     }
 }
 
@@ -99,7 +108,7 @@ body {
 }
 
 .bg-white {
-    background-color: white;
+    background-color: var(--antiFlashWhite);
 }
 
 .p-2 {
@@ -130,3 +139,38 @@ body {
     transform: translateY(2.5rem);
 }
 
+.verticalbutton {
+    position: fixed;
+    z-index: 1000;
+    left: 3vw;
+    top: 90vh;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+.verticalbutton:hover {
+    opacity: 1;
+    /* background-color: #666; */
+    transform: scale(1.05);
+}
+
+.verticalbutton:focus {
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .verticalbutton {
+        left: 5vw;
+        top: 90vh;
+        font-size: 0.8rem;
+        padding: 8px 18px;
+    }
+}

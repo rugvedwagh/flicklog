@@ -24,11 +24,11 @@ const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => setShowPassword(!showPassword);
     const { errorMessage } = useSelector((state) => state.userReducer);
-    
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-    
+
     const switchMode = () => {
         setForm(initialState);
         setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -48,8 +48,8 @@ const SignUp = () => {
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
-        <Container component="main" maxWidth="md" style={{ marginTop: '5%', paddingTop:'7rem' }}>
-            <Paper className="paper-container" elevation={6} style={{ borderRadius: '5px', backgroundColor: 'white' }}>
+        <Container component="main" maxWidth="md" style={{ marginTop: '5%', paddingTop: '7rem' }}>
+            <Paper className="paper-container" elevation={6}>
                 <Grid container spacing={0} alignItems="center">
 
                     <Grid item xs={12} md={6} className="image-container">
@@ -57,24 +57,27 @@ const SignUp = () => {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <Paper className="paper" elevation={0} style={{ padding: '20px', backgroundColor: 'transparent' }}>
+                        <Paper className="paper" elevation={0} >
 
                             <form className="form" onSubmit={handleSubmit}>
                                 <div className="auth-header">
+
                                     <LockOutlinedIcon />
+
                                     <Typography
                                         className="typography"
                                         component="h1"
                                         variant="h5"
-                                        style={{ margin: '16px 0 16px 0', color: 'black' }}
                                     >
                                         {isSignup ? 'Sign up' : 'Log in'}
                                     </Typography>
-                                {errorMessage?.length && (
-                                    <Alert severity="error" style={{ margin: '10px 0' }}>
-                                        {errorMessage}
-                                    </Alert>
-                                )}
+
+                                    {errorMessage?.length && (
+                                        <Alert severity="error" sx={{ margin: '10px 0' }}>
+                                            {errorMessage}
+                                        </Alert>
+                                    )}
+
                                 </div>
 
                                 <Grid container spacing={2}>

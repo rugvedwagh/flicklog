@@ -1,3 +1,12 @@
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
+}
+
 @keyframes flower {
     0% {
         transform: scale(0);
@@ -28,6 +37,13 @@
 
 .form-heading{
     animation: slideImage 0.4s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-heading.dark{
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
+    font-family: 'Roboto', sans-serif;
 }
 
 .searchlogo {
@@ -47,6 +63,11 @@
     border-radius: 3px;
     animation: flower 0.6s ease;
     gap: 10px;
+    background-color: var(--antiFlashWhite) !important;
+}
+
+.appBarSearch.dark{
+    background-color: var(--black) !important;
 }
 
 .appBarSearch input {
@@ -54,6 +75,9 @@
     margin-right: 10px;
 }
 
+.appBarSearch.dark .MuiTextField-root{
+    background-color: var(--antiFlashWhite);
+}
 .gridContainer {
     flex-direction: row;
 }
@@ -74,6 +98,7 @@
         height: 3em;
     }
 }
+
 
 .form-heading {
     display: flex;
@@ -130,4 +155,12 @@
 .button-28:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+.button-28.dark{
+    background-color: var(--antiFlashWhite);
+}
+
+.button-28.dark:hover{
+    color: var(--black);
 }

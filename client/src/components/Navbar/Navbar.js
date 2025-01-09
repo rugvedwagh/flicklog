@@ -9,17 +9,17 @@ import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './styles.css';
 
-const Navbar = () => {
+const Navbar = ({darkMode}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [navclass, setNavclass] = useState('appBar')
-
     const userId = user?.result?._id
+    
+    const [openDialog, setOpenDialog] = useState(false);
+    const [navclass, setNavclass] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleLogout = useCallback(() => {
         dispatch(Logout(navigate));
@@ -36,7 +36,7 @@ const Navbar = () => {
                 const decodedToken = jwtDecode(token);
 
                 if (decodedToken.exp * 1000 < new Date().getTime()) {
-                    handleLogout(); 
+                    handleLogout();
                 }
             }
         };
@@ -44,7 +44,6 @@ const Navbar = () => {
         checkTokenExpiry();
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [handleLogout, user?.token, location]);
-
 
     const openUser = () => {
         dispatch(userData(userId, navigate));
@@ -59,6 +58,10 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
+    const handleLogoClick = () => {
+        navigate('/posts')
+    }
+
     let lastScrollY = window.scrollY;
     const scrollThreshold = 300;
 
@@ -66,26 +69,21 @@ const Navbar = () => {
         const currentScrollY = window.scrollY;
 
         if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
-            setNavclass('appBar-blur');
+            setNavclass(true);
         } else if (currentScrollY < lastScrollY) {
-            setNavclass('appBar');
+            setNavclass(false);
         }
 
         lastScrollY = currentScrollY;
     });
 
     return (
-        <AppBar className={navclass}>
-            <div className='navbar'>
+        <AppBar className={`appBar ${navclass ? 'blur' : ''} ${darkMode ? 'dark' : ''}`}>
 
-                <div className='brandContainer'>
-                    <Link to="/posts" className='heading-container'>
-                        <div className="heading" align="center" style={{
-                            textAlign: 'center'
-                        }}>
-                            reminisce
-                        </div>
-                    </Link>
+            <div className={`navbar ${darkMode ? 'dark' : ''}`}>
+
+                <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
+                    reminisce
                 </div>
 
                 <Toolbar className='toolbar'>
@@ -94,20 +92,7 @@ const Navbar = () => {
                             <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
-                                    className="profileAvatar"
-                                    sx={{
-                                        width: 45,
-                                        height: 45,
-                                        bgcolor: 'white',
-                                        color: 'black',
-                                        cursor: 'pointer',
-                                        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-                                        textTransform: 'uppercase',
-                                        '&:hover': {
-                                            transform: 'scale(1.1)',
-                                            boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.3)',
-                                        },
-                                    }}
+                                    className={`profileAvatar ${darkMode ? 'dark' : ''}`}
                                     alt={user?.result.name}
                                     src={user?.result.imageUrl}
                                 >
@@ -138,15 +123,17 @@ const Navbar = () => {
                             style={{
                                 margin: "0 10px",
                                 color: "black",
-                                backgroundColor: 'white',
                                 borderRadius: '3px',
+                                backgroundColor: '#e7e9ea',
                                 textTransform: 'none'
                             }}
                         >
                             Log in
                         </Button>
                     )}
+
                 </Toolbar>
+
                 <Dialog
                     open={openDialog}
                     onClose={() => setOpenDialog(false)}
@@ -154,11 +141,13 @@ const Navbar = () => {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">{"Are you sure you want to log out?"}</DialogTitle>
+
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             Logging out will clear your session.
                         </DialogContentText>
                     </DialogContent>
+
                     <DialogActions>
                         <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }} style={{
                             color: 'white',
@@ -173,7 +162,9 @@ const Navbar = () => {
                             Logout
                         </Button>
                     </DialogActions>
+
                 </Dialog>
+
             </div>
         </AppBar>
     );

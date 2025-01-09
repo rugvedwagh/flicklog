@@ -9,7 +9,7 @@ import ReactQuill from 'react-quill';
 import './styles.css';
 
 
-const Form = ({ currentId, setCurrentId, setformOpen }) => {
+const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
     
     const dispatch = useDispatch();
     const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
@@ -65,10 +65,10 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     }
 
     return (
-        <Paper className='paper' elevation={6} style={{ marginTop: '10px' }}>
-            <form autoComplete="off" noValidate className='form' onSubmit={handleSubmit}>
-                <div className='close' onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
-                <Typography variant="h6" onClick={toggleForm}>
+        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} style={{ marginTop: '10px' }}>
+            <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
+                <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
+                <Typography  variant="h6" onClick={toggleForm} sx={{color:'#f2f2f2bb'}} gutterBottom>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
 
@@ -86,6 +86,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     name='message'
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e })}
+                    className={`descinp ${darkMode ? 'dark' : ''}`}
                     modules={{
                         toolbar: [
                             [{ header: [1, 2, false] }],

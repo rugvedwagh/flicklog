@@ -3,7 +3,7 @@
     --borderColor: #404040;
     --loadingvar: white;
     --white: white;
-    --antiFlashWhite: #F2F3F4;
+    --antiFlashWhite: #e7e9ea;
     --subtextColor : #f2f2f2bb;
 }
 
@@ -83,7 +83,7 @@
 
 .comment-data.dark{
     color: var(--antiFlashWhite);
-    font-weight: 200 !important;
+    font-weight: 100 !important;    
 }
 
 .write-comment {
@@ -111,7 +111,7 @@
 }
 
 .write-comment.dark .MuiTextField-root{
-    background-color: var(--black);
+    background-color: var(--antiFlashWhite);
 }
 
 .write-comment button {

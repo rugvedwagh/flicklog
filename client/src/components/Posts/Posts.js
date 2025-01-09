@@ -6,7 +6,7 @@ import { getPosts } from '../../actions/posts';
 import Post from '../Post/Post.js';
 import './styles.css';
 
-const Posts = ({ setCurrentId, Myposts }) => {
+const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
@@ -49,7 +49,7 @@ const Posts = ({ setCurrentId, Myposts }) => {
                     <Grid className="container" container alignItems="stretch" spacing={4}>
                         {userPosts.map((post) => (
                             <Grid key={post._id} item xs={12} sm={6} lg={4}>
-                                <Post post={post} setCurrentId={setCurrentId} />
+                                <Post post={post} setCurrentId={setCurrentId} darkMode={darkMode}/>
                             </Grid>
                         ))}
                     </Grid>

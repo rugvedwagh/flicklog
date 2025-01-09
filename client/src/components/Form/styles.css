@@ -1,3 +1,12 @@
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
+}
+
 @keyframes blooming {
     0% {
         transform: translateY(-100%);
@@ -13,12 +22,30 @@
     margin-top: 10px;
     padding: 16px;
     animation : blooming 0.7s ease;
+    background-color: var(--antiFlashWhite) !important;
+}
+
+.paper.dark{
+    background-color: var(--black) !important;
+    padding: 20px;
 }
 
 .form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.form.dark{
+    background-color: var(--black);
+}
+
+.form.dark .MuiTextField-root{
+    background-color: var(--antiFlashWhite);
+}
+
+.descinp.dark{
+    background-color: var(--antiFlashWhite);
 }
 
 .fileInput {
@@ -47,4 +74,8 @@
 .close:hover{
     opacity: 1;
     transition: 0.3s ease-in;
+}
+
+.close.dark{
+    color: var(--antiFlashWhite);
 }

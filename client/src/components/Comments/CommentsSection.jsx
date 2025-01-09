@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './comments.css';
 
-const CommentsSection = ({ post, darkmode }) => {
+const CommentsSection = ({ post, darkMode }) => {
 
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState('');
@@ -20,16 +20,16 @@ const CommentsSection = ({ post, darkmode }) => {
     }
 
     return (
-        <div className={`commentsOuterContainer ${darkmode ? 'dark' : ''}`}>
-            <div className={`commentsInnerContainer ${darkmode ? 'dark' : ''}`}>
+        <div className={`commentsOuterContainer ${darkMode ? 'dark' : ''}`}>
+            <div className={`commentsInnerContainer ${darkMode ? 'dark' : ''}`}>
                 <Typography gutterBottom variant='h6'>Comments</Typography>
                 {comments.length ?
                     comments?.slice(0).reverse().map((comment, index) => (
 
-                        <Typography className={`comments-data ${darkmode ? 'dark' : ''}`} key={index} variant='subtitle1'>
-                            <strong className={`users-name ${darkmode ? 'dark' : ''}`}>{comment.split(': ')[0]}
+                        <Typography className={`comments-data ${darkMode ? 'dark' : ''}`} key={index} variant='subtitle1'>
+                            <strong className={`users-name ${darkMode ? 'dark' : ''}`}>{comment.split(': ')[0]}
                                 :
-                            </strong> <span className={`comment-data ${darkmode ? 'dark' : ''}`}>{comment.split(':')[1]}</span>
+                            </strong> <span className={`comment-data ${darkMode ? 'dark' : ''}`}>{comment.split(':')[1]}</span>
                         </Typography>
 
                     )) :
@@ -38,7 +38,7 @@ const CommentsSection = ({ post, darkmode }) => {
                     )}
             </div>
             {user?.result?.name && (
-                <div className={`write-comment ${darkmode ? 'dark' : ''}`}>
+                <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
 
                     <Typography gutterBottom variant='h6'>
                         Write a Comment

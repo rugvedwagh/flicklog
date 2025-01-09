@@ -27,7 +27,7 @@
     flex-direction: column;
     align-items: center;
     width: 30%;
-    margin:6rem auto;
+    margin: 6rem auto;
     background-color: #f9f9f9;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
     padding: 2rem;
@@ -101,7 +101,12 @@
 }
 
 .loading {
-    margin-top: 15%;
+    position: absolute;
+    margin-top: 15rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
 }
 
 /* Responsive Design */

@@ -14,7 +14,7 @@ import Likes from '../Likes/Likes';
 import moment from 'moment';
 import './post.css';
 
-const Post = ({ post, setCurrentId }) => {
+const Post = ({ post, setCurrentId, darkMode }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Post = ({ post, setCurrentId }) => {
 
     const { clientData } = useSelector((state) => state.userReducer);
 
-    const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]); 
+    const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
     useEffect(() => {
         if (clientData?.bookmarks?.includes(post._id)) {
@@ -38,9 +38,9 @@ const Post = ({ post, setCurrentId }) => {
         }
     }, [clientData, post._id]);
 
-    const openPost = useCallback(() => {
+    const openPost = () => {
         navigate(`/posts/${post._id}`);
-    }, [navigate, post._id]);
+    };
 
     const toggleDeleteDialog = useCallback(() => {
         setOpenDeleteDialog((prev) => !prev);
@@ -51,12 +51,12 @@ const Post = ({ post, setCurrentId }) => {
         toggleDeleteDialog();
     }, [dispatch, post._id, toggleDeleteDialog]);
 
-    const handleBookmarkToggle = useCallback(() => {
+    const handleBookmarkToggle = () => {
         dispatch(bookmarkPost(post._id, clientData?._id));
         setIsBookmarked((prev) => !prev);
-    }, [dispatch, post._id, clientData?._id]);
+    };
 
-    const handleLike = useCallback(async () => {
+    const handleLike = async () => {
         dispatch(likePost(post._id));
 
         if (hasLikedPost) {
@@ -64,10 +64,10 @@ const Post = ({ post, setCurrentId }) => {
         } else {
             setLikes([...post.likes, userId]);
         }
-    }, [dispatch, post._id, hasLikedPost, userId, post.likes]);
+    };
 
     return (
-        <Card className="card" raised elevation={6}>
+        <Card className={`card ${darkMode ? 'dark' : ''}`} raised elevation={6}>
             <CardMedia
                 onClick={openPost}
                 className="media"
@@ -94,16 +94,16 @@ const Post = ({ post, setCurrentId }) => {
                 </div>
             )}
 
-            <Typography variant="body2" color="textSecondary" style={{ padding: '5px 16px 0px 16px' }}>
+            <Typography variant="body2" className={`tags ${darkMode ? 'dark' : ''}`} color="textSecondary" style={{ padding: '5px 16px 0px 16px' }}>
                 {post.tags.map((tag) => `#${tag} `)}
             </Typography>
 
-            <Typography className="title" variant="h5" gutterBottom>
+            <Typography className={`title ${darkMode ? 'dark' : ''}`} variant="h5" gutterBottom>
                 {post.title.slice(0, 43)}
             </Typography>
 
             <div className="msg">
-                <Typography color="textSecondary" variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+                <Typography color="textSecondary" className={`msg-text ${darkMode ? 'dark' : ''}`} variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
             </div>
 
             <CardActions className="cardActions">
@@ -113,15 +113,15 @@ const Post = ({ post, setCurrentId }) => {
                         style={{ color: 'black' }}
                         onClick={handleLike}
                     >
-                        <Likes likes={likes} id={userId} />
+                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode}/>
                     </Button>
                 </Tooltip>
 
                 <Tooltip title="Comments" arrow placement="top">
                     <Button style={{ color: 'black' }}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <CommentOutlinedIcon fontSize="small" />
-                            <span style={{ fontSize: '15px', color: 'black', opacity: '0.8' }}>
+                            <CommentOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                            <span style={{ fontSize: '15px', opacity: '0.8' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
                                 &nbsp;{post?.comments?.length}
                             </span>
                         </div>
@@ -132,9 +132,9 @@ const Post = ({ post, setCurrentId }) => {
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button style={{ color: 'black' }}>
                             {isbookmarked ? (
-                                <BookmarkIcon onClick={handleBookmarkToggle} fontSize="small" />
+                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} onClick={handleBookmarkToggle} fontSize="small" />
                             ) : (
-                                <BookmarkBorderOutlinedIcon onClick={handleBookmarkToggle} fontSize="small" />
+                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} onClick={handleBookmarkToggle} fontSize="small" />
                             )}
                         </Button>
                     </Tooltip>

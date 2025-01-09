@@ -35,10 +35,11 @@ export const signUp = (formData, navigate) => async (dispatch) => {
 export const userData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-
-        const { data } = await user_info(id);
-        dispatch({ type: USER_INFO, payload: data });
+        
         navigate(`/user/i`)
+        const { data } = await user_info(id);
+        
+        dispatch({ type: USER_INFO, payload: data });
 
         dispatch({ type: END_LOADING })
     } catch (error) {

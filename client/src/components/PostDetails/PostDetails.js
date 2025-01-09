@@ -1,21 +1,19 @@
-import { Typography, CircularProgress, Divider, Card, Button } from '@mui/material';
+import { Typography, CircularProgress, Divider, Card} from '@mui/material';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import CommentsSection from '../Comments/CommentsSection';
 import moment from 'moment';
 import './postdetail.css';
 
-const PostDetails = () => {
+const PostDetails = ({darkMode}) => {
 
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [vertical, setVertical] = useState(true);
     const [isFullScreen, setIsFullScreen] = useState(false);
-    const [postLoaded, setPostLoaded] = useState(false);
 
     const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
 
@@ -27,16 +25,14 @@ const PostDetails = () => {
     useEffect(() => {
         if (post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
-            setPostLoaded(true);
         }
     }, [post]);
 
-    const toggleView = useCallback(() => setVertical(prev => !prev), console.log(vertical), []);
-    const openPost = useCallback((_id) => navigate(`/posts/${_id}`), [navigate]);
-    const handleImageClick = useCallback(() => setIsFullScreen(prev => !prev), []);
+    const openPost = (_id) => navigate(`/posts/${_id}`)
+    const handleImageClick = () => setIsFullScreen(prev => !prev);
 
-    if (!isLoading && !postLoaded) {
-        return <CircularProgress className='loader' color='grey' size='4rem' />;
+    if (isLoading) {
+        return <CircularProgress className='loader' color='grey' size='3rem' />;
     }
 
     if (!post) return null;
@@ -46,11 +42,7 @@ const PostDetails = () => {
     return (
         <div sx={{ paddingTop: '1.25rem' }}>
 
-            <Button onClick={toggleView} class='verticalbutton'>
-                toggle <br /> view
-            </Button>
-
-            <div className={`main ${vertical ? 'altview' : ''}`}>
+            <div className={`main ${darkMode ? 'altview' : ''}`}>
                 <div className='second'>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
@@ -60,38 +52,38 @@ const PostDetails = () => {
                     />
                 </div>
 
-                <div className={`first ${vertical ? 'alt' : ''}`}>
-                    <Typography className={`posttitle ${vertical ? 'alt' : ''}`} >
+                <div className={`first ${darkMode ? 'alt' : ''}`}>
+                    <Typography className={`posttitle ${darkMode ? 'alt' : ''}`} >
                         {post.title}
                     </Typography>
 
-                    <Typography variant='subtitle1' className={`post-meta ${vertical ? 'dark' : ''}`}>
+                    <Typography variant='subtitle1' className={`post-meta ${darkMode ? 'dark' : ''}`}>
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
 
                     <Typography component='p' className='postmessage' dangerouslySetInnerHTML={{ __html: post.message }} />
 
-                    <Typography variant='body1' className={`post-meta ${vertical ? 'dark' : ''}`}>
-                        Posted by: {post.name}
+                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`}>
+                        Posted by: <strong>{post.name}</strong>
                     </Typography>
 
-                    <Typography variant='body1' className={`post-meta ${vertical ? 'dark' : ''}`}>
+                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`}>
                         {moment(post.createdAt).fromNow()}
                     </Typography>
 
-                    <CommentsSection darkmode={vertical} post={post} />
+                    <CommentsSection darkMode={darkMode} post={post} />
                 </div>
             </div>
 
             {recommendedPosts.length ? (
-                <div className='sect'>
+                <div className={`sect ${darkMode ? 'dark' : ''}`}>
                     <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a' }}>
                         You might also like
                     </Typography>
                     <Divider color='black' />
-                    <div className='recommended-posts'>
+                    <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
-                            <Card className='recommended-post' onClick={() => openPost(_id)} key={_id}>
+                            <Card raised className={`recommended-post ${darkMode ? 'dark' : ''}`} onClick={() => openPost(_id)} key={_id}>
                                 <Typography gutterBottom variant='h6'>{title}</Typography>
                                 <img
                                     src={selectedfile}
@@ -105,14 +97,7 @@ const PostDetails = () => {
                     </div>
                 </div>
             ) : (
-
-                isLoading
-                    ? (
-                        <CircularProgress className='loader' color='grey' size='4rem' />
-                    ) :
-                    (
-                        <Typography variant='h5' color="white" align='center' sx={{ mt: '2rem' }} > No related posts!</Typography>
-                    )
+                <Typography variant='h5' className='endmessage' align='center' sx={{ mt: '2rem' }} > No related posts!</Typography>
             )}
         </div>
     );
