@@ -8,6 +8,7 @@ const Likes = ({ likes, id, darkMode }) => (
         likes.includes(id) ? (
             <>
                 <ThumbUpAltIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+
                 <span style={{ textTransform: 'none' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
                     &nbsp;{likes.length > 2 ? `you and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
                 </span>
@@ -15,12 +16,18 @@ const Likes = ({ likes, id, darkMode }) => (
         ) : (
             <>
                 <ThumbUpAltOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                <span style={{ textTransform: 'none' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>&nbsp;{likes.length} {likes.length === 1 ? 'like' : 'likes'}</span>
+
+                <span style={{ textTransform: 'none' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                    &nbsp;{likes.length} {likes.length === 1 ? 'like' : 'likes'}
+                </span>
             </>
         )
     ) : (
         <><ThumbUpAltOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-            <span className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>&nbsp;Like</span></>
+            <span className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                &nbsp;Like
+            </span>
+        </>
     )
 );
 

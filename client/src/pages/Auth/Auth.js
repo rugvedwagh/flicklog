@@ -16,7 +16,7 @@ const initialState = {
     confirmPassword: ''
 };
 
-const SignUp = () => {
+const SignUp = ({darkMode}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [form, setForm] = useState(initialState);
@@ -49,7 +49,7 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="md" style={{ marginTop: '5%', paddingTop: '7rem' }}>
-            <Paper className="paper-container" elevation={6}>
+            <Paper className={`paper-container ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Grid container spacing={0} alignItems="center">
 
                     <Grid item xs={12} md={6} className="image-container">
@@ -57,15 +57,15 @@ const SignUp = () => {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <Paper className="paper" elevation={0} >
+                        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={0} >
 
-                            <form className="form" onSubmit={handleSubmit}>
+                            <form className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
 
                                     <LockOutlinedIcon />
 
                                     <Typography
-                                        className="typography"
+                                        className={`typography ${darkMode ? 'dark' : ''}`}
                                         component="h1"
                                         variant="h5"
                                     >
@@ -121,7 +121,7 @@ const SignUp = () => {
                                     )}
                                 </Grid>
 
-                                <Typography variant="body2" color="textSecondary" style={{ marginTop: '8px' }}>
+                                <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
                                     By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
                                     <strong>Privacy Policy</strong>.
                                 </Typography>
@@ -129,9 +129,9 @@ const SignUp = () => {
                                 <Button
                                     type="submit"
                                     fullWidth
-                                    className="submit"
+                                    className={`submit ${darkMode ? 'dark' : ''}`}
                                     variant="contained"
-                                    style={{ margin: '16px 0', backgroundColor: 'black' }}
+                                    style={{ margin: '16px 0' }}
                                 >
                                     {isSignup ? 'Sign Up' : 'Log In'}
                                 </Button>

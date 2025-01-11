@@ -5,7 +5,7 @@ import { updateUserDetails } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
 import './userstyle.css';
 
-const Userinfo = () => {
+const Userinfo = ({ darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { clientData, isLoading } = useSelector((state) => state.userReducer);
@@ -66,13 +66,13 @@ const Userinfo = () => {
     }
 
     return (
-        <div className="main-cont">
-            <div className="upper-div">
+        <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
+            <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
                 <h2>User Profile</h2>
             </div>
-            <div className="lower-div">
-                
-                <div className="avatar">
+            <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
+
+                <div className={`avatar ${darkMode ? 'dark' : ''}`}>
                     {clientData.name.charAt(0).toUpperCase()}
                 </div>
 
@@ -92,28 +92,26 @@ const Userinfo = () => {
                     <li>
                         <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
                     </li>
-                    <li onClick={() => setShowBm((prev) => !prev)}>
+                    <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
                         <Button>
                             {showBm ? <span>Hide</span> : <span>Show</span>}
                         </Button>
-                    </li>
-                    <li>
-                        <button onClick={handleEditUser}>Edit</button>
+                        <Button onClick={handleEditUser}><span>Edit</span></Button>
                     </li>
                 </ul>
 
                 {bookmarkedPosts.length > 0 && showBm ? (
                     <div className="bookmarked-posts">
                         <hr />
-                        <h3>Bookmarked Posts</h3>
+                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
                         <div className="bookmarked-list">
                             {bookmarkedPosts.map((post) => (
                                 <div
                                     key={post._id}
-                                    className="bookmarked-post"
+                                    className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
                                     onClick={() => openPost(post._id)}
                                 >
-                                    <h4>{post.title}</h4>
+                                    <h4>{post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}</h4>
                                     {post.likes.length} likes
                                 </div>
                             ))}

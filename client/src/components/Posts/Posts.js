@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Grid, CircularProgress, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts';
-import Post from '../Post/Post.js';
+import Post from './Post/Post.js';
 import './styles.css';
 
 const Posts = ({ setCurrentId, Myposts, darkMode }) => {

@@ -45,6 +45,10 @@ const Navbar = ({darkMode}) => {
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [handleLogout, user?.token, location]);
 
+    const handleLoginClick = () => {
+        navigate('/auth')
+    }
+
     const openUser = () => {
         dispatch(userData(userId, navigate));
         closeMenu();
@@ -92,7 +96,7 @@ const Navbar = ({darkMode}) => {
                             <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
-                                    className={`profileAvatar ${darkMode ? 'dark' : ''}`}
+                                    className={`menu ${darkMode ? 'dark' : ''}`}
                                     alt={user?.result.name}
                                     src={user?.result.imageUrl}
                                 >
@@ -115,21 +119,10 @@ const Navbar = ({darkMode}) => {
                             </Menu>
                         </div>
                     ) : (
-                        <Button
-                            className='logout'
-                            component={Link}
-                            to="/auth"
-                            variant='contained'
-                            style={{
-                                margin: "0 10px",
-                                color: "black",
-                                borderRadius: '3px',
-                                backgroundColor: '#e7e9ea',
-                                textTransform: 'none'
-                            }}
-                        >
-                            Log in
-                        </Button>
+
+                        <div className={`logout ${darkMode ? 'dark' : ''}`} onClick={handleLoginClick}>
+                                Log in
+                        </div>
                     )}
 
                 </Toolbar>

@@ -1,11 +1,11 @@
-import { Container, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Container, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import Posts from '../Posts/Posts';
-import Form from '../Form/Form';
+import Posts from '../../components/Posts/Posts';
+import Form from '../../components/Form/Form';
 import './home.css';
 
 const Home = ({darkMode}) => {
@@ -83,9 +83,7 @@ const Home = ({darkMode}) => {
                             onChange={(e) => setTags(e.target.value)}
                         />
                         
-                        <button className={`button-28 ${darkMode ? 'dark' : ''}`} onClick={handleSearchPost}>
-                            <SearchOutlinedIcon />
-                        </button>
+                        <Button variant="outlined" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={handleSearchPost}><SearchOutlinedIcon /></Button>
                     </AppBar>
 
                     {!formOpen && user ? (

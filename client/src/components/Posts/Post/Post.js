@@ -2,15 +2,15 @@ import { Card, CardActions, CardMedia, Button, Typography, Dialog, DialogActions
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import { likePost, deletePost } from '../../actions/posts';
+import { likePost, deletePost } from '../../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { bookmarkPost } from '../../actions/auth';
+import { bookmarkPost } from '../../../actions/auth';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import defimg from '../../assets/defimg.jpg';
-import Likes from '../Likes/Likes';
+import defimg from '../../../assets/defimg.jpg';
+import Likes from './Likes/Likes';
 import moment from 'moment';
 import './post.css';
 
@@ -113,7 +113,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                         style={{ color: 'black' }}
                         onClick={handleLike}
                     >
-                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode}/>
+                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled/>
                     </Button>
                 </Tooltip>
 

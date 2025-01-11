@@ -3,7 +3,7 @@ import { getPost, getPostsBySearch } from '../../actions/posts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import CommentsSection from '../Comments/CommentsSection';
+import CommentsSection from '../../components/Comments/CommentsSection';
 import moment from 'moment';
 import './postdetail.css';
 

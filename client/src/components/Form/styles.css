@@ -20,20 +20,22 @@
 
 .paper {
     margin-top: 10px;
-    padding: 16px;
+    padding: 1em;
     animation : blooming 0.7s ease;
-    background-color: var(--antiFlashWhite) !important;
 }
 
 .paper.dark{
     background-color: var(--black) !important;
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
     padding: 20px;
+    color: var(--antiFlashWhite) !important;
 }
 
 .form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: var(--antiFlashWhite);
 }
 
 .form.dark{
@@ -41,11 +43,14 @@
 }
 
 .form.dark .MuiTextField-root{
+    border-radius: 3px;
     background-color: var(--antiFlashWhite);
 }
 
 .descinp.dark{
     background-color: var(--antiFlashWhite);
+    border-radius: 3px !important;
+    color: var(--black) !important;
 }
 
 .fileInput {
@@ -58,7 +63,7 @@
 }
 
 .signintointeract{
-    color: #1a1a1a;
+    /* color: #1a1a1a; */
     opacity: 0.8;
 }
 

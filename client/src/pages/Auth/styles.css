@@ -25,14 +25,40 @@
     align-items: center;
     background-color: var(--white) !important;
     animation: slideleft 0.6s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.paper.dark{
+    background-color: var(--black) !important;
+    box-shadow: none !important;
+}
+
+.subtxt{
+    color: var(--black) !important;
+}
+
+.subtxt.dark{
+    color: var(--subtextColor) !important;
 }
 
 .form {
     width: 100%;
+    background-color: var(--white);
+}
+
+.form.dark{
+    background-color: var(--black);
 }
 
 .submit {
     margin: 16px 0;
+    background-color: var(--antiFlashWhite) !important;
+    background-color: var(--black) !important;
+}
+
+.submit.dark{
+    background-color: var(--antiFlashWhite) !important;
+    color: var(--black);
 }
 
 .typography {
@@ -40,9 +66,14 @@
     color: var(--black) !important;
 }
 
+.typography.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
 .cont {
     display: flex;
     flex-direction: row;
+    background-color: white !important;
 }
 
 .authart {
@@ -55,6 +86,10 @@
     display: flex;
     overflow: hidden;
     width: 100% !important;
+}
+
+.paper-container.dark{
+    background-color: var(--black);
 }
 
 .image-container {

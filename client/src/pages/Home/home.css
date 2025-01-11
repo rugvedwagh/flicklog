@@ -5,6 +5,7 @@
     --white: white;
     --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
+    --pink: #ef4056
 }
 
 @keyframes flower {
@@ -57,17 +58,20 @@
 }
 
 .appBarSearch {
+    background-color: var(--white) !important;
     display: flex;
     flex-direction: row;
-    padding: 5px;
+    padding: 1.5em;
     border-radius: 3px;
     animation: flower 0.6s ease;
     gap: 10px;
-    background-color: var(--antiFlashWhite) !important;
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+    margin-bottom: 1em;
 }
 
 .appBarSearch.dark{
     background-color: var(--black) !important;
+    box-shadow: rgb(0, 0, 0) 0px 1px 4px;
 }
 
 .appBarSearch input {
@@ -76,7 +80,10 @@
 }
 
 .appBarSearch.dark .MuiTextField-root{
-    background-color: var(--antiFlashWhite);
+    /* background-color: var(--antiFlashWhite); */
+    background-color: var(--antiFlashWhite) !important;
+    height: 3em;
+    border-radius: 3px;
 }
 .gridContainer {
     flex-direction: row;
@@ -111,8 +118,9 @@
     justify-content: center;
     padding-left: 10px;
     cursor: pointer;
-}
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
 
+}
 
 .togandsearch {
     display: flex;
@@ -120,47 +128,26 @@
     justify-content: space-around;
 }
 
-.button-28 {
-  appearance: none;
-  background-color: transparent;
-  border: 1px solid #1A1A1A;
-  border-radius: 3px;
-  box-sizing: border-box;
-  color: #3B3B3B;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-   outline: none;
-  text-align: center;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-  will-change: transform;
+.search-button{
+    color:var(--black) !important;
+    border: none;
+    border: 1px solid var(--black) !important;
 }
 
-.button-28:disabled {
-  pointer-events: none;
+.search-button.dark{
+    background-color: transparent;
+    color: var(--antiFlashWhite) !important;
+    border: 1px solid var(--borderColor) !important;
 }
-
-.button-28:hover {
-  color: #fff;
-  background-color: #1A1A1A;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
+.search-button:hover{
+    /* color:white !important; */
+    border:1px solid var(--pink) !important;
 }
+.MuiToggleButtonGroup-root{
+    background-color: var(--subtextColor);
+    color: var(--antiFlashWhite) !important;
+}	
 
-.button-28:active {
-  box-shadow: none;
-  transform: translateY(0);
-}
-
-.button-28.dark{
-    background-color: var(--antiFlashWhite);
-}
-
-.button-28.dark:hover{
-    color: var(--black);
+.MuiToggleButton-root{
+    color: var(--black) !important;
 }

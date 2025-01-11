@@ -56,8 +56,8 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
     if (!user?.result?.name) {
         return (
-            <Paper className='paper' elevation={6}>
-                <Typography variant="h6" align="center" className='signintointeract'>
+            <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
+                <Typography variant="h6" align="center">
                     Sign in to post
                 </Typography>
             </Paper>

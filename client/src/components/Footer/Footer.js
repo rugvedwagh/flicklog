@@ -1,12 +1,12 @@
 import React from 'react';
 import './styles.css'; // Assuming you will add your CSS in this file
-import twitterlogo from './twitterlogo.svg'
-import instalogo from './instalogo.svg'
-import fblogo from './fblogo.svg'
+import twitterlogo from '../../assets/twitterlogo.svg'
+import instalogo from '../../assets/instalogo.svg'
+import fblogo from '../../assets/fblogo.svg'
 
-const Footer = () => {
+const Footer = ({darkMode}) => {
     return (
-        <div className="footer">
+        <div className={`footer ${darkMode ? 'dark' : ''}`}>
             <div className="contain">
                 <div className="col">
                     <h1>Company</h1>

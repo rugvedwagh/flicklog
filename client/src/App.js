@@ -1,16 +1,16 @@
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import PostDetails from './components/PostDetails/PostDetails';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import PostDetails from '../src/pages/PostDetails/PostDetails';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import NotFound from './components/Notfound/NotFound';
-import Userinfo from './components/Userinfo/Userinfo';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import NotFound from '../src/pages/Notfound/NotFound';
+import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import { Container } from '@mui/material';
-import Home from './components/Home/Home';
-import Auth from './components/Auth/Auth';
+import Home from '../src/pages/Home/Home';
+import Auth from '../src/pages/Auth/Auth';
 import { Button } from '@mui/material'
 import './App.css';
 
@@ -19,7 +19,6 @@ const App = () => {
     const [darkMode, setDarkMode] = useState(true);
 
     const user = JSON.parse(localStorage.getItem('profile'));
-    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -49,25 +48,14 @@ const App = () => {
         });
     };
 
-    const backgroundClass = (() => {
-        switch (location.pathname) {
-            case '/posts':
-                return 'posts-background';
-            case '/auth':
-                return 'auth-background';
-            default:
-                return 'user-background';
-        }
-    })();
-
     return (
-        <div className={backgroundClass} style={{ overflowX: 'hidden' }}>
+        <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
             <Button onClick={toggleView} class='verticalbutton'>
                 {darkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
             <Container maxWidth="xl">
                 <ArrowUpwardRoundedIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
-                
+
                 <Navbar darkMode={darkMode} />
 
                 <Routes>
@@ -75,13 +63,13 @@ const App = () => {
                     <Route path="/posts/search" element={<Home darkMode={darkMode} />} />
                     <Route path="/posts/:id" element={<PostDetails darkMode={darkMode} />} />
                     <Route path="/posts" element={<Home darkMode={darkMode} />} />
-                    <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth />} />
-                    <Route path="/user/i" element={<Userinfo />} />
+                    <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth darkMode={darkMode} />} />
+                    <Route path="/user/i" element={<Userinfo darkMode={darkMode} />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
 
             </Container>
-            <Footer />
+            <Footer darkMode={darkMode} />
         </div>
     );
 };

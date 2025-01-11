@@ -1,10 +1,14 @@
 :root {
     --pinkvar: #eb24d0;
-    --black: #1a1a1a;
-    --borderColor : #404040;
     --loadingvar: white;
-    --white : white
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
 }
+
 
 .footer {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -12,9 +16,13 @@
     width: 100vw;
     position: inherit;
     height: auto;
-    background-color: #1a1a1a;
+    background-color: var(--white);
     margin-top: 100vh;
     height: 50vh;
+}
+
+.footer.dark{
+    background-color: var(--black);
 }
 
 .footer .col {
@@ -34,10 +42,17 @@
     font-size: 12px;
     line-height: 17px;
     padding: 20px 0px 5px 0px;
-    color: rgba(255, 255, 255, 0.2);
+    /* color: rgba(255, 255, 255, 0.2); */
+    color: var(--black);
     font-weight: normal;
     text-transform: uppercase;
     letter-spacing: 0.250em;
+}
+.footer.dark .col h1 {
+    
+    /* color: rgba(255, 255, 255, 0.2); */
+    color: var(--antiFlashWhite);
+    
 }
 
 .footer .col ul {
