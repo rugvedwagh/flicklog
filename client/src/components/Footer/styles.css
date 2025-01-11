@@ -1,7 +1,6 @@
 :root {
     --pinkvar: #eb24d0;
-    --pink: #ef4056
-    --loadingvar: white;
+    --pink: #ef4056;
     --black: #1a1a1a;
     --borderColor: #404040;
     --loadingvar: white;
@@ -22,7 +21,7 @@
     height: 50vh;
 }
 
-.footer.dark{
+.footer.dark {
     background-color: var(--black);
 }
 
@@ -49,11 +48,12 @@
     text-transform: uppercase;
     letter-spacing: 0.250em;
 }
+
 .footer.dark .col h1 {
-    
+
     /* color: rgba(255, 255, 255, 0.2); */
     color: var(--antiFlashWhite);
-    
+
 }
 
 .footer .col ul {
@@ -107,8 +107,9 @@
         margin: 0px;
     }
 }
+
 @media only screen and (max-width: 748px) {
-    .footer{
+    .footer {
         height: 100%;
         margin-top: 40vh;
     }
