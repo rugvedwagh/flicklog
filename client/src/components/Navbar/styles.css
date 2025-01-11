@@ -156,7 +156,7 @@
 @media (max-width: 600px) {
     .brandContainer{
         font-size: 1.75em;
-        margin-left: 1.3em;
+        margin-left: 1.2em;
     }
     .appBar {
         flex-direction: column-reverse;

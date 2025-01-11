@@ -144,10 +144,9 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                     <Tooltip title="Delete" arrow placement="top">
                         <Button
                             size="small"
-                            style={{ color: 'grey', marginRight: '-15px' }}
                             onClick={toggleDeleteDialog}
                         >
-                            <DeleteIcon fontSize="small" titleAccess="" />
+                            <DeleteIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" titleAccess="" />
                         </Button>
                     </Tooltip>
                 )}

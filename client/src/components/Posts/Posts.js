@@ -42,7 +42,7 @@ const Posts = ({ setCurrentId, Myposts, darkMode }) => {
                     hasMore={currentPage < numberOfPages}
                     loader={<CircularProgress className='infloader' sx={{color:'white'}} size="3rem" />}
                     endMessage={
-                            <Typography variant='h5' color="white" align='center' sx={{mt:'2rem'}} > No more posts!</Typography>
+                            <Typography variant='h5' align='center' sx={{mt:'2rem'}} > No more posts!</Typography>
                     }
                     style={{ overflowX: 'hidden' }}
                 >

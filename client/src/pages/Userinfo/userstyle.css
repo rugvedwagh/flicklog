@@ -147,19 +147,21 @@
     font-weight: normal;
 }
 
-.loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-}
-
 .loading {
     margin-top: 15%;
 }
 
 @media (max-width: 1120px) {
+    .main-cont {
+        width: 50%;
+        height: 40vh;
+    }
+    .loading{
+        margin-top: 50%;
+    }
+}
+
+@media (max-width: 600px) {
     .main-cont {
         width: 50%;
     }
@@ -190,7 +192,7 @@
 @media (max-width: 480px) {
     .main-cont {
         margin-top: 5rem;
-        width: 95%;
+        width: 80%;
     }
 
     .avatar {

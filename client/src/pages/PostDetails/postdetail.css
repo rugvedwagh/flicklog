@@ -157,8 +157,8 @@
 
 @media (max-width: 600px) {
     .loader {
-        top: 50%;
-        left: 40%;
+        top: 20%;
+        left: 47%;
         transform: translate(-50%, -50%);
         margin-bottom: 15em !important;
     }
