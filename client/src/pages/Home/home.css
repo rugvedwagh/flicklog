@@ -36,16 +36,6 @@
     animation: slideImage 0.7s ease-in-out;
 }
 
-.form-heading{
-    animation: slideImage 0.4s ease-in-out;
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-heading.dark{
-    background-color: var(--black);
-    color: var(--antiFlashWhite);
-    font-family: 'Roboto', sans-serif;
-}
 
 .searchlogo {
     color: rgb(107, 107, 107);
@@ -65,13 +55,14 @@
     border-radius: 3px;
     animation: flower 0.6s ease;
     gap: 10px;
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
     margin-bottom: 1em;
+    color: var(--black) !important;
+    font-family: 'Roboto', sans-serif;
 }
 
 .appBarSearch.dark{
+    color: var(--antiFlashWhite) !important;
     background-color: var(--black) !important;
-    box-shadow: rgb(0, 0, 0) 0px 1px 4px;
 }
 
 .appBarSearch input {
@@ -79,10 +70,12 @@
     margin-right: 10px;
 }
 
-.appBarSearch.dark .MuiTextField-root{
-    /* background-color: var(--antiFlashWhite); */
-    background-color: var(--antiFlashWhite) !important;
+
+.appBarSearch .MuiTextField-root{
     height: 3em;
+}
+.appBarSearch.dark .MuiTextField-root{
+    background-color: var(--antiFlashWhite) !important;
     border-radius: 3px;
 }
 .gridContainer {
@@ -104,22 +97,6 @@
         width: 9em;
         height: 3em;
     }
-}
-
-
-.form-heading {
-    display: flex;
-    background-color: white;
-    color: #1a1a1a;
-    border-radius: 3px;
-    height: 50px;
-    align-items: center;
-    margin-top: 10px;
-    justify-content: center;
-    padding-left: 10px;
-    cursor: pointer;
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
-
 }
 
 .togandsearch {

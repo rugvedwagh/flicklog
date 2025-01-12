@@ -154,10 +154,10 @@
 @media (max-width: 1120px) {
     .main-cont {
         width: 50%;
-        height: 40vh;
+        /* height: 50vh; */
     }
     .loading{
-        margin-top: 50%;
+        margin-top: 70%;
     }
 }
 

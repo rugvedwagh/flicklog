@@ -68,7 +68,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} style={{ marginTop: '10px' }}>
             <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                 <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
-                <Typography  variant="h6" onClick={toggleForm} sx={{color:'#f2f2f2bb'}} gutterBottom>
+                <Typography  variant="h6" onClick={toggleForm}  gutterBottom>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
 

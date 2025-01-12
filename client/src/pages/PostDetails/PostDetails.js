@@ -32,7 +32,7 @@ const PostDetails = ({darkMode}) => {
     const handleImageClick = () => setIsFullScreen(prev => !prev);
 
     if (isLoading) {
-        return <CircularProgress className='loader' color='grey' size='3rem' />;
+        return <CircularProgress className={`loader ${darkMode ? 'altview' : ''}`} color='grey' size='3rem' />;
     }
 
     if (!post) return null;
@@ -77,10 +77,10 @@ const PostDetails = ({darkMode}) => {
 
             {recommendedPosts.length ? (
                 <div className={`sect ${darkMode ? 'dark' : ''}`}>
-                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a' }}>
+                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a', userSelect:'none' }}>
                         You might also like
                     </Typography>
-                    <Divider color='black' />
+                    <Divider color='#404040' />
                     <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
                             <Card raised className={`recommended-post ${darkMode ? 'dark' : ''}`} onClick={() => openPost(_id)} key={_id}>

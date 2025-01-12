@@ -34,13 +34,13 @@ const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     return (
         <div style={{ overflow: 'hidden' }}>
             {isLoading && currentPage === 1 ? (
-                <CircularProgress className="loading" size="3rem" color="grey" />
+                <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" color="grey" />
             ) : (
                 <InfiniteScroll
                     dataLength={userPosts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
-                    loader={<CircularProgress className='infloader' sx={{color:'white'}} size="3rem" />}
+                    loader={<CircularProgress className={`infloader ${darkMode ? 'dark' : ''}`} sx={{color:'white'}} size="3rem" />}
                     endMessage={
                             <Typography variant='h5' align='center' sx={{mt:'2rem'}} > No more posts!</Typography>
                     }

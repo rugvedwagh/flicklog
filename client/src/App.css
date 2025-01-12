@@ -54,8 +54,8 @@ body {
 }
 
 .scrollup.show {
-    height: 2em;
-    width: 2em;
+    height: 1.7em;
+    width: 1.7em;
     transition: 0.3s ease-in;
     color: var(--black);
 }
@@ -175,42 +175,8 @@ body {
 @media (max-width: 600px) {
     .verticalbutton {
         left: 80%;
-        top: 10%;
+        top: 12%;
         font-size: 0.8rem;
         padding: 8px 18px;
     }
 }
-/* .verticalbutton {
-    position: fixed;
-    z-index: 1000;
-    left: 3vw;
-    top: 90vh;
-    background-color: transparent;
-    color: var(--white);
-    border: none;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.3;
-    transition: all 0.3s ease;
-}
-
-.verticalbutton:hover {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.verticalbutton:focus {
-    outline: none;
-}
-
-@media (max-width: 600px) {
-    .verticalbutton {
-        left: 5vw;
-        top: 90vh;
-        font-size: 0.8rem;
-        padding: 8px 18px;
-    }
-} */

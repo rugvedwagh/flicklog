@@ -125,7 +125,6 @@ const Userinfo = ({ darkMode }) => {
                 <DialogTitle>Edit User Info</DialogTitle>
 
                 <DialogContent>
-
                     <TextField
                         name="name"
                         label="Username"
@@ -147,7 +146,6 @@ const Userinfo = ({ darkMode }) => {
                 </DialogContent>
 
                 <DialogActions>
-
                     <Button onClick={handleCancel} color="secondary">
                         Cancel
                     </Button>
@@ -155,7 +153,6 @@ const Userinfo = ({ darkMode }) => {
                     <Button onClick={saveChanges} color="primary" variant="contained">
                         Save
                     </Button>
-
                 </DialogActions>
 
             </Dialog>

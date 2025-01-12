@@ -1,4 +1,4 @@
-import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -16,7 +16,7 @@ import './App.css';
 
 const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(false);
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -54,8 +54,7 @@ const App = () => {
                 {darkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
             <Container maxWidth="xl">
-                <ArrowUpwardRoundedIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
-
+                <KeyboardArrowUpIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
                 <Navbar darkMode={darkMode} />
 
                 <Routes>

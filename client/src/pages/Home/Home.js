@@ -66,7 +66,7 @@ const Home = ({darkMode}) => {
                 </Grid>
 
                 <Grid item xs={12} sm={4} md={3}>
-                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} position='static'>
+                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static'>
                         <TextField
                             name='search'
                             variant='filled'
@@ -87,9 +87,9 @@ const Home = ({darkMode}) => {
                     </AppBar>
 
                     {!formOpen && user ? (
-                        <Paper className={`form-heading ${darkMode ? 'dark' : ''}`} onClick={handleDrop}>
+                        <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='stastic' onClick={handleDrop}>
                             <h4>Want to share something?</h4>
-                        </Paper>
+                        </AppBar>
                     ) : (
 
                         <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />

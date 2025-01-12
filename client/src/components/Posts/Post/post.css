@@ -92,6 +92,12 @@
     display: flex;
     justify-content:space-around;
 }
+@media (max-width: 600px) {
+    .cardActions {
+        display: flex;
+        justify-content:flex-start;
+    }
+}
 
 .msg {
     padding: 0 16px;
