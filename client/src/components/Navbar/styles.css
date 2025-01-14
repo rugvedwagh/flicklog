@@ -38,11 +38,12 @@
     font-optical-sizing: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center !important;
+    align-items: center !important;
     animation: slideDown 0.4s ease-in;
     background-color: var(--white) !important;
     height: 4em;
+    margin-left: 30px;
 }
 
 .appBar.dark{
@@ -57,12 +58,12 @@
 
 
 .navbar {
-    width: 87%;
+    width: 95%;
+    margin-left: 1.5em;
     height: 5rem;
     background-color: var(--white);
     display: flex;
     flex-direction: row;
-    align-items: center;
     height: 100%;
 }
 
@@ -83,6 +84,7 @@
 .profile {
     display: flex;
     align-items: flex-end;
+    justify-items: flex-end;
 }
 
 .profileAvatar {
@@ -171,6 +173,8 @@
 
     .navbar {
         padding: 0;
+        width: 85%
+        /* align-items: center; */
     }
 }
 

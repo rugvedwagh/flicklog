@@ -16,7 +16,7 @@ import './App.css';
 
 const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
 
     const user = JSON.parse(localStorage.getItem('profile'));
 

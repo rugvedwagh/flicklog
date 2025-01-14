@@ -148,13 +148,17 @@
 }
 
 .loading {
+    color: var(--black) !important;
     margin-top: 15%;
+}
+
+.loading.dark{
+    color: var(--antiFlashWhite) !important;
 }
 
 @media (max-width: 1120px) {
     .main-cont {
         width: 50%;
-        /* height: 50vh; */
     }
     .loading{
         margin-top: 70%;

@@ -32,7 +32,7 @@ const PostDetails = ({darkMode}) => {
     const handleImageClick = () => setIsFullScreen(prev => !prev);
 
     if (isLoading) {
-        return <CircularProgress className={`loader ${darkMode ? 'altview' : ''}`} color='grey' size='3rem' />;
+        return <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />;
     }
 
     if (!post) return null;

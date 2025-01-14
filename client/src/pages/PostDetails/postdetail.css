@@ -144,12 +144,12 @@
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--black);
+    color: var(--black) !important;
     z-index: 1000;
 }
 
 .loader.dark{
-    color: var(--antiFlashWhite);
+    color: var(--antiFlashWhite) !important;
 }
 
 @media (max-width: 600px) {

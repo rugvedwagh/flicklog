@@ -58,7 +58,7 @@ const Userinfo = ({ darkMode }) => {
     }, []);
 
     if (isLoading) {
-        return <CircularProgress className="loading" size="3rem" color="grey" />;
+        return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />;
     }
 
     if (!clientData) {
