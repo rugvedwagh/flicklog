@@ -8,16 +8,22 @@ import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
+import { toggleTheme } from './actions/posts';
 import { Container } from '@mui/material';
+import { useSelector } from 'react-redux';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
+import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material'
 import './App.css';
 
 const App = () => {
-    const [showScrollButton, setShowScrollButton] = useState(false);
-    const [darkMode, setDarkMode] = useState(true);
+    
+    const dispatch = useDispatch();
 
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    const { darkMode } = useSelector((state) => state.themeReducer);
+    
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
@@ -39,7 +45,9 @@ const App = () => {
         };
     }, []);
 
-    const toggleView = () => setDarkMode(prev => !prev);
+    const toggleView = () => {
+        dispatch(toggleTheme()); 
+    };
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -53,7 +61,9 @@ const App = () => {
             <Button onClick={toggleView} class='verticalbutton'>
                 {darkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
+
             <Container maxWidth="xl">
+
                 <KeyboardArrowUpIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
                 <Navbar darkMode={darkMode} />
 
@@ -68,6 +78,7 @@ const App = () => {
                 </Routes>
 
             </Container>
+            
             <Footer darkMode={darkMode} />
         </div>
     );

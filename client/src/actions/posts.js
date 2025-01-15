@@ -1,6 +1,8 @@
-import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST, COMMENT, ERROR } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from '../constants/postConstants';
+import { START_LOADING, END_LOADING} from '../constants/loadingConstants';
+import { TOGGLE_THEME } from '../constants/themeConstants';
+import { ERROR } from '../constants/authConstants';
 import { fetchPost, deletepost, fetchPostsBySearch, comment, fetchPosts, createpost, likepost, updatepost } from '../api/postApi';
-
 
 // Action Creators
 // these are functions that return actions
@@ -20,11 +22,9 @@ export const getPosts = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        // Ensure cachedPosts structure is initialized properly
         const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || { posts: [], pages: {}, numberOfPages: 0 };
 
         if (cachedPosts.pages[page]) {
-            // Use cached data if the current page exists in the cache
             dispatch({
                 type: FETCH_ALL,
                 payload: {
@@ -34,16 +34,12 @@ export const getPosts = (page) => async (dispatch) => {
                 },
             });
         } else {
-            // Fetch new posts if not cached
             const { data: { data, currentPage, numberOfPages } } = await fetchPosts(page);
 
-            // Append new posts to the existing cached posts
             const updatedPosts = [...cachedPosts.posts, ...data];
 
-            // Mark the current page as cached
             const updatedPages = { ...cachedPosts.pages, [page]: true };
 
-            // Update localStorage with the new data
             localStorage.setItem(
                 'postsData',
                 JSON.stringify({
@@ -53,7 +49,6 @@ export const getPosts = (page) => async (dispatch) => {
                 })
             );
 
-            // Dispatch the updated data
             dispatch({
                 type: FETCH_ALL,
                 payload: { data: updatedPosts, currentPage, numberOfPages },
@@ -76,7 +71,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
         const { data: { data } } = await fetchPostsBySearch(searchQuery)
         dispatch({ type: FETCH_BY_SEARCH, payload: data })
-        
+
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -142,3 +137,11 @@ export const commentPost = (value, id) => async (dispatch) => {
     }
 };
 
+export const toggleTheme = () => async (dispatch) => {
+    try {
+        dispatch({ type: TOGGLE_THEME })
+    } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        console.log(error);
+    }
+};

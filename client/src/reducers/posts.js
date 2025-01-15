@@ -1,9 +1,13 @@
-import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, COMMENT } from "../constants/actionTypes";
+import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, COMMENT } from "../constants/postConstants";
+import { START_LOADING, END_LOADING } from "../constants/loadingConstants";
 
-const postsReducer = (state = {
+const initialState = {
     isLoading: true,
+    darkMode: true,
     posts: []
-}, action) => {
+}
+
+const postsReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case UPDATE:

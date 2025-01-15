@@ -131,7 +131,6 @@ const SignUp = ({darkMode}) => {
                                     fullWidth
                                     className={`submit ${darkMode ? 'dark' : ''}`}
                                     variant="contained"
-                                    style={{ margin: '16px 0' }}
                                 >
                                     {isSignup ? 'Sign Up' : 'Log In'}
                                 </Button>

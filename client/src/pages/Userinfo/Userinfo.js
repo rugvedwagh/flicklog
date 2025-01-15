@@ -1,7 +1,8 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserDetails } from '../../actions/auth';
+import { updateUserDetails, bookmarkPost } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
 import './userstyle.css';
 
@@ -57,6 +58,10 @@ const Userinfo = ({ darkMode }) => {
         setEditDialogOpen(false);
     }, []);
 
+    const removeBookmark = (postId, userId) => {
+        dispatch(bookmarkPost(postId, userId));
+    }
+
     if (isLoading) {
         return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />;
     }
@@ -109,10 +114,11 @@ const Userinfo = ({ darkMode }) => {
                                 <div
                                     key={post._id}
                                     className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
-                                    onClick={() => openPost(post._id)}
                                 >
-                                    <h4>{post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}</h4>
-                                    {post.likes.length} likes
+                                    <h4 onClick={() => openPost(post._id)}>
+                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                    </h4>
+                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
                                 </div>
                             ))}
                         </div>

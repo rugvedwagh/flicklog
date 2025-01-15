@@ -1,4 +1,5 @@
-import { AUTH, ERROR, START_LOADING, USER_INFO, END_LOADING, LOGOUT, BOOKMARK_POST, UPDATE_USER } from '../constants/actionTypes';
+import { AUTH, ERROR, USER_INFO, LOGOUT, BOOKMARK_POST, UPDATE_USER } from '../constants/authConstants';
+import { END_LOADING, START_LOADING } from '../constants/loadingConstants';
 import { sign_in, sign_up, user_info, bookmark_post, updateuserdetails } from '../api/userApi';
 
 
@@ -35,10 +36,10 @@ export const signUp = (formData, navigate) => async (dispatch) => {
 export const userData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        
+
         navigate(`/user/i`)
         const { data } = await user_info(id);
-        
+
         dispatch({ type: USER_INFO, payload: data });
 
         dispatch({ type: END_LOADING })

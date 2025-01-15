@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db.js'; // Import the database connection
+import connectDB from './config/Database.js'; // Import the database connection
 
 const app = express();
 dotenv.config();

@@ -26,7 +26,7 @@ const PostDetails = ({darkMode}) => {
         if (post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
         }
-    }, [post]);
+    }, [post, dispatch]);       // Might remove this later!! Just seeing how this affects the page
 
     const openPost = (_id) => navigate(`/posts/${_id}`)
     const handleImageClick = () => setIsFullScreen(prev => !prev);
@@ -42,7 +42,7 @@ const PostDetails = ({darkMode}) => {
     return (
         <div sx={{ paddingTop: '1.25rem' }}>
 
-            <div className={`main ${darkMode ? 'altview' : ''}`}>
+            <div className={`main ${darkMode ? 'dark' : ''}`}>
                 <div className='second'>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
@@ -52,8 +52,8 @@ const PostDetails = ({darkMode}) => {
                     />
                 </div>
 
-                <div className={`first ${darkMode ? 'alt' : ''}`}>
-                    <Typography className={`posttitle ${darkMode ? 'alt' : ''}`} >
+                <div className='first'>
+                    <Typography className={`posttitle ${darkMode ? 'dark' : ''}`} >
                         {post.title}
                     </Typography>
 
@@ -80,24 +80,30 @@ const PostDetails = ({darkMode}) => {
                     <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a', userSelect:'none' }}>
                         You might also like
                     </Typography>
+
                     <Divider color='#404040' />
+
                     <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
+
                             <Card raised className={`recommended-post ${darkMode ? 'dark' : ''}`} onClick={() => openPost(_id)} key={_id}>
                                 <Typography gutterBottom variant='h6'>{title}</Typography>
+
                                 <img
                                     src={selectedfile}
                                     class='recimg'
                                     alt='alt.img'
                                     onClick={() => openPost(_id)}
                                 />
+
                                 <Typography gutterBottom variant='subtitle1'>{likes.length} likes</Typography>
                             </Card>
+
                         ))}
                     </div>
                 </div>
             ) : (
-                <Typography variant='h5' className='endmessage' align='center' sx={{ mt: '2rem' }} > No related posts!</Typography>
+                <Typography variant='h5' className='endmessage' gutterBottom align='center'  > No related posts!</Typography>
             )}
         </div>
     );

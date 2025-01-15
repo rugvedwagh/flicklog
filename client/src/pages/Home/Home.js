@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, TextField, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
+import { Container, Grid, TextField, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../../actions/posts';

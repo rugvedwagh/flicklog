@@ -1,22 +1,20 @@
 .not-found-container {
     text-align: center;
-    padding: 20px;
+    padding: 3em;
     font-family: 'Roboto', sans-serif;
     margin-top: 5rem;
 }
 
 .not-found-container h1 {
-    color: #555555;
+    color: var(--notFoundColor);
 }
 
 .not-found-container p {
-    color: #555555;
+    color: var(--notFoundColor);
 }
 
 @media (max-width: 768px) {
     .not-found-container {
-        max-width: 100%;
-        margin: 20px auto;
-        padding: 10px;
+        max-width: 80%;
     }
 }

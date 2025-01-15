@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import userReducer from "./auth";
-import postsReducer from "./posts";
-import themeReducer from "./theme";
+import userReducer from "./reducers/auth";
+import postsReducer from "./reducers/posts";
+import themeReducer from "./reducers/theme";
 
 export const reducers = combineReducers(
     {

@@ -94,7 +94,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                 </div>
             )}
 
-            <Typography variant="body2" className={`tags ${darkMode ? 'dark' : ''}`} color="textSecondary" style={{ padding: '5px 16px 0px 16px' }}>
+            <Typography color="textSecondary" variant="body2" className={`tags ${darkMode ? 'dark' : ''}`}>
                 {post.tags.map((tag) => `#${tag} `)}
             </Typography>
 
@@ -103,7 +103,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
             </Typography>
 
             <div className="msg">
-                <Typography color="textSecondary" className={`msg-text ${darkMode ? 'dark' : ''}`} variant="body2" component="p" dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+                <Typography color="textSecondary" variant="body2" component="p" className={`msg-text ${darkMode ? 'dark' : ''}`} dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
             </div>
 
             <CardActions className="cardActions">

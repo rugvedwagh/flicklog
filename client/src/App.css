@@ -5,11 +5,17 @@
     --white: white;
     --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
+    --notFoundColor : #555555;
+    --pink: #ef4056;
+}
+
+:root{
+    box-sizing: border-box;
 }
 
 body {
-    padding: 0;
     overflow-x: hidden !important;
+    padding: 0;
     margin: 0;
 }
 
@@ -46,6 +52,7 @@ body {
     z-index: 999;
     transition: 0.3s ease-in;
     background-color: var(--antiFlashWhite);
+    color: var(--pink);
     cursor: pointer;
     border-radius: 50%;
     transition: 0.3s ease-in;
@@ -57,7 +64,11 @@ body {
     height: 1.7em;
     width: 1.7em;
     transition: 0.3s ease-in;
-    color: var(--black);
+}
+
+.scrollup.hide {
+    transition: 0.3s ease-in;
+    display: none;
 }
 
 @media (max-width: 600px) {
@@ -67,10 +78,6 @@ body {
     }
 }
 
-.scrollup.hide {
-    transition: 0.3s ease-in;
-    display: none;
-}
 
 .scrollup.show:hover {
     transform: scale(1.25);

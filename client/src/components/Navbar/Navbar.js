@@ -2,7 +2,7 @@ import { AppBar, Avatar, Toolbar, Button, Menu, MenuItem, Dialog, DialogActions,
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import { userData, Logout } from '../../actions/auth';
 import { useDispatch } from 'react-redux';

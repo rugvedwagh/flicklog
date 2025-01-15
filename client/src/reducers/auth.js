@@ -1,20 +1,14 @@
-import {
-    AUTH,
-    LOGOUT,
-    USER_INFO,
-    START_LOADING,
-    END_LOADING,
-    ERROR,
-    BOOKMARK_POST,
-    UPDATE_USER
-} from '../constants/actionTypes';
+import { AUTH, LOGOUT, USER_INFO, ERROR, BOOKMARK_POST, UPDATE_USER } from '../constants/authConstants';
+import { START_LOADING, END_LOADING } from '../constants/loadingConstants'
 
-const userReducer = (state = {
+const initialState = {
     authData: null,
     clientData: null,
-    isLoading: true,
+    isLoading: null,
     errorMessage: null
-}, action) => {
+}
+
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:

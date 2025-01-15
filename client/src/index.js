@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
-import { reducers } from './reducers';
+import { reducers } from './store';
 import { thunk } from 'redux-thunk'; // Removed curly braces around thunk
 import ReactDOM from "react-dom/client"; // Updated import for React 18+
 import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter

@@ -130,15 +130,14 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
                 </div>
 
                 <Button
-                    className='buttonSubmit'
+                    className={`buttonSubmit ${darkMode ? 'dark' : ''} `}
                     variant='contained'
                     color='primary'
                     size='large'
                     type='submit'
                     fullWidth
                     style={{
-                        marginBottom: '10px',
-                        backgroundColor: 'black'
+                        
                     }}
                 >
                     Post

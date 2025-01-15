@@ -1,15 +1,3 @@
-:root {
-    --pinkvar: #eb24d0;
-    --pink: #ef4056;
-    --black: #1a1a1a;
-    --borderColor: #404040;
-    --loadingvar: white;
-    --white: white;
-    --antiFlashWhite: #e7e9ea;
-    --subtextColor: #f2f2f2bb;
-}
-
-
 .footer {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border-top: 1px solid var(--borderColor);
