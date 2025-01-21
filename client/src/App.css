@@ -97,6 +97,7 @@ body {
     margin: 0 !important;
     overflow-x: hidden !important;
 }
+
 .root-bg.dark{
     background-color: var(--black);
 }
