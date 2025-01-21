@@ -158,7 +158,7 @@
 
     .navbar {
         padding: 0;
-        width: 85%
+        width: 90%
     }
 }
 
@@ -187,7 +187,14 @@
     display: flex;
 }
 
-@media ((min-width: 600px) and (max-width : 1669px)) {
+
+@media ((min-width: 600px) and (max-width : 1536px)) {
+    .navbar{
+        width: 95%;
+    }
+}
+
+@media ((min-width: 1537px) and (max-width : 1669px)) {
     .navbar {
         width: 94%;
     }
