@@ -26,6 +26,7 @@
     animation: slideImage 0.7s ease-in-out;
 }
 
+
 .searchlogo {
     color: rgb(107, 107, 107);
     cursor: pointer;
@@ -150,7 +151,6 @@
 .appBarSearch.dark .box{
     background-color: var(--antiFlashWhite);
 }
-
 .appBarSearch.dark .box input{
     background-color: var(--antiFlashWhite);
 }

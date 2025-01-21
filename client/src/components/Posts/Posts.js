@@ -11,7 +11,6 @@ const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
-    
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
 
     const [currentPage, setCurrentPage] = useState(1);

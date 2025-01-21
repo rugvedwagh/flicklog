@@ -199,12 +199,6 @@
     }
 }
 
-@media ((min-width : 1536px) and (max-width : 1669px)) {
-    .navbar{
-        width: 95%;
-    }
-}
-
 .commentsOuterContainer {
     display: flex;
     justify-content: space-between;

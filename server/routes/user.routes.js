@@ -14,7 +14,7 @@ router.post('/signin', logIn)
 
 router.post('/signup', signUp);
 
-router.patch('/:id/update', verfiyToken, updateUser);
+router.patch('/:id/update', auth, updateUser);
 
 router.get('/i/:id', verfiyToken, getUserData);
 

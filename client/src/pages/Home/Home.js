@@ -72,7 +72,6 @@ const Home = ({ darkMode }) => {
             </ToggleButtonGroup>
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
-                
                 <Grid item xs={12} sm={6} md={9}>
                     <Posts setCurrentId={setCurrentId} Myposts={myposts} darkMode={darkMode} />
                 </Grid>

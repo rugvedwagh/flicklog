@@ -27,6 +27,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const [isbookmarked, setIsBookmarked] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
+
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
     useEffect(() => {
