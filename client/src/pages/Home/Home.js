@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import './home.styles.css';
 
 const Home = ({ darkMode }) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,7 +18,7 @@ const Home = ({ darkMode }) => {
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);
     const [myposts, setMyposts] = useState(false);
-    
+
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
@@ -32,11 +33,17 @@ const Home = ({ darkMode }) => {
         setMyposts(!myposts);
     }
 
-    const SearchPost = () => {
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            searchPost();
+        }
+    };
+
+    const searchPost = () => {
         if (searchInput.trim()) {
             const terms = searchInput.split(',').map((term) => term.trim());
-            const search = terms[0]; 
-            const tags = terms.slice(1).join(','); 
+            const search = terms[0];
+            const tags = terms.slice(1).join(',');
 
             dispatch(getPostsBySearch({ search, tags }));
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
@@ -55,37 +62,43 @@ const Home = ({ darkMode }) => {
                 aria-label="post toggle"
             >
                 <ToggleButton value="allPosts" aria-label="all posts">
-                    <strong>All Posts</strong>
+                    All Posts
                 </ToggleButton>
 
                 <ToggleButton value="myPosts" aria-label="my posts">
-                    <strong>My Posts</strong>
+                    My Posts
                 </ToggleButton>
 
             </ToggleButtonGroup>
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
+                
                 <Grid item xs={12} sm={6} md={9}>
                     <Posts setCurrentId={setCurrentId} Myposts={myposts} darkMode={darkMode} />
                 </Grid>
 
                 <Grid item xs={12} sm={4} md={3}>
                     <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static'>
-                        <div class="box">
-                            <input type="text" onChange={(e) => setSearchInput(e.target.value)} name="" />
-                            <Button variant="filled" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={SearchPost}>
+                        <div className="box">
+                            <input
+                                type="text"
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                name=""
+                                onKeyDown={handleKeyDown}
+                            />
+                            <Button variant="filled" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={searchPost}>
                                 <SearchOutlinedIcon />
                             </Button>
                         </div>
                     </AppBar>
 
-                    {!formOpen && user ? (
-                        <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='stastic' onClick={handleDrop}>
-                            <h4>Want to share something?</h4>
-                        </AppBar>
-                    ) : (
-                        <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
-                    )}
+                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >
+                        {!formOpen && user ? (
+                            <h4 onClick={handleDrop}>Want to share something?</h4>
+                        ) : (
+                            <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                        )}
+                    </AppBar>
 
                 </Grid>
             </Grid>

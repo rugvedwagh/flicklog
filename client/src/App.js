@@ -58,7 +58,7 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
-            <Button onClick={toggleView} className='verticalbutton'>
+            <Button onClick={toggleView} className='toggleButton'>
                 {darkMode ? <LightModeIcon sx={{ color: 'white' }}/> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
 

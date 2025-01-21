@@ -10,10 +10,10 @@ import './form.styles.css';
 
 
 const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
-    
+
     const dispatch = useDispatch();
-    const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
     const user = JSON.parse(localStorage.getItem('profile'));
+    const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
 
     const [postData, setPostData] = useState({
         title: '',
@@ -65,10 +65,14 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
     }
 
     return (
-        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} style={{ marginTop: '10px' }}>
+        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} >
             <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
-                <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}><CloseOutlinedIcon color='black' /></div>
-                <Typography  variant="h6" onClick={toggleForm}  gutterBottom>
+
+                <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}>
+                    <CloseOutlinedIcon color='black' />
+                </div>
+
+                <Typography variant="h6" onClick={toggleForm} gutterBottom>
                     {currentId ? 'Edit' : 'Post'}
                 </Typography>
 
@@ -137,7 +141,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
                     type='submit'
                     fullWidth
                     style={{
-                        
+
                     }}
                 >
                     Post

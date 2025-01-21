@@ -6,11 +6,11 @@ import './commentsection.styles.css';
 
 const CommentsSection = ({ post, darkMode }) => {
 
-    const [comments, setComments] = useState(post?.comments)
-    const [comment, setComment] = useState('');
-
-    const user = JSON.parse(localStorage.getItem('profile'))
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'))
+
+    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState(post?.comments)
 
     const postComment = async () => {
         const finalComment = `${user.result.name}: ${comment}`;

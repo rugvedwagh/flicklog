@@ -70,6 +70,6 @@
 }
 
 .endmsg.dark {
-    color: var(--white);
+    color: var(--subtextColor);
 }
 

@@ -5,20 +5,20 @@ import {
     bookmarkPost,
     updateUser
 } from '../controllers/user.controller.js'
+import verfiyToken from '../middleware/auth.middleware.js'
 import express from 'express'
-import auth from '../middleware/auth.middleware.js'
-const router = express.Router()
 
+const router = express.Router()
 
 router.post('/signin', logIn)
 
 router.post('/signup', signUp);
 
-router.patch('/:id/update', auth, updateUser);
+router.patch('/:id/update', verfiyToken, updateUser);
 
-router.get('/i/:id', getUserData);
+router.get('/i/:id', verfiyToken, getUserData);
 
-router.post('/bookmarks/add', bookmarkPost);
+router.post('/bookmarks/add', verfiyToken, bookmarkPost);
 
 
 export default router;

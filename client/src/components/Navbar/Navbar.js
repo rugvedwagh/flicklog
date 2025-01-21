@@ -10,6 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 import './navbar.styles.css';
 
 const Navbar = ({darkMode}) => {
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

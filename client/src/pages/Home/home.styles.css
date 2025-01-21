@@ -26,7 +26,6 @@
     animation: slideImage 0.7s ease-in-out;
 }
 
-
 .searchlogo {
     color: rgb(107, 107, 107);
     cursor: pointer;
@@ -131,7 +130,7 @@
     border-radius: 3px;
     display: flex;
     align-items: center;
-    padding: 1em;
+    padding: 1em 0 1em 1em;
 }
 
 .box > input {
@@ -139,7 +138,7 @@
     height: 1em;
     border: none;
     outline: none;
-    font-size: 18px;
+    font-size: 16px;
     padding-left: 10px;
     width: 100%;
 }
@@ -151,6 +150,7 @@
 .appBarSearch.dark .box{
     background-color: var(--antiFlashWhite);
 }
+
 .appBarSearch.dark .box input{
     background-color: var(--antiFlashWhite);
 }

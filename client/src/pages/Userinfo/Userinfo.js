@@ -11,8 +11,8 @@ const Userinfo = ({ darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const { clientData, isLoading } = useSelector((state) => state.authReducer);
     const { posts } = useSelector((state) => state.postsReducer);
+    const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);

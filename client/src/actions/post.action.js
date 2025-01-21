@@ -9,8 +9,10 @@ import { ERROR } from '../constants/auth.constants';
 export const getPost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
+
         const { data } = await fetchPostApi(id);
         dispatch({ type: FETCH_POST, payload: data })
+        
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -85,6 +87,7 @@ export const createPost = (post) => async (dispatch) => {
 
         const { data } = await createPostApi(post);
         dispatch({ type: CREATE, payload: data })
+        localStorage.removeItem('postsData')
 
         dispatch({ type: END_LOADING })
     } catch (error) {

@@ -39,7 +39,6 @@ export const userData = (id, navigate) => async (dispatch) => {
 
         navigate(`/user/i`)
         const { data } = await userInfoApi(id);
-
         dispatch({ type: USER_INFO, payload: data });
 
         dispatch({ type: END_LOADING })

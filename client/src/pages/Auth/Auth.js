@@ -17,11 +17,14 @@ const initialState = {
 };
 
 const SignUp = ({darkMode}) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
     const handleShowPassword = () => setShowPassword(!showPassword);
     const { errorMessage } = useSelector((state) => state.authReducer);
 

@@ -21,12 +21,11 @@ const Post = ({ post, setCurrentId, darkMode }) => {
 
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
+    const { clientData } = useSelector((state) => state.authReducer);
 
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-    const { clientData } = useSelector((state) => state.authReducer);
 
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
@@ -119,7 +118,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
 
                 <Tooltip title="Comments" arrow placement="top">
                     <Button style={{ color: 'black' }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }} onClick={openPost}>
                             <CommentOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             <span style={{ fontSize: '15px', opacity: '0.8' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
                                 &nbsp;{post?.comments?.length}

@@ -101,7 +101,7 @@ body {
     background-color: var(--black);
 }
 
-.verticalbutton {
+.toggleButton {
     position: fixed;
     z-index: 1000;
     left: 95vw;
@@ -113,16 +113,16 @@ body {
     transition: all 0.3s ease;
 }
 
-.verticalbutton:hover {
+.toggleButton:hover {
     transform: scale(1.1);
 }
 
-.verticalbutton:focus {
+.toggleButton:focus {
     outline: none;
 }
 
 @media (max-width: 600px) {
-    .verticalbutton {
+    .toggleButton {
         left: 80%;
         top: 12%;
         font-size: 0.8rem;

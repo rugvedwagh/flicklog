@@ -1,13 +1,13 @@
-import { Typography, CircularProgress, Divider, Card} from '@mui/material';
+import { Typography, CircularProgress, Divider, Card } from '@mui/material';
 import CommentsSection from '../../components/Comments/CommentsSection';
 import { getPost, getPostsBySearch } from '../../actions/post.action';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import './postdetails.styles.css';
+import moment from 'moment';
 
-const PostDetails = ({darkMode}) => {
+const PostDetails = ({ darkMode }) => {
 
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -43,16 +43,16 @@ const PostDetails = ({darkMode}) => {
         <div sx={{ paddingTop: '1.25rem' }}>
 
             <div className={`main ${darkMode ? 'dark' : ''}`}>
-                <div className='second'>
+                <section className='second'>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
                         src={post.selectedfile}
                         alt=''
                         onClick={handleImageClick}
                     />
-                </div>
+                </section>
 
-                <div className='first'>
+                <section className='first'>
                     <Typography className={`posttitle ${darkMode ? 'dark' : ''}`} >
                         {post.title}
                     </Typography>
@@ -72,16 +72,16 @@ const PostDetails = ({darkMode}) => {
                     </Typography>
 
                     <CommentsSection darkMode={darkMode} post={post} />
-                </div>
+                </section>
             </div>
 
             {recommendedPosts.length ? (
                 <div className={`sect ${darkMode ? 'dark' : ''}`}>
-                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a', userSelect:'none' }}>
+                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a', userSelect: 'none' }}>
                         You might also like
                     </Typography>
 
-                    <Divider color='#404040' />
+                    <Divider />
 
                     <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
@@ -91,7 +91,7 @@ const PostDetails = ({darkMode}) => {
 
                                 <img
                                     src={selectedfile}
-                                    class='recimg'
+                                    className='recimg'
                                     alt='alt.img'
                                     onClick={() => openPost(_id)}
                                 />

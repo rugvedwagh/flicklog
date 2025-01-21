@@ -182,6 +182,7 @@
     transform: translateY(-5px);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 15px;
 }
+
 .recommended-post.dark {
     background-color: var(--black);
     color: var(--antiFlashWhite);
@@ -198,6 +199,7 @@
 .recommended-posts.dark {
     background-color: var(--black);
 }
+
 .recimg {
     width: 100%;
     height: 75%;
@@ -308,4 +310,8 @@
 .endmessage {
     margin-top: 2em !important;
     color: var(--subtextColor) !important;
+}
+
+.sect > .MuiDivider{
+    color: var(--borderColor);
 }

@@ -8,11 +8,13 @@ import './posts.styles.css';
 
 const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     
+    const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
-    const dispatch = useDispatch();
-    const [currentPage, setCurrentPage] = useState(1);
+    
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
+
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         dispatch(getPosts(currentPage));

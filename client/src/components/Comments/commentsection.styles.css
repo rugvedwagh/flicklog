@@ -57,6 +57,11 @@
     border-radius: 3px;
 }
 
+.users-name{
+    user-select: none;
+    cursor: pointer;
+}
+
 .users-name.dark{
     color: var(--antiFlashWhite) !important;
 }
