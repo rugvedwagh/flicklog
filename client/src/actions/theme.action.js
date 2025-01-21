@@ -1,4 +1,4 @@
-import { ERROR, TOGGLE_THEME } from '../constants/themeConstants';
+import { ERROR, TOGGLE_THEME } from '../constants/theme.constants';
 
 // Theme actions
 export const toggleTheme = () => async (dispatch) => {

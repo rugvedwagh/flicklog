@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
 
-const secret = 'test';
+dotenv.config();
 
-const authMiddleWare = async (req, res, next) => {
+const verfiyToken = async (req, res, next) => {
     try {
         //  'req.header.authorization' was set in api.js in client
         const authorizationHeader = req.headers.authorization;
@@ -17,7 +18,7 @@ const authMiddleWare = async (req, res, next) => {
         let decodedData;
 
         if (token && isCustomAuth) {
-            decodedData = jwt.verify(token, secret);
+            decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
             req.userId = decodedData?.id;
         } else {
             decodedData = jwt.decode(token);
@@ -29,4 +30,4 @@ const authMiddleWare = async (req, res, next) => {
     }
 };
 
-export default authMiddleWare;
+export default verfiyToken;

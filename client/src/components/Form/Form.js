@@ -1,12 +1,12 @@
 import { TextField, Button, Typography, Paper } from '@mui/material';
-import { createPost, updatePost } from '../../actions/posts';
+import { createPost, updatePost } from '../../actions/post.action';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
-import './styles.css';
+import './form.styles.css';
 
 
 const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {

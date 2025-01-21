@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Grid, CircularProgress, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPosts } from '../../actions/posts';
+import { getPosts } from '../../actions/post.action.js';
 import Post from './Post/Post.js';
-import './styles.css';
+import './posts.styles.css';
 
 const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     
@@ -32,7 +32,7 @@ const Posts = ({ setCurrentId, Myposts, darkMode }) => {
     }, [currentPage, numberOfPages]);
 
     return (
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden' }} >
             {isLoading && currentPage === 1 ? (
                 <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" color="grey" />
             ) : (
@@ -42,7 +42,7 @@ const Posts = ({ setCurrentId, Myposts, darkMode }) => {
                     hasMore={currentPage < numberOfPages}
                     loader={<CircularProgress className={`infloader ${darkMode ? 'dark' : ''}`} sx={{color:'white'}} size="3rem" />}
                     endMessage={
-                            <Typography variant='h5' align='center' sx={{mt:'2rem'}} > No more posts!</Typography>
+                            <Typography className={`endmsg ${darkMode ? 'dark' : ''}`} variant='h5' align='center' > No more posts!</Typography>
                     }
                     style={{ overflowX: 'hidden' }}
                 >

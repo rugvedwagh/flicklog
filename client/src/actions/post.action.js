@@ -1,15 +1,15 @@
-import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from '../constants/postConstants';
-import { START_LOADING, END_LOADING} from '../constants/loadingConstants';
-import { TOGGLE_THEME } from '../constants/themeConstants';
-import { ERROR } from '../constants/authConstants';
-import { fetchPost, deletepost, fetchPostsBySearch, comment, fetchPosts, createpost, likepost, updatepost } from '../api/postApi';
+import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from '../constants/post.constants';
+import { fetchPostApi, deletePostApi, fetchPostsBySearchApi, addCommentApi, fetchPostsApi, createPostApi, likePostApi, updatePostApi } from '../api/post.api';
+import { START_LOADING, END_LOADING} from '../constants/loading.constants';
+import { TOGGLE_THEME } from '../constants/theme.constants';
+import { ERROR } from '../constants/auth.constants';
 
 // Action Creators
 // these are functions that return actions
 export const getPost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await fetchPost(id);
+        const { data } = await fetchPostApi(id);
         dispatch({ type: FETCH_POST, payload: data })
         dispatch({ type: END_LOADING })
     } catch (error) {
@@ -34,7 +34,7 @@ export const getPosts = (page) => async (dispatch) => {
                 },
             });
         } else {
-            const { data: { data, currentPage, numberOfPages } } = await fetchPosts(page);
+            const { data: { data, currentPage, numberOfPages } } = await fetchPostsApi(page);
 
             const updatedPosts = [...cachedPosts.posts, ...data];
 
@@ -69,7 +69,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        const { data: { data } } = await fetchPostsBySearch(searchQuery)
+        const { data: { data } } = await fetchPostsBySearchApi(searchQuery)
         dispatch({ type: FETCH_BY_SEARCH, payload: data })
 
         dispatch({ type: END_LOADING })
@@ -82,8 +82,10 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await createpost(post);
+
+        const { data } = await createPostApi(post);
         dispatch({ type: CREATE, payload: data })
+
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -94,8 +96,10 @@ export const createPost = (post) => async (dispatch) => {
 export const updatePost = (id, post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await updatepost(id, post)
+
+        const { data } = await updatePostApi(id, post)
         dispatch({ type: UPDATE, payload: data })
+
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -106,8 +110,10 @@ export const updatePost = (id, post) => async (dispatch) => {
 export const deletePost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        await deletepost(id);
+
+        await deletePostApi(id);
         dispatch({ type: DELETE, payload: id })
+
         dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -117,7 +123,7 @@ export const deletePost = (id) => async (dispatch) => {
 
 export const likePost = (id) => async (dispatch) => {
     try {
-        const { data } = await likepost(id);
+        const { data } = await likePostApi(id);
         dispatch({ type: LIKE, payload: data })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -127,7 +133,7 @@ export const likePost = (id) => async (dispatch) => {
 
 export const commentPost = (value, id) => async (dispatch) => {
     try {
-        const { data } = await comment(value, id);
+        const { data } = await addCommentApi(value, id);
         dispatch({ type: COMMENT, payload: data });
 
         return data.comments;

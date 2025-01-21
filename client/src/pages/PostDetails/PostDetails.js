@@ -1,11 +1,11 @@
 import { Typography, CircularProgress, Divider, Card} from '@mui/material';
-import { getPost, getPostsBySearch } from '../../actions/posts';
+import CommentsSection from '../../components/Comments/CommentsSection';
+import { getPost, getPostsBySearch } from '../../actions/post.action';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import CommentsSection from '../../components/Comments/CommentsSection';
 import moment from 'moment';
-import './postdetail.css';
+import './postdetails.styles.css';
 
 const PostDetails = ({darkMode}) => {
 

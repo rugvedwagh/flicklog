@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'https://remserver01.onrender.com'  // Change this to your API's base URL
+    baseURL: process.env.REACT_APP_API_URL  // Change this to your API's base URL
 });
 
 // Sending the Token back to our backend for it to verify

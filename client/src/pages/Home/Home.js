@@ -1,22 +1,23 @@
-import { Container, Grid, TextField, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
+import { Container, Grid, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getPostsBySearch } from '../../actions/posts';
-import { useDispatch } from 'react-redux';
+import { getPostsBySearch } from '../../actions/post.action';
 import React, { useState, useEffect } from 'react';
 import Posts from '../../components/Posts/Posts';
 import Form from '../../components/Form/Form';
-import './home.css';
+import { useDispatch } from 'react-redux';
+import './home.styles.css';
 
-const Home = ({darkMode}) => {
-    const [currentId, setCurrentId] = useState(null);
-    const [search, setSearch] = useState('');
-    const [tags, setTags] = useState('');
-    const [formOpen, setformOpen] = useState(false);
-    const [myposts, setMyposts] = useState(false);
+const Home = ({ darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [searchInput, setSearchInput] = useState('');
+    const [currentId, setCurrentId] = useState(null);
+    const [formOpen, setformOpen] = useState(false);
+    const [myposts, setMyposts] = useState(false);
+    
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
@@ -31,15 +32,18 @@ const Home = ({darkMode}) => {
         setMyposts(!myposts);
     }
 
-    const handleSearchPost = () => {
-        if (search.trim() || tags) {
-            dispatch(getPostsBySearch({ search, tags }))
+    const SearchPost = () => {
+        if (searchInput.trim()) {
+            const terms = searchInput.split(',').map((term) => term.trim());
+            const search = terms[0]; 
+            const tags = terms.slice(1).join(','); 
+
+            dispatch(getPostsBySearch({ search, tags }));
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
-        }
-        else {
+        } else {
             navigate('/');
         }
-    }
+    };
 
     return (
         <Container maxWidth='xl' style={{ marginTop: '5.5rem' }}>
@@ -67,23 +71,12 @@ const Home = ({darkMode}) => {
 
                 <Grid item xs={12} sm={4} md={3}>
                     <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static'>
-                        <TextField
-                            name='search'
-                            variant='filled'
-                            label='Search Memories'
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-
-                        <TextField
-                            name='search'
-                            variant='filled'
-                            label='Search Tags'
-                            value={tags}
-                            onChange={(e) => setTags(e.target.value)}
-                        />
-                        
-                        <Button variant="outlined" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={handleSearchPost}><SearchOutlinedIcon /></Button>
+                        <div class="box">
+                            <input type="text" onChange={(e) => setSearchInput(e.target.value)} name="" />
+                            <Button variant="filled" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={SearchPost}>
+                                <SearchOutlinedIcon />
+                            </Button>
+                        </div>
                     </AppBar>
 
                     {!formOpen && user ? (
@@ -91,7 +84,6 @@ const Home = ({darkMode}) => {
                             <h4>Want to share something?</h4>
                         </AppBar>
                     ) : (
-
                         <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                     )}
 

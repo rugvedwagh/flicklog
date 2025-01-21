@@ -1,11 +1,9 @@
-import UserModel from "../models/user.js";
-import jwt from "jsonwebtoken";
+import UserModel from "../models/user.model.js";
+import { generateToken } from '../utils/token.js'; 
 import bcrypt from "bcrypt";
 
-const secret = 'test';
-
-export const logIn = async (req, res) => {
-
+const logIn = async (req, res) => {
+    
     const { email, password } = req.body;
 
     try {
@@ -15,18 +13,13 @@ export const logIn = async (req, res) => {
             message: "User doesn't exist"
         });
 
-        const isPasswordCorrect = await bcrypt.compare(
-            password,
-            oldUser.password);
+        const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
         if (!isPasswordCorrect) return res.status(400).json({
             message: "Incorrect password!"
         });
 
-        const token = jwt.sign({
-            email: oldUser.email,
-            id: oldUser._id
-        }, secret, { expiresIn: "1h" });
+        const token = generateToken(oldUser); // Use the utility function
 
         res.status(200).json({ result: oldUser, token });
     } catch (err) {
@@ -34,15 +27,9 @@ export const logIn = async (req, res) => {
     }
 };
 
-export const signUp = async (req, res) => {
+const signUp = async (req, res) => {
     try {
-        const {
-            email,
-            password,
-            confirmPassword,
-            firstName,
-            lastName
-        } = req.body;
+        const { email, password, confirmPassword, firstName, lastName } = req.body;
 
         const oldUser = await UserModel.findOne({ email });
 
@@ -54,12 +41,6 @@ export const signUp = async (req, res) => {
             message: "Password doesn't match"
         });
 
-        if (!password) {
-            return res.status(400).json({
-                message: "Password is required"
-            });
-        }
-
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const result = new UserModel({
@@ -70,24 +51,16 @@ export const signUp = async (req, res) => {
 
         await result.save();
 
-        const token = jwt.sign({
-            email: result.email,
-            id: result._id
-        }, secret, { expiresIn: "1h" });
+        const token = generateToken(result);
 
-        res.status(201).json({
-            result,
-            token
-        });
+        res.status(201).json({ result, token });
     } catch (error) {
-        res.status(500).json({
-            message: "Something went wrong"
-        });
-        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
 
-export const getUserData = async (req, res) => {
+const getUserData = async (req, res) => {
+
     const { id } = req.params;
     try {
         const user = await UserModel.findById(id);
@@ -99,7 +72,8 @@ export const getUserData = async (req, res) => {
     }
 }
 
-export const bookmarkPost = async (req, res) => {
+const bookmarkPost = async (req, res) => {
+
     const { postId, userId } = req.body;
 
     try {
@@ -135,7 +109,7 @@ export const bookmarkPost = async (req, res) => {
 };
 
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email } = req.body;
 
@@ -166,3 +140,11 @@ export const updateUser = async (req, res) => {
         });
     }
 };
+
+export {
+    signUp,
+    logIn,
+    updateUser,
+    getUserData,
+    bookmarkPost
+}

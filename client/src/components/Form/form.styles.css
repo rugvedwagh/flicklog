@@ -48,12 +48,12 @@
 }
 
 .buttonSubmit {
-    background-color: var(--pink) ;
+    background-color: var(--pink) !important;
     margin-bottom: 10px !important;
 }
 
 .buttonSubmit.dark{
-    background-color: var(--black) ;
+    background-color: var(--black) !important;
 }
 
 .buttonSubmit:hover{

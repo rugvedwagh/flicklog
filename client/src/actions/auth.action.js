@@ -1,13 +1,13 @@
-import { AUTH, ERROR, USER_INFO, LOGOUT, BOOKMARK_POST, UPDATE_USER } from '../constants/authConstants';
-import { END_LOADING, START_LOADING } from '../constants/loadingConstants';
-import { sign_in, sign_up, user_info, bookmark_post, updateuserdetails } from '../api/userApi';
+import { AUTH, ERROR, USER_INFO, LOGOUT, BOOKMARK_POST, UPDATE_USER } from '../constants/auth.constants';
+import { END_LOADING, START_LOADING } from '../constants/loading.constants';
+import { signInApi, signUpApi, userInfoApi, bookmarkPostApi, updateUserDetailsApi } from '../api/user.api';
 
 
 export const signIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const { data } = await sign_in(formData);
+        const { data } = await signInApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
 
@@ -22,7 +22,7 @@ export const signUp = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        const { data } = await sign_up(formData);
+        const { data } = await signUpApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts')
 
@@ -38,7 +38,7 @@ export const userData = (id, navigate) => async (dispatch) => {
         dispatch({ type: START_LOADING })
 
         navigate(`/user/i`)
-        const { data } = await user_info(id);
+        const { data } = await userInfoApi(id);
 
         dispatch({ type: USER_INFO, payload: data });
 
@@ -67,7 +67,7 @@ export const Logout = (navigate) => (dispatch) => {
 
 export const bookmarkPost = (postId, userId) => async (dispatch) => {
     try {
-        const { data } = await bookmark_post(postId, userId);
+        const { data } = await bookmarkPostApi(postId, userId);
 
         dispatch({ type: BOOKMARK_POST, payload: data });
     } catch (error) {
@@ -78,7 +78,7 @@ export const bookmarkPost = (postId, userId) => async (dispatch) => {
 
 export const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
-        const { data } = await updateuserdetails(id, updatedData);
+        const { data } = await updateUserDetailsApi(id, updatedData);
 
         dispatch({ type: UPDATE_USER, payload: data });
 

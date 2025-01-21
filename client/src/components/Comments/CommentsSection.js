@@ -1,8 +1,8 @@
 import { Typography, TextField, Button } from '@mui/material';
-import { commentPost } from '../../actions/posts';
+import { commentPost } from '../../actions/post.action';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
-import './comments.css';
+import './commentsection.styles.css';
 
 const CommentsSection = ({ post, darkMode }) => {
 

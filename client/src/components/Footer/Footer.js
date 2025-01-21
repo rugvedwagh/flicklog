@@ -1,8 +1,8 @@
 import React from 'react';
-import './styles.css'; // Assuming you will add your CSS in this file
 import twitterlogo from '../../assets/twitterlogo.svg'
 import instalogo from '../../assets/instalogo.svg'
 import fblogo from '../../assets/fblogo.svg'
+import './footer.styles.css'; // Assuming you will add your CSS in this file
 
 const Footer = ({darkMode}) => {
     return (

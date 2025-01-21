@@ -2,17 +2,17 @@ import { Card, CardActions, CardMedia, Button, Typography, Dialog, DialogActions
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import { likePost, deletePost } from '../../../actions/posts';
+import { likePost, deletePost } from '../../../actions/post.action';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { bookmarkPost } from '../../../actions/auth';
+import { bookmarkPost } from '../../../actions/auth.action';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../../assets/defimg.jpg';
 import Likes from './Likes/Likes';
 import moment from 'moment';
-import './post.css';
+import './post.styles.css';
 
 const Post = ({ post, setCurrentId, darkMode }) => {
 
@@ -26,7 +26,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const [isbookmarked, setIsBookmarked] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-    const { clientData } = useSelector((state) => state.userReducer);
+    const { clientData } = useSelector((state) => state.authReducer);
 
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 

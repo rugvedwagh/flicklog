@@ -1,7 +1,7 @@
-import PostMessage from "../models/postMessage.js"
+import PostMessage from "../models/post.model.js"
 import mongoose from "mongoose";
 
-export const getPost = async (req, res) => {
+const getPost = async (req, res) => {
     const { id } = req.params;
     try {
         const post = await PostMessage.findById(id);
@@ -13,7 +13,7 @@ export const getPost = async (req, res) => {
     }
 }
 
-export const getPosts = async (req, res) => {
+const getPosts = async (req, res) => {
     const { page } = req.query;
 
     try {
@@ -39,7 +39,7 @@ export const getPosts = async (req, res) => {
 };
 
 
-export const getPostsBySearch = async (req, res) => {
+const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
 
     try {
@@ -61,7 +61,7 @@ export const getPostsBySearch = async (req, res) => {
     }
 };
 
-export const createPost = async (req, res) => {
+const createPost = async (req, res) => {
     const post = req.body;
 
     const newPost = new PostMessage({
@@ -80,12 +80,12 @@ export const createPost = async (req, res) => {
     }
 }
 
-export const updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
     const { id: _id } = req.params;
     const post = req.body;
 
     try {
-        // Check if the provided ID is valid
+
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(404).send('No post with this id');
         }
@@ -106,7 +106,7 @@ export const updatePost = async (req, res) => {
     }
 };
 
-export const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -126,7 +126,7 @@ export const deletePost = async (req, res) => {
     }
 };
 
-export const likePost = async (req, res) => {
+const likePost = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -164,7 +164,7 @@ export const likePost = async (req, res) => {
     }
 };
 
-export const commentPost = async (req, res) => {
+const commentPost = async (req, res) => {
     const { id } = req.params;
     const { value } = req.body;
 
@@ -190,3 +190,14 @@ export const commentPost = async (req, res) => {
         });
     }
 };
+
+export {
+    getPost,
+    getPosts,
+    getPostsBySearch,
+    likePost,
+    commentPost,
+    deletePost,
+    updatePost,
+    createPost
+}

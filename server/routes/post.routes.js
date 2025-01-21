@@ -7,9 +7,9 @@ import {
     updatePost,
     deletePost,
     likePost
-} from '../controllers/posts.js';
+} from '../controllers/post.controller.js';
 
-import auth from '../middleware/authMiddleWare.js'
+import verfiyToken from '../middleware/auth.middleware.js'
 import express from 'express'
 
 const router = express.Router();
@@ -21,15 +21,15 @@ router.get('/', getPosts);
 
 router.get('/:id', getPost);
 
-router.post('/', auth, createPost);
+router.post('/', verfiyToken, createPost);
 
-router.patch('/:id', auth, updatePost);
+router.patch('/:id', verfiyToken, updatePost);
 
-router.delete('/:id', auth, deletePost);
+router.delete('/:id', verfiyToken, deletePost);
 
-router.patch('/:id/likePost', auth, likePost);
+router.patch('/:id/likePost', verfiyToken, likePost);
 
-router.post('/:id/commentPost', auth, commentPost);
+router.post('/:id/commentPost', verfiyToken, commentPost);
 
 
 export default router;

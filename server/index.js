@@ -1,10 +1,10 @@
-import userRoutes from './routes/users.js';
-import postRoutes from './routes/posts.js';
+import userRoutes from './routes/user.routes.js';
+import postRoutes from './routes/post.routes.js';
+import connectDB from './config/Database.js'; // Import the database connection
 import bodyParser from 'body-parser';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/Database.js'; // Import the database connection
 
 const app = express();
 dotenv.config();

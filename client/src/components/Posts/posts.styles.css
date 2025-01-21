@@ -65,5 +65,11 @@
     display: none;
 }
 
+.endmsg{
+    margin-top: 2rem !important;
+}
 
+.endmsg.dark {
+    color: var(--white);
+}
 

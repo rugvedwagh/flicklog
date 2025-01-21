@@ -1,15 +1,17 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { updateUserDetails, bookmarkPost } from '../../actions/auth.action';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserDetails, bookmarkPost } from '../../actions/auth';
 import { useNavigate } from 'react-router-dom';
-import './userstyle.css';
+import './userinfo.styles.css';
 
 const Userinfo = ({ darkMode }) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { clientData, isLoading } = useSelector((state) => state.userReducer);
+    
+    const { clientData, isLoading } = useSelector((state) => state.authReducer);
     const { posts } = useSelector((state) => state.postsReducer);
 
     const [showBm, setShowBm] = useState(false);

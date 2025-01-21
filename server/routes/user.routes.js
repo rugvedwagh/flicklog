@@ -4,9 +4,9 @@ import {
     getUserData,
     bookmarkPost,
     updateUser
-} from '../controllers/users.js'
+} from '../controllers/user.controller.js'
 import express from 'express'
-import auth from '../middleware/authMiddleWare.js'
+import auth from '../middleware/auth.middleware.js'
 const router = express.Router()
 
 

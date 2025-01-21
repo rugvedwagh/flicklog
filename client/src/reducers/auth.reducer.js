@@ -1,5 +1,5 @@
-import { AUTH, LOGOUT, USER_INFO, ERROR, BOOKMARK_POST, UPDATE_USER } from '../constants/authConstants';
-import { START_LOADING, END_LOADING } from '../constants/loadingConstants'
+import { AUTH, LOGOUT, USER_INFO, ERROR, BOOKMARK_POST, UPDATE_USER } from '../constants/auth.constants';
+import { START_LOADING, END_LOADING } from '../constants/loading.constants'
 
 const initialState = {
     authData: null,
@@ -8,7 +8,7 @@ const initialState = {
     errorMessage: null
 }
 
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
@@ -85,4 +85,4 @@ const userReducer = (state = initialState, action) => {
     }
 };
 
-export default userReducer;
+export default authReducer;

@@ -1,5 +1,5 @@
-import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, COMMENT } from "../constants/postConstants";
-import { START_LOADING, END_LOADING } from "../constants/loadingConstants";
+import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, COMMENT } from "../constants/post.constants";
+import { START_LOADING, END_LOADING } from "../constants/loading.constants";
 
 const initialState = {
     isLoading: true,

@@ -1,4 +1,4 @@
-import { TOGGLE_THEME } from "../constants/themeConstants";
+import { TOGGLE_THEME } from "../constants/theme.constants";
 
 const initialState = {
     darkMode: true,

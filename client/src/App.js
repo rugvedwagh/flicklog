@@ -8,7 +8,7 @@ import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
-import { toggleTheme } from './actions/posts';
+import { toggleTheme } from './actions/post.action';
 import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Home from '../src/pages/Home/Home';
@@ -58,8 +58,8 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
-            <Button onClick={toggleView} class='verticalbutton'>
-                {darkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: 'black' }} />}
+            <Button onClick={toggleView} className='verticalbutton'>
+                {darkMode ? <LightModeIcon sx={{ color: 'white' }}/> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
 
             <Container maxWidth="xl">

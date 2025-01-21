@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
     bookmarks: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "PostMesssage" 
+            ref: "Post" 
         }
     ]
 });

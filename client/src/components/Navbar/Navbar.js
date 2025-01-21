@@ -4,10 +4,10 @@ import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
-import { userData, Logout } from '../../actions/auth';
+import { userData, Logout } from '../../actions/auth.action';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
-import './styles.css';
+import './navbar.styles.css';
 
 const Navbar = ({darkMode}) => {
     const dispatch = useDispatch();
