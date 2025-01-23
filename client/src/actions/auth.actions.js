@@ -1,6 +1,22 @@
-import { AUTH, ERROR, USER_INFO, LOGOUT, BOOKMARK_POST, UPDATE_USER } from '../constants/auth.constants';
-import { END_LOADING, START_LOADING } from '../constants/loading.constants';
-import { signInApi, signUpApi, userInfoApi, bookmarkPostApi, updateUserDetailsApi } from '../api/user.api';
+import {
+    AUTH,
+    ERROR,
+    USER_INFO,
+    LOGOUT,
+    BOOKMARK_POST,
+    UPDATE_USER
+} from '../constants/auth.constants';
+import {
+    END_LOADING,
+    START_LOADING
+} from '../constants/loading.constants';
+import {
+    signInApi,
+    signUpApi,
+    userInfoApi,
+    bookmarkPostApi,
+    updateUserDetailsApi
+} from '../api/user.api';
 
 
 export const signIn = (formData, navigate) => async (dispatch) => {

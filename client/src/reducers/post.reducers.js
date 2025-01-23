@@ -8,6 +8,7 @@ const initialState = {
 }
 
 const postsReducer = (state = initialState, action) => {
+    
     switch (action.type) {
 
         case UPDATE:

@@ -1,5 +1,5 @@
 import { TextField, Button, Typography, Paper } from '@mui/material';
-import { createPost, updatePost } from '../../actions/post.action';
+import { createPost, updatePost } from '../../actions/post.actions';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
@@ -12,6 +12,7 @@ import './form.styles.css';
 const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
     const dispatch = useDispatch();
+
     const user = JSON.parse(localStorage.getItem('profile'));
     const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
 
@@ -26,16 +27,21 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         if (post) {
             setPostData({
                 title: post.title || '',
-                message: post.message || '',            // Not setting message for now because it gives error and ruins the rest also
+                message: post.message || '',       
                 tags: post.tags || '',
-                selectedfile: post.selectedfile || '',
+                selectedfile: post.selectedfile || ''
             });
         }
     }, [post]);
 
     const clearForm = () => {
         setCurrentId(0);
-        setPostData({ title: '', message: '', tags: '', selectedfile: '' });
+        setPostData({
+            title: "",
+            message: '',
+            tags: [],
+            selectedfile: ''
+        });
     };
 
     const toggleForm = () => {
@@ -47,11 +53,10 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
         if (currentId === 0) {
             dispatch(createPost({ ...postData, name: user?.result?.name }));
-            clearForm();
         } else {
             dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
-            clearForm();
         }
+        clearForm();
     };
 
     if (!user?.result?.name) {
@@ -109,11 +114,6 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
                     ]}
 
                     placeholder='Description'
-
-                    style={{
-                        marginBottom: '75px',
-                        minHeight: '200px'
-                    }}
                 />
 
                 <TextField

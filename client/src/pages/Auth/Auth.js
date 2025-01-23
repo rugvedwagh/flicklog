@@ -1,7 +1,7 @@
 import { Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn, signUp } from '../../actions/auth.action';
+import { signIn, signUp } from '../../actions/auth.actions';
 import React, { useState, useEffect } from 'react';
 import loginArt from '../../assets/loginart.PNG'
 import { useNavigate } from 'react-router-dom';

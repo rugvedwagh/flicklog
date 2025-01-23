@@ -1,20 +1,16 @@
-import { Container, Grid, AppBar, ToggleButtonGroup, ToggleButton, Button } from '@mui/material';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { getPostsBySearch } from '../../actions/post.action';
+import { Container, Grid, AppBar, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import Search from '../../components/Search/Search';
 import React, { useState, useEffect } from 'react';
 import Posts from '../../components/Posts/Posts';
 import Form from '../../components/Form/Form';
-import { useDispatch } from 'react-redux';
 import './home.styles.css';
 
 const Home = ({ darkMode }) => {
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    
     const location = useLocation();
 
-    const [searchInput, setSearchInput] = useState('');
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);
     const [myposts, setMyposts] = useState(false);
@@ -32,25 +28,6 @@ const Home = ({ darkMode }) => {
     const handleSwitch = () => {
         setMyposts(!myposts);
     }
-
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            searchPost();
-        }
-    };
-
-    const searchPost = () => {
-        if (searchInput.trim()) {
-            const terms = searchInput.split(',').map((term) => term.trim());
-            const search = terms[0];
-            const tags = terms.slice(1).join(',');
-
-            dispatch(getPostsBySearch({ search, tags }));
-            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
-        } else {
-            navigate('/');
-        }
-    };
 
     return (
         <Container maxWidth='xl' style={{ marginTop: '5.5rem' }}>
@@ -77,19 +54,8 @@ const Home = ({ darkMode }) => {
                 </Grid>
 
                 <Grid item xs={12} sm={4} md={3}>
-                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static'>
-                        <div className="box">
-                            <input
-                                type="text"
-                                onChange={(e) => setSearchInput(e.target.value)}
-                                name=""
-                                onKeyDown={handleKeyDown}
-                            />
-                            <Button variant="filled" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={searchPost}>
-                                <SearchOutlinedIcon />
-                            </Button>
-                        </div>
-                    </AppBar>
+
+                    <Search darkMode={darkMode}/>
 
                     <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >
                         {!formOpen && user ? (
@@ -98,7 +64,6 @@ const Home = ({ darkMode }) => {
                             <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                         )}
                     </AppBar>
-
                 </Grid>
             </Grid>
 

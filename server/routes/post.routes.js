@@ -1,35 +1,35 @@
+import express from "express";
 import {
-    getPostsBySearch,
-    commentPost,
-    getPost,
-    getPosts,
     createPost,
-    updatePost,
+    fetchPost,
+    fetchPosts,
+    fetchPostsBySearch,
     deletePost,
-    likePost
-} from '../controllers/post.controller.js';
-
-import verfiyToken from '../middleware/auth.middleware.js'
-import express from 'express'
+    updatePost,
+    likePost,
+    commentPost,
+} from "../controllers/post.controllers.js";
+import verifyJWT from "../middleware/auth.middleware.js";
+import asyncHandler from "../middleware/async.middleware.js";
 
 const router = express.Router();
 
+// Route definitions
+router
+    .route("/")
+    .get(asyncHandler(fetchPosts))
+    .post(verifyJWT, asyncHandler(createPost));
 
-router.get('/search', getPostsBySearch);    // the position matters, if I push this line down the search does not work!
+router
+    .route("/:id")
+    .get(asyncHandler(fetchPost))
+    .patch(verifyJWT, asyncHandler(updatePost))
+    .delete(verifyJWT, asyncHandler(deletePost));
 
-router.get('/', getPosts);
+router.get("/search", asyncHandler(fetchPostsBySearch));
 
-router.get('/:id', getPost);
+router.patch("/:id/likePost", verifyJWT, asyncHandler(likePost));
 
-router.post('/', verfiyToken, createPost);
-
-router.patch('/:id', verfiyToken, updatePost);
-
-router.delete('/:id', verfiyToken, deletePost);
-
-router.patch('/:id/likePost', verfiyToken, likePost);
-
-router.post('/:id/commentPost', verfiyToken, commentPost);
-
+router.post("/:id/commentPost", verifyJWT, asyncHandler(commentPost));
 
 export default router;

@@ -1,30 +1,3 @@
-@keyframes flower {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes slideImage {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.form{
-    animation: slideImage 0.7s ease-in-out;
-}
 
 .searchlogo {
     color: rgb(107, 107, 107);
@@ -68,38 +41,12 @@
     border-radius: 3px;
 }
 
-.gridContainer {
-    flex-direction: row;
-}
-
-.MuiToggleButtonGroup-root {
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-}
-
-@media (max-width: 600px) {
-    .gridContainer {
-        flex-direction: column-reverse;
-    }
-    .MuiToggleButtonGroup-root {
-        width: 9em;
-        height: 3em;
-    }
-}
-
-.togandsearch {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
 
 .search-button{
     color:var(--black) !important;
     background-color: var(--white) !important;
-    border: none;
     padding-right: 0 !important;
+    border: none;
 }
 
 .search-button.dark{
@@ -113,35 +60,6 @@
 .appBarSearch > .box {
     border: 1px solid var(--borderColor) !important;
 }   
-
-.MuiToggleButtonGroup-root{
-    background-color: var(--white);
-    color: var(--antiFlashWhite) !important;
-}	
-
-.MuiToggleButton-root{
-    color: var(--black) !important;
-}
-
-.box {
-    width: 90%;
-    height: 1em;
-    background-color: var(--white);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    padding: 1em 0 1em 1em;
-}
-
-.box > input {
-    flex: 1;
-    height: 1em;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding-left: 10px;
-    width: 100%;
-}
 
 .appBarSearch > h4{
     cursor: pointer;

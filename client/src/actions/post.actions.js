@@ -1,6 +1,27 @@
-import { FETCH_ALL, CREATE, UPDATE, LIKE, DELETE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from '../constants/post.constants';
-import { fetchPostApi, deletePostApi, fetchPostsBySearchApi, addCommentApi, fetchPostsApi, createPostApi, likePostApi, updatePostApi } from '../api/post.api';
-import { START_LOADING, END_LOADING} from '../constants/loading.constants';
+import {
+    FETCH_ALL,
+    CREATE,
+    UPDATE,
+    LIKE,
+    DELETE,
+    FETCH_BY_SEARCH,
+    FETCH_POST,
+    COMMENT
+} from '../constants/post.constants';
+import {
+    fetchPostApi,
+    deletePostApi,
+    fetchPostsBySearchApi
+    , addCommentApi,
+    fetchPostsApi,
+    createPostApi,
+    likePostApi,
+    updatePostApi
+} from '../api/post.api';
+import {
+    START_LOADING,
+    END_LOADING
+} from '../constants/loading.constants';
 import { TOGGLE_THEME } from '../constants/theme.constants';
 import { ERROR } from '../constants/auth.constants';
 
@@ -12,10 +33,10 @@ export const getPost = (id) => async (dispatch) => {
 
         const { data } = await fetchPostApi(id);
         dispatch({ type: FETCH_POST, payload: data })
-        
+
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error);
     }
 }
@@ -24,7 +45,11 @@ export const getPosts = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || { posts: [], pages: {}, numberOfPages: 0 };
+        const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || {
+            posts: [],
+            pages: {},
+            numberOfPages: 0
+        };
 
         if (cachedPosts.pages[page]) {
             dispatch({
@@ -35,8 +60,15 @@ export const getPosts = (page) => async (dispatch) => {
                     numberOfPages: cachedPosts.numberOfPages,
                 },
             });
-        } else {
-            const { data: { data, currentPage, numberOfPages } } = await fetchPostsApi(page);
+        }
+        else {
+            const {
+                data: {
+                    data,
+                    currentPage,
+                    numberOfPages
+                }
+            } = await fetchPostsApi(page);
 
             const updatedPosts = [...cachedPosts.posts, ...data];
 
@@ -53,30 +85,37 @@ export const getPosts = (page) => async (dispatch) => {
 
             dispatch({
                 type: FETCH_ALL,
-                payload: { data: updatedPosts, currentPage, numberOfPages },
+                payload: {
+                    data: updatedPosts,
+                    currentPage,
+                    numberOfPages
+                },
             });
         }
 
         dispatch({ type: END_LOADING });
     } catch (error) {
-        dispatch({
-            type: ERROR,
-            payload: error?.response?.data?.message || 'An error occurred',
-        });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.error(error);
     }
 };
 
-export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+export const getPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        const { data: { data } } = await fetchPostsBySearchApi(searchQuery)
-        dispatch({ type: FETCH_BY_SEARCH, payload: data })
+        const {
+            data: {
+                data
+            }
+        } = await fetchPostsBySearchApi(searchQuery)
+        dispatch({
+            type: FETCH_BY_SEARCH, payload: data
+        })
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error)
     }
 }
@@ -91,7 +130,7 @@ export const createPost = (post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error)
     }
 }
@@ -105,7 +144,7 @@ export const updatePost = (id, post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error)
     }
 }
@@ -116,10 +155,11 @@ export const deletePost = (id) => async (dispatch) => {
 
         await deletePostApi(id);
         dispatch({ type: DELETE, payload: id })
+        localStorage.removeItem('postsData')
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error)
     }
 }
@@ -129,7 +169,7 @@ export const likePost = (id) => async (dispatch) => {
         const { data } = await likePostApi(id);
         dispatch({ type: LIKE, payload: data })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error)
     }
 }
@@ -141,7 +181,7 @@ export const commentPost = (value, id) => async (dispatch) => {
 
         return data.comments;
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error);
     }
 };
@@ -150,7 +190,7 @@ export const toggleTheme = () => async (dispatch) => {
     try {
         dispatch({ type: TOGGLE_THEME })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error || 'An error occurred' });
         console.log(error);
     }
 };

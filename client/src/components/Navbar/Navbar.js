@@ -4,7 +4,7 @@ import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
-import { userData, Logout } from '../../actions/auth.action';
+import { userData, Logout } from '../../actions/auth.actions';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './navbar.styles.css';

@@ -1,24 +1,26 @@
+import express from "express";
 import {
     logIn,
     signUp,
-    getUserData,
+    fetchUserData,
     bookmarkPost,
-    updateUser
-} from '../controllers/user.controller.js'
-import verfiyToken from '../middleware/auth.middleware.js'
-import express from 'express'
+    updateUser,
+} from "../controllers/user.controllers.js";
+import verifyJWT from "../middleware/auth.middleware.js";
+import asyncHandler from "../middleware/async.middleware.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post('/signin', logIn)
+// Route definitions
+router
+    .route("/i/:id")
+    .get(verifyJWT, asyncHandler(fetchUserData))
+    .patch(verifyJWT, asyncHandler(updateUser));
 
-router.post('/signup', signUp);
+router.post("/signin", asyncHandler(logIn));
 
-router.patch('/:id/update', verfiyToken, updateUser);
+router.post("/signup", asyncHandler(signUp));
 
-router.get('/i/:id', verfiyToken, getUserData);
-
-router.post('/bookmarks/add', verfiyToken, bookmarkPost);
-
+router.post("/bookmarks/add", verifyJWT, asyncHandler(bookmarkPost));
 
 export default router;

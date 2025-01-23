@@ -1,5 +1,5 @@
 import { Typography, TextField, Button } from '@mui/material';
-import { commentPost } from '../../actions/post.action';
+import { commentPost } from '../../actions/post.actions';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './commentsection.styles.css';
