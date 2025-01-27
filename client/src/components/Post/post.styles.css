@@ -1,0 +1,112 @@
+.media {
+    height: 0;
+    padding-top: 56.25%;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
+    cursor: pointer;
+    border-top-left-radius: 3px; 
+    border-top-right-radius: 3px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--white) !important;
+    color: white;
+    border-radius: 3px;
+    height: 100%;   
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.card.dark{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--black) !important;
+    color: white;
+    border-radius: 3px;
+    height: 100%; 
+}
+
+.card:hover{
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+}
+
+.overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+}
+
+.overlay2 {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+}
+
+.grid {
+    display: flex;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.title {
+    padding: 0px 0 0 16px;
+    margin-bottom: 0;
+    color: var(--black);
+    opacity: 0.9;
+    user-select: none;
+}
+
+.title.dark{
+    color: var(--antiFlashWhite);
+}
+
+.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom.title.css-h93ljk-MuiTypography-root{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.cardActions {
+    display: flex;
+    justify-content:space-between;
+}
+@media (max-width: 600px) {
+    .cardActions {
+        display: flex;
+        justify-content:flex-start;
+    }
+}
+
+.msg {
+    padding: 0 16px;
+    margin-top: 0;
+    user-select: none;
+}
+
+.msg-text.dark{
+    color: var(--subtextColor) !important;
+}
+
+.interaction-buttons{
+    color: var(--black);
+}
+.interaction-buttons.dark{
+    color: var(--subtextColor);
+}
+
+.tags{
+    padding: 5px 16px 0px 16px;
+}
+
+.tags.dark{
+    color: var(--subtextColor);
+}

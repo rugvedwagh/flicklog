@@ -1,0 +1,239 @@
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.appBar {
+    font-family: "EB Garamond", serif !important;
+    font-optical-sizing: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center !important;
+    align-items: center !important;
+    animation: slideDown 0.4s ease-in;
+    background-color: var(--white) !important;
+    height: 4em;
+    margin-left: 30px;
+}
+
+.appBar.dark{
+    border-bottom: 1px solid var(--borderColor);
+    background-color: var(--black) !important;
+}
+
+.appBar.blur {
+    animation: slideUp 0.4s ease-in;
+    transform: translateY(-100%);
+}
+
+.navbar {
+    width: 95%;
+    margin-left: 1.5em;
+    height: 5rem;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.navbar.dark{
+    background-color: var(--black);
+}
+
+.image {
+    margin-left: 15px;
+}
+
+.toolbar {
+    margin-left: auto;
+    cursor: pointer;
+    display: flex;
+}
+
+.profile {
+    display: flex;
+    align-items: flex-end;
+    justify-items: flex-end;
+}
+
+.profileAvatar {
+    width: 45px;
+    height: 45px;
+    background-color: var(--black) !important;
+    color: var(--antiFlashWhite) !important;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    text-transform: uppercase;
+}
+
+.profileAvatar.dark{
+    background-color: var(--subtextColor) !important;
+    color: var(--black) !important;
+}
+
+.profileAvatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.purple {
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.brandContainer {
+    font-family: "EB Garamond", serif !important;
+    font-style: italic;
+    font-size: 2em;
+    color: var(--antiFlashWhite);
+    font-optical-sizing: auto;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    height: 100%; 
+}
+
+.brandContainer{
+    color: var(--black);
+}
+
+.brandContainer.dark{
+    color: var(--antiFlashWhite);
+}
+
+.logout {
+    font-size: 16px;
+    color: var(--black) !important;
+    font-family: 'Roboto', sans-serif;
+    background-color: transparent;
+    text-transform: none;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+.logout.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
+.logout:hover{
+    color: var(--pink) !important;
+    transition: 0.2s ease-in;
+}
+
+@media (max-width: 600px) {
+    .brandContainer{
+        font-size: 1.75em;
+    }
+    .appBar {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .userName {
+        display: none;
+    }
+
+    .navbar {
+        padding: 0;
+        width: 90%
+    }
+}
+
+.card {
+    display: flex;
+    width: 100%;
+}
+
+.section {
+    border-radius: 20px;
+    margin: 10px;
+    flex: 1;
+}
+
+.imageSection {
+    margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+    .imageSection {
+        margin-left: 0;
+    }
+}
+
+.recommendedPosts {
+    display: flex;
+}
+
+
+@media ((min-width: 600px) and (max-width : 1536px)) {
+    .navbar{
+        width: 95%;
+    }
+}
+
+@media ((min-width: 1537px) and (max-width : 1669px)) {
+    .navbar {
+        width: 94%;
+    }
+}
+
+@media ((min-width: 1670px) and (max-width: 1921px)) {
+    .navbar{
+        width: 76%;
+    }
+}
+
+.commentsOuterContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentsInnerContainer {
+    height: 200px;
+    overflow-y: auto;
+    margin-right: 30px;
+}
+
+@keyframes dropdownanim {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.menu {
+    width: 25rem;
+    animation: dropdownanim 0.6s ease;
+}
+
+.menu.dark .MuiMenuItem{
+    background-color: var(--black) !important;
+}

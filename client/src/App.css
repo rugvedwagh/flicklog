@@ -1,0 +1,135 @@
+:root {
+    --black: #1a1a1a;
+    --borderColor: #404040;
+    --loadingvar: white;
+    --white: white;
+    --antiFlashWhite: #e7e9ea;
+    --subtextColor: #f2f2f2bb;
+    --notFoundColor : #555555;
+    --pink: #ef4056;
+}
+
+:root{
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden !important;
+    padding: 0;
+    margin: 0;
+}
+
+.mainContainer {
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 767px) {
+    .mainContainer {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
+
+@keyframes flower {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scrollup {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 999;
+    transition: 0.3s ease-in;
+    background-color: var(--antiFlashWhite);
+    color: var(--pink);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.3s ease-in;
+    animation: flower 0.6s ease-in-out;
+    padding: 10px;
+}
+
+.scrollup.show {
+    height: 1.7em;
+    width: 1.7em;
+    transition: 0.3s ease-in;
+}
+
+.scrollup.hide {
+    transition: 0.3s ease-in;
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .scrollup.show {
+        height: 1.75em;
+        width: 1.75em;
+    }
+}
+
+
+.scrollup.show:hover {
+    transform: scale(1.25);
+    transition: 0.2s ease-in-out;
+}
+
+.footer {
+    top: 100%;
+    height: 50px;
+    bottom: 0;
+}
+
+.root-bg{
+    background-color: var(--white);
+    width: 100vw !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+}
+
+.root-bg.dark{
+    /* background-image: url('../src/assets/login-bg-img-dim.svg') !important;
+    background-size: contain;
+    background-repeat: no-repeat; */
+    background-color: var(--black);
+}
+
+.toggleButton {
+    position: fixed;
+    z-index: 1000;
+    left: 95vw;
+    top: 10vh;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggleButton:hover {
+    transform: scale(1.1);
+}
+
+.toggleButton:focus {
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .toggleButton {
+        left: 80%;
+        top: 12%;
+        font-size: 0.8rem;
+        padding: 8px 18px;
+    }
+}

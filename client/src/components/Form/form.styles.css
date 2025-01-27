@@ -1,0 +1,86 @@
+@keyframes blooming {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.paper {
+    animation: blooming 0.7s ease;
+}
+
+.paper.dark {
+    color: var(--antiFlashWhite) !important;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: var(--white);
+}
+
+.form.dark {
+    background-color: var(--black);
+}
+
+.form.dark .MuiTextField-root {
+    border-radius: 3px;
+    background-color: var(--antiFlashWhite);
+}
+
+.descinp {
+    margin-bottom: 100px;
+    border-radius: 3px !important;
+    min-height: 350px !important;
+}
+
+.descinp.dark {
+    background-color: var(--antiFlashWhite);
+    color: var(--black) !important;
+}
+
+.fileInput {
+    width: 97%;
+    margin: 10px 0;
+}
+
+.buttonSubmit {
+    background-color: var(--pink) !important;
+    margin-bottom: 10px !important;
+}
+
+.buttonSubmit.dark {
+    background-color: var(--borderColor) !important;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--black) !important;
+}
+
+.signintointeract {
+    opacity: 0.8;
+}
+
+.close {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(120%, -50%);
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.close:hover {
+    opacity: 1;
+    transition: 0.3s ease-in;
+}
+
+.close.dark {
+    color: var(--antiFlashWhite);
+}

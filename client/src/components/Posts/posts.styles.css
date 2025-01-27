@@ -1,0 +1,75 @@
+.mainContainer {
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 0;
+}
+
+.container {
+    padding: 0.1em;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.actionDiv {
+    text-align: center;
+}
+
+.infloader{
+    margin: 3rem 50%;
+    color: var(--black) !important;
+}
+
+.infloader.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
+.loading {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--black);
+}
+
+.loading.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
+@media (max-width: 600px) {
+    .loading {
+        margin-bottom: 400px;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%,-50%);
+    }
+    .infloader{
+        margin: 2rem 40%;
+    }
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-container .MuiToggleButtonGroup-root {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container ::-webkit-scrollbar {
+    display: none;
+}
+
+.endmsg{
+    margin-top: 2rem !important;
+}
+
+.endmsg.dark {
+    color: var(--subtextColor);
+}
+

@@ -1,0 +1,10 @@
+span{
+    text-transform: none;
+}
+
+.interaction-buttons{
+    color: var(--black);
+}
+.interaction-buttons.dark{
+    color: var(--antiFlashWhite);
+}

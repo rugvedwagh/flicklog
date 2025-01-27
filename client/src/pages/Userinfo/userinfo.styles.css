@@ -1,0 +1,265 @@
+@keyframes blooming {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes flower {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideImage {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.main-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    margin: 6rem auto;
+    background-color: #f9f9f9;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+    padding: 2rem;
+    border-radius: 3px;
+    animation: slideImage 0.5s ease;
+    font-family: 'Arial', sans-serif;
+}
+
+.main-cont.dark {
+    background-color: var(--black) !important;
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+}
+
+.upper-div {
+    width: 100%;
+    text-align: center;
+    color: var(--subtextColor);
+}
+
+.upper-div.dark {
+    color: var(--black);
+}
+
+.upper-div h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--subtextColor);
+}
+
+.upper-div.dark h2{
+    color: var(--subtextColor);
+}
+
+.avatar {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    background-color: var(--subtextColor) !important;
+    color: var(--black);
+    border-radius: 50%;
+    margin: 0.1em auto 2em auto;
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+    user-select: none;
+}
+
+.avatar.dark{
+    box-shadow: white 0px 2px 5px -1px, rgba(255, 255, 255, 0.3) 0px 1px 3px -1px !important;
+    background-color: var(--antiFlashWhite) !important;
+    color: var(--black);
+}
+
+.lower-div {
+    width: 100%;
+    text-align: left;
+    animation: flower 0.5s ease;
+}
+
+.lower-div ul {
+    list-style: none;
+    padding: 0;
+}
+
+.lower-div ul li {
+    margin: 15px 0;
+    font-size: 1.1rem;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lower-div ul li button{
+    background-color: transparent;
+    padding: 0.4em;
+    border: none;
+    color: var(--antiFlashWhite);
+} 
+
+.lower-div.dark ul li strong {
+    color: var(--subtextColor)
+}
+.lower-div.dark ul li span {
+    color: var(--subtextColor)
+}
+
+.lower-div ul li strong{
+    color: var(--black);
+}
+
+.lower-div ul li span {
+    color: var(--black);
+    font-weight: normal;
+}
+
+.loading {
+    color: var(--black) !important;
+    margin-top: 15%;
+}
+
+.loading.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
+@media (max-width: 1120px) {
+    .main-cont {
+        width: 50%;
+    }
+    .loading{
+        margin-top: 70%;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-cont {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-cont {
+        margin-top: 5rem;
+        width: 80%;
+    }
+
+    .avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .upper-div h2 {
+        font-size: 1.5rem;
+    }
+
+    .lower-div ul li {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-cont {
+        margin-top: 5rem;
+        width: 80%;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .upper-div h2 {
+        font-size: 1.2rem;
+    }
+
+    .lower-div ul li {
+        font-size: 0.9rem;
+    }
+}
+
+.bookmarked-posts {
+    margin-top: 2rem;
+}
+
+.bookmarked-posts h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.bookmarked-list {
+    list-style: none;
+    padding-left: 0;
+    animation : blooming 0.8s ease;
+}
+
+.bookmarked-post {
+    color: var(--black);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    background-color: var(--antiFlashWhite);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.bookmarked-post h4{
+    max-width: 80%;
+}
+
+.bookmarked-post.dark{
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+}
+
+.bookmarked-post:hover {
+    background-color: var(--antiFlashWhite);
+    color: var(--black);
+}
+
+.bookmark-heading.dark{
+    color: var(--antiFlashWhite);
+}
+
+.bookmarked-post strong {
+    font-size: 1.1rem;
+}
+
+.bookmarked-post button {
+    opacity: 0.7;
+}
+
+.bookmarked-post button:hover {
+    transition: 0.3s ease-in;
+    opacity: 1;
+}
+

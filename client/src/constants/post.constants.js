@@ -1,0 +1,19 @@
+const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH'
+const FETCH_POST = 'FETCH_POST'
+const FETCH_ALL = 'FETCH_ALL'
+const COMMENT = 'COMMENT'
+const CREATE = 'CREATE'
+const UPDATE = 'UPDATE'
+const DELETE = 'DELETE'
+const LIKE = 'LIKE'
+
+export {
+    FETCH_POST,
+    FETCH_ALL,
+    FETCH_BY_SEARCH,
+    COMMENT,
+    CREATE,
+    UPDATE,
+    DELETE,
+    LIKE
+}

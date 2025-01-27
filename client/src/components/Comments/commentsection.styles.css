@@ -1,0 +1,148 @@
+@keyframes btow {
+    0% {
+        backdrop-filter: blur(10px);
+        background-color: var(--black);
+    }
+    
+    100% {
+        backdrop-filter: blur(0px);
+    }
+}
+
+@keyframes grow {
+    0% {
+        backdrop-filter: blur(10px);
+        background-color: var(--antiFlashWhite);
+    }
+
+    100% {
+        backdrop-filter: blur(0px);
+    }
+}
+
+.commentsOuterContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--antiFlashWhite);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    max-width: 100%;
+    animation: btow 0.2s ease-in;
+}
+
+.commentsOuterContainer.dark {
+    background-color: var(--black); /* Example styling */
+    color: white;
+    animation: grow 0.2s ease-in;
+}
+
+.commentsInnerContainer {
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    width: 100%;
+}
+.commentsInnerContainer.dark {
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
+}
+
+.commentsInnerContainer .MuiTypography-h6 {
+    font-size: 1.1rem;
+    color: #333;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 3px;
+}
+
+.users-name{
+    user-select: none;
+    cursor: pointer;
+}
+
+.users-name.dark{
+    color: var(--antiFlashWhite) !important;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 {
+    margin-top: 8px;
+    font-size: 1em;
+    color: #555;
+}
+
+.commentsInnerContainer .MuiTypography-subtitle1 strong {
+    font-weight: bold;
+    color: #000;
+}
+
+.comment-data.dark{
+    color: var(--antiFlashWhite);
+    font-weight: 100 !important;    
+}
+
+.write-comment {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+}
+
+.write-comment.dark{
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
+}
+
+.write-comment .MuiTypography-h6 {
+    color: #444;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.write-comment .MuiTextField-root {
+    background-color: #f9f9f9;
+    border-radius: 3px;
+}
+
+.write-comment.dark .MuiTextField-root{
+    background-color: var(--antiFlashWhite);
+}
+
+.write-comment button {
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 3px;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.write-comment.dark button{
+    color: var(--antiFlashWhite);
+}
+
+.write-comment button:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .commentsOuterContainer {
+        padding: 10px;
+    }
+
+    .write-comment {
+        margin-top: 1rem;
+        width: 90%;
+        padding: 15px;
+    }
+
+    .commentsInnerContainer {
+        width: 100%;
+        margin: 0px auto;
+    }
+}
