@@ -5,7 +5,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
-import { toggleTheme } from './actions/post.actions';
+import { toggleTheme } from './actions/theme.actions';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
@@ -18,13 +18,13 @@ import { Button } from '@mui/material'
 import './App.css';
 
 const App = () => {
-    
+
     const dispatch = useDispatch();
 
     const [showScrollButton, setShowScrollButton] = useState(false);
     const { darkMode } = useSelector((state) => state.themeReducer);
-    
-    const user = JSON.parse(localStorage.getItem('profile'));
+
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,7 +46,7 @@ const App = () => {
     }, []);
 
     const toggleView = () => {
-        dispatch(toggleTheme()); 
+        dispatch(toggleTheme());
     };
 
     const scrollToTop = () => {
@@ -58,13 +58,15 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
+
             <Button onClick={toggleView} className='toggleButton'>
-                {darkMode ? <LightModeIcon sx={{ color: 'white' }}/> : <DarkModeIcon sx={{ color: 'black' }} />}
+                {darkMode ? <LightModeIcon sx={{ color: 'white' }} /> : <DarkModeIcon sx={{ color: 'black' }} />}
             </Button>
 
             <Container maxWidth="xl">
 
                 <KeyboardArrowUpIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
+                
                 <Navbar darkMode={darkMode} />
 
                 <Routes>
@@ -72,13 +74,13 @@ const App = () => {
                     <Route path="/posts/search" element={<Home darkMode={darkMode} />} />
                     <Route path="/posts/:id" element={<PostDetails darkMode={darkMode} />} />
                     <Route path="/posts" element={<Home darkMode={darkMode} />} />
-                    <Route path="/auth" element={user ? <Navigate to="/posts" /> : <Auth darkMode={darkMode} />} />
+                    <Route path="/auth" element={!profile ? <Auth darkMode={darkMode} /> : <Navigate to="/posts" />} />
                     <Route path="/user/i" element={<Userinfo darkMode={darkMode} />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
 
             </Container>
-            
+
             <Footer darkMode={darkMode} />
         </div>
     );

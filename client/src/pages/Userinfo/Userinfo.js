@@ -1,5 +1,6 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails, bookmarkPost } from '../../actions/auth.actions';
+import { updateUserDetails } from '../../actions/auth.actions';
+import { bookmarkPost } from '../../actions/post.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';

@@ -1,8 +1,25 @@
-export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH'
-export const FETCH_POST = 'FETCH_POST'
-export const FETCH_ALL = 'FETCH_ALL'
-export const COMMENT = 'COMMENT'
-export const CREATE = 'CREATE'
-export const UPDATE = 'UPDATE'
-export const DELETE = 'DELETE'
-export const LIKE = 'LIKE'
+const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH'
+const FETCH_POST = 'FETCH_POST'
+const FETCH_ALL = 'FETCH_ALL'
+const COMMENT = 'COMMENT'
+const CREATE = 'CREATE'
+const UPDATE = 'UPDATE'
+const DELETE = 'DELETE'
+const LIKE = 'LIKE'
+const LIKED_POSTS = 'LIKED_POSTS'
+const USER_POSTS = 'USER_POSTS'
+const BOOKMARK_POST = 'BOOKMARK_POST'
+
+export {
+    FETCH_POST,
+    FETCH_ALL,
+    FETCH_BY_SEARCH,
+    COMMENT,
+    CREATE,
+    UPDATE,
+    DELETE,
+    LIKED_POSTS,
+    USER_POSTS,
+    LIKE,
+    BOOKMARK_POST
+}

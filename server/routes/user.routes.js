@@ -12,10 +12,9 @@ import asyncHandler from "../middleware/async.middleware.js";
 const router = express.Router();
 
 // Route definitions
-router
-    .route("/i/:id")
-    .get(verifyJWT, asyncHandler(fetchUserData))
-    .patch(verifyJWT, asyncHandler(updateUser));
+router.patch("/:id/update", verifyJWT, asyncHandler(updateUser));
+
+router.get("/i/:id", verifyJWT, asyncHandler(fetchUserData))
 
 router.post("/signin", asyncHandler(logIn));
 

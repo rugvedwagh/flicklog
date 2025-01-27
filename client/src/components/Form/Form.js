@@ -13,7 +13,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
     const dispatch = useDispatch();
 
-    const user = JSON.parse(localStorage.getItem('profile'));
+    const profile = JSON.parse(localStorage.getItem('profile'));
     const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
 
     const [postData, setPostData] = useState({
@@ -52,14 +52,14 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         e.preventDefault();
 
         if (currentId === 0) {
-            dispatch(createPost({ ...postData, name: user?.result?.name }));
+            dispatch(createPost({ ...postData, name: profile?.user?.name }));
         } else {
-            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+            dispatch(updatePost(currentId, { ...postData, name: profile?.user?.name }));
         }
         clearForm();
     };
 
-    if (!user?.result?.name) {
+    if (!profile?.user) {
         return (
             <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Typography variant="h6" align="center">

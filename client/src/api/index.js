@@ -6,11 +6,14 @@ const API = axios.create({
 
 // Sending the Token back to our backend for it to verify
 API.interceptors.request.use((req) => {
+
     const profile = localStorage.getItem('profile');
+
     if (profile) {
-        const token = JSON.parse(profile).token; 
+        const token = JSON.parse(profile).token;       
         req.headers.Authorization = `Bearer ${token}`;
     }
+    
     return req;
 });
 

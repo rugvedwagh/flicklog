@@ -3,7 +3,6 @@ import {
     ERROR,
     USER_INFO,
     LOGOUT,
-    BOOKMARK_POST,
     UPDATE_USER
 } from '../constants/auth.constants';
 import {
@@ -14,12 +13,11 @@ import {
     signInApi,
     signUpApi,
     userInfoApi,
-    bookmarkPostApi,
     updateUserDetailsApi
 } from '../api/user.api';
 
 
-export const signIn = (formData, navigate) => async (dispatch) => {
+const signIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
@@ -34,7 +32,7 @@ export const signIn = (formData, navigate) => async (dispatch) => {
     }
 };
 
-export const signUp = (formData, navigate) => async (dispatch) => {
+const signUp = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -49,7 +47,7 @@ export const signUp = (formData, navigate) => async (dispatch) => {
     }
 };
 
-export const userData = (id, navigate) => async (dispatch) => {
+const userData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -64,7 +62,7 @@ export const userData = (id, navigate) => async (dispatch) => {
     }
 }
 
-export const Logout = (navigate) => (dispatch) => {
+const Logout = (navigate) => (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
@@ -80,28 +78,29 @@ export const Logout = (navigate) => (dispatch) => {
     }
 };
 
-export const bookmarkPost = (postId, userId) => async (dispatch) => {
+const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
-        const { data } = await bookmarkPostApi(postId, userId);
-
-        dispatch({ type: BOOKMARK_POST, payload: data });
-    } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
-    }
-};
-
-export const updateUserDetails = (id, updatedData) => async (dispatch) => {
-    try {
+        // dispatch({ type: START_LOADING });
+        
         const { data } = await updateUserDetailsApi(id, updatedData);
-
+        console.log(data);
         dispatch({ type: UPDATE_USER, payload: data });
 
         const profile = JSON.parse(localStorage.getItem('profile'));
         profile.result = data;
         localStorage.setItem('profile', JSON.stringify(profile));
+
+        // dispatch({type : END_LOADING})
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.error('Error updating user details:', error);
     }
 };
+
+export {
+    signIn,
+    signUp,
+    userData,
+    updateUserDetails,
+    Logout
+}

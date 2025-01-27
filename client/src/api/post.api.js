@@ -1,18 +1,32 @@
-import API from './index';  // Assuming you have an axios instance exported from api.js
+import API from './index';  // Assuming you have an axios instance d from api.js
 
 // Post-related API calls
-export const updatePostApi = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
+const updatePostApi = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
 
-export const createPostApi = (newPost) => API.post('/posts', newPost);
+const createPostApi = (newPost) => API.post('/posts', newPost);
 
-export const likePostApi = (id) => API.patch(`/posts/${id}/likePost`);
+const likePostApi = (id) => API.patch(`/posts/${id}/likePost`);
 
-export const deletePostApi = (id) => API.delete(`/posts/${id}`);
+const deletePostApi = (id) => API.delete(`/posts/${id}`);
 
-export const fetchPostsBySearchApi = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags || 'none'}`);
+const fetchPostsBySearchApi = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags || 'none'}`);
 
-export const fetchPostsApi = (page) => API.get(`/posts?page=${page}`);
+const fetchPostsApi = (page) => API.get(`/posts?page=${page}`);
 
-export const fetchPostApi = (id) => API.get(`/posts/${id}`);
+const fetchPostApi = (id) => API.get(`/posts/${id}`);
 
-export const addCommentApi = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
+const addCommentApi = (value, id) => API.post(`/posts/${id}/commentPost`, { value });   // {value} is in the body and the {id} is in the params!
+
+const bookmarkPostApi = (postId, userId) => API.post('/user/bookmarks/add', { postId, userId });
+
+export {
+    updatePostApi,
+    createPostApi,
+    likePostApi,
+    deletePostApi,
+    fetchPostApi,
+    fetchPostsApi,
+    addCommentApi,
+    bookmarkPostApi,
+    fetchPostsBySearchApi
+}

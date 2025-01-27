@@ -1,36 +1,39 @@
 import { AppBar, Avatar, Toolbar, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import { likedPosts, userPosts } from '../../actions/post.actions';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import { userData, Logout } from '../../actions/auth.actions';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './navbar.styles.css';
 
-const Navbar = ({darkMode}) => {
-    
+const Navbar = ({ darkMode }) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    const userId = user?.result?._id
-    
+    const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')));
+    const userId = profile?.user?._id
+
     const [openDialog, setOpenDialog] = useState(false);
     const [navclass, setNavclass] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleLogout = useCallback(() => {
         dispatch(Logout(navigate));
-        setUser(null);
+        setProfile(null);
         closeMenu();
         setOpenDialog(false);
     }, [dispatch, navigate]);
 
     useEffect(() => {
-        const token = user?.token;
+        const token = profile?.token;
 
         const checkTokenExpiry = () => {
             if (token) {
@@ -43,8 +46,8 @@ const Navbar = ({darkMode}) => {
         };
 
         checkTokenExpiry();
-        setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [handleLogout, user?.token, location]);
+        setProfile(JSON.parse(localStorage.getItem('profile')));
+    }, [handleLogout, profile?.token, location]);
 
     const handleLoginClick = () => {
         navigate('/auth')
@@ -65,6 +68,16 @@ const Navbar = ({darkMode}) => {
 
     const handleLogoClick = () => {
         navigate('/posts')
+    }
+
+    const handleLikedPosts = () => {
+        dispatch(likedPosts(userId));
+        closeMenu()
+    }
+
+    const handleUserPosts = () => {
+        dispatch(userPosts(userId));
+        closeMenu()
     }
 
     let lastScrollY = window.scrollY;
@@ -92,16 +105,16 @@ const Navbar = ({darkMode}) => {
                 </div>
 
                 <Toolbar className='toolbar'>
-                    {user?.result ? (
+                    {profile?.user ? (
                         <div className='profile'>
                             <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
                                     className={`menu ${darkMode ? 'dark' : ''}`}
-                                    alt={user?.result.name}
-                                    src={user?.result.imageUrl}
+                                    alt={profile.user?.name}
+                                    src={profile.user?.imageUrl}
                                 >
-                                    {user?.result.name.charAt(0)}
+                                    {profile?.user?.name.charAt(0)}
                                 </Avatar>
                             </span>
 
@@ -114,15 +127,35 @@ const Navbar = ({darkMode}) => {
                                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                             >
-                                <MenuItem onClick={openUser}> <AccountCircleRoundedIcon />&nbsp; Your account</MenuItem>
-                                <MenuItem > <EditNoteRoundedIcon />&nbsp; Your posts</MenuItem>
-                                <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Logout</MenuItem>
+                                <MenuItem onClick={openUser}>
+                                    <Avatar
+                                        onClick={handleMenuClick}
+                                        className={`menu ${darkMode ? 'dark' : ''}`}
+                                        alt={profile.user?.name}
+                                        src={profile.user?.imageUrl}
+                                    >
+                                        {profile?.user?.name.charAt(0)}
+                                    </Avatar>&nbsp;
+                                    <div className='userinfo'>
+                                        <strong>
+                                            {profile?.user?.name}<br></br>
+                                        </strong>
+                                        <small>
+                                            {profile?.user?.email}
+                                        </small>
+                                    </div>
+                                </MenuItem>
+                                <MenuItem onClick={openUser}> <AccountCircleOutlinedIcon />&nbsp; My account</MenuItem>
+                                <MenuItem onClick={handleLikedPosts}> <ThumbUpAltOutlinedIcon />&nbsp; Liked posts</MenuItem>
+                                <MenuItem onClick={handleUserPosts}> <EditNoteOutlinedIcon />&nbsp; My posts</MenuItem>
+                                <MenuItem> <SettingsOutlinedIcon />&nbsp; Settings</MenuItem>
+                                <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Log out</MenuItem>
                             </Menu>
                         </div>
                     ) : (
 
                         <div className={`logout ${darkMode ? 'dark' : ''}`} onClick={handleLoginClick}>
-                                Log in
+                            Log in
                         </div>
                     )}
 
@@ -143,17 +176,11 @@ const Navbar = ({darkMode}) => {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }} style={{
-                            color: 'white',
-                            backgroundColor: 'black'
-                        }} >
+                        <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }} >
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={handleLogout} style={{
-                            color: 'white',
-                            backgroundColor: 'black'
-                        }} autoFocus>
-                            Logout
+                        <Button variant="contained" onClick={handleLogout} autoFocus>
+                            Log out
                         </Button>
                     </DialogActions>
 

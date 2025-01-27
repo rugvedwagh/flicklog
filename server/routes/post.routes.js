@@ -15,6 +15,8 @@ import asyncHandler from "../middleware/async.middleware.js";
 const router = express.Router();
 
 // Route definitions
+router.get("/search", asyncHandler(fetchPostsBySearch));
+
 router
     .route("/")
     .get(asyncHandler(fetchPosts))
@@ -25,8 +27,6 @@ router
     .get(asyncHandler(fetchPost))
     .patch(verifyJWT, asyncHandler(updatePost))
     .delete(verifyJWT, asyncHandler(deletePost));
-
-router.get("/search", asyncHandler(fetchPostsBySearch));
 
 router.patch("/:id/likePost", verifyJWT, asyncHandler(likePost));
 

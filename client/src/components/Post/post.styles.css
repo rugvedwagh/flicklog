@@ -75,6 +75,7 @@
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
+
 .cardActions {
     display: flex;
     justify-content:space-between;
@@ -99,6 +100,7 @@
 .interaction-buttons{
     color: var(--black);
 }
+
 .interaction-buttons.dark{
     color: var(--subtextColor);
 }
@@ -109,4 +111,17 @@
 
 .tags.dark{
     color: var(--subtextColor);
+}
+
+.MuiTooltip-tooltip	.MuiButton{
+    color: var(--black);
+}
+
+.MuiDialogActions-root .MuiButton-contained{
+    background-color: var(--black);
+}
+
+.MuiDialogActions-root .MuiButton-contained:hover{
+    background-color: var(--antiFlashWhite);
+    color: var(--black);
 }

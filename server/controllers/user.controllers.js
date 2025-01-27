@@ -8,49 +8,52 @@ const logIn = async (req, res) => {
 
     const oldUser = await UserModel.findOne({ email });
 
-    if (!oldUser) return res.status(404).json({
-        message: "User doesn't exist"
-    });
+    if (!oldUser) {
+        const error = new Error("User doesn't exist");
+        error.statusCode = 404;
+        throw error;
+    }
 
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
-    if (!isPasswordCorrect) return res.status(400).json({
-        message: "Incorrect password!"
-    });
+    if (!isPasswordCorrect) {
+        const error = new Error("Incorrect password!");
+        error.statusCode = 400;
+        throw error;
+    }
 
     const token = generateToken(oldUser);
+
     res.status(200).json({
         result: oldUser,
-        token
+        token,
     });
 };
 
 // Sign Up Controller
 const signUp = async (req, res) => {
-    const {
-        email,
-        password,
-        confirmPassword,
-        firstName,
-        lastName
-    } = req.body;
+    const { email, password, confirmPassword, firstName, lastName } = req.body;
 
     const oldUser = await UserModel.findOne({ email });
 
-    if (oldUser) return res.status(400).json({
-        message: "Email is already in use"
-    });
+    if (oldUser) {
+        const error = new Error("Email is already in use");
+        error.statusCode = 400;
+        throw error;
+    }
 
-    if (password !== confirmPassword) return res.status(400).json({
-        message: "Password doesn't match"
-    });
+    if (password !== confirmPassword) {
+        const error = new Error("Passwords don't match");
+        error.statusCode = 400;
+        throw error;
+    }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const result = new UserModel({
         email,
         password: hashedPassword,
-        name: `${firstName} ${lastName}`
+        name: `${firstName} ${lastName}`,
     });
 
     await result.save();
@@ -64,9 +67,11 @@ const bookmarkPost = async (req, res) => {
     const { postId, userId } = req.body;
 
     const user = await UserModel.findById(userId);
-    if (!user) return res.status(404).json({
-        error: "User not found"
-    });
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
 
     const isAlreadyBookmarked = user.bookmarks.includes(postId);
 
@@ -78,8 +83,7 @@ const bookmarkPost = async (req, res) => {
             message: "Bookmark removed successfully",
             bookmarks: user.bookmarks,
         });
-    }
-    else {
+    } else {
         user.bookmarks.push(postId);
         await user.save();
 
@@ -95,9 +99,11 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email } = req.body;
 
-    if (!req.userId) return res.status(403).json({
-        message: "Unauthorized"
-    });
+    if (!req.userId) {
+        const error = new Error("Unauthorized");
+        error.statusCode = 403;
+        throw error;
+    }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
         id,
@@ -105,9 +111,11 @@ const updateUser = async (req, res) => {
         { new: true } // Return the updated document
     );
 
-    if (!updatedUser) return res.status(404).json({
-        message: "User not found"
-    });
+    if (!updatedUser) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
 
     res.status(200).json(updatedUser);
 };
@@ -118,11 +126,15 @@ const fetchUserData = async (req, res) => {
 
     const user = await UserModel.findById(id);
 
-    if (!user) return res.status(404).json({
-        message: "User not found"
-    });
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
 
-    res.status(200).json(user);
+    const { password, userWithoutPassword } = user.toObject();
+
+    res.status(200).json(userWithoutPassword);
 };
 
 export {

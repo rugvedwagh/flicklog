@@ -1,2 +1,7 @@
-export const TOGGLE_THEME = 'TOGGLE_THEME';
-export const ERROR = 'ERROR';
+const TOGGLE_THEME = 'TOGGLE_THEME';
+const ERROR = 'ERROR';
+
+export {
+    TOGGLE_THEME,
+    ERROR
+}

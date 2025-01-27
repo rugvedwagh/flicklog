@@ -5,7 +5,7 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import { likePost, deletePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { bookmarkPost } from '../../actions/auth.actions';
+import { bookmarkPost } from '../../actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
@@ -19,9 +19,9 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem('profile'));
-    const userId = user?.result?._id;
-    
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    const userId = profile?.user?._id;
+
     const { clientData } = useSelector((state) => state.authReducer);
 
     const [likes, setLikes] = useState(post?.likes);
@@ -110,15 +110,14 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                 <Tooltip title="Like" arrow placement="top">
                     <Button
                         size="small"
-                        style={{ color: 'black' }}
                         onClick={handleLike}
                     >
-                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled/>
+                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled />
                     </Button>
                 </Tooltip>
 
                 <Tooltip title="Comments" arrow placement="top">
-                    <Button style={{ color: 'black' }}>
+                    <Button>
                         <div style={{ display: 'flex', alignItems: 'center' }} onClick={openPost}>
                             <CommentOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             <span style={{ fontSize: '15px', opacity: '0.8' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
@@ -130,11 +129,11 @@ const Post = ({ post, setCurrentId, darkMode }) => {
 
                 {userId && (
                     <Tooltip title="Bookmark" arrow placement="top">
-                        <Button style={{ color: 'black' }}>
+                        <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
-                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} onClick={handleBookmarkToggle} fontSize="small" />
+                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             ) : (
-                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} onClick={handleBookmarkToggle} fontSize="small" />
+                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             )}
                         </Button>
                     </Tooltip>
@@ -158,20 +157,25 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this post?"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete this post?"}
+                </DialogTitle>
+
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         This action cannot be undone.
                     </DialogContentText>
                 </DialogContent>
+
                 <DialogActions>
-                    <Button onClick={toggleDeleteDialog} variant="contained" style={{ color: 'white', backgroundColor: 'black' }}>
+                    <Button onClick={toggleDeleteDialog} variant="contained">
                         Cancel
                     </Button>
-                    <Button onClick={handleDeletePost} variant="contained" style={{ color: 'white', backgroundColor: 'black' }}>
+                    <Button onClick={handleDeletePost} variant="contained">
                         Delete
                     </Button>
                 </DialogActions>
+
             </Dialog>
         </Card>
     );

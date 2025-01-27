@@ -1,19 +1,29 @@
 import PostMessage from "../models/post.model.js";
 import mongoose from "mongoose";
 
-// fetch a Single Post
+// Fetch a Single Post
 const fetchPost = async (req, res) => {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
+    }
+
     const post = await PostMessage.findById(id);
-    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (!post) {
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
+    }
 
     res.status(200).json(post);
 };
 
-// fetch All Posts with Pagination
+// Fetch All Posts with Pagination
 const fetchPosts = async (req, res) => {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
 
     const LIMIT = 6;
     const startIndex = (Number(page) - 1) * LIMIT;
@@ -33,7 +43,7 @@ const fetchPosts = async (req, res) => {
 
 // Search Posts by Title or Tags
 const fetchPostsBySearch = async (req, res) => {
-    const { searchQuery, tags } = req.query;
+    const { searchQuery = "", tags = "" } = req.query;
 
     const title = new RegExp(searchQuery, "i");
     const tagsArray = tags.split(",").map((tag) => tag.trim());
@@ -65,9 +75,9 @@ const updatePost = async (req, res) => {
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).json({
-            message: "No post with this id"
-        });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -77,9 +87,9 @@ const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-        return res.status(404).json({
-            message: "No post found"
-        });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     res.status(200).json(updatedPost);
@@ -90,14 +100,21 @@ const deletePost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({
-            message: "No post with this id"
-        });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
-    await PostMessage.findByIdAndDelete(id);
+    const deletedPost = await PostMessage.findByIdAndDelete(id);
+
+    if (!deletedPost) {
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
     res.status(200).json({
-        message: "Post deleted successfully!"
+        message: "Post deleted successfully!",
     });
 };
 
@@ -106,23 +123,23 @@ const likePost = async (req, res) => {
     const { id } = req.params;
 
     if (!req.userId) {
-        return res.status(401).json({
-            message: "Unauthenticated"
-        });
+        const error = new Error("Unauthenticated");
+        error.statusCode = 401;
+        throw error;
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({
-            message: "No post with this id"
-        });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        return res.status(404).json({
-            message: "No post found"
-        });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     const index = post.likes.findIndex((userId) => userId === String(req.userId));
@@ -143,17 +160,17 @@ const commentPost = async (req, res) => {
     const { value } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({
-            message: "No post with this id"
-        });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        return res.status(404).json({
-            message: "No post found"
-        });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     post.comments.push(value);
