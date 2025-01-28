@@ -6,20 +6,24 @@ import {
     bookmarkPost,
     updateUser,
 } from "../controllers/user.controllers.js";
-import verifyJWT from "../middleware/auth.middleware.js";
+import verifyAccessToken from "../middleware/auth.middleware.js";
 import asyncHandler from "../middleware/async.middleware.js";
 
 const router = express.Router();
 
 // Route definitions
-router.patch("/:id/update", verifyJWT, asyncHandler(updateUser));
+router
+    .route("/:id/update") 
+    .patch(verifyAccessToken, asyncHandler(updateUser));
 
-router.get("/i/:id", verifyJWT, asyncHandler(fetchUserData))
+router
+    .route("/i/:id") 
+    .get(verifyAccessToken, asyncHandler(fetchUserData));
 
 router.post("/signin", asyncHandler(logIn));
 
 router.post("/signup", asyncHandler(signUp));
 
-router.post("/bookmarks/add", verifyJWT, asyncHandler(bookmarkPost));
+router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
 
 export default router;

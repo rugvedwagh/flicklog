@@ -65,7 +65,7 @@
 .upper-div h2 {
     font-size: 1.8rem;
     font-weight: bold;
-    color: var(--subtextColor);
+    color: var(--borderColor);
 }
 
 .upper-div.dark h2{
@@ -150,7 +150,7 @@
         width: 50%;
     }
     .loading{
-        margin-top: 70%;
+        margin-top: 50%;
     }
 }
 
@@ -242,6 +242,10 @@
 }
 
 .bookmarked-post:hover {
+    background-color: var(--borderColor);
+    color: var(--antiFlashWhite);
+}
+.bookmarked-post.dark:hover {
     background-color: var(--antiFlashWhite);
     color: var(--black);
 }
@@ -262,4 +266,3 @@
     transition: 0.3s ease-in;
     opacity: 1;
 }
-

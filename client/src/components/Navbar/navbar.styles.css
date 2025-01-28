@@ -267,4 +267,7 @@
     flex-direction: column;
 }
 
-
+.menu .MuiMenuItem-root:first-child:hover {
+    background-color: transparent !important;
+    color: inherit !important; 
+}

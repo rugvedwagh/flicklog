@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const verfiyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
     try {
-        //  'req.header.authorization' was set in api.js in client
         const authorizationHeader = req.headers.authorization;
 
         if (!authorizationHeader) {
-            return res.status(401).json({ message: 'Authorization header is missing.' });
+            const error = new Error("Authorization header is missing.");
+            error.statusCode = 401;
+            return next(error); // Pass error to global error handler
         }
 
         const token = authorizationHeader.split(" ")[1];
@@ -24,10 +25,13 @@ const verfiyToken = async (req, res, next) => {
             decodedData = jwt.decode(token);
             req.userId = decodedData?.sub;
         }
-        next();
+
+        next(); // Call the next middleware if successful
     } catch (error) {
-        return res.status(401).json({ message: 'Token verification failed.' });
+        error.statusCode = 401;
+        error.message = "Token verification failed.";
+        next(error); // Pass error to global error handler
     }
 };
 
-export default verfiyToken;
+export default verifyToken;

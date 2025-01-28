@@ -23,12 +23,13 @@ app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
 // Global Not Found and Error Handlers (ensure notFound is used before errorHandler)
-// app.use(notFound);  // Catch-all for undefined routes
-app.use(errorHandler);  // Global error handler
+app.use(notFound);  // Catch-all for undefined routes
 
 app.get('/', (req, res) => {
     res.send(`<h2>Server is running...</h2>`);
 });
+
+app.use(errorHandler);  // Global error handler
 
 const PORT = process.env.PORT || 5000;  // Fallback to 5000 if no PORT is defined
 

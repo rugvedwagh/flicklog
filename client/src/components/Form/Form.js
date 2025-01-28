@@ -27,7 +27,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         if (post) {
             setPostData({
                 title: post.title || '',
-                message: post.message || '',       
+                message: post.message || '',
                 tags: post.tags || '',
                 selectedfile: post.selectedfile || ''
             });
@@ -52,14 +52,14 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         e.preventDefault();
 
         if (currentId === 0) {
-            dispatch(createPost({ ...postData, name: profile?.user?.name }));
+            dispatch(createPost({ ...postData, name: profile?.result?.name }));
         } else {
-            dispatch(updatePost(currentId, { ...postData, name: profile?.user?.name }));
+            dispatch(updatePost(currentId, { ...postData, name: profile?.result?.name }));
         }
         clearForm();
     };
 
-    if (!profile?.user) {
+    if (!profile?.result) {
         return (
             <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Typography variant="h6" align="center">

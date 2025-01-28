@@ -20,7 +20,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const navigate = useNavigate();
 
     const profile = JSON.parse(localStorage.getItem('profile'));
-    const userId = profile?.user?._id;
+    const userId = profile?.result?._id;
 
     const { clientData } = useSelector((state) => state.authReducer);
 
@@ -52,7 +52,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     }, [dispatch, post._id, toggleDeleteDialog]);
 
     const handleBookmarkToggle = () => {
-        dispatch(bookmarkPost(post._id, clientData?._id));
+        dispatch(bookmarkPost(post._id, userId));
         setIsBookmarked((prev) => !prev);
     };
 

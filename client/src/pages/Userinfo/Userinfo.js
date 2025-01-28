@@ -11,7 +11,7 @@ const Userinfo = ({ darkMode }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
@@ -102,7 +102,7 @@ const Userinfo = ({ darkMode }) => {
                     </li>
                     <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
                         <Button>
-                            {showBm ? <span>Hide</span> : <span>Show</span>}
+                            {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
                         </Button>
                         <Button onClick={handleEditUser}><span>Edit</span></Button>
                     </li>

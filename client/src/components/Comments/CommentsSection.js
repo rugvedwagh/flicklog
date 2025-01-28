@@ -13,7 +13,7 @@ const CommentsSection = ({ post, darkMode }) => {
     const [comments, setComments] = useState(post?.comments)
 
     const postComment = async () => {
-        const finalComment = `${profile?.user.name}: ${comment}`;
+        const finalComment = `${profile?.result.name}: ${comment}`;
         const newComments = await dispatch(addComment(finalComment, post._id));    // await is needed here 
         setComments(newComments);
         setComment('');
@@ -37,7 +37,7 @@ const CommentsSection = ({ post, darkMode }) => {
                         <></>
                     )}
             </div>
-            {profile?.user?.name && (
+            {profile?.result?.name && (
                 <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
 
                     <Typography gutterBottom variant='h6'>
