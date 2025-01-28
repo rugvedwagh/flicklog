@@ -138,6 +138,7 @@ const fetchUserData = async (req, res) => {
     res.status(200).json(userWithoutPassword);
 };
 
+
 export {
     signUp,
     logIn,
