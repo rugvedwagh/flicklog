@@ -132,10 +132,12 @@ const fetchUserData = async (req, res) => {
         throw error;
     }
 
-    const { password, userWithoutPassword } = user.toObject();
+    // Manually exclude the password from the response
+    const { password, ...userWithoutPassword } = user.toObject();
 
     res.status(200).json(userWithoutPassword);
 };
+
 
 export {
     signUp,
