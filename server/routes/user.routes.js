@@ -13,9 +13,12 @@ const router = express.Router();
 
 // Route definitions
 router
-    .route("/i/:id")
-    .get(verifyJWT, asyncHandler(fetchUserData))
+    .route("/:id/update") // Corrected route for updating user details
     .patch(verifyJWT, asyncHandler(updateUser));
+
+router
+    .route("/i/:id") // Separate route for fetching user data
+    .get(verifyJWT, asyncHandler(fetchUserData));
 
 router.post("/signin", asyncHandler(logIn));
 
