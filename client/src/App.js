@@ -66,7 +66,7 @@ const App = () => {
             <Container maxWidth="xl">
 
                 <KeyboardArrowUpIcon className={showScrollButton ? 'scrollup show' : 'scrollup hide'} onClick={scrollToTop} />
-                
+
                 <Navbar darkMode={darkMode} />
 
                 <Routes>

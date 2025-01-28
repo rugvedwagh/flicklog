@@ -20,7 +20,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const navigate = useNavigate();
 
     const profile = JSON.parse(localStorage.getItem('profile'));
-    const userId = profile?.result?._id;  
+    const userId = profile?.result?._id;
 
     const { clientData } = useSelector((state) => state.authReducer);
 

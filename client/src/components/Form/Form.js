@@ -27,7 +27,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         if (post) {
             setPostData({
                 title: post.title || '',
-                message: post.message || '',       
+                message: post.message || '',
                 tags: post.tags || '',
                 selectedfile: post.selectedfile || ''
             });
