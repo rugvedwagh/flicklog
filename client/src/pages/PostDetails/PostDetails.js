@@ -1,6 +1,6 @@
 import { Typography, CircularProgress, Divider, Card } from '@mui/material';
 import CommentsSection from '../../components/Comments/CommentsSection';
-import { getPost, getPostsBySearch } from '../../actions/post.actions';
+import { fetchPost, fetchPostsBySearch } from '../../actions/post.actions';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
@@ -19,12 +19,12 @@ const PostDetails = ({ darkMode }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(getPost(id));
+        dispatch(fetchPost(id));
     }, [id, dispatch]);
 
     useEffect(() => {
         if (post) {
-            dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
+            dispatch(fetchPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
         }
     }, [post, dispatch]);       // Might remove this later!! Just seeing how this affects the page
 

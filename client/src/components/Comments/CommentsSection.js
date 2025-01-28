@@ -1,5 +1,5 @@
 import { Typography, TextField, Button } from '@mui/material';
-import { commentPost } from '../../actions/post.actions';
+import { addComment } from '../../actions/post.actions';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './commentsection.styles.css';
@@ -7,14 +7,14 @@ import './commentsection.styles.css';
 const CommentsSection = ({ post, darkMode }) => {
 
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('profile'))
+    const profile = JSON.parse(localStorage.getItem('profile'))
 
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post?.comments)
 
     const postComment = async () => {
-        const finalComment = `${user.result.name}: ${comment}`;
-        const newComments = await dispatch(commentPost(finalComment, post._id));    // await is needed here 
+        const finalComment = `${profile?.user.name}: ${comment}`;
+        const newComments = await dispatch(addComment(finalComment, post._id));    // await is needed here 
         setComments(newComments);
         setComment('');
     }
@@ -37,7 +37,7 @@ const CommentsSection = ({ post, darkMode }) => {
                         <></>
                     )}
             </div>
-            {user?.result?.name && (
+            {profile?.user?.name && (
                 <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
 
                     <Typography gutterBottom variant='h6'>

@@ -1,5 +1,6 @@
-import { AUTH, LOGOUT, USER_INFO, ERROR, BOOKMARK_POST, UPDATE_USER } from '../constants/auth.constants';
-import { START_LOADING, END_LOADING } from '../constants/loading.constants'
+import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER } from '../constants/auth.constants';
+import { START_LOADING, END_LOADING } from '../constants/loading.constants';
+import { BOOKMARK_POST } from '../constants/post.constants';
 
 const initialState = {
     authData: null,
@@ -9,14 +10,16 @@ const initialState = {
 }
 
 const authReducer = (state = initialState, action) => {
-    
+
     switch (action.type) {
 
         case AUTH:
-            localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
+            const { password, __v, bookmarks, ...user } = action?.payload?.result;
+            const { token } = action?.payload;
+            localStorage.setItem('profile', JSON.stringify({ token, user: user }));
             return {
                 ...state,
-                authData: action?.payload
+                authData: { token, user },
             };
 
         case LOGOUT:

@@ -6,6 +6,9 @@ const CREATE = 'CREATE'
 const UPDATE = 'UPDATE'
 const DELETE = 'DELETE'
 const LIKE = 'LIKE'
+const LIKED_POSTS = 'LIKED_POSTS'
+const USER_POSTS = 'USER_POSTS'
+const BOOKMARK_POST = 'BOOKMARK_POST'
 
 export {
     FETCH_POST,
@@ -15,5 +18,8 @@ export {
     CREATE,
     UPDATE,
     DELETE,
-    LIKE
+    LIKED_POSTS,
+    USER_POSTS,
+    LIKE,
+    BOOKMARK_POST
 }

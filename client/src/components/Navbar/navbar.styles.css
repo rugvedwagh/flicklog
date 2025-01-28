@@ -237,3 +237,34 @@
 .menu.dark .MuiMenuItem{
     background-color: var(--black) !important;
 }
+
+.MuiDialogActions-root .MuiButton-contained{
+    background-color: var(--black);
+}
+
+.MuiDialogActions-root .MuiButton-contained:hover{
+    background-color: var(--antiFlashWhite);
+    color: var(--black);
+}
+
+.MuiMenuItem-root{
+    color: var(--black);
+}
+
+.MuiMenuItem-root:hover{
+    color: var(--white);
+    background-color: var(--black) !important;
+}
+
+.MuiMenuItem-root .MuiAvatar-root{
+    height: 60px;
+    width: 60px;
+    font-size: 28px;
+}
+
+.userinfo {
+    display: flex;
+    flex-direction: column;
+}
+
+

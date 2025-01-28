@@ -6,28 +6,31 @@ import {
     DELETE,
     FETCH_BY_SEARCH,
     FETCH_POST,
-    COMMENT
+    COMMENT,
+    LIKED_POSTS,
+    USER_POSTS,
+    BOOKMARK_POST
 } from '../constants/post.constants';
 import {
     fetchPostApi,
     deletePostApi,
-    fetchPostsBySearchApi
-    , addCommentApi,
+    fetchPostsBySearchApi,
+    addCommentApi,
     fetchPostsApi,
     createPostApi,
     likePostApi,
-    updatePostApi
+    updatePostApi,
+    bookmarkPostApi
 } from '../api/post.api';
 import {
     START_LOADING,
     END_LOADING
 } from '../constants/loading.constants';
-import { TOGGLE_THEME } from '../constants/theme.constants';
 import { ERROR } from '../constants/auth.constants';
 
 // Action Creators
 // these are functions that return actions
-export const getPost = (id) => async (dispatch) => {
+const fetchPost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -36,12 +39,12 @@ export const getPost = (id) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
 }
 
-export const getPosts = (page) => async (dispatch) => {
+const fetchPosts = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
@@ -95,12 +98,12 @@ export const getPosts = (page) => async (dispatch) => {
 
         dispatch({ type: END_LOADING });
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.error(error);
     }
 };
 
-export const getPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
+const fetchPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -115,12 +118,12 @@ export const getPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
 }
 
-export const createPost = (post) => async (dispatch) => {
+const createPost = (post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -130,12 +133,12 @@ export const createPost = (post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
 }
 
-export const updatePost = (id, post) => async (dispatch) => {
+const updatePost = (id, post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -144,12 +147,12 @@ export const updatePost = (id, post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
 }
 
-export const deletePost = (id) => async (dispatch) => {
+const deletePost = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -159,38 +162,74 @@ export const deletePost = (id) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
 }
 
-export const likePost = (id) => async (dispatch) => {
+const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await likePostApi(id);
         dispatch({ type: LIKE, payload: data })
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
 }
 
-export const commentPost = (value, id) => async (dispatch) => {
+const addComment = (value, id) => async (dispatch) => {
     try {
         const { data } = await addCommentApi(value, id);
         dispatch({ type: COMMENT, payload: data });
 
         return data.comments;
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
 };
 
-export const toggleTheme = () => async (dispatch) => {
+const likedPosts = (data) => async (dispatch) => {
     try {
-        dispatch({ type: TOGGLE_THEME })
+        
+        dispatch({ type: LIKED_POSTS, payload: data })
+
     } catch (error) {
-        dispatch({ type: ERROR, payload: error || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        console.log(error);
+    }
+}
+
+const userPosts = (data) => async (dispatch) =>{
+    try {
+        dispatch({type : USER_POSTS, payload : data});
+    } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        console.log(error);
+    }
+}
+
+const bookmarkPost = (postId, userId) => async (dispatch) => {
+    try {
+        const { data } = await bookmarkPostApi(postId, userId);
+
+        dispatch({ type: BOOKMARK_POST, payload: data });
+    } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
 };
+
+export {
+    fetchPost,
+    fetchPosts,
+    fetchPostsBySearch,
+    createPost,
+    updatePost,
+    deletePost,
+    userPosts,
+    likePost,
+    likedPosts,
+    addComment,
+    bookmarkPost
+}

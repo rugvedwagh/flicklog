@@ -1,5 +1,5 @@
 import UserModel from "../models/user.model.js";
-import { generateToken } from "../utils/token.js";
+import { generateToken } from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
 
 // Log In Controller
@@ -23,7 +23,7 @@ const logIn = async (req, res) => {
     }
 
     const token = generateToken(oldUser);
-    
+
     res.status(200).json({
         result: oldUser,
         token,
@@ -132,7 +132,9 @@ const fetchUserData = async (req, res) => {
         throw error;
     }
 
-    res.status(200).json(user);
+    const { password, userWithoutPassword } = user.toObject();
+
+    res.status(200).json(userWithoutPassword);
 };
 
 export {

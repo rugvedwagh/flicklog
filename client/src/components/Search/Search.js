@@ -1,5 +1,5 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { getPostsBySearch } from '../../actions/post.actions';
+import { fetchPostsBySearch } from '../../actions/post.actions';
 import { AppBar, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -27,7 +27,7 @@ const Search = ({ darkMode }) => {
 
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
 
-            dispatch(getPostsBySearch({ search, tags }));
+            dispatch(fetchPostsBySearch({ search, tags }));
         } else {
             navigate('/');
         }

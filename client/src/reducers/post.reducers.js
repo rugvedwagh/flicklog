@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, COMMENT } from "../constants/post.constants";
+import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE, FETCH_BY_SEARCH, COMMENT, LIKED_POSTS, USER_POSTS } from "../constants/post.constants";
 import { START_LOADING, END_LOADING } from "../constants/loading.constants";
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 }
 
 const postsReducer = (state = initialState, action) => {
-    
+
     switch (action.type) {
 
         case UPDATE:
@@ -68,6 +68,18 @@ const postsReducer = (state = initialState, action) => {
                     return post;
                 }),
             };
+
+        case LIKED_POSTS:
+            return {
+                ...state,
+                posts: state.posts?.filter((post) => post.likes.includes(action.payload))
+            }
+
+        case USER_POSTS:
+            return {
+                ...state,
+                posts: state.posts?.filter((post) => post.creator === action.payload)
+            }
 
         case START_LOADING:
             return {
