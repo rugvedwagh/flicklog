@@ -16,7 +16,6 @@ import {
     updateUserDetailsApi
 } from '../api/user.api';
 
-
 const signIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
@@ -81,7 +80,7 @@ const Logout = (navigate) => (dispatch) => {
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-       
+
         const { data } = await updateUserDetailsApi(id, updatedData);
         dispatch({ type: UPDATE_USER, payload: data });
 
@@ -89,10 +88,10 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         profile.result = data;
         localStorage.setItem('profile', JSON.stringify(profile));
 
-        dispatch({type : END_LOADING})
+        dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.error('Error updating user details:', error);
+        console.error(error);
     }
 };
 
