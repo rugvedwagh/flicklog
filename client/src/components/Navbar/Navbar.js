@@ -19,7 +19,7 @@ const Navbar = ({ darkMode }) => {
     const location = useLocation();
 
     const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')));
-    const userId = profile?.user?._id
+    const userId = profile?.result?._id
 
     const [openDialog, setOpenDialog] = useState(false);
     const [navclass, setNavclass] = useState(false)
@@ -105,16 +105,16 @@ const Navbar = ({ darkMode }) => {
                 </div>
 
                 <Toolbar className='toolbar'>
-                    {profile?.user ? (
+                    {profile?.result ? (
                         <div className='profile'>
                             <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
                                     className={`menu ${darkMode ? 'dark' : ''}`}
-                                    alt={profile.user?.name}
-                                    src={profile.user?.imageUrl}
+                                    alt={profile.result?.name}
+                                    src={profile.result?.imageUrl}
                                 >
-                                    {profile?.user?.name.charAt(0)}
+                                    {profile?.result?.name.charAt(0)}
                                 </Avatar>
                             </span>
 
@@ -131,17 +131,17 @@ const Navbar = ({ darkMode }) => {
                                     <Avatar
                                         onClick={handleMenuClick}
                                         className={`menu ${darkMode ? 'dark' : ''}`}
-                                        alt={profile.user?.name}
-                                        src={profile.user?.imageUrl}
+                                        alt={profile.result?.name}
+                                        src={profile.result?.imageUrl}
                                     >
-                                        {profile?.user?.name.charAt(0)}
+                                        {profile?.result?.name.charAt(0)}
                                     </Avatar>&nbsp;
                                     <div className='userinfo'>
                                         <strong>
-                                            {profile?.user?.name}<br></br>
+                                            {profile?.result?.name}<br></br>
                                         </strong>
                                         <small>
-                                            {profile?.user?.email}
+                                            {profile?.result?.email}
                                         </small>
                                     </div>
                                 </MenuItem>

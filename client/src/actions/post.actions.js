@@ -189,11 +189,20 @@ const addComment = (value, id) => async (dispatch) => {
     }
 };
 
+const bookmarkPost = (postId, userId) => async (dispatch) => {
+    try {
+        const { data } = await bookmarkPostApi(postId, userId);
+
+        dispatch({ type: BOOKMARK_POST, payload: data });
+    } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        console.log(error);
+    }
+};
+
 const likedPosts = (data) => async (dispatch) => {
     try {
-        
         dispatch({ type: LIKED_POSTS, payload: data })
-
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
@@ -208,17 +217,6 @@ const userPosts = (data) => async (dispatch) =>{
         console.log(error);
     }
 }
-
-const bookmarkPost = (postId, userId) => async (dispatch) => {
-    try {
-        const { data } = await bookmarkPostApi(postId, userId);
-
-        dispatch({ type: BOOKMARK_POST, payload: data });
-    } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
-    }
-};
 
 export {
     fetchPost,

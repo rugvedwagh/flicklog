@@ -14,12 +14,10 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            const { password, __v, bookmarks, ...user } = action?.payload?.result;
-            const { token } = action?.payload;
-            localStorage.setItem('profile', JSON.stringify({ token, user: user }));
+            localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
             return {
                 ...state,
-                authData: { token, user },
+                authData: action?.payload
             };
 
         case LOGOUT:
