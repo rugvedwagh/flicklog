@@ -102,7 +102,7 @@ const Userinfo = ({ darkMode }) => {
                     </li>
                     <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
                         <Button>
-                            {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
+                            {showBm ? <span>Hide</span> : <span>Show</span>}
                         </Button>
                         <Button onClick={handleEditUser}><span>Edit</span></Button>
                     </li>

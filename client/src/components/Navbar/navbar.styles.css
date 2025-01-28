@@ -269,5 +269,7 @@
 
 .menu .MuiMenuItem-root:first-child:hover {
     background-color: transparent !important;
-    color: inherit !important; 
+    /* Optionally remove any other hover effects */
+    color: inherit !important; /* Remove any color changes */
 }
+
