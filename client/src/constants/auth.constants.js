@@ -3,11 +3,13 @@ const LOGOUT = 'LOGOUT'
 const AUTH = 'AUTH'
 const ERROR = 'ERROR'
 const UPDATE_USER = 'UPDATE_USER'
+const REFRESH_TOKEN = 'REFRESH_TOKEN'
 
 export {
     USER_INFO,
     LOGOUT,
     AUTH,
     ERROR,
+    REFRESH_TOKEN,
     UPDATE_USER
 }

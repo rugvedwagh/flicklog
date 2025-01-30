@@ -21,8 +21,15 @@ const authReducer = (state = initialState, action) => {
             };
 
         case LOGOUT:
-            localStorage.removeItem('profile');
-            localStorage.removeItem('postsData')
+            // Get the current profile from localStorage
+            const profile = JSON.parse(localStorage.getItem('profile'));
+
+            if (profile) {
+                // Set the access token to null but keep the refreshToken
+                profile.token = null; // Remove access token but keep refreshToken
+                localStorage.setItem('profile', JSON.stringify(profile)); // Save updated profile back to localStorage
+            }
+
             return {
                 ...state,
                 authData: null,

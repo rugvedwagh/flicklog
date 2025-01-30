@@ -3,7 +3,8 @@ import {
     ERROR,
     USER_INFO,
     LOGOUT,
-    UPDATE_USER
+    UPDATE_USER,
+    REFRESH_TOKEN
 } from '../constants/auth.constants';
 import {
     END_LOADING,
@@ -13,7 +14,8 @@ import {
     signInApi,
     signUpApi,
     userInfoApi,
-    updateUserDetailsApi
+    updateUserDetailsApi,
+    refreshTokenApi
 } from '../api/user.api';
 
 const signIn = (formData, navigate) => async (dispatch) => {
@@ -65,9 +67,16 @@ const Logout = (navigate) => (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        localStorage.removeItem('profile');
-        localStorage.removeItem('postsData')
-        navigate('/')
+        // Get the profile from localStorage
+        const profile = JSON.parse(localStorage.getItem('profile'));
+
+        if (profile) {
+            // Remove only the access token, not the refresh token
+            profile.token = null;
+            localStorage.setItem('profile', JSON.stringify(profile));
+        }
+
+        navigate('/');
         dispatch({ type: LOGOUT });
 
         dispatch({ type: END_LOADING });
@@ -76,6 +85,7 @@ const Logout = (navigate) => (dispatch) => {
         console.log(error);
     }
 };
+
 
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
@@ -95,10 +105,37 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
     }
 };
 
+// Action to refresh the token
+const refreshToken = () => async (dispatch) => {
+    try {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+
+        // If no profile or refresh token exists, return
+        if (!profile || !profile.result.refreshToken) {
+            return;
+        }
+
+        dispatch({ type: START_LOADING });
+
+        const { data } = await refreshTokenApi(profile.result.refreshToken);  // Implement the API call to refresh the token
+        dispatch({ type: REFRESH_TOKEN, payload: data });
+
+        // Update profile in localStorage with new tokens
+        const updatedProfile = { ...profile, result: { ...profile.result, token: data.token, refreshToken: data.refreshToken } };
+        localStorage.setItem('profile', JSON.stringify(updatedProfile));
+
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        console.log(error);
+    }
+};
+
 export {
     signIn,
     signUp,
     userData,
     updateUserDetails,
-    Logout
+    Logout,
+    refreshToken
 }
