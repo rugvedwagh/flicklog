@@ -118,6 +118,7 @@ const fetchPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }

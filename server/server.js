@@ -1,8 +1,8 @@
 import errorHandler from './middleware/error.middleware.js';
+import notFound from './middleware/notFound.middleware.js'; 
 import dataBaseConnection from './config/Database.js';
 import userRoutes from './routes/user.routes.js';   
 import postRoutes from './routes/post.routes.js';
-import notFound from './middleware/notfound.middleware.js'; 
 import bodyParser from 'body-parser';
 import express from 'express';
 import dotenv from 'dotenv';
@@ -31,11 +31,11 @@ app.get('/', (req, res) => {
 
 app.use(errorHandler);  // Global error handler
 
-const PORT = process.env.PORT || 5000;  // Fallback to 5000 if no PORT is defined
+const PORT = process.env.PORT || 8000;  // Fallback to 5000 if no PORT is defined
 
 // Connect to the database and start the server
 dataBaseConnection().then(() => {
     app.listen(PORT, () => {
-        console.log(`Server  on port: ${PORT}`);
+        console.log(`Server running on port: ${PORT}`);
     });
 });

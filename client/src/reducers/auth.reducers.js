@@ -3,9 +3,9 @@ import { START_LOADING, END_LOADING } from '../constants/loading.constants';
 import { BOOKMARK_POST } from '../constants/post.constants';
 
 const initialState = {
+    isLoading: false,
     authData: null,
     clientData: null,
-    isLoading: null,
     errorMessage: null
 }
 

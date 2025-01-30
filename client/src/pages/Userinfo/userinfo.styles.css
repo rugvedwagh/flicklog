@@ -137,7 +137,7 @@
 }
 
 .loading {
-    color: var(--black) !important;
+    color: var(--borderColor) !important;
     margin-top: 15%;
 }
 

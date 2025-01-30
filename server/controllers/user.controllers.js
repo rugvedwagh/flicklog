@@ -161,6 +161,7 @@ const fetchUserData = async (req, res) => {
 };
 
 const refreshToken = async (req, res) => {
+    
     let { refreshToken } = req.body;
     console.log("Here in the refreshToken controller", refreshToken);
 
@@ -185,7 +186,6 @@ const refreshToken = async (req, res) => {
     try {
         // Now that refreshToken is a string, we can proceed with verifying it
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-        console.log("Decoded refreshToken:", decoded);
 
         // Assuming the decoded token has a userId, you can fetch the user based on the userId in the decoded token
         const userId = decoded.id; // Replace `id` with the actual field used in the decoded token
@@ -208,10 +208,8 @@ const refreshToken = async (req, res) => {
         res.status(200).json({ token: newToken, refreshToken: newRefreshToken });
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-            console.log("The refresh token has expired.");
             throw new Error("Refresh token has expired");
         } else {
-            console.log("Error verifying refresh token:", error);
             throw new Error("Invalid or expired refresh token");
         }
     }

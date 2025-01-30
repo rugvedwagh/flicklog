@@ -44,7 +44,7 @@
 
 .submit {
     margin: 16px 0 !important;
-    background-color: var(--pink) !important;
+    background-color: var(--forrestGreen) !important;
 }
 
 .submit.dark{
@@ -107,4 +107,12 @@
     .image-container {
         display: none;
     }   
+}
+
+.form .MuiCircularProgress-circle{
+    color: var(--borderColor);
+}
+
+.form.dark .MuiCircularProgress-circle{
+    color: var(--antiFlashWhite);
 }

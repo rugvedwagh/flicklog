@@ -28,6 +28,7 @@ const signIn = (formData, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING });
     } catch (error) {
+        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -36,13 +37,14 @@ const signIn = (formData, navigate) => async (dispatch) => {
 const signUp = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-
+        
         const { data } = await signUpApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts')
-
+        
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }

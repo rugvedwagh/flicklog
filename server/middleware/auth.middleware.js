@@ -19,8 +19,7 @@ const verifyToken = async (req, res, next) => {
         let decodedData;
 
         if (token && isCustomAuth) {
-            console.log("in the auth middlware above teh verify process, TOKEN =", token)
-            decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            decodedData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
             req.userId = decodedData?.id;
         } else {
             decodedData = jwt.decode(token);
