@@ -122,7 +122,6 @@ const refreshToken = () => async (dispatch) => {
         const { data } = await refreshTokenApi(profile.result.refreshToken);  // Implement the API call to refresh the token
         dispatch({ type: REFRESH_TOKEN, payload: data });
 
-        // Update profile in localStorage with new tokens
         const updatedProfile = { ...profile, result: { ...profile.result, token: data.token, refreshToken: data.refreshToken } };
         localStorage.setItem('profile', JSON.stringify(updatedProfile));
 

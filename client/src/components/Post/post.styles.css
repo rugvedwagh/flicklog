@@ -4,7 +4,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
     cursor: pointer;
-    border-top-left-radius: 3px; 
+    border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
@@ -16,11 +16,11 @@
     background-color: var(--white) !important;
     color: white;
     border-radius: 3px;
-    height: 100%;   
+    height: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
 }
 
-.card.dark{
+.card.dark {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -28,10 +28,10 @@
     background-color: var(--black) !important;
     color: white;
     border-radius: 3px;
-    height: 100%; 
+    height: 100%;
 }
 
-.card:hover{
+.card:hover {
     box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
 }
 
@@ -67,23 +67,24 @@
     user-select: none;
 }
 
-.title.dark{
+.title.dark {
     color: var(--antiFlashWhite);
 }
 
-.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom.title.css-h93ljk-MuiTypography-root{
+.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom.title.css-h93ljk-MuiTypography-root {
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
 
 .cardActions {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
+
 @media (max-width: 600px) {
     .cardActions {
         display: flex;
-        justify-content:flex-start;
+        justify-content: flex-start;
     }
 }
 
@@ -93,35 +94,39 @@
     user-select: none;
 }
 
-.msg-text.dark{
+.msg-text.dark {
     color: var(--subtextColor) !important;
 }
 
-.interaction-buttons{
+.interaction-buttons {
     color: var(--black);
 }
 
-.interaction-buttons.dark{
+.interaction-buttons.dark {
     color: var(--subtextColor);
 }
 
-.tags{
+.tags {
     padding: 5px 16px 0px 16px;
 }
 
-.tags.dark{
+.tags.dark {
     color: var(--subtextColor);
 }
 
-.MuiTooltip-tooltip	.MuiButton{
+.MuiTooltip-tooltip .MuiButton {
     color: var(--black);
 }
 
-.MuiDialogActions-root .MuiButton-contained{
+.MuiDialogActions-root .MuiButton-contained {
     background-color: var(--black);
 }
 
-.MuiDialogActions-root .MuiButton-contained:hover{
+.MuiDialogActions-root .MuiButton-contained:hover {
     background-color: var(--antiFlashWhite);
     color: var(--black);
+}
+
+section {
+    cursor: pointer;
 }

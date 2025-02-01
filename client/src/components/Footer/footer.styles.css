@@ -68,7 +68,7 @@
 }
 
 .footer .col ul li:hover {
-    color: var();
+    color: var(--forrestGreen);
     transition: .1s;
     -webkit-transition: .1s;
     -moz-transition: .1s;

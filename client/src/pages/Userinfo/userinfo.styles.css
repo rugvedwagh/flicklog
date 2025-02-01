@@ -139,7 +139,7 @@
 }
 
 .loading {
-    color: var(--black) !important;
+    color: var(--borderColor) !important;
     transition: translate(-50%, -50%);
     left: 0% !important;
     top: 80% !important; 

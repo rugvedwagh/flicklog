@@ -115,7 +115,7 @@ const SignUp = ({ darkMode }) => {
                                         handleChange={handleChange}
                                         type={showPassword ? 'text' : 'password'}
                                         handleShowPassword={handleShowPassword}
-                                    />
+                                        />
                                     {isSignup && (
                                         <Input
                                             name="confirmPassword"

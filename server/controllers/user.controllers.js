@@ -160,10 +160,9 @@ const fetchUserData = async (req, res) => {
     res.status(200).json(userWithoutPassword);
 };
 
+// Generate refresh token Controller
 const refreshToken = async (req, res) => {
-    
     let { refreshToken } = req.body;
-    console.log("Here in the refreshToken controller", refreshToken);
 
     if (!refreshToken) {
         const error = new Error("Refresh token is required");
@@ -171,48 +170,21 @@ const refreshToken = async (req, res) => {
         throw error;
     }
 
-    // If the refreshToken is an object, convert it to a string (typically the token is in a property like 'refreshToken' in the object)
-    if (typeof refreshToken !== 'string') {
-        // Check if refreshToken is an object, if it is, extract the string token
-        if (typeof refreshToken === 'object' && refreshToken.refreshToken) {
-            refreshToken = refreshToken.refreshToken; // Extract the token from the object
-        } else {
-            const error = new Error("Invalid refresh token format");
-            error.statusCode = 400;
-            throw error;
-        }
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    const userId = decoded.id;
+    const user = await UserModel.findOne({ _id: userId });
+
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
     }
 
-    try {
-        // Now that refreshToken is a string, we can proceed with verifying it
-        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const newToken = generateToken(user);
+    const newRefreshToken = generateRefreshToken(user);
 
-        // Assuming the decoded token has a userId, you can fetch the user based on the userId in the decoded token
-        const userId = decoded.id; // Replace `id` with the actual field used in the decoded token
-        const user = await UserModel.findOne({ _id: userId });
-
-        if (!user) {
-            throw new Error("User not found");
-        }
-
-        // Proceed with generating a new access token
-        const newToken = generateToken(user);
-
-        // Optionally generate a new refresh token here if you're rotating it
-        const newRefreshToken = generateRefreshToken(user);
-
-        // If you're rotating the refresh token, update the user's refresh token in the database
-        // Example: user.refreshToken = newRefreshToken; await user.save();
-
-        // Send the new tokens to the client
-        res.status(200).json({ token: newToken, refreshToken: newRefreshToken });
-    } catch (error) {
-        if (error.name === 'TokenExpiredError') {
-            throw new Error("Refresh token has expired");
-        } else {
-            throw new Error("Invalid or expired refresh token");
-        }
-    }
+    res.status(200).json({ token: newToken, refreshToken: newRefreshToken });
 };
 
 export {
