@@ -126,16 +126,15 @@ const SignUp = ({ darkMode }) => {
                                     )}
                                 </Grid>
 
-                                <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
-                                    By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
-                                    <strong>Privacy Policy</strong>.
-                                </Typography>
-
                                 {isLoading
                                     ?
-                                    <CircularProgress />
+                                    <CircularProgress sx={{marginTop:'2em'}}/>
                                     :
                                     <>
+                                        <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
+                                            By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
+                                            <strong>Privacy Policy</strong>.
+                                        </Typography>
                                         <Button
                                             type="submit"
                                             fullWidth

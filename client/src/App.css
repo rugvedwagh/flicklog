@@ -1,7 +1,6 @@
 :root {
     --black: #1a1a1a;
     --borderColor: #404040;
-    --loadingvar: white;
     --white: white;
     --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
@@ -99,37 +98,6 @@ body {
 }
 
 .root-bg.dark{
-    /* background-image: url('../src/assets/login-bg-img-dim.svg') !important;
-    background-size: contain;
-    background-repeat: no-repeat; */
     background-color: var(--black);
 }
 
-.toggleButton {
-    position: fixed;
-    z-index: 1000;
-    left: 95vw;
-    top: 10vh;
-    background-color: transparent;
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.toggleButton:hover {
-    transform: scale(1.1);
-}
-
-.toggleButton:focus {
-    outline: none;
-}
-
-@media (max-width: 600px) {
-    .toggleButton {
-        left: 80%;
-        top: 12%;
-        font-size: 0.8rem;
-        padding: 8px 18px;
-    }
-}

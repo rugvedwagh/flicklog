@@ -70,7 +70,7 @@ const Logout = (navigate) => (dispatch) => {
         dispatch({ type: START_LOADING });
 
         // Get the profile from localStorage
-        const profile = JSON.parse(localStorage.getItem('profile'));
+        const profile = JSON.parse(localStorage.getItem('profile')) ;
 
         if (profile) {
             // Remove only the access token, not the refresh token
@@ -96,7 +96,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         const { data } = await updateUserDetailsApi(id, updatedData);
         dispatch({ type: UPDATE_USER, payload: data });
 
-        const profile = JSON.parse(localStorage.getItem('profile'));
+        const profile = JSON.parse(localStorage.getItem('profile')) ;
         profile.result = data;
         localStorage.setItem('profile', JSON.stringify(profile));
 
@@ -110,7 +110,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
 // Action to refresh the token
 const refreshToken = () => async (dispatch) => {
     try {
-        const profile = JSON.parse(localStorage.getItem('profile'));
+        const profile = JSON.parse(localStorage.getItem('profile')) ;
 
         // If no profile or refresh token exists, return
         if (!profile || !profile.result.refreshToken) {

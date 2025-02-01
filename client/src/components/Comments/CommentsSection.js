@@ -7,7 +7,7 @@ import './commentsection.styles.css';
 const CommentsSection = ({ post, darkMode }) => {
 
     const dispatch = useDispatch();
-    const profile = JSON.parse(localStorage.getItem('profile'))
+    const profile = JSON.parse(localStorage.getItem('profile')) 
 
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post?.comments)

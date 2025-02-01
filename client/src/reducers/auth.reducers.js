@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER } from '../constants/auth.constants';
+import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER, REFRESH_TOKEN } from '../constants/auth.constants';
 import { START_LOADING, END_LOADING } from '../constants/loading.constants';
 import { BOOKMARK_POST } from '../constants/post.constants';
 
@@ -20,14 +20,25 @@ const authReducer = (state = initialState, action) => {
                 authData: action?.payload
             };
 
+        case REFRESH_TOKEN:
+            const updatedProfile = JSON.parse(localStorage.getItem('profile'));
+            updatedProfile.token = action.payload; 
+            localStorage.setItem('profile', JSON.stringify(updatedProfile));
+
+            return {
+                ...state,
+                authData: {
+                    ...state.authData,
+                    token: action.payload
+                }
+            };
+
         case LOGOUT:
-            // Get the current profile from localStorage
             const profile = JSON.parse(localStorage.getItem('profile'));
 
             if (profile) {
-                // Set the access token to null but keep the refreshToken
                 profile.token = null; // Remove access token but keep refreshToken
-                localStorage.setItem('profile', JSON.stringify(profile)); // Save updated profile back to localStorage
+                localStorage.setItem('profile', JSON.stringify(profile)); 
             }
 
             return {
