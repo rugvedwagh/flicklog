@@ -2,7 +2,7 @@ import errorHandler from './middleware/error.middleware.js';
 import dataBaseConnection from './config/Database.js';
 import userRoutes from './routes/user.routes.js';   
 import postRoutes from './routes/post.routes.js';
-import notFound from './middleware/notfound.middleware.js'; 
+import notFound from './middleware/notFound.middleware.js'; 
 import bodyParser from 'body-parser';
 import express from 'express';
 import dotenv from 'dotenv';
