@@ -5,8 +5,6 @@ import {
     LOGOUT,
     UPDATE_USER,
     REFRESH_TOKEN,
-    UPDATE_USER,
-    REFRESH_TOKEN
 } from '../constants/auth.constants';
 import {
     END_LOADING,
@@ -18,8 +16,6 @@ import {
     userInfoApi,
     updateUserDetailsApi,
     refreshTokenApi,
-    updateUserDetailsApi,
-    refreshTokenApi
 } from '../api/user.api';
 import Cookies from 'js-cookie'
 
@@ -147,6 +143,4 @@ export {
     updateUserDetails,
     Logout,
     refreshToken,
-    Logout,
-    refreshToken
 }
