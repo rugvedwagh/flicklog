@@ -1,7 +1,29 @@
+// import axios from 'axios';
+
+// const API = axios.create({
+//     baseURL: process.env.REACT_APP_API_URL  // Change this to your API's base URL
+// });
+
+// // Sending the Token back to our backend for it to verify
+// API.interceptors.request.use((req) => {
+
+//     const profile = localStorage.getItem('profile');
+
+//     if (profile) {
+//         const token = JSON.parse(profile).token;       
+//         req.headers.Authorization = `Bearer ${token}`;
+//     }
+
+//     return req;
+// });
+
+// export default API;
+
+// **************************************************************
+
 import axios from 'axios';
 import { refreshTokenApi } from './user.api'; // Import the refresh token API call
 import { REFRESH_TOKEN } from '../constants/auth.constants'; // Import the REFRESH_TOKEN constant
-import { useDispatch } from 'react-redux';
 import store from '../store'
 import Cookies from 'js-cookie';
 
@@ -66,4 +88,6 @@ API.interceptors.response.use(
 );
 
 export default API;
+
+
 

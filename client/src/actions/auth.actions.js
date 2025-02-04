@@ -4,6 +4,8 @@ import {
     USER_INFO,
     LOGOUT,
     UPDATE_USER,
+    REFRESH_TOKEN,
+    UPDATE_USER,
     REFRESH_TOKEN
 } from '../constants/auth.constants';
 import {
@@ -14,6 +16,8 @@ import {
     signInApi,
     signUpApi,
     userInfoApi,
+    updateUserDetailsApi,
+    refreshTokenApi,
     updateUserDetailsApi,
     refreshTokenApi
 } from '../api/user.api';
@@ -88,6 +92,7 @@ const Logout = (navigate) => (dispatch) => {
 };
 
 
+
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
@@ -140,6 +145,8 @@ export {
     signUp,
     userData,
     updateUserDetails,
+    Logout,
+    refreshToken,
     Logout,
     refreshToken
 }
