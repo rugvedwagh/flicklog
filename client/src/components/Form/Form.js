@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
+import Cookie from 'js-cookie';
 import './form.styles.css';
 
 
@@ -13,7 +14,9 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
     const dispatch = useDispatch();
 
-    const profile = JSON.parse(localStorage.getItem('profile')) ;
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    const User = Cookie.get('refreshToken');
+
     const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
 
     const [postData, setPostData] = useState({
@@ -59,7 +62,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
         clearForm();
     };
 
-    if (!profile?.result) {
+    if (!User) {
         return (
             <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Typography variant="h6" align="center">
@@ -95,6 +98,7 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
                     name='message'
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e })}
+                    className={`descinp ${darkMode ? 'dark' : ''}`}
                     modules={{
                         toolbar: [
                             [{ header: [1, 2, false] }],
@@ -121,7 +125,6 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
                     label="Tags"
                     fullWidth
                     value={postData.tags}
-                    sx={{marginTop:'6em'}}
                     onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
                 />
 

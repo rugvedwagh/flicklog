@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg';
 import Likes from './Likes/Likes';
+import Cookie from 'js-cookie';
 import moment from 'moment';
 import './post.styles.css';
 
@@ -18,6 +19,8 @@ const Post = ({ post, setCurrentId, darkMode }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const User = Cookie.get('refreshToken')
 
     const profile = JSON.parse(localStorage.getItem('profile'));
     const userId = profile?.result?._id;
@@ -109,14 +112,16 @@ const Post = ({ post, setCurrentId, darkMode }) => {
             </section>
 
             <CardActions className="cardActions">
-                <Tooltip title="Like" arrow placement="top">
-                    <Button
-                        size="small"
-                        onClick={handleLike}
-                    >
-                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled />
-                    </Button>
-                </Tooltip>
+                {User &&
+                    <Tooltip title="Like" arrow placement="top">
+                        <Button
+                            size="small"
+                            onClick={handleLike}
+                        >
+                            <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled />
+                        </Button>
+                    </Tooltip>
+                }
 
                 <Tooltip title="Comments" arrow placement="top">
                     <Button>

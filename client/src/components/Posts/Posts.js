@@ -27,7 +27,7 @@ const Posts = ({ setCurrentId, darkMode }) => {
     }, [currentPage, numberOfPages]);
 
     return (
-        <div style={{ overflow: 'hidden' }} >
+        <div>
             {isLoading && currentPage === 1 ? (
                 <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" color="grey" />
             ) : (

@@ -109,10 +109,10 @@
     }   
 }
 
-.form .MuiCircularProgress-circle{
-    color: var(--borderColor);
+.submit .MuiCircularProgress-circle{
+    color: var(--antiFlashWhite);
 }
 
-.form.dark .MuiCircularProgress-circle{
-    color: var(--antiFlashWhite);
+.submit.dark .MuiCircularProgress-circle{
+    color: var(--borderColor);
 }

@@ -13,6 +13,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie'
 import './navbar.styles.css';
 
 const Navbar = ({ darkMode }) => {
@@ -21,6 +22,7 @@ const Navbar = ({ darkMode }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const User = Cookies.get('refreshToken');
     const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')));
     const userId = profile?.result?._id
 
@@ -112,14 +114,14 @@ const Navbar = ({ darkMode }) => {
                 </div>
 
                 <Toolbar className='toolbar'>
-                    {profile?.result ? (
+                    {User ? (
                         <div className='profile'>
                             <span className="avatar-container">
                                 <Avatar
                                     onClick={handleMenuClick}
                                     className={`menu ${darkMode ? 'dark' : ''}`}
-                                    alt={profile.result?.name}
-                                    src={profile.result?.imageUrl}
+                                    alt={profile?.result?.name}
+                                    src={profile?.result?.imageUrl}
                                 >
                                     {profile?.result?.name.charAt(0)}
                                 </Avatar>
@@ -137,8 +139,8 @@ const Navbar = ({ darkMode }) => {
                                 <MenuItem onClick={openUser} >
                                     <Avatar
                                         onClick={handleMenuClick}
-                                        alt={profile.result?.name}
-                                        src={profile.result?.imageUrl}
+                                        alt={profile?.result?.name}
+                                        src={profile?.result?.imageUrl}
                                     >
                                         {profile?.result?.name.charAt(0)}
                                     </Avatar>&nbsp;

@@ -160,23 +160,22 @@ const fetchUserData = async (req, res) => {
     res.status(200).json(userWithoutPassword);
 };
 
-// Generate refresh token Controller
 const refreshToken = async (req, res) => {
     let { refreshToken } = req.body;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token is required");
+        const error = new Error("Refresh token is required.");
         error.statusCode = 400;
         throw error;
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const decodeToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-    const userId = decoded.id;
+    const userId = decodeToken.id;
     const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
-        const error = new Error("User not found");
+        const error = new Error("User not found.");
         error.statusCode = 404;
         throw error;
     }
@@ -184,8 +183,12 @@ const refreshToken = async (req, res) => {
     const newToken = generateToken(user);
     const newRefreshToken = generateRefreshToken(user);
 
-    res.status(200).json({ token: newToken, refreshToken: newRefreshToken });
+    res.status(200).json({
+        token: newToken,
+        refreshToken: newRefreshToken
+    });
 };
+
 
 export {
     signUp,

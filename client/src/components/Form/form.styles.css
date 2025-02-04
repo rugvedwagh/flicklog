@@ -29,9 +29,20 @@
     background-color: var(--black);
 }
 
-.form.dark .MuiOutlinedInput-root {
-    color: white !important; 
-    background-color: var(--black) !important; 
+.form.dark .MuiTextField-root {
+    border-radius: 3px;
+    background-color: var(--antiFlashWhite);
+}
+
+.descinp {
+    margin-bottom: 100px;
+    border-radius: 3px !important;
+    min-height: 350px !important;
+}
+
+.descinp.dark {
+    background-color: var(--antiFlashWhite);
+    color: var(--black) !important;
 }
 
 .fileInput {
@@ -40,7 +51,7 @@
 }
 
 .buttonSubmit {
-    background-color: var(--forrestGreen) !important;
+    background-color: var(--pink) !important;
     margin-bottom: 10px !important;
 }
 
@@ -72,18 +83,4 @@
 
 .close.dark {
     color: var(--antiFlashWhite);
-}
-
-.ql-editor{
-    height: 150px !important;
-}
-
-.ql-editor.ql-blank::before {
-    color: gray !important; 
-    opacity: 1 !important;
-}
-
-.form.dark .MuiInputBase-input::placeholder {
-    color: white !important; 
-    opacity: 0.7 !important;
 }

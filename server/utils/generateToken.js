@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 
-// JWT format : header.payload.signature
-
 const generateToken = (user) => {
     return jwt.sign(
         {
@@ -11,4 +9,4 @@ const generateToken = (user) => {
         process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' });
 };
 
-export { generateToken }
+export {generateToken}

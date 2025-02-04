@@ -4,7 +4,7 @@ import {
     USER_INFO,
     LOGOUT,
     UPDATE_USER,
-    REFRESH_TOKEN
+    REFRESH_TOKEN,
 } from '../constants/auth.constants';
 import {
     END_LOADING,
@@ -15,8 +15,9 @@ import {
     signUpApi,
     userInfoApi,
     updateUserDetailsApi,
-    refreshTokenApi
+    refreshTokenApi,
 } from '../api/user.api';
+import Cookies from 'js-cookie'
 
 const signIn = (formData, navigate) => async (dispatch) => {
     try {
@@ -28,7 +29,6 @@ const signIn = (formData, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING });
     } catch (error) {
-        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -37,14 +37,13 @@ const signIn = (formData, navigate) => async (dispatch) => {
 const signUp = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        
+
         const { data } = await signUpApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts')
-        
+
         dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -70,7 +69,7 @@ const Logout = (navigate) => (dispatch) => {
         dispatch({ type: START_LOADING });
 
         // Get the profile from localStorage
-        const profile = JSON.parse(localStorage.getItem('profile')) ;
+        const profile = JSON.parse(localStorage.getItem('profile'));
 
         if (profile) {
             // Remove only the access token, not the refresh token
@@ -89,6 +88,7 @@ const Logout = (navigate) => (dispatch) => {
 };
 
 
+
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
@@ -96,7 +96,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         const { data } = await updateUserDetailsApi(id, updatedData);
         dispatch({ type: UPDATE_USER, payload: data });
 
-        const profile = JSON.parse(localStorage.getItem('profile')) ;
+        const profile = JSON.parse(localStorage.getItem('profile'));
         profile.result = data;
         localStorage.setItem('profile', JSON.stringify(profile));
 
@@ -110,22 +110,20 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
 // Action to refresh the token
 const refreshToken = () => async (dispatch) => {
     try {
-        const profile = JSON.parse(localStorage.getItem('profile')) ;
-
-        // If no profile or refresh token exists, return
-        if (!profile || !profile.result.refreshToken) {
+        
+        const profile = JSON.parse(localStorage.getItem('profile'));
+        const refreshTokenFromCookies = Cookies.get('refreshToken');
+        
+        if (!profile || !refreshTokenFromCookies) {
             return;
         }
 
         dispatch({ type: START_LOADING });
 
-        const { data } = await refreshTokenApi(profile.result.refreshToken);  // Implement the API call to refresh the token
-        dispatch({ type: REFRESH_TOKEN, payload: data });
-
-        const updatedProfile = { ...profile, result: { ...profile.result, token: data.token, refreshToken: data.refreshToken } };
-        localStorage.setItem('profile', JSON.stringify(updatedProfile));
-
-        dispatch({ type: END_LOADING });
+        const { data } = await refreshTokenApi(refreshTokenFromCookies);  
+        dispatch({ type: REFRESH_TOKEN, payload: data.token });
+        
+        dispatch({ type: END_LOADING })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
@@ -138,5 +136,5 @@ export {
     userData,
     updateUserDetails,
     Logout,
-    refreshToken
+    refreshToken,
 }

@@ -115,7 +115,7 @@ const SignUp = ({ darkMode }) => {
                                         handleChange={handleChange}
                                         type={showPassword ? 'text' : 'password'}
                                         handleShowPassword={handleShowPassword}
-                                        />
+                                    />
                                     {isSignup && (
                                         <Input
                                             name="confirmPassword"
@@ -126,38 +126,36 @@ const SignUp = ({ darkMode }) => {
                                     )}
                                 </Grid>
 
-                                {isLoading
-                                    ?
-                                    <CircularProgress sx={{marginTop:'2em'}}/>
-                                    :
-                                    <>
-                                        <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
-                                            By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
-                                            <strong>Privacy Policy</strong>.
-                                        </Typography>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            className={`submit ${darkMode ? 'dark' : ''}`}
-                                            variant="contained"
-                                        >
-                                            {isSignup ? 'Sign Up' : 'Log In'}
-                                        </Button>
-                                        <Grid style={{ margin: '16px 0' }} container justify="flex-end">
-                                            <Grid item>
-                                                <div
-                                                    onClick={switchMode}
-                                                    style={{ color: '#2f8ddf', cursor: 'pointer' }}
-                                                >
-                                                    {isSignup
-                                                        ? 'Already have an account? Log in'
-                                                        : "Don't have an account? Sign Up"}
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </>
-                                }
+                                <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
+                                    By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
+                                    <strong>Privacy Policy</strong>.
+                                </Typography>
 
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    className={`submit ${darkMode ? 'dark' : ''}`}
+                                    variant="contained"
+                                >
+                                    {isLoading ? (
+                                        <CircularProgress  />
+                                    ) : (
+                                        isSignup ? 'Sign Up' : 'Log In'
+                                    )}
+                                </Button>
+
+                                <Grid style={{ margin: '16px 0' }} container justify="flex-end">
+                                    <Grid item>
+                                        <div
+                                            onClick={switchMode}
+                                            style={{ color: '#2f8ddf', cursor: 'pointer' }}
+                                        >
+                                            {isSignup
+                                                ? 'Already have an account? Log in'
+                                                : "Don't have an account? Sign Up"}
+                                        </div>
+                                    </Grid>
+                                </Grid>
                             </form>
                         </Paper>
                     </Grid>

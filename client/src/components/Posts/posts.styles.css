@@ -16,24 +16,24 @@
     text-align: center;
 }
 
-.infloader{
+.infloader {
     margin: 3rem 50%;
     color: var(--black) !important;
 }
 
-.infloader.dark{
+.infloader.dark {
     color: var(--antiFlashWhite) !important;
 }
 
 .loading {
     position: relative;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--borderColor);
+    color: var(--black);
 }
 
-.loading.dark{
+.loading.dark {
     color: var(--antiFlashWhite) !important;
 }
 
@@ -42,9 +42,10 @@
         margin-bottom: 400px;
         top: 50%;
         left: 40%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
     }
-    .infloader{
+
+    .infloader {
         margin: 2rem 40%;
     }
 }
@@ -65,11 +66,10 @@
     display: none;
 }
 
-.endmsg{
+.endmsg {
     margin-top: 2rem !important;
 }
 
 .endmsg.dark {
     color: var(--subtextColor);
 }
-

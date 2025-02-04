@@ -1,3 +1,14 @@
+
+.searchlogo {
+    color: rgb(107, 107, 107);
+    cursor: pointer;
+}
+
+.searchlogo:hover {
+    color: black;
+    transition: 0.3s ease-in;
+}
+
 .appBarSearch {
     background-color: var(--white) !important;
     display: flex;
@@ -32,7 +43,7 @@
 
 
 .search-button{
-    color:var(--forrestGreen) !important;
+    color:var(--black) !important;
     background-color: var(--white) !important;
     padding-right: 0 !important;
     border: none;
@@ -42,16 +53,12 @@
     background-color: var(--antiFlashWhite) !important;
 }
 
-.search-button .box{
-    border: 1px solid var(--forrestGreen) !important;
-}
-
 .search-button.dark .box{
-    border: 1px solid var(--antiFlashWhite) !important;
+    border: 1px solid var(--borderColor) !important;
 }
 
 .appBarSearch > .box {
-    border: 1px solid var(--forrestGreen) !important;
+    border: 1px solid var(--borderColor) !important;
 }   
 
 .appBarSearch > h4{

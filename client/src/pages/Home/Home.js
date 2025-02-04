@@ -13,7 +13,7 @@ const Home = ({ darkMode }) => {
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);
 
-    const profile = JSON.parse(localStorage.getItem('profile')) ;
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -31,7 +31,7 @@ const Home = ({ darkMode }) => {
                     <Posts setCurrentId={setCurrentId} darkMode={darkMode} />
                 </Grid>
 
-                <Grid id='gridtemp' item xs={12} sm={4} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
 
                     <Search darkMode={darkMode} />
 

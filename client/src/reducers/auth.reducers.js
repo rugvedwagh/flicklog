@@ -1,11 +1,12 @@
 import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER, REFRESH_TOKEN } from '../constants/auth.constants';
 import { START_LOADING, END_LOADING } from '../constants/loading.constants';
 import { BOOKMARK_POST } from '../constants/post.constants';
+import Cookies from 'js-cookie'
 
 const initialState = {
-    isLoading: false,
     authData: null,
     clientData: null,
+    isLoading: null,
     errorMessage: null
 }
 
@@ -14,33 +15,31 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
+            const { refreshToken, ...rest } = action?.payload;
+            localStorage.setItem('profile', JSON.stringify(rest));
+
+            Cookies.set('refreshToken', refreshToken, { expires: 7 });
+
             return {
                 ...state,
                 authData: action?.payload
             };
 
         case REFRESH_TOKEN:
-            const updatedProfile = JSON.parse(localStorage.getItem('profile'));
-            updatedProfile.token = action.payload; 
+            const updatedProfile = {
+                ...JSON.parse(localStorage.getItem('profile')),
+                token: action.payload, 
+            };
             localStorage.setItem('profile', JSON.stringify(updatedProfile));
 
             return {
                 ...state,
-                authData: {
-                    ...state.authData,
-                    token: action.payload
-                }
+                token: action.payload,
             };
 
         case LOGOUT:
-            const profile = JSON.parse(localStorage.getItem('profile'));
-
-            if (profile) {
-                profile.token = null; // Remove access token but keep refreshToken
-                localStorage.setItem('profile', JSON.stringify(profile)); 
-            }
-
+            localStorage.removeItem('profile');
+            Cookies.remove('refreshToken'); 
             return {
                 ...state,
                 authData: null,
