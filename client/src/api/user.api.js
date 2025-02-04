@@ -9,9 +9,12 @@ const userInfoApi = (id) => API.get(`/user/i/${id}`);
 
 const updateUserDetailsApi = (id, updatedData) => API.patch(`/user/${id}/update`, updatedData);
 
+const refreshTokenApi = (refreshToken) => API.post('/user/refresh-token', { refreshToken });
+
 export {
     signInApi,
     signUpApi,
     userInfoApi,
+    refreshTokenApi,
     updateUserDetailsApi
 }

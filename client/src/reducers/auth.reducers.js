@@ -1,6 +1,7 @@
-import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER } from '../constants/auth.constants';
+import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER, REFRESH_TOKEN } from '../constants/auth.constants';
 import { START_LOADING, END_LOADING } from '../constants/loading.constants';
 import { BOOKMARK_POST } from '../constants/post.constants';
+import Cookies from 'js-cookie'
 
 const initialState = {
     authData: null,
@@ -14,15 +15,38 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
+            console.log(action?.payload)
+            const { refreshToken, ...rest } = action?.payload;
+            console.log(rest)
+
+            // Store the rest of the user profile (excluding refreshToken) in localStorage
+            localStorage.setItem('profile', JSON.stringify(rest));
+
+            // Store refreshToken in HTTP-only cookies
+            Cookies.set('refreshToken', refreshToken, { expires: 7 });
+
             return {
                 ...state,
                 authData: action?.payload
             };
 
+
+        case REFRESH_TOKEN:
+            return {
+                ...state,
+                token: action.payload, // Updating the access token
+            };
+
         case LOGOUT:
-            localStorage.removeItem('profile');
-            localStorage.removeItem('postsData')
+            // Get the current profile from localStorage
+            const profile = JSON.parse(localStorage.getItem('profile'));
+
+            if (profile) {
+                // Set the access token to null but keep the refreshToken
+                profile.token = null; // Remove access token but keep refreshToken
+                localStorage.setItem('profile', JSON.stringify(profile)); // Save updated profile back to localStorage
+            }
+
             return {
                 ...state,
                 authData: null,

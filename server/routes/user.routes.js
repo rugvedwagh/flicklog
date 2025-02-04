@@ -5,6 +5,7 @@ import {
     fetchUserData,
     bookmarkPost,
     updateUser,
+    refreshToken  // Import the refreshToken controller
 } from "../controllers/user.controllers.js";
 import verifyAccessToken from "../middleware/auth.middleware.js";
 import asyncHandler from "../middleware/async.middleware.js";
@@ -25,5 +26,8 @@ router.post("/signin", asyncHandler(logIn));
 router.post("/signup", asyncHandler(signUp));
 
 router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
+
+// Add the new route for refresh-token
+router.post("/refresh-token", asyncHandler(refreshToken));  // This is the new route
 
 export default router;

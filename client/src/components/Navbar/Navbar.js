@@ -35,7 +35,7 @@ const Navbar = ({ darkMode }) => {
     useEffect(() => {
         const token = profile?.token;
 
-        const checkTokenExpiry = () => {
+        const checkAccessTokenExpiry = () => {
             if (token) {
                 const decodedToken = jwtDecode(token);
 
@@ -45,7 +45,7 @@ const Navbar = ({ darkMode }) => {
             }
         };
 
-        checkTokenExpiry();
+        checkAccessTokenExpiry();
         setProfile(JSON.parse(localStorage.getItem('profile')));
     }, [handleLogout, profile?.token, location]);
 

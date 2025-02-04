@@ -36,6 +36,6 @@ const PORT = process.env.PORT || 5000;  // Fallback to 5000 if no PORT is define
 // Connect to the database and start the server
 dataBaseConnection().then(() => {
     app.listen(PORT, () => {
-        console.log(`Server running on port: ${PORT}`);
+        console.log(`Server  on port: ${PORT}`);
     });
 });
