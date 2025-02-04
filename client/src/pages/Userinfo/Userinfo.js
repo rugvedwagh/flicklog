@@ -13,7 +13,7 @@ const Userinfo = ({ darkMode }) => {
     const navigate = useNavigate();
 
     const { posts } = useSelector((state) => state.postsReducer);
-    const { clientData, isLoading } = useSelector((state) => state.authReducer);  
+    const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -65,10 +65,6 @@ const Userinfo = ({ darkMode }) => {
         dispatch(bookmarkPost(postId, userId));
     }
 
-    if (isLoading) {
-        return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />;
-    }
-
     if (!clientData) {
         return <h2>User does not exist!</h2>;
     }
@@ -78,56 +74,58 @@ const Userinfo = ({ darkMode }) => {
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
                 <h2>User Profile</h2>
             </div>
-            <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
-                <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                    {clientData.name.charAt(0).toUpperCase()}
-                </div>
+            {isLoading ? <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" /> : (
+                <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
-                <ul>
-                    <li>
-                        <strong>Username:</strong> <span>{clientData.name}</span>
-                    </li>
-                    <li>
-                        <strong>Email:</strong> <span>{clientData.email}</span>
-                    </li>
-                    <li>
-                        <strong>Posts:</strong> <span>{userPostsCount}</span>
-                    </li>
-                    <li>
-                        <strong>Version:</strong> <span>{clientData.__v}</span>
-                    </li>
-                    <li>
-                        <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
-                    </li>
-                    <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
-                        <Button>
-                            {showBm ? <span>Hide</span> : <span>Show</span>}
-                        </Button>
-                        <Button onClick={handleEditUser}><span>Edit</span></Button>
-                    </li>
-                </ul>
-
-                {bookmarkedPosts.length > 0 && showBm ? (
-                    <div className="bookmarked-posts">
-                        <hr />
-                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
-                        <div className="bookmarked-list">
-                            {bookmarkedPosts.map((post) => (
-                                <div
-                                    key={post._id}
-                                    className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
-                                >
-                                    <h4 onClick={() => openPost(post._id)}>
-                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
-                                    </h4>
-                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
-                                </div>
-                            ))}
-                        </div>
+                    <div className={`avatar ${darkMode ? 'dark' : ''}`}>
+                        {clientData.name.charAt(0).toUpperCase()}
                     </div>
-                ) : null}
-            </div>
+
+                    <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
+
+                    <ul>
+                        <li>
+                            <strong>Email:</strong> <span>{clientData.email}</span>
+                        </li>
+                        <li>
+                            <strong>Posts:</strong> <span>{userPostsCount}</span>
+                        </li>
+                        <li>
+                            <strong>Version:</strong> <span>{clientData.__v}</span>
+                        </li>
+                        <li>
+                            <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
+                        </li>
+                        <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
+                            <Button>
+                                {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
+                            </Button>
+                            <Button onClick={handleEditUser}><span>Edit</span></Button>
+                        </li>
+                    </ul>
+
+                    {bookmarkedPosts.length > 0 && showBm ? (
+                        <div className="bookmarked-posts">
+                            <hr />
+                            <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                            <div className="bookmarked-list">
+                                {bookmarkedPosts.map((post) => (
+                                    <div
+                                        key={post._id}
+                                        className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
+                                    >
+                                        <h4 onClick={() => openPost(post._id)}>
+                                            {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                        </h4>
+                                        <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
+                </div>
+            )}
 
             <Dialog open={editDialogOpen} onClose={handleCancel}>
 

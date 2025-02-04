@@ -95,12 +95,6 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-.purple {
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
 .brandContainer {
     font-family: "EB Garamond", serif !important;
     font-style: italic;
@@ -139,7 +133,7 @@
 }
 
 .logout:hover{
-    color: var(--pink) !important;
+    color: var(--forrestGreen) !important;
     transition: 0.2s ease-in;
 }
 
@@ -251,11 +245,6 @@
     color: var(--black);
 }
 
-.MuiMenuItem-root:hover{
-    color: var(--white);
-    background-color: var(--black) !important;
-}
-
 .MuiMenuItem-root .MuiAvatar-root{
     height: 60px;
     width: 60px;
@@ -269,7 +258,43 @@
 
 .menu .MuiMenuItem-root:first-child:hover {
     background-color: transparent !important;
-    /* Optionally remove any other hover effects */
-    color: inherit !important; /* Remove any color changes */
+    color: inherit !important;
 }
 
+.toggleButton {
+    position: fixed;
+    z-index: 1000;
+    left: 95vw;
+    top: 10vh;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggleButton:hover {
+    transform: scale(1.1);
+}
+
+.toggleButton:focus {
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .toggleButton {
+        left: 80%;
+        top: 12%;
+        font-size: 0.8rem;
+        padding: 8px 18px;
+    }
+}
+
+.menuRoot.dark .MuiMenuItem-root{
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.menuRoot.dark .MuiMenuItem-root:hover{
+    background-color: #333;
+}

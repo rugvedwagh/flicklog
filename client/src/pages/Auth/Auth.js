@@ -1,4 +1,4 @@
-import { Button, Paper, Grid, Typography, Container, Alert } from '@mui/material';
+import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn, signUp } from '../../actions/auth.actions';
@@ -16,7 +16,7 @@ const initialState = {
     confirmPassword: ''
 };
 
-const SignUp = ({darkMode}) => {
+const SignUp = ({ darkMode }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,12 +25,14 @@ const SignUp = ({darkMode}) => {
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleShowPassword = () => setShowPassword(!showPassword);
-    const { errorMessage } = useSelector((state) => state.authReducer);
+
+    const { errorMessage, isLoading } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const handleShowPassword = () => setShowPassword(!showPassword);
 
     const switchMode = () => {
         setForm(initialState);
@@ -113,7 +115,7 @@ const SignUp = ({darkMode}) => {
                                         handleChange={handleChange}
                                         type={showPassword ? 'text' : 'password'}
                                         handleShowPassword={handleShowPassword}
-                                    />
+                                        />
                                     {isSignup && (
                                         <Input
                                             name="confirmPassword"
@@ -124,39 +126,44 @@ const SignUp = ({darkMode}) => {
                                     )}
                                 </Grid>
 
-                                <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
-                                    By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
-                                    <strong>Privacy Policy</strong>.
-                                </Typography>
-
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    className={`submit ${darkMode ? 'dark' : ''}`}
-                                    variant="contained"
-                                >
-                                    {isSignup ? 'Sign Up' : 'Log In'}
-                                </Button>
-
-                                <Grid style={{ margin: '16px 0' }} container justify="flex-end">
-                                    <Grid item>
-                                        <div
-                                            onClick={switchMode}
-                                            style={{ color: '#2f8ddf', cursor: 'pointer' }}
+                                {isLoading
+                                    ?
+                                    <CircularProgress sx={{marginTop:'2em'}}/>
+                                    :
+                                    <>
+                                        <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
+                                            By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
+                                            <strong>Privacy Policy</strong>.
+                                        </Typography>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            className={`submit ${darkMode ? 'dark' : ''}`}
+                                            variant="contained"
                                         >
-                                            {isSignup
-                                                ? 'Already have an account? Log in'
-                                                : "Don't have an account? Sign Up"}
-                                        </div>
-                                    </Grid>
-                                </Grid>
+                                            {isSignup ? 'Sign Up' : 'Log In'}
+                                        </Button>
+                                        <Grid style={{ margin: '16px 0' }} container justify="flex-end">
+                                            <Grid item>
+                                                <div
+                                                    onClick={switchMode}
+                                                    style={{ color: '#2f8ddf', cursor: 'pointer' }}
+                                                >
+                                                    {isSignup
+                                                        ? 'Already have an account? Log in'
+                                                        : "Don't have an account? Sign Up"}
+                                                </div>
+                                            </Grid>
+                                        </Grid>
+                                    </>
+                                }
 
                             </form>
                         </Paper>
                     </Grid>
                 </Grid>
             </Paper>
-        </Container>
+        </Container >
     );
 };
 

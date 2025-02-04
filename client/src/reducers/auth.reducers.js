@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 const initialState = {
     authData: null,
     clientData: null,
-    isLoading: null,
+    isLoading: false,
     errorMessage: null
 }
 
@@ -15,14 +15,8 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            console.log(action?.payload)
             const { refreshToken, ...rest } = action?.payload;
-            console.log(rest)
-
-            // Store the rest of the user profile (excluding refreshToken) in localStorage
             localStorage.setItem('profile', JSON.stringify(rest));
-
-            // Store refreshToken in HTTP-only cookies
             Cookies.set('refreshToken', refreshToken, { expires: 7 });
 
             return {
@@ -30,21 +24,18 @@ const authReducer = (state = initialState, action) => {
                 authData: action?.payload
             };
 
-
         case REFRESH_TOKEN:
             return {
                 ...state,
-                token: action.payload, // Updating the access token
+                token: action.payload, 
             };
 
         case LOGOUT:
-            // Get the current profile from localStorage
             const profile = JSON.parse(localStorage.getItem('profile'));
 
             if (profile) {
-                // Set the access token to null but keep the refreshToken
-                profile.token = null; // Remove access token but keep refreshToken
-                localStorage.setItem('profile', JSON.stringify(profile)); // Save updated profile back to localStorage
+                profile.token = null;
+                localStorage.setItem('profile', JSON.stringify(profile)); 
             }
 
             return {

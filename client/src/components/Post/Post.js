@@ -94,17 +94,19 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                 </div>
             )}
 
-            <Typography color="textSecondary" variant="body2" className={`tags ${darkMode ? 'dark' : ''}`}>
-                {post.tags.map((tag) => `#${tag} `)}
-            </Typography>
+            <section onClick={openPost}>
+                <Typography color="textSecondary" variant="body2" className={`tags ${darkMode ? 'dark' : ''}`}>
+                    {post.tags.map((tag) => `#${tag} `)}
+                </Typography>
 
-            <Typography className={`title ${darkMode ? 'dark' : ''}`} variant="h5" gutterBottom>
-                {post.title.slice(0, 43)}
-            </Typography>
+                <Typography className={`title ${darkMode ? 'dark' : ''}`} variant="h5" gutterBottom>
+                    {post.title.slice(0, 43)}
+                </Typography>
 
-            <div className="msg">
-                <Typography color="textSecondary" variant="body2" component="p" className={`msg-text ${darkMode ? 'dark' : ''}`} dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
-            </div>
+                <div className="msg">
+                    <Typography color="textSecondary" variant="body2" component="p" className={`msg-text ${darkMode ? 'dark' : ''}`} dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+                </div>
+            </section>
 
             <CardActions className="cardActions">
                 <Tooltip title="Like" arrow placement="top">

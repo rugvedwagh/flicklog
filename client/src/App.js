@@ -1,11 +1,8 @@
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
-import { toggleTheme } from './actions/theme.actions';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
@@ -13,7 +10,6 @@ import { Container } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
-import { Button } from '@mui/material';
 import { refreshToken } from './actions/auth.actions';
 import './App.css';
 import Cookies from 'js-cookie'
@@ -28,11 +24,11 @@ const App = () => {
     const refreshTokenFromCookies = Cookies.get('refreshToken');
 
     useEffect(() => {
-        // Dispatch the refreshToken action if refreshToken exists
-        if (profile && refreshTokenFromCookies) {
+        if (refreshTokenFromCookies) {
+            
             dispatch(refreshToken());
         }
-    }, [profile, dispatch]);
+    }, [profile?.token]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,10 +49,6 @@ const App = () => {
         };
     }, []);
 
-    const toggleView = () => {
-        dispatch(toggleTheme());
-    };
-
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -66,10 +58,7 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
-            <Button onClick={toggleView} className="toggleButton">
-                {darkMode ? <LightModeIcon sx={{ color: 'white' }} /> : <DarkModeIcon sx={{ color: 'black' }} />}
-            </Button>
-
+          
             <Container maxWidth="xl">
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}

@@ -8,6 +8,9 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import React, { useState, useEffect, useCallback } from 'react';
 import { userData, Logout } from '../../actions/auth.actions';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { toggleTheme } from '../../actions/theme.actions';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import './navbar.styles.css';
@@ -24,6 +27,10 @@ const Navbar = ({ darkMode }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [navclass, setNavclass] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const toggleView = () => {
+        dispatch(toggleTheme());
+    };
 
     const handleLogout = useCallback(() => {
         dispatch(Logout(navigate));
@@ -119,18 +126,17 @@ const Navbar = ({ darkMode }) => {
                             </span>
 
                             <Menu
-                                sx={{ left: -10, top: 10 }}
+                                sx={{ left: -45, top: 5 }}
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={closeMenu}
-                                className='menu'
+                                className={`menuRoot ${darkMode ? 'dark' : ''}`}
                                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                                transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                             >
-                                <MenuItem onClick={openUser}>
+                                <MenuItem onClick={openUser} >
                                     <Avatar
                                         onClick={handleMenuClick}
-                                        className={`menu ${darkMode ? 'dark' : ''}`}
                                         alt={profile.result?.name}
                                         src={profile.result?.imageUrl}
                                     >
@@ -149,6 +155,9 @@ const Navbar = ({ darkMode }) => {
                                 <MenuItem onClick={handleLikedPosts}> <ThumbUpAltOutlinedIcon />&nbsp; Liked posts</MenuItem>
                                 <MenuItem onClick={handleUserPosts}> <EditNoteOutlinedIcon />&nbsp; My posts</MenuItem>
                                 <MenuItem> <SettingsOutlinedIcon />&nbsp; Settings</MenuItem>
+                                <MenuItem onClick={toggleView}>
+                                    {darkMode ? <><LightModeIcon />&nbsp; Light Mode</> : <><DarkModeIcon />&nbsp; Dark Mode</>}
+                                </MenuItem>
                                 <MenuItem onClick={() => setOpenDialog(true)}>  <LogoutRoundedIcon />&nbsp; Log out</MenuItem>
                             </Menu>
                         </div>

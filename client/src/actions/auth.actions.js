@@ -29,6 +29,7 @@ const signIn = (formData, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING });
     } catch (error) {
+        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -44,6 +45,7 @@ const signUp = (formData, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -120,15 +122,13 @@ const refreshToken = () => async (dispatch) => {
 
         dispatch({ type: START_LOADING });
 
-        const { data } = await refreshTokenApi(refreshTokenFromCookies);  // Implement the API call to refresh the token
-        dispatch({ type: REFRESH_TOKEN, payload: data });
+        const { data } = await refreshTokenApi(refreshTokenFromCookies);
         console.log(data)
+        dispatch({ type: REFRESH_TOKEN, payload: data });
 
-        // Update profile in localStorage with new tokens
         const updatedProfile = { ...profile, result: { ...profile.result, token: data.token } };
         localStorage.setItem('profile', JSON.stringify(updatedProfile));
         
-
         dispatch({ type: END_LOADING });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
