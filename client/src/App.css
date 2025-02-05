@@ -6,7 +6,7 @@
     --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
     --notFoundColor : #555555;
-    --forrestGreen: #2e6f40;
+    --pink: #ef4056;
 }
 
 :root{
@@ -52,7 +52,7 @@ body {
     z-index: 999;
     transition: 0.3s ease-in;
     background-color: var(--antiFlashWhite);
-    color: var(--forrestGreen);
+    color: var(--pink);
     cursor: pointer;
     border-radius: 50%;
     transition: 0.3s ease-in;

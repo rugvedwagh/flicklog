@@ -27,6 +27,8 @@ const logIn = async (req, res) => {
     const token = generateToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
 
+    // Optionally, you can store the refresh token in the user's record
+    oldUser.refreshToken = refreshToken;
     await oldUser.save();
 
     res.status(200).json({
@@ -183,6 +185,7 @@ const refreshToken = async (req, res) => {
         refreshToken: newRefreshToken
     });
 };
+
 
 export {
     signUp,
