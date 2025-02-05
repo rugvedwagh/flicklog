@@ -1,5 +1,5 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { fetchPostsBySearch } from '../../actions/post.actions';
+import { fetchPostsBySearch } from '../../redux/actions/post.actions';
 import { AppBar, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -34,7 +34,11 @@ const Search = ({ darkMode }) => {
     };
 
     return (
-        <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static'>
+        <AppBar
+            className={`appBarSearch ${darkMode ? 'dark' : ''}`}
+            elevation={6}
+            position='static'
+        >
             <section className="box">
 
                 <input
@@ -44,7 +48,12 @@ const Search = ({ darkMode }) => {
                     onKeyDown={handleKeyDown}
                 />
 
-                <Button variant="filled" className={`search-button ${darkMode ? 'dark' : ''}`} onClick={searchPost}>
+                <Button
+                    variant="filled"
+                    disabled={!searchInput.trim()}
+                    onClick={searchPost}
+                    className={`search-button ${darkMode ? 'dark' : ''}`}
+                >
                     <SearchOutlinedIcon />
                 </Button>
 

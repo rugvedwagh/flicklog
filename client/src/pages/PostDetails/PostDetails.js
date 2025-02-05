@@ -1,6 +1,6 @@
 import { Typography, CircularProgress, Divider, Card } from '@mui/material';
 import CommentsSection from '../../components/Comments/CommentsSection';
-import { fetchPost, fetchPostsBySearch } from '../../actions/post.actions';
+import { fetchPost, fetchPostsBySearch} from '../../redux/actions/post.actions'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';

@@ -1,18 +1,18 @@
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
+import { refreshToken } from './redux/actions/auth.actions';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import { Container } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
-import { refreshToken } from './actions/auth.actions';
-import './App.css';
 import Cookies from 'js-cookie'
+import './App.css';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -24,11 +24,10 @@ const App = () => {
     const refreshTokenFromCookies = Cookies.get('refreshToken');
 
     useEffect(() => {
-        if (refreshTokenFromCookies) {
-            
-            dispatch(refreshToken());
+        if (!profile?.token && refreshTokenFromCookies) {
+            dispatch(refreshToken(refreshTokenFromCookies));
         }
-    }, [profile?.token]);
+    }, [profile?.token, dispatch]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -58,7 +57,6 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`} style={{ overflowX: 'hidden' }}>
-          
             <Container maxWidth="xl">
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
@@ -76,7 +74,7 @@ const App = () => {
                     <Route path="/posts/search" element={<Home darkMode={darkMode} />} />
                     <Route path="/posts/:id" element={<PostDetails darkMode={darkMode} />} />
                     <Route path="/posts" element={<Home darkMode={darkMode} />} />
-                    <Route path="/auth" element={!profile ? <Auth darkMode={darkMode} /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={<Auth darkMode={darkMode} />} />
                     <Route path="/user/i" element={<Userinfo darkMode={darkMode} />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>

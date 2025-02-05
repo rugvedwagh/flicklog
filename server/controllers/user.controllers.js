@@ -11,7 +11,7 @@ const logIn = async (req, res) => {
     const oldUser = await UserModel.findOne({ email });
 
     if (!oldUser) {
-        const error = new Error("User doesn't exist");
+        const error = new Error("User not found.");
         error.statusCode = 404;
         throw error;
     }
@@ -19,7 +19,7 @@ const logIn = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
     if (!isPasswordCorrect) {
-        const error = new Error("Incorrect password!");
+        const error = new Error("Incorrect password.");
         error.statusCode = 400;
         throw error;
     }
@@ -38,13 +38,7 @@ const logIn = async (req, res) => {
 
 // Sign Up Controller
 const signUp = async (req, res) => {
-    const {
-        email,
-        password,
-        confirmPassword,
-        firstName,
-        lastName
-    } = req.body;
+    const { email, password, confirmPassword, firstName, lastName } = req.body;
 
     const oldUser = await UserModel.findOne({ email });
 
@@ -62,21 +56,23 @@ const signUp = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = new UserModel({
+    const newUser = new UserModel({
         email,
         password: hashedPassword,
         name: `${firstName} ${lastName}`,
     });
 
-    await result.save();
+    await newUser.save();
 
-    const token = generateToken(result);
-    const refreshToken = generateRefreshToken(result);
+    const token = generateToken(newUser);
+    const refreshToken = generateRefreshToken(newUser);
 
-    await result.save();
+    // Store the refresh token
+    newUser.refreshToken = refreshToken;
+    await newUser.save();
 
     res.status(201).json({
-        result,
+        newUser,
         token,
         refreshToken
     });
@@ -84,11 +80,10 @@ const signUp = async (req, res) => {
 
 // Bookmark Post Controller
 const bookmarkPost = async (req, res) => {
-
     const { postId, userId } = req.body;
 
     const user = await UserModel.findById(userId);
-
+    
     if (!user) {
         const error = new Error("User not found");
         error.statusCode = 404;
@@ -119,8 +114,6 @@ const bookmarkPost = async (req, res) => {
 // Update User Controller
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
-
     const { name, email } = req.body;
 
     if (!req.userId) {
@@ -162,31 +155,22 @@ const fetchUserData = async (req, res) => {
     res.status(200).json(userWithoutPassword);
 };
 
-// Generate refresh token Controller
 const refreshToken = async (req, res) => {
     let { refreshToken } = req.body;
 
-    console.log(typeof refreshToken)
-
     if (!refreshToken) {
-        const error = new Error("Refresh token is required");
+        const error = new Error("Refresh token is required.");
         error.statusCode = 400;
         throw error;
     }
 
-    const decodedToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const decodeToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-    if(!decodedToken){
-        const error = new Error("Token verification failed");
-        error.statusCode = 500;
-        throw error;
-    }
-    
-    const userId = decodedToken.id;
+    const userId = decodeToken.id;
     const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
-        const error = new Error("User not found");
+        const error = new Error("User not found.");
         error.statusCode = 404;
         throw error;
     }
@@ -194,7 +178,10 @@ const refreshToken = async (req, res) => {
     const newToken = generateToken(user);
     const newRefreshToken = generateRefreshToken(user);
 
-    res.status(200).json({ token: newToken, refreshToken: newRefreshToken });
+    res.status(200).json({
+        token: newToken,
+        refreshToken: newRefreshToken
+    });
 };
 
 export {

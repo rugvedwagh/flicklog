@@ -144,8 +144,13 @@
 }
 
 .appBarSearch > h4{
+    color: var(--forrestGreen);
     animation: slideImage 0.3s ease-in-out;
     cursor: pointer;
+}
+
+.appBarSearch.dark > h4{
+    color: var(--antiFlashWhite);
 }
 
 .appBarSearch.dark .box{

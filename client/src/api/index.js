@@ -1,13 +1,10 @@
-import { REFRESH_TOKEN } from '../constants/auth.constants';
-import { refreshTokenApi } from './user.api';
-import store from '../store';
 import axios from 'axios';
-import Cookies from 'js-cookie'; // Import js-cookie to handle cookies
+import store from '../redux/store';
+import Cookies from 'js-cookie';
+import { refreshToken } from '../redux/actions/auth.actions';
 
 const API = axios.create({
-    baseURL: process.env.NODE_ENV === "production"
-        ? process.env.REACT_APP_API_URL
-        : process.env.REACT_APP_API_URL_DEV,
+    baseURL: process.env.REACT_APP_API_URL_DEV, // Change this to your API's base URL
 });
 
 /*
@@ -19,10 +16,10 @@ const API = axios.create({
 */
 API.interceptors.request.use((req) => {
     const profile = localStorage.getItem('profile');
-    if (profile) {
-        const { token } = JSON.parse(profile); // Get access token from localStorage
 
-        req.headers.Authorization = `Bearer ${token}`;
+    if (profile) {
+        const { token } = JSON.parse(profile);         
+        req.headers['Authorization'] = `Bearer ${token}`;
     }
     return req;
 });
@@ -33,25 +30,20 @@ API.interceptors.request.use((req) => {
     Purpose: This handles responses, particularly for refreshing expired 
     tokens when a 401 Unauthorized error occurs (typically caused by an expired access token).
 */
-API.interceptors.response.use(
-    (response) => response, // Return successful responses as is
+API.interceptors.response.use((response) => response,
     async (error) => {
         const originalRequest = error.config;
-        const refreshToken = Cookies.get('refreshToken'); 
+        const profile = localStorage.getItem('profile');
+        const refreshTokenFromCookies = Cookies.get('refreshToken');
 
-        if (error.response.status === 401 && refreshToken) {
+        if (profile && error.response.status === 401) {
             try {
-                const { data } = await refreshTokenApi(refreshToken);
+                await store.dispatch(refreshToken(refreshTokenFromCookies));   // "await" Otherwise the code below this line is exuced before the localstorage is updated
 
-                store.dispatch({
-                    type: REFRESH_TOKEN,
-                    payload: data.token,
-                });
+                const profile = JSON.parse(localStorage.getItem('profile'));
+                originalRequest.headers['Authorization'] = `Bearer ${profile?.token}`;
 
-                // Retry the original request with the new token
-                originalRequest.headers['Authorization'] = `Bearer ${data.token}`;
-
-                return API(originalRequest);
+                return axios(originalRequest);
             } catch (err) {
                 return Promise.reject(error);
             }
@@ -61,3 +53,6 @@ API.interceptors.response.use(
 );
 
 export default API;
+
+
+

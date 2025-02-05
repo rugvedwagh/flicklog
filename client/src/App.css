@@ -99,9 +99,6 @@ body {
 }
 
 .root-bg.dark{
-    /* background-image: url('../src/assets/login-bg-img-dim.svg') !important;
-    background-size: contain;
-    background-repeat: no-repeat; */
     background-color: var(--black);
 }
 
@@ -133,3 +130,4 @@ body {
         padding: 8px 18px;
     }
 }
+

@@ -5,19 +5,18 @@ import {
     LOGOUT,
     UPDATE_USER,
     REFRESH_TOKEN,
-} from '../constants/auth.constants';
+} from '../../constants/auth.constants';
 import {
     END_LOADING,
     START_LOADING
-} from '../constants/loading.constants';
+} from '../../constants/loading.constants';
 import {
     signInApi,
     signUpApi,
     userInfoApi,
     updateUserDetailsApi,
     refreshTokenApi,
-} from '../api/user.api';
-import Cookies from 'js-cookie'
+} from '../../api/user.api';
 
 const signIn = (formData, navigate) => async (dispatch) => {
     try {
@@ -61,6 +60,7 @@ const userData = (id, navigate) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -69,15 +69,6 @@ const userData = (id, navigate) => async (dispatch) => {
 const Logout = (navigate) => (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-
-        // Get the profile from localStorage
-        const profile = JSON.parse(localStorage.getItem('profile'));
-
-        if (profile) {
-            // Remove only the access token, not the refresh token
-            profile.token = null;
-            localStorage.setItem('profile', JSON.stringify(profile));
-        }
 
         navigate('/');
         dispatch({ type: LOGOUT });
@@ -89,47 +80,32 @@ const Logout = (navigate) => (dispatch) => {
     }
 };
 
-
-
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
         const { data } = await updateUserDetailsApi(id, updatedData);
-        dispatch({ type: UPDATE_USER, payload: data });
-
-        const profile = JSON.parse(localStorage.getItem('profile'));
-        profile.result = data;
-        localStorage.setItem('profile', JSON.stringify(profile));
+        const {password, __v, bookmarks, ...fileredData} = data;
+        dispatch({ type: UPDATE_USER, payload: fileredData });
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.error(error);
     }
 };
 
-// Action to refresh the token
-const refreshToken = () => async (dispatch) => {
+const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
     try {
         const profile = JSON.parse(localStorage.getItem('profile'));
-        const refreshTokenFromCookies = Cookies.get('refreshToken');
-
-        // If no profile or refresh token exists, return
-        if (!profile || refreshTokenFromCookies) {
+        
+        if (!profile || !refreshTokenFromCookies) {
             return;
         }
+        const { data } = await refreshTokenApi(refreshTokenFromCookies);  
 
-        dispatch({ type: START_LOADING });
-
-        const { data } = await refreshTokenApi(refreshTokenFromCookies);
-        console.log(data)
-        dispatch({ type: REFRESH_TOKEN, payload: data });
-
-        const updatedProfile = { ...profile, result: { ...profile.result, token: data.token } };
-        localStorage.setItem('profile', JSON.stringify(updatedProfile));
-        
-        dispatch({ type: END_LOADING });
+        dispatch({ type: REFRESH_TOKEN, payload: data.token });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);

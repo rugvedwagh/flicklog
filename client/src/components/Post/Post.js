@@ -2,15 +2,16 @@ import { Card, CardActions, CardMedia, Button, Typography, Dialog, DialogActions
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import { likePost, deletePost } from '../../actions/post.actions';
+import { likePost, deletePost } from '../../redux/actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { bookmarkPost } from '../../actions/post.actions';
+import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import defimg from '../../assets/defimg.jpg';
+import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
+import Cookie from 'js-cookie';
 import moment from 'moment';
 import './post.styles.css';
 
@@ -19,8 +20,10 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const UserIsAuthenticated = Cookie.get('refreshToken')
+
     const profile = JSON.parse(localStorage.getItem('profile'));
-    const userId = profile?.result?._id;
+    const userId = profile?._id;
 
     const { clientData } = useSelector((state) => state.authReducer);
 
@@ -31,11 +34,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
     useEffect(() => {
-        if (clientData?.bookmarks?.includes(post._id)) {
-            setIsBookmarked(true);
-        } else {
-            setIsBookmarked(false);
-        }
+        setIsBookmarked(clientData?.bookmarks?.includes(post._id))
     }, [clientData, post._id]);
 
     const openPost = () => {
@@ -57,13 +56,10 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     };
 
     const handleLike = async () => {
-        dispatch(likePost(post._id));
-
-        if (hasLikedPost) {
-            setLikes(post.likes.filter((id) => id !== userId));
-        } else {
-            setLikes([...post.likes, userId]);
+        if (userId) {
+            dispatch(likePost(post._id));
         }
+        hasLikedPost ? setLikes(post.likes.filter((id) => id !== userId)) : setLikes([...post.likes, userId]);
     };
 
     return (
@@ -76,8 +72,13 @@ const Post = ({ post, setCurrentId, darkMode }) => {
             />
 
             <div className="overlay">
-                <Typography variant="h6">{post.name}</Typography>
-                <Typography variant="body">{moment(post.createdAt).fromNow()}</Typography>
+                <Typography variant="h6">
+                    {post.name}
+                </Typography>
+
+                <Typography variant="body">
+                    {moment(post.createdAt).fromNow()}
+                </Typography>
             </div>
 
             {userId === post?.creator && (
@@ -95,16 +96,30 @@ const Post = ({ post, setCurrentId, darkMode }) => {
             )}
 
             <section onClick={openPost}>
-                <Typography color="textSecondary" variant="body2" className={`tags ${darkMode ? 'dark' : ''}`}>
+                <Typography
+                    color="textSecondary"
+                    variant="body2"
+                    className={`tags ${darkMode ? 'dark' : ''}`}
+                >
                     {post.tags.map((tag) => `#${tag} `)}
                 </Typography>
 
-                <Typography className={`title ${darkMode ? 'dark' : ''}`} variant="h5" gutterBottom>
+                <Typography
+                    className={`title ${darkMode ? 'dark' : ''}`}
+                    variant="h5"
+                    gutterBottom
+                >
                     {post.title.slice(0, 43)}
                 </Typography>
 
                 <div className="msg">
-                    <Typography color="textSecondary" variant="body2" component="p" className={`msg-text ${darkMode ? 'dark' : ''}`} dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }} />
+                    <Typography
+                        color="textSecondary"
+                        variant="body2"
+                        component="p"
+                        className={`msg-text ${darkMode ? 'dark' : ''}`}
+                        dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }}
+                    />
                 </div>
             </section>
 
@@ -114,7 +129,12 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                         size="small"
                         onClick={handleLike}
                     >
-                        <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled />
+                        <Likes
+                            className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
+                            likes={likes}
+                            id={userId}
+                            darkMode={darkMode}
+                        />
                     </Button>
                 </Tooltip>
 
@@ -129,14 +149,15 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                     </Button>
                 </Tooltip>
 
-                {userId && (
+                {UserIsAuthenticated && (
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
-                            {isbookmarked ? (
-                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            ) : (
-                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            )}
+                            {isbookmarked ?
+                                (
+                                    <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                ) : (
+                                    <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                )}
                         </Button>
                     </Tooltip>
                 )}

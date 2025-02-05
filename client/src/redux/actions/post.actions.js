@@ -10,7 +10,7 @@ import {
     LIKED_POSTS,
     USER_POSTS,
     BOOKMARK_POST
-} from '../constants/post.constants';
+} from '../../constants/post.constants';
 import {
     fetchPostApi,
     deletePostApi,
@@ -21,12 +21,12 @@ import {
     likePostApi,
     updatePostApi,
     bookmarkPostApi
-} from '../api/post.api';
+} from '../../api/post.api';
 import {
     START_LOADING,
     END_LOADING
-} from '../constants/loading.constants';
-import { ERROR } from '../constants/auth.constants';
+} from '../../constants/loading.constants';
+import { ERROR } from '../../constants/auth.constants';
 
 // Action Creators
 // these are functions that return actions
@@ -39,6 +39,7 @@ const fetchPost = (id) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
     }
@@ -98,26 +99,24 @@ const fetchPosts = (page) => async (dispatch) => {
 
         dispatch({ type: END_LOADING });
     } catch (error) {
+        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.error(error);
     }
 };
 
-const fetchPostsBySearch = (searchQuery, navigate) => async (dispatch) => {
+const fetchPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        const {
-            data: {
-                data
-            }
-        } = await fetchPostsBySearchApi(searchQuery)
+        const { data: { data } } = await fetchPostsBySearchApi(searchQuery)
         dispatch({
             type: FETCH_BY_SEARCH, payload: data
         })
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
@@ -133,6 +132,7 @@ const createPost = (post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
@@ -147,6 +147,7 @@ const updatePost = (id, post) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
@@ -162,6 +163,7 @@ const deletePost = (id) => async (dispatch) => {
 
         dispatch({ type: END_LOADING })
     } catch (error) {
+        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error)
     }
@@ -209,9 +211,9 @@ const likedPosts = (data) => async (dispatch) => {
     }
 }
 
-const userPosts = (data) => async (dispatch) =>{
+const userPosts = (data) => async (dispatch) => {
     try {
-        dispatch({type : USER_POSTS, payload : data});
+        dispatch({ type: USER_POSTS, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);

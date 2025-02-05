@@ -1,7 +1,7 @@
 import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn, signUp } from '../../actions/auth.actions';
+import { signIn, signUp } from '../../redux/actions/auth.actions';
 import React, { useState, useEffect } from 'react';
 import loginArt from '../../assets/loginart.PNG'
 import { useNavigate } from 'react-router-dom';
@@ -25,14 +25,15 @@ const SignUp = ({ darkMode }) => {
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-
     const { errorMessage, isLoading } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    const handleShowPassword = () => setShowPassword(!showPassword);
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
 
     const switchMode = () => {
         setForm(initialState);
@@ -42,12 +43,7 @@ const SignUp = ({ darkMode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (isSignup) {
-            dispatch(signUp(form, navigate));
-        } else {
-            dispatch(signIn(form, navigate));
-        }
+        isSignup ? dispatch(signUp(form, navigate)) : dispatch(signIn(form, navigate));
     };
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -115,7 +111,7 @@ const SignUp = ({ darkMode }) => {
                                         handleChange={handleChange}
                                         type={showPassword ? 'text' : 'password'}
                                         handleShowPassword={handleShowPassword}
-                                        />
+                                    />
                                     {isSignup && (
                                         <Input
                                             name="confirmPassword"
@@ -126,38 +122,32 @@ const SignUp = ({ darkMode }) => {
                                     )}
                                 </Grid>
 
-                                {isLoading
-                                    ?
-                                    <CircularProgress sx={{marginTop:'2em'}}/>
-                                    :
-                                    <>
-                                        <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
-                                            By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
-                                            <strong>Privacy Policy</strong>.
-                                        </Typography>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            className={`submit ${darkMode ? 'dark' : ''}`}
-                                            variant="contained"
-                                        >
-                                            {isSignup ? 'Sign Up' : 'Log In'}
-                                        </Button>
-                                        <Grid style={{ margin: '16px 0' }} container justify="flex-end">
-                                            <Grid item>
-                                                <div
-                                                    onClick={switchMode}
-                                                    style={{ color: '#2f8ddf', cursor: 'pointer' }}
-                                                >
-                                                    {isSignup
-                                                        ? 'Already have an account? Log in'
-                                                        : "Don't have an account? Sign Up"}
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </>
-                                }
+                                <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
+                                    By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
+                                    <strong>Privacy Policy</strong>.
+                                </Typography>
 
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    className={`submit ${darkMode ? 'dark' : ''}`}
+                                    variant="contained"
+                                >
+                                    {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" />}
+                                </Button>
+
+                                <Grid style={{ margin: '16px 0' }} container justify="flex-end">
+                                    <Grid item>
+                                        <div
+                                            onClick={switchMode}
+                                            style={{ color: '#2f8ddf', cursor: 'pointer' }}
+                                        >
+                                            {isSignup
+                                                ? 'Already have an account? Log in'
+                                                : "Don't have an account? Sign Up"}
+                                        </div>
+                                    </Grid>
+                                </Grid>
                             </form>
                         </Paper>
                     </Grid>

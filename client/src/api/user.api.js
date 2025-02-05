@@ -1,4 +1,4 @@
-import API from './index'; 
+import API from './index';  // Assuming you have an axios instance exported from api.js
 
 // User-related API calls
 const signInApi = (formData) => API.post('/user/signin', formData);

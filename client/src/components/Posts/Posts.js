@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Grid, CircularProgress, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosts } from '../../actions/post.actions.js';
+import { fetchPosts } from '../../redux/actions/post.actions.js';
 import Post from '../Post/Post'
 import './posts.styles.css';
 import { useLocation } from 'react-router-dom';
@@ -27,21 +27,42 @@ const Posts = ({ setCurrentId, darkMode }) => {
     }, [currentPage, numberOfPages]);
 
     return (
-        <div style={{ overflow: 'hidden' }} >
+        <div>
             {isLoading && currentPage === 1 ? (
-                <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" color="grey" />
+                <CircularProgress
+                    className={`loading ${darkMode ? 'dark' : ''}`}
+                    size="3rem"
+                    color="grey"
+                />
             ) : (
                 <InfiniteScroll
                     dataLength={posts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
-                    loader={<CircularProgress className={`infloader ${darkMode ? 'dark' : ''}`} sx={{ color: 'white' }} size="3rem" />}
+                    loader={
+                        <CircularProgress
+                            className={`infloader ${darkMode ? 'dark' : ''}`}
+                            sx={{ color: 'white' }}
+                            size="3rem"
+                        />
+                    }
                     endMessage={
-                        <Typography className={`endmsg ${darkMode ? 'dark' : ''}`} variant='h5' align='center' > No more posts!</Typography>
+                        <Typography
+                            className={`endmsg ${darkMode ? 'dark' : ''}`}
+                            variant='h5'
+                            align='center'
+                        >
+                            No more posts!
+                        </Typography>
                     }
                     style={{ overflowX: 'hidden' }}
                 >
-                    <Grid className="container" container alignItems="stretch" spacing={4}>
+                    <Grid
+                        className="container"
+                        container
+                        alignItems="stretch"
+                        spacing={4}
+                    >
                         {posts.map((post) => (
                             <Grid key={post._id} item xs={12} sm={6} lg={4}>
                                 <Post post={post} setCurrentId={setCurrentId} darkMode={darkMode} />

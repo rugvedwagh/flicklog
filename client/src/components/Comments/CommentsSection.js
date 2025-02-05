@@ -1,13 +1,16 @@
 import { Typography, TextField, Button } from '@mui/material';
-import { addComment } from '../../actions/post.actions';
+import { addComment } from '../../redux/actions/post.actions';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './commentsection.styles.css';
+import Cookie from 'js-cookie';
 
 const CommentsSection = ({ post, darkMode }) => {
 
     const dispatch = useDispatch();
+
     const profile = JSON.parse(localStorage.getItem('profile'))
+    const UserIsAuthenticated = Cookie.get('refreshToken');
 
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post?.comments)
@@ -37,7 +40,7 @@ const CommentsSection = ({ post, darkMode }) => {
                         <></>
                     )}
             </div>
-            {profile?.result?.name && (
+            {UserIsAuthenticated && (
                 <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
 
                     <Typography gutterBottom variant='h6'>

@@ -1,12 +1,24 @@
-import { AUTH, LOGOUT, USER_INFO, ERROR, UPDATE_USER, REFRESH_TOKEN } from '../constants/auth.constants';
-import { START_LOADING, END_LOADING } from '../constants/loading.constants';
-import { BOOKMARK_POST } from '../constants/post.constants';
+import {
+    AUTH,
+    LOGOUT,
+    USER_INFO,
+    ERROR,
+    UPDATE_USER,
+    REFRESH_TOKEN
+} from '../../constants/auth.constants';
+import {
+    START_LOADING,
+    END_LOADING
+} from '../../constants/loading.constants';
+import {
+    BOOKMARK_POST
+} from '../../constants/post.constants';
 import Cookies from 'js-cookie'
 
 const initialState = {
     authData: null,
     clientData: null,
-    isLoading: false,
+    isLoading: null,
     errorMessage: null
 }
 
@@ -15,29 +27,30 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            const { refreshToken, ...rest } = action?.payload;
-            localStorage.setItem('profile', JSON.stringify(rest));
-            Cookies.set('refreshToken', refreshToken, { expires: 7 });
+            const { refreshToken, token, ...rest } = action?.payload;
+            const { password, __v, bookmarks, ...fileredData } = rest.result;
 
+            localStorage.setItem('profile', JSON.stringify({ ...fileredData, token }));
+            Cookies.set('refreshToken', refreshToken, { expires: 7 });
             return {
                 ...state,
                 authData: action?.payload
             };
 
         case REFRESH_TOKEN:
+            const updatedProfile = {
+                ...JSON.parse(localStorage.getItem('profile')),
+                token: action.payload,
+            };
+            localStorage.setItem('profile', JSON.stringify(updatedProfile));
             return {
                 ...state,
-                token: action.payload, 
+                token: action.payload,
             };
 
         case LOGOUT:
-            const profile = JSON.parse(localStorage.getItem('profile'));
-
-            if (profile) {
-                profile.token = null;
-                localStorage.setItem('profile', JSON.stringify(profile)); 
-            }
-
+            localStorage.removeItem('profile');
+            Cookies.remove('refreshToken');
             return {
                 ...state,
                 authData: null,
@@ -59,25 +72,22 @@ const authReducer = (state = initialState, action) => {
                 },
             };
 
-        case UPDATE_USER:
-            const updatedClientData = {
-                ...state.clientData,
-                ...action.payload
+        case UPDATE_USER: {
+            const updatedAuthData = action.payload;
+            const existingProfile = JSON.parse(localStorage.getItem("profile"));
+            const updatedProfile = {
+                ...existingProfile,
+                ...updatedAuthData,
+                token: existingProfile.token
             };
-
-            if (state.authData) {
-                const updatedAuthData = {
-                    ...state.authData,
-                    result: updatedClientData
-                };
-                localStorage.setItem('profile', JSON.stringify(updatedAuthData));
-            }
+            localStorage.setItem("profile", JSON.stringify(updatedProfile));
 
             return {
                 ...state,
-                clientData: updatedClientData,
-                errorMessage: null
+                clientData: updatedAuthData,
+                errorMessage: ''
             };
+        }
 
         case ERROR:
             return {
