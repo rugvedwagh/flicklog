@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
+import { toggleTheme } from './actions/theme.actions';
 import React, { useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
@@ -47,6 +48,10 @@ const App = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const toggleView = () => {
+        dispatch(toggleTheme());
+    };
 
     const scrollToTop = () => {
         window.scrollTo({

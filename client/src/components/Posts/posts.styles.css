@@ -67,7 +67,10 @@
 }
 
 .endmsg {
+<<<<<<< HEAD
     color: var(--forrestGreen);
+=======
+>>>>>>> bc1fcde3113a55e57bfd539e0c5ba92fcc640cd4
     margin-top: 2rem !important;
 }
 

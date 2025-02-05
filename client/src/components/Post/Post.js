@@ -20,7 +20,11 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+<<<<<<< HEAD
     const UserIsAuthenticated = Cookie.get('refreshToken')
+=======
+    const User = Cookie.get('refreshToken')
+>>>>>>> bc1fcde3113a55e57bfd539e0c5ba92fcc640cd4
 
     const profile = JSON.parse(localStorage.getItem('profile'));
     const userId = profile?._id;
@@ -124,6 +128,7 @@ const Post = ({ post, setCurrentId, darkMode }) => {
             </section>
 
             <CardActions className="cardActions">
+<<<<<<< HEAD
                 <Tooltip title="Like" arrow placement="top">
                     <Button
                         size="small"
@@ -137,6 +142,18 @@ const Post = ({ post, setCurrentId, darkMode }) => {
                         />
                     </Button>
                 </Tooltip>
+=======
+                {User &&
+                    <Tooltip title="Like" arrow placement="top">
+                        <Button
+                            size="small"
+                            onClick={handleLike}
+                        >
+                            <Likes className={`interaction-buttons ${darkMode ? 'dark' : ''}`} likes={likes} id={userId} darkMode={darkMode} disabled />
+                        </Button>
+                    </Tooltip>
+                }
+>>>>>>> bc1fcde3113a55e57bfd539e0c5ba92fcc640cd4
 
                 <Tooltip title="Comments" arrow placement="top">
                     <Button>
