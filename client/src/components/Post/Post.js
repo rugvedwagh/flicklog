@@ -3,15 +3,16 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import { likePost, deletePost } from '../../redux/actions/post.actions';
-import { useDispatch, useSelector } from 'react-redux';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useDispatch, useSelector } from 'react-redux';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { getRefreshToken } from '../../utils/getTokens';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
-import Cookie from 'js-cookie';
 import moment from 'moment';
 import './post.styles.css';
 
@@ -20,9 +21,8 @@ const Post = ({ post, setCurrentId, darkMode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const UserIsAuthenticated = Cookie.get('refreshToken')
-
-    const profile = JSON.parse(localStorage.getItem('profile'));
+    const UserIsAuthenticated = getRefreshToken();
+    const profile = getProfile();
     const userId = profile?._id;
 
     const { clientData } = useSelector((state) => state.authReducer);

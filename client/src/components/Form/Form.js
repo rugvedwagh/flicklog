@@ -1,12 +1,13 @@
-import { TextField, Button, Typography, Paper } from '@mui/material';
 import { createPost, updatePost } from '../../redux/actions/post.actions';
+import { TextField, Button, Typography, Paper } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
+import { getRefreshToken } from '../../utils/getTokens'
 import React, { useState, useEffect } from 'react';
+import { getProfile } from '../../utils/storage';
 import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
-import Cookie from 'js-cookie';
 import './form.styles.css';
 
 
@@ -14,10 +15,12 @@ const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
 
     const dispatch = useDispatch();
 
-    const profile = JSON.parse(localStorage.getItem('profile'));
-    const UserIsAuthenticated = Cookie.get('refreshToken');
+    const profile = getProfile();
+    const UserIsAuthenticated = getRefreshToken()
 
-    const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null));
+    const post = useSelector((state) => (currentId ?
+        state.postsReducer.posts.find((message) => message._id === currentId)
+        : null));
 
     const [postData, setPostData] = useState({
         title: '',

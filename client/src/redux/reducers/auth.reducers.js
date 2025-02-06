@@ -34,7 +34,7 @@ const authReducer = (state = initialState, action) => {
             Cookies.set('refreshToken', refreshToken, { expires: 7 });
             return {
                 ...state,
-                authData: action?.payload
+                authData: fileredData
             };
 
         case REFRESH_TOKEN:

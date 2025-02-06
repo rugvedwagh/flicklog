@@ -4,15 +4,23 @@ import Cookies from 'js-cookie';
 import { refreshToken } from '../redux/actions/auth.actions';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL, // Change this to your API's base URL
+    baseURL: process.env.NODE_ENV === 'production' ?
+        process.env.REACT_APP_API_URL :
+        process.env.REACT_APP_API_URL_DEV
 });
 
-// Sending the Token back to our backend for it to verify
+/*
+    Attaching the accessToken to the request headers for authentication.
+
+    Purpose: This is used to attach the Authorization header with the token to each request
+    before it is sent to the server. It's a global setup, ensuring that all outgoing 
+    requests have the proper authentication token.
+*/
 API.interceptors.request.use((req) => {
     const profile = localStorage.getItem('profile');
 
     if (profile) {
-        const { token } = JSON.parse(profile);         
+        const { token } = JSON.parse(profile);
         req.headers['Authorization'] = `Bearer ${token}`;
     }
     return req;

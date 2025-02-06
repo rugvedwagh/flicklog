@@ -27,7 +27,6 @@ const logIn = async (req, res) => {
     const token = generateToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
 
-    // Optionally, you can store the refresh token in the user's record
     oldUser.refreshToken = refreshToken;
     await oldUser.save();
 
@@ -69,7 +68,6 @@ const signUp = async (req, res) => {
     const token = generateToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
 
-    // Store the refresh token
     newUser.refreshToken = refreshToken;
     await newUser.save();
 
@@ -161,7 +159,7 @@ const refreshToken = async (req, res) => {
     let { refreshToken } = req.body;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token is required.");
+        const error = new Error("Refresh token is required");
         error.statusCode = 400;
         throw error;
     }
@@ -172,7 +170,7 @@ const refreshToken = async (req, res) => {
     const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
-        const error = new Error("User not found.");
+        const error = new Error("User not found");
         error.statusCode = 404;
         throw error;
     }

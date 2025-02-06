@@ -24,6 +24,7 @@ const signIn = (formData, navigate) => async (dispatch) => {
 
         const { data } = await signInApi(formData);
         dispatch({ type: AUTH, payload: data });
+        console.log(data)
         navigate('/posts');
 
         dispatch({ type: END_LOADING });

@@ -1,6 +1,7 @@
 import { Container, Grid, AppBar } from '@mui/material';
 import Search from '../../components/Search/Search';
 import React, { useState, useEffect } from 'react';
+import { getProfile } from '../../utils/storage';
 import Posts from '../../components/Posts/Posts';
 import { useLocation } from 'react-router-dom';
 import Form from '../../components/Form/Form';
@@ -13,7 +14,7 @@ const Home = ({ darkMode }) => {
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);
 
-    const profile = JSON.parse(localStorage.getItem('profile'));
+    const profile = getProfile();
 
     useEffect(() => {
         window.scrollTo(0, 0);

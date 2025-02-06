@@ -274,5 +274,5 @@
 }
 
 .username:hover{
-    text-decoration: underline;
+    color: var(--forrestGreen);
 }

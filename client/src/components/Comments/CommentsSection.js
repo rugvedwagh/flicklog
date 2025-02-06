@@ -1,22 +1,23 @@
 import { Typography, TextField, Button } from '@mui/material';
 import { addComment } from '../../redux/actions/post.actions';
+import { getRefreshToken } from '../../utils/getTokens'
+import { getProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './commentsection.styles.css';
-import Cookie from 'js-cookie';
 
 const CommentsSection = ({ post, darkMode }) => {
 
     const dispatch = useDispatch();
 
-    const profile = JSON.parse(localStorage.getItem('profile'))
-    const UserIsAuthenticated = Cookie.get('refreshToken');
+    const profile = getProfile();
+    const UserIsAuthenticated = getRefreshToken();
 
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post?.comments)
 
     const postComment = async () => {
-        const finalComment = `${profile?.result.name}: ${comment}`;
+        const finalComment = `${profile?.name}: ${comment}`;
         const newComments = await dispatch(addComment(finalComment, post._id));    // await is needed here 
         setComments(newComments);
         setComment('');

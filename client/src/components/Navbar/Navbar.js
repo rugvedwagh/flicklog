@@ -12,6 +12,7 @@ import { toggleTheme } from '../../redux/actions/theme.actions';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie'
 import './navbar.styles.css';
@@ -24,8 +25,10 @@ const Navbar = ({ darkMode }) => {
 
     const UserIsAuthenticated = Cookies.get('refreshToken');
 
-    const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')));
-    const userId = profile?._id
+    const { authData } = useSelector((state) => state.authReducer);
+    
+    const [profile, setProfile] = useState(authData);
+    const userId = profile?._id;
 
     const [openDialog, setOpenDialog] = useState(false);
     const [navclass, setNavclass] = useState(false)
