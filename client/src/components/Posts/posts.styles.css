@@ -26,10 +26,7 @@
 }
 
 .loading {
-    position: relative;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 50%;
     color: var(--black);
 }
 
@@ -74,3 +71,4 @@
 .endmsg.dark {
     color: var(--subtextColor);
 }
+

@@ -111,9 +111,7 @@ const Navbar = ({ darkMode }) => {
             <div className={`navbar ${darkMode ? 'dark' : ''}`}>
 
                 <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                    {process.env.NODE_ENV === 'production' &&
-                        'reminisce'
-                    }
+                    reminisce
                 </div>
 
                 {UserIsAuthenticated ? (

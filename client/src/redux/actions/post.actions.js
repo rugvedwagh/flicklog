@@ -86,7 +86,7 @@ const fetchPosts = (page) => async (dispatch) => {
                     numberOfPages,
                 })
             );
-
+                
             dispatch({
                 type: FETCH_ALL,
                 payload: {

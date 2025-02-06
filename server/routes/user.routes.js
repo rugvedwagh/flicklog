@@ -27,7 +27,6 @@ router.post("/signup", asyncHandler(signUp));
 
 router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
 
-// Add the new route for refresh-token
-router.post("/refresh-token", asyncHandler(refreshToken));  // This is the new route
+router.post("/refresh-token", asyncHandler(refreshToken));  
 
 export default router;

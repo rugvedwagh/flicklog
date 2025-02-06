@@ -77,7 +77,7 @@ const PostDetails = ({ darkMode }) => {
 
             {recommendedPosts.length ? (
                 <div className={`sect ${darkMode ? 'dark' : ''}`}>
-                    <Typography gutterBottom variant='h5' sx={{ color: '#1a1a1a', userSelect: 'none' }}>
+                    <Typography gutterBottom variant='h5'>
                         You might also like
                     </Typography>
 

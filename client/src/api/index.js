@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { refreshToken } from '../redux/actions/auth.actions';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL_DEV, // Change this to your API's base URL
+    baseURL: process.env.REACT_APP_API_URL, // Change this to your API's base URL
 });
 
 // Sending the Token back to our backend for it to verify

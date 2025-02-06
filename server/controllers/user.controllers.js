@@ -11,7 +11,7 @@ const logIn = async (req, res) => {
     const oldUser = await UserModel.findOne({ email });
 
     if (!oldUser) {
-        const error = new Error("User not found.");
+        const error = new Error("User not found");
         error.statusCode = 404;
         throw error;
     }
@@ -19,7 +19,7 @@ const logIn = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
     if (!isPasswordCorrect) {
-        const error = new Error("Incorrect password.");
+        const error = new Error("Incorrect password");
         error.statusCode = 400;
         throw error;
     }

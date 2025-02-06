@@ -135,7 +135,7 @@
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--black) !important;
+    color: var(--forrestGreen) !important;
     z-index: 1000;
 }
 
@@ -169,7 +169,6 @@
     padding: 15px 20px;
     cursor: pointer;
     max-width: 30rem;
-    /* max-height: 80%; */
     height: 70% !important;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 15px;
@@ -309,9 +308,14 @@
 
 .endmessage {
     margin-top: 2em !important;
-    color: var(--subtextColor) !important;
+    color: var(--borderColor) !important;
 }
 
 .sect > .MuiDivider{
+    color: var(--borderColor);
+}
+
+.sect > .MuiTypography-h5{
+    user-select: none;
     color: var(--borderColor);
 }
