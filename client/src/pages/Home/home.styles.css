@@ -52,6 +52,8 @@
 .appBarSearch.dark{
     color: var(--antiFlashWhite) !important;
     background-color: var(--black) !important;
+    outline: 1px solid var(--borderColor);
+
 }
 
 .appBarSearch input {

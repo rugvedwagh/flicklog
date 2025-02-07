@@ -8,6 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getRefreshToken } from '../../utils/getTokens';
+import { useTheme } from '../../context/themeContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
@@ -16,10 +17,12 @@ import Likes from './Likes/Likes';
 import moment from 'moment';
 import './post.styles.css';
 
-const Post = ({ post, setCurrentId, darkMode }) => {
+const Post = ({ post, setCurrentId }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const darkModObj = useTheme();
+    const darkMode = darkModObj.darkMode;
 
     const UserIsAuthenticated = getRefreshToken();
     const profile = getProfile();

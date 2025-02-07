@@ -216,16 +216,18 @@
     justify-content: space-between;
     padding: 10px;
     margin: 8px 0;
-    cursor: pointer;
     background-color: var(--antiFlashWhite);
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .bookmarked-post h4 {
+    cursor: pointer;
     max-width: 80%;
 }
-
+.bookmarked-post h4:hover{
+    color: var(--forrestGreen);
+}
 .bookmarked-post.dark {
     background-color: var(--black);
     color: var(--antiFlashWhite);

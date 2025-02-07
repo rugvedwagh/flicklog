@@ -1,3 +1,34 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    font-family: "EB Garamond", serif !important;
+    font-optical-sizing: auto;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center !important;
+    height: 4em;
+    padding: 0 0.2em;
+    z-index: 1000;
+    transition: transform 0.4s ease-in-out;
+}
+
+.navbar.dark {
+    background-color: var(--black);
+    border-bottom: 1px solid var(--borderColor);
+}
+
+.navbar.visible {
+    transform: translateY(0);
+    animation: slideDown 0.4s ease-in;
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
+    animation: slideUp 0.4s ease-in;
+}
+
 @keyframes slideDown {
     0% {
         transform: translateY(-100%);
@@ -5,14 +36,14 @@
     }
 
     100% {
-        transform: translateY(0%);
+        transform: translateY(0);
         opacity: 1;
     }
 }
 
 @keyframes slideUp {
     0% {
-        transform: translateY(0%);
+        transform: translateY(0);
         opacity: 1;
     }
 
@@ -20,44 +51,6 @@
         transform: translateY(-100%);
         opacity: 0;
     }
-}
-
-.appBar {
-    font-family: "EB Garamond", serif !important;
-    font-optical-sizing: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center !important;
-    align-items: center !important;
-    animation: slideDown 0.4s ease-in;
-    background-color: var(--white) !important;
-    height: 4em;
-    margin-left: 30px;
-}
-
-.appBar.dark{
-    border-bottom: 1px solid var(--borderColor);
-    background-color: var(--black) !important;
-}
-
-.appBar.blur {
-    animation: slideUp 0.4s ease-in;
-    transform: translateY(-100%);
-}
-
-.navbar {
-    width: 95%;
-    margin-left: 1.5em;
-    height: 5rem;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.navbar.dark{
-    background-color: var(--black);
 }
 
 .image {
@@ -76,14 +69,14 @@
 .profileAvatar {
     width: 45px;
     height: 45px;
-    background-color: var(--black) !important;
+    background-color: var(--forrestGreen) !important;
     color: var(--antiFlashWhite) !important;
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     text-transform: uppercase;
 }
 
-.profileAvatar.dark{
+.profileAvatar.dark {
     background-color: var(--subtextColor) !important;
     color: var(--black) !important;
 }
@@ -102,12 +95,12 @@
     user-select: none;
     cursor: pointer;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    height: 100%; 
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
-.brandContainer.dark{
+.brandContainer.dark {
     color: var(--antiFlashWhite);
 }
 
@@ -124,34 +117,25 @@
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
-    margin-right: 1.5rem;
 }
 
-.logout.dark{
+.logout.dark {
     color: var(--antiFlashWhite) !important;
 }
 
-.logout:hover{
+.logout:hover {
     color: var(--forrestGreen) !important;
     transition: 0.2s ease-in;
 }
 
 @media (max-width: 600px) {
-    .brandContainer{
+    .brandContainer {
         font-size: 1.75em;
     }
-    .appBar {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
 
-    .userName {
-        display: none;
-    }
 
     .navbar {
         padding: 0;
-        width: 90%
     }
 }
 
@@ -178,25 +162,6 @@
 
 .recommendedPosts {
     display: flex;
-}
-
-
-@media ((min-width: 600px) and (max-width : 1536px)) {
-    .navbar{
-        width: 95%;
-    }
-}
-
-@media ((min-width: 1537px) and (max-width : 1669px)) {
-    .navbar {
-        width: 94%;
-    }
-}
-
-@media ((min-width: 1670px) and (max-width: 1921px)) {
-    .navbar{
-        width: 76%;
-    }
 }
 
 .commentsOuterContainer {
@@ -227,24 +192,24 @@
     animation: dropdownanim 0.6s ease;
 }
 
-.menu.dark .MuiMenuItem{
+.menu.dark .MuiMenuItem {
     background-color: var(--black) !important;
 }
 
-.MuiDialogActions-root .MuiButton-contained{
+.MuiDialogActions-root .MuiButton-contained {
     background-color: var(--black);
 }
 
-.MuiDialogActions-root .MuiButton-contained:hover{
+.MuiDialogActions-root .MuiButton-contained:hover {
     background-color: var(--antiFlashWhite);
     color: var(--black);
 }
 
-.MuiMenuItem-root{
+.MuiMenuItem-root {
     color: var(--black);
 }
 
-.MuiMenuItem-root .MuiAvatar-root{
+.MuiMenuItem-root .MuiAvatar-root {
     height: 60px;
     width: 60px;
     font-size: 28px;
@@ -289,11 +254,11 @@
     }
 }
 
-.menuRoot.dark .MuiMenuItem-root{
+.menuRoot.dark .MuiMenuItem-root {
     background-color: var(--black);
     color: var(--white);
 }
 
-.menuRoot.dark .MuiMenuItem-root:hover{
+.menuRoot.dark .MuiMenuItem-root:hover {
     background-color: #333;
 }

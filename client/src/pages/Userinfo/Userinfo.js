@@ -6,11 +6,14 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
+import { useTheme } from '../../context/themeContext';
 
-const Userinfo = ({ darkMode }) => {
+const Userinfo = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const darkModeObj = useTheme();
+    const darkMode = darkModeObj.darkMode;
 
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
@@ -36,6 +39,7 @@ const Userinfo = ({ darkMode }) => {
     }, [posts, clientData]);
 
     const openPost = useCallback((postId) => {
+        console.log('in the open post function in userinfo');
         navigate(`/posts/${postId}`);
     }, [navigate]);
 
@@ -118,7 +122,7 @@ const Userinfo = ({ darkMode }) => {
                                         <h4 onClick={() => openPost(post._id)}>
                                             {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
                                         </h4>
-                                        <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                        <CancelRoundedIcon sx={{ cursor: 'pointer' }} color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
                                     </div>
                                 ))}
                             </div>

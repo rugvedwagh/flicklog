@@ -1,14 +1,17 @@
 import { Typography, TextField, Button } from '@mui/material';
 import { addComment } from '../../redux/actions/post.actions';
 import { getRefreshToken } from '../../utils/getTokens'
+import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './commentsection.styles.css';
 
-const CommentsSection = ({ post, darkMode }) => {
+const CommentsSection = ({ post }) => {
 
     const dispatch = useDispatch();
+    const darkModeObj = useTheme();
+    const darkMode = darkModeObj.darkMode;
 
     const profile = getProfile();
     const UserIsAuthenticated = getRefreshToken();

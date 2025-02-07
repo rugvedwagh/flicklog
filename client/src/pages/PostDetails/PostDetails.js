@@ -3,15 +3,18 @@ import CommentsSection from '../../components/Comments/CommentsSection';
 import { fetchPost, fetchPostsBySearch} from '../../redux/actions/post.actions'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from '../../context/themeContext';
 import React, { useEffect, useState } from 'react';
 import './postdetails.styles.css';
 import moment from 'moment';
 
-const PostDetails = ({ darkMode }) => {
+const PostDetails = () => {
 
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const darkModObj = useTheme();
+    const darkMode = darkModObj.darkMode;
 
     const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -71,7 +74,7 @@ const PostDetails = ({ darkMode }) => {
                         {moment(post.createdAt).fromNow()}
                     </Typography>
 
-                    <CommentsSection darkMode={darkMode} post={post} />
+                    <CommentsSection post={post} />
                 </section>
             </div>
 

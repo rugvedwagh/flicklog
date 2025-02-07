@@ -24,7 +24,6 @@ const signIn = (formData, navigate) => async (dispatch) => {
 
         const { data } = await signInApi(formData);
         dispatch({ type: AUTH, payload: data });
-        console.log(data)
         navigate('/posts');
 
         dispatch({ type: END_LOADING });
@@ -86,7 +85,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         dispatch({ type: START_LOADING });
 
         const { data } = await updateUserDetailsApi(id, updatedData);
-        const {password, __v, bookmarks, ...fileredData} = data;
+        const { password, __v, bookmarks, ...fileredData } = data;
         dispatch({ type: UPDATE_USER, payload: fileredData });
 
         dispatch({ type: END_LOADING })
@@ -99,13 +98,13 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
 
 const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
     try {
-        
+
         const profile = JSON.parse(localStorage.getItem('profile'));
-        
+
         if (!profile || !refreshTokenFromCookies) {
             return;
         }
-        const { data } = await refreshTokenApi(refreshTokenFromCookies);  
+        const { data } = await refreshTokenApi(refreshTokenFromCookies);
 
         dispatch({ type: REFRESH_TOKEN, payload: data.token });
     } catch (error) {

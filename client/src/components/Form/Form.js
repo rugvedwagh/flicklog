@@ -3,6 +3,7 @@ import { TextField, Button, Typography, Paper } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken } from '../../utils/getTokens'
+import { useTheme } from '../../context/themeContext';
 import React, { useState, useEffect } from 'react';
 import { getProfile } from '../../utils/storage';
 import 'react-quill/dist/quill.snow.css';
@@ -11,9 +12,11 @@ import ReactQuill from 'react-quill';
 import './form.styles.css';
 
 
-const Form = ({ currentId, setCurrentId, setformOpen, darkMode }) => {
+const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     const dispatch = useDispatch();
+    const darkModObj = useTheme();
+    const darkMode = darkModObj.darkMode;
 
     const profile = getProfile();
     const UserIsAuthenticated = getRefreshToken()

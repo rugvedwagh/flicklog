@@ -1,4 +1,5 @@
 import { Container, Grid, AppBar } from '@mui/material';
+import { useTheme } from '../../context/themeContext';
 import Search from '../../components/Search/Search';
 import React, { useState, useEffect } from 'react';
 import { getProfile } from '../../utils/storage';
@@ -7,9 +8,11 @@ import { useLocation } from 'react-router-dom';
 import Form from '../../components/Form/Form';
 import './home.styles.css';
 
-const Home = ({ darkMode }) => {
+const Home = () => {
 
     const location = useLocation();
+    const darkModObj = useTheme();
+    const darkMode = darkModObj.darkMode;
 
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);
@@ -25,7 +28,7 @@ const Home = ({ darkMode }) => {
     }
 
     return (
-        <Container maxWidth='xl' style={{ marginTop: '5.5rem' }}>
+        <Container maxWidth='xl' disableGutters style={{ marginTop: '1.5rem' }}>
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                 <Grid item xs={12} sm={6} md={9}>

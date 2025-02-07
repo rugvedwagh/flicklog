@@ -1,16 +1,17 @@
 .footer {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border-top: 1px solid var(--borderColor);
-    width: 100vw;
+    width: 100%;
     position: inherit;
     height: auto;
     background-color: var(--white);
     margin-top: 100vh;
-    height: 50vh;
+    height: 80vh;
 }
 
 .footer.dark {
     background-color: var(--black);
+    height: 50vh;
 }
 
 .footer .col {
@@ -30,7 +31,6 @@
     font-size: 12px;
     line-height: 17px;
     padding: 20px 0px 5px 0px;
-    /* color: rgba(255, 255, 255, 0.2); */
     color: var(--black);
     font-weight: normal;
     text-transform: uppercase;
@@ -95,12 +95,15 @@
 
 @media only screen and (max-width: 748px) {
     .footer {
-        height: 100%;
+        height: 100vh;
         margin-top: 100vh;
     }
 }
 
 @media only screen and (max-width: 950px) {
+    .footer {
+        height: 100vh;
+    }
     .footer .col {
         width: 33%;
     }

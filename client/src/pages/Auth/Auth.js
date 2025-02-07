@@ -2,6 +2,7 @@ import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } f
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn, signUp } from '../../redux/actions/auth.actions';
+import { useTheme } from '../../context/themeContext';
 import React, { useState, useEffect } from 'react';
 import loginArt from '../../assets/loginart.PNG'
 import { useNavigate } from 'react-router-dom';
@@ -16,10 +17,12 @@ const initialState = {
     confirmPassword: ''
 };
 
-const SignUp = ({ darkMode }) => {
+const SignUp = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const darkModeObj = useTheme();
+    const darkMode = darkModeObj.darkMode;
 
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);

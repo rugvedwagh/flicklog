@@ -1,4 +1,3 @@
-import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 const getAccessToken = () => {
@@ -21,23 +20,7 @@ const getRefreshToken = () => {
     }
 }
 
-const isAccessTokenExpired = (accessToken) => {
-    let isExpired = true;
-    try {
-        if (!accessToken) return;
-
-        const decodedToken = jwtDecode(accessToken);
-        isExpired = decodedToken.exp * 1000 < Date.now();
-        
-        return isExpired;
-    } catch (error) {
-        console.error("Invalid token detected.", error);
-        return isExpired;
-    }
-};
-
 export {
     getAccessToken,
     getRefreshToken,
-    isAccessTokenExpired
 }
