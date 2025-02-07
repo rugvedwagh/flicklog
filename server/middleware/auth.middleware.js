@@ -10,7 +10,7 @@ const verifyToken = async (req, res, next) => {
         if (!authorizationHeader) {
             const error = new Error("Authorization header is missing.");
             error.statusCode = 401;
-            return next(error); // Pass error to global error handler
+            return next(error); 
         }
 
         const token = authorizationHeader.split(" ")[1];
@@ -26,11 +26,11 @@ const verifyToken = async (req, res, next) => {
             req.userId = decodedData?.sub;
         }
 
-        next(); // Call the next middleware if successful
+        next(); 
     } catch (error) {
         error.statusCode = 401;
         error.message = "Token verification failed.";
-        next(error); // Pass error to global error handler
+        next(error); 
     }
 };
 

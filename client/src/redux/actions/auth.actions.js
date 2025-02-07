@@ -21,91 +21,80 @@ import {
 const signIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-
         const { data } = await signInApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
-
-        dispatch({ type: END_LOADING });
     } catch (error) {
-        dispatch({ type: END_LOADING });
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
+    } finally {
+        dispatch({ type: END_LOADING });
     }
 };
 
 const signUp = (formData, navigate) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING })
-
+        dispatch({ type: START_LOADING });
         const { data } = await signUpApi(formData);
         dispatch({ type: AUTH, payload: data });
-        navigate('/posts')
-
-        dispatch({ type: END_LOADING })
+        navigate('/posts');
     } catch (error) {
-        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
+    } finally {
+        dispatch({ type: END_LOADING });
     }
 };
 
 const userData = (id, navigate) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING })
-
-        navigate(`/user/i`)
+        dispatch({ type: START_LOADING });
+        navigate(`/user/i`);
         const { data } = await userInfoApi(id);
         dispatch({ type: USER_INFO, payload: data });
-
-        dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
+    } finally {
+        dispatch({ type: END_LOADING });
     }
-}
+};
 
 const Logout = (navigate) => (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-
         navigate('/');
         dispatch({ type: LOGOUT });
-
-        dispatch({ type: END_LOADING });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
+    } finally {
+        dispatch({ type: END_LOADING });
     }
 };
 
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-
         const { data } = await updateUserDetailsApi(id, updatedData);
         const { password, __v, bookmarks, ...fileredData } = data;
         dispatch({ type: UPDATE_USER, payload: fileredData });
-
-        dispatch({ type: END_LOADING })
     } catch (error) {
-        dispatch({ type: END_LOADING })
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.error(error);
+    } finally {
+        dispatch({ type: END_LOADING });
     }
 };
 
 const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
     try {
-
         const profile = JSON.parse(localStorage.getItem('profile'));
 
         if (!profile || !refreshTokenFromCookies) {
             return;
         }
         const { data } = await refreshTokenApi(refreshTokenFromCookies);
-
         dispatch({ type: REFRESH_TOKEN, payload: data.token });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
