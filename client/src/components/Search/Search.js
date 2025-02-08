@@ -1,14 +1,16 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { fetchPostsBySearch } from '../../redux/actions/post.actions';
+import { useTheme } from '../../context/themeContext';
 import { AppBar, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 
-const Search = ({ darkMode }) => {
+const Search = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const darkMode = useTheme();
 
     const [searchInput, setSearchInput] = useState('');
 

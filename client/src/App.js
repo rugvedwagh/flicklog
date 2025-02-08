@@ -7,7 +7,7 @@ import { handleScroll, scrollToTop } from './utils/scroll';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
-import { useTheme } from './context/themeContext'; // ✅ Use your ThemeContext
+import { useTheme } from './context/themeContext';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ import './App.css';
 const App = () => {
     const dispatch = useDispatch();
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const { darkMode } = useTheme();
+    const darkMode = useTheme();
 
     const accessToken = getAccessToken();
     const refreshTokenFromCookies = getRefreshToken();

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 const getAccessToken = () => {
     try {
         const profile = JSON.parse(localStorage.getItem('profile')) || '';
-        return profile?.token || null;
+        return profile?.accessToken || null;
     } catch (error) {
         console.error('Error parsing profile from localStorage:', error);
         return null;

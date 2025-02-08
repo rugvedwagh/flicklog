@@ -8,28 +8,28 @@ const verifyToken = async (req, res, next) => {
         const authorizationHeader = req.headers.authorization;
 
         if (!authorizationHeader) {
-            const error = new Error("Authorization header is missing.");
+            const error = new Error("Authorization header is missing");
             error.statusCode = 401;
             return next(error); 
         }
 
-        const token = authorizationHeader.split(" ")[1];
-        const isCustomAuth = token.length < 500;
+        const accessToken = authorizationHeader.split(" ")[1];
+        const isCustomAuth = accessToken.length < 500;
 
         let decodedData;
 
-        if (token && isCustomAuth) {
-            decodedData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        if (accessToken && isCustomAuth) {
+            decodedData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
             req.userId = decodedData?.id;
         } else {
-            decodedData = jwt.decode(token);
+            decodedData = jwt.decode(accessToken);
             req.userId = decodedData?.sub;
         }
 
         next(); 
     } catch (error) {
         error.statusCode = 401;
-        error.message = "Token verification failed.";
+        error.message = "Token verification failed";
         next(error); 
     }
 };

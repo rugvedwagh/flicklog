@@ -27,10 +27,11 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            const { refreshToken, token, ...rest } = action?.payload;
+            console.log(action?.payload)
+            const { refreshToken, accessToken, ...rest } = action?.payload;
             const { password, __v, bookmarks, ...fileredData } = rest.result;
 
-            localStorage.setItem('profile', JSON.stringify({ ...fileredData, token }));
+            localStorage.setItem('profile', JSON.stringify({ ...fileredData, accessToken }));
             Cookies.set('refreshToken', refreshToken, { expires: 7 });
             return {
                 ...state,
@@ -40,12 +41,12 @@ const authReducer = (state = initialState, action) => {
         case REFRESH_TOKEN:
             const updatedProfile = {
                 ...JSON.parse(localStorage.getItem('profile')),
-                token: action.payload,
+                accessToken: action.payload,
             };
             localStorage.setItem('profile', JSON.stringify(updatedProfile));
             return {
                 ...state,
-                token: action.payload,
+                accessToken: action.payload,
             };
 
         case LOGOUT:
@@ -78,7 +79,7 @@ const authReducer = (state = initialState, action) => {
             const updatedProfile = {
                 ...existingProfile,
                 ...updatedAuthData,
-                token: existingProfile.token
+                accessToken: existingProfile.accessToken
             };
             localStorage.setItem("profile", JSON.stringify(updatedProfile));
 

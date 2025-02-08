@@ -23,17 +23,16 @@ app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
 // Global Not Found and Error Handlers (ensure notFound is used before errorHandler)
-app.use(notFound);  // Catch-all for undefined routes
+app.use(notFound);  
 
 app.get('/', (req, res) => {
     res.send(`<h2>Server is running...</h2>`);
 });
 
-app.use(errorHandler);  // Global error handler
+app.use(errorHandler);  
 
-const PORT = process.env.PORT || 5000;  // Fallback to 5000 if no PORT is defined
+const PORT = process.env.PORT || 6000;  
 
-// Connect to the database and start the server
 dataBaseConnection().then(() => {
     app.listen(PORT, () => {
         console.log(`Server  on port: ${PORT}`);

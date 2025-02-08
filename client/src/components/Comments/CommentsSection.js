@@ -10,8 +10,7 @@ import './commentsection.styles.css';
 const CommentsSection = ({ post }) => {
 
     const dispatch = useDispatch();
-    const darkModeObj = useTheme();
-    const darkMode = darkModeObj.darkMode;
+    const darkMode = useTheme();
 
     const profile = getProfile();
     const UserIsAuthenticated = getRefreshToken();

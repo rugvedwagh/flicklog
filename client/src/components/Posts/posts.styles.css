@@ -18,7 +18,7 @@
 
 .infloader {
     margin: 3rem 50%;
-    color: var(--black) !important;
+    color: var(--forrestGreen) !important;
 }
 
 .infloader.dark {
@@ -27,7 +27,7 @@
 
 .loading {
     margin: 0 50%;
-    color: var(--black);
+    color: var(--forrestGreen);
 }
 
 .loading.dark {

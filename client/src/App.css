@@ -1,8 +1,8 @@
 :root {
-    --black: #1a1a1a;
-    --borderColor: #404040;
-    --loadingvar: white;
     --white: white;
+    --black: #1a1a1a;
+    --loadingvar: white;
+    --borderColor: #404040;
     --antiFlashWhite: #e7e9ea;
     --subtextColor: #f2f2f2bb;
     --notFoundColor: #555555;

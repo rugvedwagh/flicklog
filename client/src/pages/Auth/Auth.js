@@ -21,8 +21,7 @@ const SignUp = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkModeObj = useTheme();
-    const darkMode = darkModeObj.darkMode;
+    const darkMode = useTheme();
 
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);

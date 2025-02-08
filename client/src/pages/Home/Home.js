@@ -11,8 +11,7 @@ import './home.styles.css';
 const Home = () => {
 
     const location = useLocation();
-    const darkModObj = useTheme();
-    const darkMode = darkModObj.darkMode;
+    const darkMode = useTheme();
 
     const [currentId, setCurrentId] = useState(null);
     const [formOpen, setformOpen] = useState(false);

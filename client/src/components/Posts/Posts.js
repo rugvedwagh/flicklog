@@ -3,17 +3,18 @@ import { Grid, CircularProgress, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts } from '../../redux/actions/post.actions.js';
+import { useLocation } from 'react-router-dom';
+import { useTheme } from '../../context/themeContext.js';
 import Post from '../Post/Post'
 import './posts.styles.css';
-import { useLocation } from 'react-router-dom';
 
-const Posts = ({ setCurrentId, darkMode }) => {
+const Posts = ({ setCurrentId }) => {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const darkMode = useTheme()
 
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
-    console.log(posts[0], posts[1])
 
     const [currentPage, setCurrentPage] = useState(1);
 

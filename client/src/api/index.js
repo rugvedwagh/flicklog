@@ -20,8 +20,8 @@ API.interceptors.request.use((req) => {
     const profile = localStorage.getItem('profile');
 
     if (profile) {
-        const { token } = JSON.parse(profile);
-        req.headers['Authorization'] = `Bearer ${token}`;
+        const { accessToken } = JSON.parse(profile);
+        req.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return req;
 });
@@ -43,7 +43,7 @@ API.interceptors.response.use((response) => response,
                 await store.dispatch(refreshToken(refreshTokenFromCookies));   // "await" Otherwise the code below this line is exuced before the localstorage is updated
 
                 const profile = JSON.parse(localStorage.getItem('profile'));
-                originalRequest.headers['Authorization'] = `Bearer ${profile?.token}`;
+                originalRequest.headers['Authorization'] = `Bearer ${profile?.accessToken}`;
 
                 return axios(originalRequest);
             } catch (err) {

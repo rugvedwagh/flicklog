@@ -15,8 +15,7 @@ import './form.styles.css';
 const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     const dispatch = useDispatch();
-    const darkModObj = useTheme();
-    const darkMode = darkModObj.darkMode;
+    const darkMode = useTheme();
 
     const profile = getProfile();
     const UserIsAuthenticated = getRefreshToken()

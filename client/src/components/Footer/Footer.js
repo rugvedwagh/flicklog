@@ -7,8 +7,7 @@ import './footer.styles.css';
 
 const Footer = () => {
 
-    const darkModObj = useTheme();
-    const darkMode = darkModObj.darkMode;
+    const darkMode = useTheme();
 
     return (
         <div className={`footer ${darkMode ? 'dark' : ''}`}>

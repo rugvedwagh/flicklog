@@ -21,8 +21,7 @@ const Navbar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkModeObj = useTheme();
-    const darkMode = darkModeObj.darkMode;
+    const darkMode = useTheme();
 
     const UserIsAuthenticated = Cookies.get('refreshToken');
     const profile = getProfile();

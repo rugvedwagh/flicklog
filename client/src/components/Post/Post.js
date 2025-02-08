@@ -21,8 +21,7 @@ const Post = ({ post, setCurrentId }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkModObj = useTheme();
-    const darkMode = darkModObj.darkMode;
+    const darkMode = useTheme();
 
     const UserIsAuthenticated = getRefreshToken();
     const profile = getProfile();

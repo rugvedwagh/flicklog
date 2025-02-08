@@ -22,6 +22,7 @@ const signIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await signInApi(formData);
+        console.log(data)
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -95,7 +96,7 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
             return;
         }
         const { data } = await refreshTokenApi(refreshTokenFromCookies);
-        dispatch({ type: REFRESH_TOKEN, payload: data.token });
+        dispatch({ type: REFRESH_TOKEN, payload: data.accessToken });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);

@@ -13,8 +13,7 @@ const PostDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkModObj = useTheme();
-    const darkMode = darkModObj.darkMode;
+    const darkMode = useTheme();
 
     const [isFullScreen, setIsFullScreen] = useState(false);
 

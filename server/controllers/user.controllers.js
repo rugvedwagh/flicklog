@@ -1,5 +1,5 @@
 import { generateRefreshToken } from "../utils/generateRefreshToken.js";
-import { generateToken } from "../utils/generateToken.js";
+import { generateAccessToken } from "../utils/generateAccessToken.js";
 import UserModel from "../models/user.model.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
@@ -24,14 +24,14 @@ const logIn = async (req, res) => {
         throw error;
     }
 
-    const token = generateToken(oldUser);
+    const accessToken = generateAccessToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
-
+    
     await oldUser.save();
 
     res.status(200).json({
         result: oldUser,
-        token,
+        accessToken: accessToken,
         refreshToken
     });
 };
@@ -64,14 +64,14 @@ const signUp = async (req, res) => {
 
     await newUser.save();
 
-    const token = generateToken(newUser);
+    const accessToken = generateAccessToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
 
     await newUser.save();
 
     res.status(201).json({
         newUser,
-        token,
+        accessToken: accessToken,
         refreshToken
     });
 };
@@ -123,7 +123,7 @@ const updateUser = async (req, res) => {
     const updatedUser = await UserModel.findByIdAndUpdate(
         id,
         { name, email },
-        { new: true } // Return the updated document
+        { new: true } 
     );
 
     if (!updatedUser) {
@@ -153,6 +153,7 @@ const fetchUserData = async (req, res) => {
     res.status(200).json(userWithoutPassword);
 };
 
+// Refresh token controller
 const refreshToken = async (req, res) => {
     let { refreshToken } = req.body;
 
@@ -173,11 +174,11 @@ const refreshToken = async (req, res) => {
         throw error;
     }
 
-    const newToken = generateToken(user);
+    const newToken = generateAccessToken(user);
     const newRefreshToken = generateRefreshToken(user);
 
     res.status(200).json({
-        token: newToken,
+        accessToken: newToken,
         refreshToken: newRefreshToken
     });
 };

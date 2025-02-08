@@ -12,8 +12,7 @@ const Userinfo = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkModeObj = useTheme();
-    const darkMode = darkModeObj.darkMode;
+    const darkMode = useTheme();
 
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);

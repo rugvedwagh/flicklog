@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const generateToken = (user) => {
+const generateAccessToken = (user) => {
     return jwt.sign(
         {
             email: user.email,
@@ -9,4 +9,4 @@ const generateToken = (user) => {
         process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' });
 };
 
-export {generateToken}
+export {generateAccessToken}
