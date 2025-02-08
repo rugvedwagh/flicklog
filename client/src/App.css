@@ -19,7 +19,7 @@ body {
     margin: 0;
 }
 
-.root-bg.dark .MuiContainer-maxWidthLg {
+.root-bg.dark .MuiContainer-maxWidthXl {
     /* outline: 0.1px solid var(--borderColor); */
     min-height: 100vh;
     overflow: visible;

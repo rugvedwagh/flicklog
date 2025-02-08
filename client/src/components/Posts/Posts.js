@@ -13,6 +13,7 @@ const Posts = ({ setCurrentId, darkMode }) => {
     const location = useLocation();
 
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
+    console.log(posts[0], posts[1])
 
     const [currentPage, setCurrentPage] = useState(1);
 

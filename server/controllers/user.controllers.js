@@ -27,7 +27,6 @@ const logIn = async (req, res) => {
     const token = generateToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
 
-    oldUser.refreshToken = refreshToken;
     await oldUser.save();
 
     res.status(200).json({
@@ -68,7 +67,6 @@ const signUp = async (req, res) => {
     const token = generateToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
 
-    newUser.refreshToken = refreshToken;
     await newUser.save();
 
     res.status(201).json({

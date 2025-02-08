@@ -61,8 +61,8 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
         e.preventDefault();
 
         (currentId === 0) ?
-            dispatch(createPost({ ...postData, name: profile?.result?.name })) :
-            dispatch(updatePost(currentId, { ...postData, name: profile?.result?.name }));
+            dispatch(createPost({ ...postData, name: profile.name })) :
+            dispatch(updatePost(currentId, { ...postData, name: profile.name }));
 
         clearForm();
     };
