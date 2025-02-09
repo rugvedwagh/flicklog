@@ -26,8 +26,8 @@
 }
 
 .loading {
-    margin: 0 50%;
-    color: var(--forrestGreen);
+    margin: 20% 50%;
+    color: var(--forrestGreen) !important;
 }
 
 .loading.dark {

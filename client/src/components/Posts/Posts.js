@@ -44,7 +44,6 @@ const Posts = ({ setCurrentId }) => {
                     loader={
                         <CircularProgress
                             className={`infloader ${darkMode ? 'dark' : ''}`}
-                            sx={{ color: 'white' }}
                             size="3rem"
                         />
                     }
