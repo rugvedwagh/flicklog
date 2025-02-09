@@ -1,15 +1,14 @@
-import { Card, CardActions, CardMedia, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
+import { Card, CardActions, CardMedia, Button, Typography, Tooltip } from '@mui/material';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import { likePost, deletePost } from '../../redux/actions/post.actions';
+import { likePost } from '../../redux/actions/post.actions';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getRefreshToken } from '../../utils/getTokens';
 import { useTheme } from '../../context/themeContext';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
@@ -47,10 +46,7 @@ const Post = ({ post, setCurrentId }) => {
         setOpenDeleteDialog((prev) => !prev);
     }, []);
 
-    const handleDeletePost = useCallback(() => {
-        dispatch(deletePost(post._id));
-        toggleDeleteDialog();
-    }, [dispatch, post._id, toggleDeleteDialog]);
+
 
     const handleBookmarkToggle = () => {
         dispatch(bookmarkPost(post._id, userId));
@@ -127,10 +123,7 @@ const Post = ({ post, setCurrentId }) => {
 
             <CardActions className="cardActions">
                 <Tooltip title="Like" arrow placement="top">
-                    <Button
-                        size="small"
-                        onClick={handleLike}
-                    >
+                    <Button size="small" onClick={handleLike}>
                         <Likes
                             className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
                             likes={likes}
@@ -154,54 +147,15 @@ const Post = ({ post, setCurrentId }) => {
                 {UserIsAuthenticated && (
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
-                            {isbookmarked ?
-                                (
-                                    <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                                ) : (
-                                    <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                                )}
+                            {isbookmarked ? (
+                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                            ) : (
+                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                            )}
                         </Button>
                     </Tooltip>
                 )}
-
-                {userId === post?.creator && (
-                    <Tooltip title="Delete" arrow placement="top">
-                        <Button
-                            size="small"
-                            onClick={toggleDeleteDialog}
-                        >
-                            <DeleteIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" titleAccess="" />
-                        </Button>
-                    </Tooltip>
-                )}
-            </CardActions>
-
-            <Dialog
-                open={openDeleteDialog}
-                onClose={toggleDeleteDialog}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete this post?"}
-                </DialogTitle>
-
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        This action cannot be undone.
-                    </DialogContentText>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={toggleDeleteDialog} variant="contained">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleDeletePost} variant="contained">
-                        Delete
-                    </Button>
-                </DialogActions>
-
-            </Dialog>
+           </CardActions>
         </Card>
     );
 };

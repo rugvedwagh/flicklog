@@ -20,15 +20,14 @@ body {
 }
 
 .root-bg.dark .MuiContainer-maxWidthXl {
-    /* outline: 0.1px solid var(--borderColor); */
     min-height: 100vh;
     overflow: visible;
 }
 
-.root-bg.dark .MuiContainer-maxWidthXl .scrollup{
+.root-bg.dark .MuiContainer-maxWidthLg .scrollup{
     background-color: var(--black);
     color: var(--antiFlashWhite);
-    outline: 1px solid var(--antiFlashWhite);
+    outline: 1px solid var(--borderColor);
 }
 
 @keyframes flower {

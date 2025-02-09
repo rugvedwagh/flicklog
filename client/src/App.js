@@ -40,7 +40,7 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
                     onClick={scrollToTop}

@@ -52,13 +52,13 @@
     padding-top: 30px;
     border-radius: 3px;
     background-color: var(--white);
-    animation: btow 0.2s ease-in;   
+    animation: btow 0.2s ease-in;
 }
 
 .main.dark {
     color: var(--antiFlashWhite);
     background-color: var(--black);
-    animation: grow 0.2s ease-in;   
+    animation: grow 0.2s ease-in;
 }
 
 .first {
@@ -66,13 +66,13 @@
     word-spacing: 1px;
     display: flex;
     flex-direction: column;
-    width: 47%;
+    width: 65%;
 }
 
 .second {
     display: flex;
     flex-direction: row;
-    width: 60%;
+    width: 65%;
     justify-content: center;
     align-items: center;
     animation: grow 0.8s ease;
@@ -138,7 +138,7 @@
     z-index: 1000;
 }
 
-.loader.dark{
+.loader.dark {
     color: var(--antiFlashWhite) !important;
 }
 
@@ -310,11 +310,17 @@
     color: var(--borderColor) !important;
 }
 
-.sect > .MuiDivider{
+.sect>.MuiDivider {
     color: var(--borderColor);
 }
 
-.sect > .MuiTypography-h5{
+.sect>.MuiTypography-h5 {
     user-select: none;
     color: var(--borderColor);
+}
+
+.dateAndDelete {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
 }
