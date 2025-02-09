@@ -7,6 +7,9 @@
     background-color: var(--white);
     margin-top: 100vh;
     height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .footer.dark {

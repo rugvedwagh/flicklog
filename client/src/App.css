@@ -25,6 +25,12 @@ body {
     overflow: visible;
 }
 
+.root-bg.dark .MuiContainer-maxWidthXl .scrollup{
+    background-color: var(--black);
+    color: var(--antiFlashWhite);
+    outline: 1px solid var(--antiFlashWhite);
+}
+
 @keyframes flower {
     0% {
         transform: scale(0);

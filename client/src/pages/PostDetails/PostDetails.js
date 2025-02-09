@@ -42,7 +42,7 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
     return (
-        <div sx={{ paddingTop: '1.25rem' }}>
+        <div>
 
             <div className={`main ${darkMode ? 'dark' : ''}`}>
                 <section className='second'>

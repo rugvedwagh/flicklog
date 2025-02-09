@@ -68,10 +68,6 @@ const Userinfo = () => {
         dispatch(bookmarkPost(postId, userId));
     }
 
-    if (!clientData) {
-        return <h2>User does not exist!</h2>;
-    }
-
     return (
         <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>

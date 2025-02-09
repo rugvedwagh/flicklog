@@ -22,6 +22,8 @@ const App = () => {
     const darkMode = useTheme();
 
     const accessToken = getAccessToken();
+    console.log(accessToken);
+    
     const refreshTokenFromCookies = getRefreshToken();
 
     useEffect(() => {
@@ -49,8 +51,8 @@ const App = () => {
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/user/i" element={<Userinfo />} />
+                    <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="user/i" element={accessToken ? <Userinfo /> : <Navigate to="/posts" />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
