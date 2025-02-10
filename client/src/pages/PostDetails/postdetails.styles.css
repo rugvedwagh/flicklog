@@ -66,13 +66,13 @@
     word-spacing: 1px;
     display: flex;
     flex-direction: column;
-    width: 65%;
+    width: 64%;
 }
 
 .second {
     display: flex;
     flex-direction: row;
-    width: 65%;
+    width: 64%;
     justify-content: center;
     align-items: center;
     animation: grow 0.8s ease;

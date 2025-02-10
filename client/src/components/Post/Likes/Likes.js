@@ -10,22 +10,22 @@ const Likes = ({ likes, id, darkMode }) => (
                 (
                     <>
                         <ThumbUpAltIcon
-                            className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
+                            className={`like-button ${darkMode ? 'dark' : ''}`}
                             fontSize="small"
                         />
 
-                        <span style={{ textTransform: 'none' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                        <span style={{ textTransform: 'none' }} className={`like-button ${darkMode ? 'dark' : ''}`}>
                             &nbsp;{likes.length > 2 ? `you and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
                         </span>
                     </>
                 ) : (
                     <>
                         <ThumbUpAltOutlinedIcon
-                            className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
+                            className={`like-button ${darkMode ? 'dark' : ''}`}
                             fontSize="small"
                         />
 
-                        <span style={{ textTransform: 'none' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                        <span style={{ textTransform: 'none' }} className={`like-button ${darkMode ? 'dark' : ''}`}>
                             &nbsp;{likes.length} {likes.length === 1 ? 'like' : 'likes'}
                         </span>
                     </>
@@ -33,10 +33,10 @@ const Likes = ({ likes, id, darkMode }) => (
         ) : (
             <>
                 <ThumbUpAltOutlinedIcon
-                    className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
+                    className={`like-button ${darkMode ? 'dark' : ''}`}
                     fontSize="small"
                 />
-                <span className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                <span className={`like-button ${darkMode ? 'dark' : ''}`}>
                     &nbsp;Like
                 </span>
             </>

@@ -8,7 +8,7 @@ import './footer.styles.css';
 const Footer = () => {
 
     const darkMode = useTheme();
-
+    
     return (
         <div className={`footer ${darkMode ? 'dark' : ''}`}>
             <div className="col">
@@ -91,6 +91,7 @@ const Footer = () => {
                     </li>
                 </ul>
             </div>
+            <div className="clearfix"></div>
         </div>
     );
 };

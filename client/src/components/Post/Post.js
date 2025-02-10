@@ -1,6 +1,6 @@
 import { Card, CardActions, CardMedia, Button, Typography, Tooltip } from '@mui/material';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import { likePost } from '../../redux/actions/post.actions';
 import { bookmarkPost } from '../../redux/actions/post.actions';
@@ -30,7 +30,6 @@ const Post = ({ post, setCurrentId }) => {
 
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
@@ -41,12 +40,6 @@ const Post = ({ post, setCurrentId }) => {
     const openPost = () => {
         navigate(`/posts/${post._id}`);
     };
-
-    const toggleDeleteDialog = useCallback(() => {
-        setOpenDeleteDialog((prev) => !prev);
-    }, []);
-
-
 
     const handleBookmarkToggle = () => {
         dispatch(bookmarkPost(post._id, userId));
@@ -107,7 +100,7 @@ const Post = ({ post, setCurrentId }) => {
                     variant="h5"
                     gutterBottom
                 >
-                    {post.title.slice(0, 43)}
+                    {post.title.slice(0, 25)}
                 </Typography>
 
                 <div className="msg">
@@ -125,7 +118,6 @@ const Post = ({ post, setCurrentId }) => {
                 <Tooltip title="Like" arrow placement="top">
                     <Button size="small" onClick={handleLike}>
                         <Likes
-                            className={`interaction-buttons ${darkMode ? 'dark' : ''}`}
                             likes={likes}
                             id={userId}
                             darkMode={darkMode}
@@ -136,8 +128,8 @@ const Post = ({ post, setCurrentId }) => {
                 <Tooltip title="Comments" arrow placement="top">
                     <Button>
                         <div style={{ display: 'flex', alignItems: 'center' }} onClick={openPost}>
-                            <CommentOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            <span style={{ fontSize: '15px', opacity: '0.8' }} className={`interaction-buttons ${darkMode ? 'dark' : ''}`}>
+                            <CommentOutlinedIcon className={`comment-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                            <span style={{ fontSize: '15px', opacity: '0.8' }} className={`comment-button ${darkMode ? 'dark' : ''}`}>
                                 &nbsp;{post?.comments?.length}
                             </span>
                         </div>
@@ -148,9 +140,9 @@ const Post = ({ post, setCurrentId }) => {
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
-                                <BookmarkIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                <BookmarkIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             ) : (
-                                <BookmarkBorderOutlinedIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                <BookmarkBorderOutlinedIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             )}
                         </Button>
                     </Tooltip>

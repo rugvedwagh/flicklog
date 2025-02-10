@@ -2,9 +2,9 @@ span{
     text-transform: none;
 }
 
-.interaction-buttons{
-    color: var(--black);
+.like-button{
+    color: var(--borderColor);
 }
-.interaction-buttons.dark{
-    color: var(--antiFlashWhite);
+.like-button.dark{
+    color: var(--subtextColor);
 }

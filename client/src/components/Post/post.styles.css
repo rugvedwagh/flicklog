@@ -50,7 +50,7 @@
 }
 
 .title {
-    padding: 0px 0 0 16px;
+    padding: 0px 1rem 0 1rem;
     margin-bottom: 0;
     color: var(--black);
     opacity: 0.9;
@@ -74,7 +74,7 @@
 }
 
 .msg {
-    padding: 0 16px;
+    padding: 0 1rem;
     margin-top: 0;
     user-select: none;
 }
@@ -83,11 +83,11 @@
     color: var(--subtextColor) !important;
 }
 
-.interaction-buttons{
-    color: var(--black);
+.comment-button{
+    color: var(--borderColor);
 }
 
-.interaction-buttons.dark{
+.comment-button.dark{
     color: var(--subtextColor);
 }
 
@@ -103,22 +103,20 @@
     color: var(--black);
 }
 
-.MuiDialogActions-root .MuiButton-contained{
-    background-color: var(--black);
-}
-
-.MuiDialogActions-root .MuiButton-contained:hover{
-    background-color: var(--antiFlashWhite);
-    color: var(--black);
-}
-
 section{
     cursor: pointer;
 }
 
 .cardActions{
-    /* padding: 0 0rem 0 0 !important; */
     display: flex;
     flex-direction: row;
     justify-content: flex-start !important;
+}
+
+.bookmark-button{
+    color: var(--borderColor);
+}
+
+.bookmark-button.dark{
+    color: var(--subtextColor);
 }
