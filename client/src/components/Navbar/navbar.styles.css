@@ -54,10 +54,6 @@
     }
 }
 
-.image {
-    margin-left: 15px;
-}
-
 .profile {
     display: flex;
     flex-direction: column;

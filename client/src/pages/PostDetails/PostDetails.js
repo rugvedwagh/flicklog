@@ -98,7 +98,7 @@ const PostDetails = () => {
                                             size="small"
                                             onClick={toggleDeleteDialog}
                                         >
-                                            <DeleteIcon className={`interaction-buttons ${darkMode ? 'dark' : ''}`} fontSize="small" titleAccess="" />
+                                            <DeleteIcon color='error' fontSize="small" titleAccess="" />
                                         </Button>
                                     </Tooltip>
                                 )}
