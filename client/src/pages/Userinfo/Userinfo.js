@@ -27,19 +27,19 @@ const Userinfo = () => {
         name: clientData?.name || '',
         email: clientData?.email || ''
     });
-    
-    const bookmarkedPosts = useMemo(() => {
+
+    const bookmarkedPosts = () => {
         return posts.filter((post) => clientData?.bookmarks?.includes(post._id));
-    }, [posts, clientData]);
+    };
 
     const userPostsCount = useMemo(() => {
         return posts.filter((post) => post.creator === clientData?._id).length;
-    }, [posts, clientData]);
+    }, [posts, clientData?._id]);
 
     const openPost = useCallback((postId) => {
         navigate(`/posts/${postId}`);
     }, [navigate]);
-    
+
     const handleEditUser = useCallback(() => {
         setFormData({
             name: clientData.name,
@@ -47,21 +47,21 @@ const Userinfo = () => {
         });
         setEditDialogOpen(true);
     }, [clientData]);
-    
+
     const handleFormChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }, []);
-    
+
     const saveChanges = useCallback(() => {
         dispatch(updateUserDetails(clientData._id, formData));
         setEditDialogOpen(false);
     }, [dispatch, clientData, formData]);
-    
+
     const handleCancel = useCallback(() => {
         setEditDialogOpen(false);
     }, []);
-    
+
     const removeBookmark = (postId, userId) => {
         dispatch(bookmarkPost(postId, userId));
     }
@@ -70,68 +70,70 @@ const Userinfo = () => {
         window.scrollTo(0, 0);
         dispatch(fetchUserData(userId, navigate))
     }, []);
-    
-    if (!clientData) {
-        return <h2>User does not exist!</h2>;
+
+    if (isLoading) {
+        return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
     }
-    
+
+    if (!clientData) {
+        return <h2 sx={{color : 'white'}}>User does not exist!</h2>;
+    }
+
     return (
         <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
                 <h2>User Profile</h2>
             </div>
 
-            {isLoading ? <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" /> : (
-                <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
+            <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
-                    <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                        {clientData.name.charAt(0).toUpperCase()}
-                    </div>
-
-                    <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
-
-                    <ul>
-                        <li>
-                            <strong>Email:</strong> <span>{clientData.email}</span>
-                        </li>
-                        <li>
-                            <strong>Posts:</strong> <span>{userPostsCount}</span>
-                        </li>
-                        <li>
-                            <strong>Version:</strong> <span>{clientData.__v}</span>
-                        </li>
-                        <li>
-                            <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
-                        </li>
-                        <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
-                            <Button>
-                                {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
-                            </Button>
-                            <Button onClick={handleEditUser}><span>Edit</span></Button>
-                        </li>
-                    </ul>
-
-                    {bookmarkedPosts.length > 0 && showBm ? (
-                        <div className="bookmarked-posts">
-                            <hr />
-                            <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
-                            <div className="bookmarked-list">
-                                {bookmarkedPosts.map((post) => (
-                                    <div
-                                        key={post._id}
-                                        className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
-                                    >
-                                        <h4 onClick={() => openPost(post._id)}>
-                                            {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
-                                        </h4>
-                                        <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ) : null}
+                <div className={`avatar ${darkMode ? 'dark' : ''}`}>
+                    {clientData.name.charAt(0).toUpperCase()}
                 </div>
-            )}
+
+                <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
+
+                <ul>
+                    <li>
+                        <strong>Email:</strong> <span>{clientData.email}</span>
+                    </li>
+                    <li>
+                        <strong>Posts:</strong> <span>{userPostsCount}</span>
+                    </li>
+                    <li>
+                        <strong>Version:</strong> <span>{clientData.__v}</span>
+                    </li>
+                    <li>
+                        <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
+                    </li>
+                    <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
+                        <Button>
+                            {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
+                        </Button>
+                        <Button onClick={handleEditUser}><span>Edit</span></Button>
+                    </li>
+                </ul>
+
+                {bookmarkedPosts.length > 0 && showBm ? (
+                    <div className="bookmarked-posts">
+                        <hr />
+                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                        <div className="bookmarked-list">
+                            {bookmarkedPosts.map((post) => (
+                                <div
+                                    key={post._id}
+                                    className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
+                                >
+                                    <h4 onClick={() => openPost(post._id)}>
+                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                    </h4>
+                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : null}
+            </div>
 
             <Dialog open={editDialogOpen} onClose={handleCancel}>
 

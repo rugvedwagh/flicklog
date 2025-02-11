@@ -8,6 +8,7 @@ import './footer.styles.css';
 const Footer = () => {
 
     const darkMode = useTheme();
+    const currentYear = new Date().getFullYear();
 
     return (
         <div className={`footer ${darkMode ? 'dark' : ''}`}>
@@ -92,6 +93,10 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="clearfix"></div>
+            <div className="footer-bottom">
+                <p>© {currentYear} Reminisce. All rights reserved.</p>
+                <p>Privacy Policy | Terms of Service</p>
+            </div>
         </div>
     );
 };

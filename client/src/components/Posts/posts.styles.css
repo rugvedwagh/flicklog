@@ -6,12 +6,6 @@
     padding: 0;
 }
 
-.container {
-    padding: 0.1em;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
 .actionDiv {
     text-align: center;
 }
@@ -26,6 +20,7 @@
 }
 
 .loading {
+    position: relative;
     margin: 20% 50%;
     color: var(--forrestGreen) !important;
 }
@@ -36,10 +31,8 @@
 
 @media (max-width: 600px) {
     .loading {
+        margin: 20% 45%;
         margin-bottom: 400px;
-        top: 50%;
-        left: 40%;
-        transform: translate(-50%, -50%);
     }
 
     .infloader {

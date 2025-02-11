@@ -68,7 +68,6 @@
     transform: translateX(5px);
 }
 
-/* Social icons column specific styles */
 .footer .col:last-child ul {
     display: flex;
     gap: 15px;
@@ -90,12 +89,33 @@
     opacity: 0.8;
 }
 
-/* Clear fix */
 .clearfix {
     width: 100%;
 }
 
-/* Responsive Design */
+.footer-bottom {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    font-size: 14px;
+    color: var(--antiFlashWhite);
+}
+
+.footer-bottom p {
+    margin: 5px 0;
+}
+
+.footer-bottom a {
+    color: var(--antiFlashWhite);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+    color: white;
+}
+
 @media screen and (max-width: 960px) {
     .footer {
         gap: 40px;
