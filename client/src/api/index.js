@@ -42,8 +42,8 @@ API.interceptors.response.use((response) => response,
         if (profile && error.response.status === 401) {
             try {
                 await store.dispatch(refreshToken(refreshTokenFromCookies));
-                const profile = JSON.parse(localStorage.getItem('profile'));
-                const { accessToken } = profile;
+                const updatedProfile = getProfile();
+                const { accessToken } = updatedProfile;
                 originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
 
                 return axios(originalRequest);
