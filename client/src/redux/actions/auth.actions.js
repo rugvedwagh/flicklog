@@ -17,6 +17,7 @@ import {
     updateUserDetailsApi,
     refreshTokenApi,
 } from '../../api/user.api';
+import { getProfile } from '../../utils/storage';
 
 const signIn = (formData, navigate) => async (dispatch) => {
     try {
@@ -90,7 +91,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
 
 const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
     try {
-        const profile = JSON.parse(localStorage.getItem('profile'));
+        const profile = getProfile();
 
         if (!profile || !refreshTokenFromCookies) {
             return;

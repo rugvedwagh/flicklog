@@ -13,7 +13,7 @@
     background-color: var(--white) !important;
     display: flex;
     flex-direction: row;
-    padding: 1.5em;
+    /* padding: 1.5em; */
     border-radius: 3px;
     animation: flower 0.6s ease;
     gap: 10px;
@@ -40,7 +40,6 @@
     background-color: var(--antiFlashWhite) !important;
     border-radius: 3px;
 }
-
 
 .search-button{
     color:var(--black) !important;

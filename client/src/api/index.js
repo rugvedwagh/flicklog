@@ -1,7 +1,8 @@
 import axios from 'axios';
 import store from '../redux/store';
-import Cookies from 'js-cookie';
 import { refreshToken } from '../redux/actions/auth.actions';
+import { getProfile } from '../utils/storage';
+import { getRefreshToken } from '../utils/getTokens';
 
 const API = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ?
@@ -17,10 +18,10 @@ const API = axios.create({
     requests have the proper authentication token.
 */
 API.interceptors.request.use((req) => {
-    const profile = localStorage.getItem('profile');
+    const profile = getProfile();
 
     if (profile) {
-        const { accessToken } = JSON.parse(profile);
+        const { accessToken } = profile;
         req.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return req;
@@ -35,15 +36,15 @@ API.interceptors.request.use((req) => {
 API.interceptors.response.use((response) => response,
     async (error) => {
         const originalRequest = error.config;
-        const profile = localStorage.getItem('profile');
-        const refreshTokenFromCookies = Cookies.get('refreshToken');
+        const profile = getProfile();
+        const refreshTokenFromCookies = getRefreshToken();
 
         if (profile && error.response.status === 401) {
             try {
-                await store.dispatch(refreshToken(refreshTokenFromCookies));   // "await" Otherwise the code below this line is exuced before the localstorage is updated
-
+                await store.dispatch(refreshToken(refreshTokenFromCookies));
                 const profile = JSON.parse(localStorage.getItem('profile'));
-                originalRequest.headers['Authorization'] = `Bearer ${profile?.accessToken}`;
+                const { accessToken } = profile;
+                originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
 
                 return axios(originalRequest);
             } catch (err) {

@@ -1,12 +1,13 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails } from '../../redux/actions/auth.actions';
+import { updateUserDetails, userData } from '../../redux/actions/auth.actions';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
-import { useTheme } from '../../context/themeContext';
+import { getProfile } from '../../utils/storage';
 
 const Userinfo = () => {
 
@@ -14,6 +15,8 @@ const Userinfo = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
+    const profile = getProfile();
+    const userId = profile._id;
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
@@ -22,6 +25,7 @@ const Userinfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        dispatch(userData(userId, navigate))
     }, []);
 
     const [formData, setFormData] = useState({
@@ -38,7 +42,6 @@ const Userinfo = () => {
     }, [posts, clientData]);
 
     const openPost = useCallback((postId) => {
-        console.log('in the open post function in userinfo');
         navigate(`/posts/${postId}`);
     }, [navigate]);
 
@@ -66,6 +69,10 @@ const Userinfo = () => {
 
     const removeBookmark = (postId, userId) => {
         dispatch(bookmarkPost(postId, userId));
+    }
+
+    if (!clientData) {
+        return <h2>User does not exist!</h2>;
     }
 
     return (
@@ -117,7 +124,7 @@ const Userinfo = () => {
                                         <h4 onClick={() => openPost(post._id)}>
                                             {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
                                         </h4>
-                                        <CancelRoundedIcon sx={{ cursor: 'pointer' }} color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                        <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
                                     </div>
                                 ))}
                             </div>

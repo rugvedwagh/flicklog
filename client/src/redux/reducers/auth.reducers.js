@@ -14,6 +14,7 @@ import {
     BOOKMARK_POST
 } from '../../constants/post.constants';
 import Cookies from 'js-cookie'
+import { getProfile } from '../../utils/storage';
 
 const initialState = {
     authData: null,
@@ -40,7 +41,7 @@ const authReducer = (state = initialState, action) => {
 
         case REFRESH_TOKEN:
             const updatedProfile = {
-                ...JSON.parse(localStorage.getItem('profile')),
+                ...getProfile(),
                 accessToken: action.payload,
             };
             localStorage.setItem('profile', JSON.stringify(updatedProfile));
@@ -75,7 +76,7 @@ const authReducer = (state = initialState, action) => {
 
         case UPDATE_USER: {
             const updatedAuthData = action.payload;
-            const existingProfile = JSON.parse(localStorage.getItem("profile"));
+            const existingProfile = getProfile();
             const updatedProfile = {
                 ...existingProfile,
                 ...updatedAuthData,

@@ -21,10 +21,8 @@ const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const darkMode = useTheme();
 
-    const accessToken = getAccessToken();
-    console.log(accessToken);
-    
     const refreshTokenFromCookies = getRefreshToken();
+    const accessToken = getAccessToken();
 
     useEffect(() => {
         if (!accessToken && refreshTokenFromCookies) {
@@ -52,7 +50,7 @@ const App = () => {
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
                     <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
-                    <Route path="user/i" element={accessToken ? <Userinfo /> : <Navigate to="/posts" />} />
+                    <Route path="user/i" element={<Userinfo />} />;
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
