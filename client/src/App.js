@@ -17,6 +17,7 @@ import Auth from '../src/pages/Auth/Auth';
 import './App.css';
 
 const App = () => {
+    
     const dispatch = useDispatch();
     const [showScrollButton, setShowScrollButton] = useState(false);
     const darkMode = useTheme();
@@ -39,10 +40,12 @@ const App = () => {
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
             <Container maxWidth="lg">
+
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
                     onClick={scrollToTop}
                 />
+
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
@@ -54,6 +57,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
+                
             </Container>
         </div>
     );

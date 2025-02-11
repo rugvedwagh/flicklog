@@ -48,7 +48,7 @@ const signUp = (formData, navigate) => async (dispatch) => {
     }
 };
 
-const userData = (id, navigate) => async (dispatch) => {
+const fetchUserData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         navigate(`/user/i`);
@@ -107,7 +107,7 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
 export {
     signIn,
     signUp,
-    userData,
+    fetchUserData,
     updateUserDetails,
     Logout,
     refreshToken,

@@ -1,13 +1,13 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails, userData } from '../../redux/actions/auth.actions';
-import { bookmarkPost } from '../../redux/actions/post.actions';
+import { updateUserDetails, fetchUserData } from '../../redux/actions/auth.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { bookmarkPost } from '../../redux/actions/post.actions';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
+import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
-import { getProfile } from '../../utils/storage';
 
 const Userinfo = () => {
 
@@ -23,16 +23,11 @@ const Userinfo = () => {
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        dispatch(userData(userId, navigate))
-    }, []);
-
     const [formData, setFormData] = useState({
         name: clientData?.name || '',
         email: clientData?.email || ''
     });
-
+    
     const bookmarkedPosts = useMemo(() => {
         return posts.filter((post) => clientData?.bookmarks?.includes(post._id));
     }, [posts, clientData]);
@@ -44,7 +39,7 @@ const Userinfo = () => {
     const openPost = useCallback((postId) => {
         navigate(`/posts/${postId}`);
     }, [navigate]);
-
+    
     const handleEditUser = useCallback(() => {
         setFormData({
             name: clientData.name,
@@ -52,29 +47,34 @@ const Userinfo = () => {
         });
         setEditDialogOpen(true);
     }, [clientData]);
-
+    
     const handleFormChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }, []);
-
+    
     const saveChanges = useCallback(() => {
         dispatch(updateUserDetails(clientData._id, formData));
         setEditDialogOpen(false);
     }, [dispatch, clientData, formData]);
-
+    
     const handleCancel = useCallback(() => {
         setEditDialogOpen(false);
     }, []);
-
+    
     const removeBookmark = (postId, userId) => {
         dispatch(bookmarkPost(postId, userId));
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        dispatch(fetchUserData(userId, navigate))
+    }, []);
+    
     if (!clientData) {
         return <h2>User does not exist!</h2>;
     }
-
+    
     return (
         <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>

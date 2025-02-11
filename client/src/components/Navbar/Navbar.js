@@ -4,12 +4,13 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { likedPosts, userPosts } from '../../redux/actions/post.actions';
-import { userData, Logout } from '../../redux/actions/auth.actions';
+import { fetchUserData, Logout } from '../../redux/actions/auth.actions';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { toggleTheme } from '../../redux/actions/theme.actions';
 import React, { useState, useEffect, useCallback } from 'react';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { handleNavbarScroll } from '../../utils/scroll';
 import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
@@ -27,7 +28,6 @@ const Navbar = () => {
     const profile = getProfile();
     const userId = profile?._id;
 
-
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -42,27 +42,9 @@ const Navbar = () => {
         setOpenDialog(false);
     }, [dispatch, navigate]);
 
+
     useEffect(() => {
-        let lastScrollY = window.scrollY;
-        const scrollThreshold = 300;
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-
-            if (currentScrollY > scrollThreshold) {
-                setIsVisible(currentScrollY <= lastScrollY);
-            } else {
-                setIsVisible(true);
-            }
-
-            lastScrollY = currentScrollY;
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+        return handleNavbarScroll(setIsVisible);
     }, []);
 
     const handleLoginClick = () => {
@@ -71,7 +53,7 @@ const Navbar = () => {
 
     const openUser = () => {
         if (userId) {
-            dispatch(userData(userId, navigate));
+            dispatch(fetchUserData(userId, navigate));
             closeMenu();
         }
     };
