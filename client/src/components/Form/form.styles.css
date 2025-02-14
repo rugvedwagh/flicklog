@@ -12,9 +12,11 @@
 
 .paper {
     animation: blooming 0.7s ease;
+    padding: 0 !important;
 }
 
 .paper.dark {
+    padding: 0 !important;
     color: var(--antiFlashWhite) !important;
 }
 
@@ -76,11 +78,11 @@
     opacity: 0.5;
 }
 
+.close.dark {
+    color: var(--antiFlashWhite);
+}
+
 .close:hover {
     opacity: 1;
     transition: 0.3s ease-in;
-}
-
-.close.dark {
-    color: var(--antiFlashWhite);
 }

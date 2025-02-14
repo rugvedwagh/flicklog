@@ -38,18 +38,18 @@ Reminisce is a **MERN stack** application designed for users to store and revisi
 ## Environment Variables
 Create a `.env` file in the `server` directory with:
 ```env
-PORT=your_port_no
-DB_URL=your_mongodb_uri
-ACCESS_TOKEN_SECRET=your_secret
-REFRESH_TOKEN_SECRET=your_secret
-REDIS_URL=your_redis_url
+PORT = your_port_no
+DB_URL = your_mongodb_uri
+ACCESS_TOKEN_SECRET = your_secret
+REFRESH_TOKEN_SECRET = your_secret
+REDIS_URL = your_redis_url
 ``` 
 
 Create a `.env` file in the `client` directory with:
 ```env
-NODE_ENV=development/production
-REACT_APP_API_URL=your_backend_url
-REACT_APP_API_URL_DEV=your_local_backend_url
+NODE_ENV = development/production
+REACT_APP_API_URL = your_backend_url
+REACT_APP_API_URL_DEV = your_local_backend_url
 ``` 
 
 ## Contributing

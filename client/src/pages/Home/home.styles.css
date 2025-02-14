@@ -74,13 +74,6 @@
     flex-direction: row;
 }
 
-.MuiToggleButtonGroup-root {
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-}
-
 @media (max-width: 600px) {
     .gridContainer {
         flex-direction: column-reverse;

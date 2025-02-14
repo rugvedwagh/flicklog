@@ -101,7 +101,7 @@
 
 @media only screen and (max-width: 600px) {
     .main {
-        margin-top: 4rem;
+        margin-top: 0.5rem;
         flex-direction: column;
         padding: 20px;
     }
@@ -274,9 +274,8 @@
     }
 
     .postmessage {
-        font-size: 20px !important;
+        font-size: 18px !important;
         font-weight: 300 !important;
-        /* confused between font weight 400/300 both look good */
     }
 
     .posttitle {
