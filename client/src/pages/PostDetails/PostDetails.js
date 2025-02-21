@@ -82,7 +82,7 @@ const PostDetails = () => {
                     <Typography component='p' className='postmessage' dangerouslySetInnerHTML={{ __html: post.message }} />
 
                     <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
-                        Posted by: <strong>{post.name}</strong>
+                        Posted by : <strong>{post.name}</strong>
                     </Typography>
 
                     <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
@@ -139,7 +139,6 @@ const PostDetails = () => {
                 </Dialog>
             )}
 
-            {/* Recommended Posts */}
             {recommendedPosts.length ? (
                 <div className={`sect ${darkMode ? 'dark' : ''}`}>
                     <Typography gutterBottom variant='h5'>

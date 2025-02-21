@@ -45,7 +45,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     const clearForm = () => {
         setCurrentId(0);
         setPostData({
-            title: "",
+            title: '',
             message: '',
             tags: [],
             selectedfile: ''

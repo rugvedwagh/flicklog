@@ -46,15 +46,11 @@ const CommentsSection = ({ post }) => {
             {UserIsAuthenticated && (
                 <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
 
-                    <Typography gutterBottom variant='h6'>
-                        Write a Comment
-                    </Typography>
-
                     <TextField
                         fullWidth
-                        rows={3}
+                        rows={1}
                         variant='outlined'
-                        label='Comment...'
+                        label='Add a comment...'
                         multiline
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}

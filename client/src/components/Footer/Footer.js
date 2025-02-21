@@ -34,7 +34,7 @@ const Footer = () => {
                 </ul>
             </div>
 
-            <div className="col">
+            <div className="col"> 
                 <h1>Accounts</h1>
                 <ul>
                     <li>About</li>
@@ -54,15 +54,6 @@ const Footer = () => {
                     <li>Site map</li>
                     <li>Web templates</li>
                     <li>Email templates</li>
-                </ul>
-            </div>
-
-            <div className="col">
-                <h1>Support</h1>
-                <ul>
-                    <li>Contact us</li>
-                    <li>Web chat</li>
-                    <li>Open ticket</li>
                 </ul>
             </div>
 

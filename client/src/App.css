@@ -94,26 +94,6 @@ body {
     background-color: var(--black);
 }
 
-.toggleButton {
-    position: fixed;
-    z-index: 1000;
-    left: 95vw;
-    top: 10vh;
-    background-color: transparent;
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.toggleButton:hover {
-    transform: scale(1.1);
-}
-
-.toggleButton:focus {
-    outline: none;
-}
-
 @media (max-width: 600px) {
     .toggleButton {
         left: 80%;
@@ -121,10 +101,4 @@ body {
         font-size: 0.8rem;
         padding: 8px 18px;
     }
-}
-
-.tempp {
-    background-color: red;
-    width: 100vw;
-    position: fixed;
 }

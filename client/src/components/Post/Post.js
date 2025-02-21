@@ -43,7 +43,7 @@ const Post = ({ post, setCurrentId }) => {
 
     const handleBookmarkToggle = () => {
         dispatch(bookmarkPost(post._id, userId));
-        setIsBookmarked((prev) => !prev);
+        setIsBookmarked(!isbookmarked);
     };
 
     const handleLike = async () => {

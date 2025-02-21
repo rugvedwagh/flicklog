@@ -26,16 +26,6 @@
     animation: slideImage 0.7s ease-in-out;
 }
 
-.searchlogo {
-    color: rgb(107, 107, 107);
-    cursor: pointer;
-}
-
-.searchlogo:hover {
-    color: black;
-    transition: 0.3s ease-in;
-}
-
 .appBarSearch {
     background-color: var(--white) !important;
     display: flex;
@@ -53,7 +43,6 @@
     color: var(--antiFlashWhite) !important;
     background-color: var(--black) !important;
     outline: 1px solid var(--borderColor);
-
 }
 
 .appBarSearch input {

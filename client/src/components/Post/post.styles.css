@@ -1,3 +1,23 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--white) ;
+    color: var(--white);
+    border-radius: 3px;
+    height: 100%;   
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
+}
+
+.card.dark{
+    background-color: var(--black) ;
+}
+
+.card:hover{
+    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px ;
+}
+
 .media {
     height: 0;
     padding-top: 56.25%;
@@ -6,33 +26,6 @@
     cursor: pointer;
     border-top-left-radius: 3px; 
     border-top-right-radius: 3px;
-}
-
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--white) !important;
-    color: var(--white);
-    border-radius: 3px;
-    height: 100%;   
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
-}
-
-.card.dark{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--black) !important;
-    color: var(--white);
-    border-radius: 3px;
-    height: 100%; 
-}
-
-.card:hover{
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
 }
 
 .overlay {

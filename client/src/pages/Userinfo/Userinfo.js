@@ -28,13 +28,13 @@ const Userinfo = () => {
         email: clientData?.email || ''
     });
 
-    const bookmarkedPosts = () => {
+    const bookmarkedPosts = useMemo(() => {
         return posts.filter((post) => clientData?.bookmarks?.includes(post._id));
-    };
+    }, [posts, clientData]);
 
     const userPostsCount = useMemo(() => {
         return posts.filter((post) => post.creator === clientData?._id).length;
-    }, [posts, clientData?._id]);
+    }, [posts, clientData]);
 
     const openPost = useCallback((postId) => {
         navigate(`/posts/${postId}`);
@@ -70,13 +70,13 @@ const Userinfo = () => {
         window.scrollTo(0, 0);
         dispatch(fetchUserData(userId, navigate))
     }, []);
-
+   
     if (isLoading) {
         return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
     }
 
     if (!clientData) {
-        return <h2 sx={{color : 'white'}}>User does not exist!</h2>;
+        return <h2>User does not exist!</h2>;
     }
 
     return (
