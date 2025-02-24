@@ -14,9 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
 import moment from 'moment';
-import './post.styles.css';
+import './postcard.styles.css';
 
-const Post = ({ post, setCurrentId }) => {
+const PostCard = ({ post, setCurrentId }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -152,4 +152,4 @@ const Post = ({ post, setCurrentId }) => {
     );
 };
 
-export default Post;
+export default PostCard;

@@ -17,6 +17,7 @@ const Userinfo = () => {
 
     const profile = getProfile();
     const userId = profile._id;
+    
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
@@ -70,7 +71,7 @@ const Userinfo = () => {
         window.scrollTo(0, 0);
         dispatch(fetchUserData(userId, navigate))
     }, []);
-   
+
     if (isLoading) {
         return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
     }
@@ -82,7 +83,7 @@ const Userinfo = () => {
     return (
         <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
-                <h2>User Profile</h2>
+                <h2>My Profile</h2>
             </div>
 
             <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
@@ -117,7 +118,10 @@ const Userinfo = () => {
                 {bookmarkedPosts.length > 0 && showBm ? (
                     <div className="bookmarked-posts">
                         <hr />
-                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>
+                            Bookmarked Posts
+
+                        </h3>
                         <div className="bookmarked-list">
                             {bookmarkedPosts.map((post) => (
                                 <div
@@ -127,7 +131,10 @@ const Userinfo = () => {
                                     <h4 onClick={() => openPost(post._id)}>
                                         {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
                                     </h4>
-                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                    <CancelRoundedIcon
+                                        color='error'
+                                        onClick={() => removeBookmark(post._id, clientData._id)}
+                                    />
                                 </div>
                             ))}
                         </div>

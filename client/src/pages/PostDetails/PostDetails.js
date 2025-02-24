@@ -1,6 +1,6 @@
 import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
-import CommentsSection from '../../components/Comments/CommentsSection';
+import Comments from '../../components/Comments/Comments';
 import React, { useEffect, useState, useCallback } from 'react';
 import { deletePost } from '../../redux/actions/post.actions';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -75,17 +75,30 @@ const PostDetails = () => {
                         {post.title}
                     </Typography>
 
-                    <Typography variant='subtitle1' className={`post-meta ${darkMode ? 'dark' : ''}`} >
+                    <Typography
+                        variant='subtitle1'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
 
-                    <Typography component='p' className='postmessage' dangerouslySetInnerHTML={{ __html: post.message }} />
+                    <Typography
+                        component='p'
+                        className='postmessage'
+                        dangerouslySetInnerHTML={{ __html: post.message }}
+                    />
 
-                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
+                    <Typography
+                        variant='h6'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
                         Posted by : <strong>{post.name}</strong>
                     </Typography>
 
-                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
+                    <Typography
+                        variant='h6'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
                         <div className='dateAndDelete'>
                             <span>
                                 {moment(post.createdAt).fromNow()}
@@ -98,7 +111,11 @@ const PostDetails = () => {
                                             size="small"
                                             onClick={toggleDeleteDialog}
                                         >
-                                            <DeleteIcon color='error' fontSize="small" titleAccess="" />
+                                            <DeleteIcon
+                                                color="error"
+                                                fontSize="small"
+                                                titleAccess=""
+                                            />
                                         </Button>
                                     </Tooltip>
                                 )}
@@ -106,8 +123,7 @@ const PostDetails = () => {
                         </div>
                     </Typography>
 
-
-                    <CommentsSection post={post} />
+                    <Comments post={post} />
                 </section>
             </div>
 
@@ -149,7 +165,11 @@ const PostDetails = () => {
 
                     <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
-                            <Card raised className={`recommended-post ${darkMode ? 'dark' : ''}`} onClick={() => openPost(_id)} key={_id}>
+                            <Card
+                                raised
+                                className={`recommended-post ${darkMode ? 'dark' : ''}`}
+                                onClick={() => openPost(_id)} key={_id}
+                            >
                                 <Typography gutterBottom variant='h6'>{title}</Typography>
 
                                 <img
@@ -159,13 +179,17 @@ const PostDetails = () => {
                                     onClick={() => openPost(_id)}
                                 />
 
-                                <Typography gutterBottom variant='subtitle1'>{likes.length} likes</Typography>
+                                <Typography gutterBottom variant='subtitle1'>
+                                    {likes.length} likes
+                                </Typography>
                             </Card>
                         ))}
                     </div>
                 </div>
             ) : (
-                <Typography variant='h5' className='endmessage' gutterBottom align='center'> No related posts!</Typography>
+                <Typography variant='h5' className='endmessage' gutterBottom align='center'>
+                    No related posts!
+                </Typography>
             )}
         </div>
     );

@@ -73,12 +73,6 @@
     }
 }
 
-.togandsearch {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
 .search-button{
     color:var(--black) !important;
     background-color: var(--white) !important;
