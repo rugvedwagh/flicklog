@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../redux/store';
+import { store } from '../redux/store';
 import { refreshToken } from '../redux/actions/auth.actions';
 import { getProfile } from '../utils/storage';
 import { getRefreshToken } from '../utils/getTokens';

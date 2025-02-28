@@ -1,44 +1,62 @@
 import PostMessage from "../models/post.model.js";
+import redis from "../config/redisClient.js"; 
 import mongoose from "mongoose";
 
 // Fetch a Single Post
 const fetchPost = async (req, res) => {
     const { id } = req.params;
-
+    
     if (!mongoose.Types.ObjectId.isValid(id)) {
         const error = new Error("Invalid post ID");
         error.statusCode = 400;
         throw error;
     }
-
+    
     const post = await PostMessage.findById(id);
     if (!post) {
         const error = new Error("Post not found");
         error.statusCode = 404;
         throw error;
     }
-
+    
     res.status(200).json(post);
 };
 
-// Fetch All Posts with Pagination
+// Fetch All Posts
 const fetchPosts = async (req, res) => {
-    const { page = 1 } = req.query;
+    try {
+        const pageNumber = parseInt(req.query.page, 10) || 1;
+        const cacheKey = `posts:page:${pageNumber}`;
 
-    const LIMIT = 6;
-    const startIndex = (Number(page) - 1) * LIMIT;
-    const total = await PostMessage.countDocuments({});
+        const cachedPosts = await redis.get(cacheKey);
+        if (cachedPosts) {
+            return res.status(200).json(JSON.parse(cachedPosts));
+        }
 
-    const posts = await PostMessage.find()
-        .sort({ _id: -1 })
-        .limit(LIMIT)
-        .skip(startIndex);
+        const LIMIT = 6;
+        const startIndex = (pageNumber - 1) * LIMIT;
+        const total = await PostMessage.countDocuments({});
 
-    res.status(200).json({
-        data: posts,
-        currentPage: Number(page),
-        numberOfPages: Math.ceil(total / LIMIT),
-    });
+        const posts = await PostMessage.find()
+            .sort({ _id: -1 })
+            .limit(LIMIT)
+            .skip(startIndex);
+
+        const response = {
+            data: posts,
+            currentPage: pageNumber,
+            numberOfPages: Math.ceil(total / LIMIT),
+        };
+
+        const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+        
+        await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+
+        res.status(200).json(response);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
 };
 
 // Search Posts by Title or Tags

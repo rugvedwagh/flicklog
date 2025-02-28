@@ -3,7 +3,6 @@ import { Grid, CircularProgress, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts } from '../../redux/actions/post.actions.js';
-import { useLocation } from 'react-router-dom';
 import { useTheme } from '../../context/themeContext.js';
 import PostCard from '../PostCard/PostCard.js'
 import './posts.styles.css';
@@ -11,7 +10,6 @@ import './posts.styles.css';
 const Posts = ({ setCurrentId }) => {
 
     const dispatch = useDispatch();
-    const location = useLocation();
     const darkMode = useTheme()
 
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);
@@ -20,7 +18,7 @@ const Posts = ({ setCurrentId }) => {
 
     useEffect(() => {
         dispatch(fetchPosts(currentPage));
-    }, [currentPage, dispatch, location]);
+    }, [dispatch, currentPage]);
 
     const fetchMorePosts = useCallback(() => {
         if (currentPage < numberOfPages) {

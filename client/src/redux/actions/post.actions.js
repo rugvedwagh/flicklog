@@ -41,57 +41,22 @@ const fetchPost = (id) => async (dispatch) => {
     }
 };
 
-const fetchPosts = (page) => async (dispatch) => {
+const fetchPosts = (page) => async (dispatch, getState) => {
     try {
         dispatch({ type: START_LOADING });
-        const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || {
-            posts: [],
-            pages: {},
-            numberOfPages: 0
-        };
 
-        if (cachedPosts.pages[page]) {
-            dispatch({
-                type: FETCH_ALL,
-                payload: {
-                    data: cachedPosts.posts,
-                    currentPage: page,
-                    numberOfPages: cachedPosts.numberOfPages,
-                },
-            });
-        } else {
-            const {
-                data: {
-                    data,
-                    currentPage,
-                    numberOfPages
-                }
-            } = await fetchPostsApi(page);
+        const { posts, currentPage: storedPage } = getState().postsReducer;
 
-            const updatedPosts = [...cachedPosts.posts, ...data];
-            const updatedPages = { ...cachedPosts.pages, [page]: true };
-
-            localStorage.setItem(
-                'postsData',
-                JSON.stringify({
-                    posts: updatedPosts,
-                    pages: updatedPages,
-                    numberOfPages,
-                })
-            );
-                
-            dispatch({
-                type: FETCH_ALL,
-                payload: {
-                    data: updatedPosts,
-                    currentPage,
-                    numberOfPages
-                },
-            });
+        if (posts.length > 0 && storedPage === page) {
+            dispatch({ type: END_LOADING });
+        }
+        else {
+            console.log('in the else block');
+            const { data: { data, currentPage, numberOfPages } } = await fetchPostsApi(page);
+            dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
         }
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.error(error);
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || "An error occurred" });
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -115,7 +80,6 @@ const createPost = (post) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data } = await createPostApi(post);
         dispatch({ type: CREATE, payload: data });
-        localStorage.removeItem('postsData');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
@@ -142,7 +106,6 @@ const deletePost = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         await deletePostApi(id);
         dispatch({ type: DELETE, payload: id });
-        localStorage.removeItem('postsData');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
         console.log(error);
@@ -151,7 +114,6 @@ const deletePost = (id) => async (dispatch) => {
     }
 };
 
-// Functions without loading states remain unchanged
 const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await likePostApi(id);
