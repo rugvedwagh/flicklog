@@ -3,6 +3,8 @@ import { generateAccessToken } from "../utils/generateAccessToken.js";
 import UserModel from "../models/user.model.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
+import redis from "../config/redisClient.js";
+import mongoose from "mongoose";
 
 // Log In Controller
 const logIn = async (req, res) => {
@@ -26,7 +28,7 @@ const logIn = async (req, res) => {
 
     const accessToken = generateAccessToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
-    
+
     await oldUser.save();
 
     res.status(200).json({
@@ -37,7 +39,7 @@ const logIn = async (req, res) => {
 };
 
 // Sign Up Controller
-const signUp = async (req, res) => {
+const registerUser = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
     const oldUser = await UserModel.findOne({ email });
@@ -70,7 +72,7 @@ const signUp = async (req, res) => {
     await newUser.save();
 
     res.status(201).json({
-        newUser,
+        result: newUser,
         accessToken: accessToken,
         refreshToken
     });
@@ -81,7 +83,7 @@ const bookmarkPost = async (req, res) => {
     const { postId, userId } = req.body;
 
     const user = await UserModel.findById(userId);
-    
+
     if (!user) {
         const error = new Error("User not found");
         error.statusCode = 404;
@@ -115,7 +117,7 @@ const updateUser = async (req, res) => {
     const { name, email } = req.body;
 
     if (!req.userId) {
-        const error = new Error("Unauthorized");
+        const error = new Error("Unauthorized action");
         error.statusCode = 403;
         throw error;
     }
@@ -123,7 +125,7 @@ const updateUser = async (req, res) => {
     const updatedUser = await UserModel.findByIdAndUpdate(
         id,
         { name, email },
-        { new: true } 
+        { new: true }
     );
 
     if (!updatedUser) {
@@ -139,18 +141,44 @@ const updateUser = async (req, res) => {
 const fetchUserData = async (req, res) => {
     const { id } = req.params;
 
-    const user = await UserModel.findById(id);
-
-    if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        const error = new Error("Invalid user ID");
+        error.statusCode = 400;
         throw error;
     }
 
-    // Manually exclude the password from the response
-    const { password, ...userWithoutPassword } = user.toObject();
+    const cacheKey = `user:${id}`;
 
-    res.status(200).json(userWithoutPassword);
+    try {
+        const cachedUser = await redis.get(cacheKey);
+        if (cachedUser) {
+            return res.status(200).json(JSON.parse(cachedUser));
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    try {
+        const user = await UserModel.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        try {
+            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+        } catch (err) {
+            console.log(err.message);
+        }
+
+        const { password, ...userWithoutPassword } = user.toObject();
+
+        res.status(200).json(userWithoutPassword);
+
+    } catch (err) {
+        next(err)
+    }
 };
 
 // Refresh token controller
@@ -185,7 +213,7 @@ const refreshToken = async (req, res) => {
 
 
 export {
-    signUp,
+    registerUser,
     logIn,
     updateUser,
     fetchUserData,

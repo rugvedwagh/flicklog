@@ -67,10 +67,6 @@
     .gridContainer {
         flex-direction: column-reverse;
     }
-    .MuiToggleButtonGroup-root {
-        width: 9em;
-        height: 3em;
-    }
 }
 
 .search-button{
@@ -91,15 +87,6 @@
 .appBarSearch > .box {
     border: 1px solid var(--borderColor) !important;
 }   
-
-.MuiToggleButtonGroup-root{
-    background-color: var(--white);
-    color: var(--antiFlashWhite) !important;
-}	
-
-.MuiToggleButton-root{
-    color: var(--black) !important;
-}
 
 .box {
     width: 90%;

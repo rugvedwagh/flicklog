@@ -1,38 +1,62 @@
 import PostMessage from "../models/post.model.js";
-import redis from "../config/redisClient.js"; 
-import mongoose from "mongoose";
+import redis from "../config/redisClient.js";
+import mongoose from 'mongoose';
 
-// Fetch a Single Post
+// Fetch a post
 const fetchPost = async (req, res) => {
     const { id } = req.params;
-    
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         const error = new Error("Invalid post ID");
         error.statusCode = 400;
         throw error;
     }
-    
-    const post = await PostMessage.findById(id);
-    if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+
+    const cacheKey = `post:${id}`;
+
+    try {
+        const cachedPost = await redis.get(cacheKey);
+        if (cachedPost) {
+            return res.status(200).json(JSON.parse(cachedPost));
+        }
+    } catch (err) {
+        console.log(err.message);
     }
-    
-    res.status(200).json(post);
+
+    try {
+        const post = await PostMessage.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        try {
+            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
+        } catch (err) {
+            console.log(err.message);
+        }
+
+        res.status(200).json(post);
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Fetch All Posts
-const fetchPosts = async (req, res) => {
-    try {
-        const pageNumber = parseInt(req.query.page, 10) || 1;
-        const cacheKey = `posts:page:${pageNumber}`;
+const fetchPosts = async (req, res, next) => {
+    const pageNumber = parseInt(req.query.page, 10) || 1;
+    const cacheKey = `posts:page:${pageNumber}`;
 
+    try {
         const cachedPosts = await redis.get(cacheKey);
         if (cachedPosts) {
             return res.status(200).json(JSON.parse(cachedPosts));
         }
+    } catch (err) {
+        console.log(err.message);
+    }
 
+    try {
         const LIMIT = 6;
         const startIndex = (pageNumber - 1) * LIMIT;
         const total = await PostMessage.countDocuments({});
@@ -48,29 +72,54 @@ const fetchPosts = async (req, res) => {
             numberOfPages: Math.ceil(total / LIMIT),
         };
 
-        const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        
-        await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+        try {
+            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+        } catch (err) {
+            console.log("Redis set error:", err.message);
+        }
 
         res.status(200).json(response);
-    } catch (error) {
-        console.error("Error fetching posts:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+    } catch (err) {
+        next(err);
     }
 };
 
 // Search Posts by Title or Tags
-const fetchPostsBySearch = async (req, res) => {
+const fetchPostsBySearch = async (req, res, next) => {
     const { searchQuery = "", tags = "" } = req.query;
+    const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
-    const title = new RegExp(searchQuery, "i");
-    const tagsArray = tags.split(",").map((tag) => tag.trim());
+    try {
+        const cachedResults = await redis.get(cacheKey);
+        if (cachedResults) {
+            return res.status(200).json(JSON.parse(cachedResults));
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
 
-    const posts = await PostMessage.find({
-        $or: [{ title }, { tags: { $in: tagsArray } }],
-    });
+    try {
+        const title = new RegExp(searchQuery, "i");
+        const tagsArray = tags ? tags.split(",").map((tag) => tag.trim()) : [];
 
-    res.status(200).json({ data: posts });
+        const posts = await PostMessage.find({
+            $or: [{ title }, { tags: { $in: tagsArray } }],
+        });
+
+        const response = { data: posts };
+
+        try {
+            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+        } catch (err) {
+            console.log(err.message);
+        }
+
+        res.status(200).json(response);
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Create a New Post

@@ -28,7 +28,6 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            console.log(action?.payload)
             const { refreshToken, accessToken, ...rest } = action?.payload;
             const { password, __v, bookmarks, ...fileredData } = rest.result;
 

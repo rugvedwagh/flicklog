@@ -1,11 +1,10 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails, fetchUserData } from '../../redux/actions/auth.actions';
+import { updateUserDetails } from '../../redux/actions/auth.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
-import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
 
@@ -15,9 +14,6 @@ const Userinfo = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const profile = getProfile();
-    const userId = profile._id;
-    
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
@@ -69,7 +65,6 @@ const Userinfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserData(userId, navigate))
     }, []);
 
     if (isLoading) {

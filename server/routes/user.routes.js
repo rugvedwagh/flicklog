@@ -1,7 +1,7 @@
 import express from "express";
 import {
     logIn,
-    signUp,
+    registerUser,
     fetchUserData,
     bookmarkPost,
     updateUser,
@@ -23,7 +23,7 @@ router
 
 router.post("/signin", asyncHandler(logIn));
 
-router.post("/signup", asyncHandler(signUp));
+router.post("/signup", asyncHandler(registerUser));
 
 router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
 

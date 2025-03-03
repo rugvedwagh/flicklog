@@ -51,7 +51,6 @@ const fetchPosts = (page) => async (dispatch, getState) => {
             dispatch({ type: END_LOADING });
         }
         else {
-            console.log('in the else block');
             const { data: { data, currentPage, numberOfPages } } = await fetchPostsApi(page);
             dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
         }

@@ -1,8 +1,7 @@
 const errorHandler = (err, req, res, next) => {
-    const statusCode = err.statusCode || 500; // Default to 500 for server errors
+    const statusCode = err.statusCode || 500; 
     const message = err.message || "Internal server error.";
 
-    // Optional: Add stack trace for non-production environments
     const response = {
         message,
     };

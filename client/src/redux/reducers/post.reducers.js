@@ -17,9 +17,7 @@ import {
 
 const initialState = {
     isLoading: true,
-    posts: [],
     posts: JSON.parse(localStorage.getItem("cachedPosts")) || [],
-    // post: null,
     currentPage: 1,
     numberOfPages: 1
 };
