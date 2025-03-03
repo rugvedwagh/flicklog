@@ -169,7 +169,7 @@ const fetchUserData = async (req, res) => {
             const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
             await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
 
         const { password, ...userWithoutPassword } = user.toObject();

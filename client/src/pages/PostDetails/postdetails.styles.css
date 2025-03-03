@@ -323,3 +323,8 @@
     justify-content: space-between;
     width: 100%
 }
+
+#whole{
+    display: grid;
+    grid-column: 100vh;
+}

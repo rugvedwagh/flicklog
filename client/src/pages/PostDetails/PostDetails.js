@@ -13,9 +13,11 @@ import './postdetails.styles.css';
 import moment from 'moment';
 
 const PostDetails = () => {
+
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const darkMode = useTheme();
     const profile = getProfile();
     const userId = profile?._id;
@@ -59,7 +61,7 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== id);
 
     return (
-        <div>
+        <div id='whole'>
             <div className={`main ${darkMode ? 'dark' : ''}`}>
                 <section className='second'>
                     <img

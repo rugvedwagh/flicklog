@@ -20,7 +20,7 @@ const fetchPost = async (req, res) => {
             return res.status(200).json(JSON.parse(cachedPost));
         }
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 
     try {
@@ -33,7 +33,7 @@ const fetchPost = async (req, res) => {
             const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
             await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
 
         res.status(200).json(post);
@@ -53,7 +53,7 @@ const fetchPosts = async (req, res, next) => {
             return res.status(200).json(JSON.parse(cachedPosts));
         }
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 
     try {
@@ -96,7 +96,7 @@ const fetchPostsBySearch = async (req, res, next) => {
             return res.status(200).json(JSON.parse(cachedResults));
         }
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 
     try {
@@ -113,7 +113,7 @@ const fetchPostsBySearch = async (req, res, next) => {
             const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
             await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
 
         res.status(200).json(response);

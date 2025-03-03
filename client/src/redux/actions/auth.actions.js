@@ -28,7 +28,7 @@ const signIn = (formData, navigate) => async (dispatch) => {
         navigate('/posts');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -42,7 +42,7 @@ const signUp = (formData, navigate) => async (dispatch) => {
         navigate('/posts');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -56,7 +56,7 @@ const fetchUserData = (id, navigate) => async (dispatch) => {
         dispatch({ type: USER_INFO, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -69,7 +69,7 @@ const Logout = (navigate) => (dispatch) => {
         dispatch({ type: LOGOUT });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -100,7 +100,7 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
         dispatch({ type: REFRESH_TOKEN, payload: data.accessToken });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 
