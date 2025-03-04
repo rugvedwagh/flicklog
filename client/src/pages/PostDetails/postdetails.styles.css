@@ -88,14 +88,14 @@
 
 .imag.fullscreen {
     position: fixed;
-    width: 100%;
+    width: 90%;
     height: 90%;
+    backdrop-filter: blur(0px);
     top: 5%;
     left: 10;
     object-fit: contain;
     z-index: 9999;
     cursor: zoom-out;
-    backdrop-filter: blur(10px);
     background-color: rgba(22, 22, 22, 0.5);
     animation: grow 0.6s ease;
 }

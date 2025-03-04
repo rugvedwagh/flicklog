@@ -51,6 +51,7 @@ const authReducer = (state = initialState, action) => {
 
         case LOGOUT:
             localStorage.removeItem('profile');
+            localStorage.removeItem('cachedPosts')
             Cookies.remove('refreshToken');
             return {
                 ...state,

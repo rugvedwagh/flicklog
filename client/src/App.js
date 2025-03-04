@@ -1,8 +1,9 @@
+import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { getAccessToken, getRefreshToken } from './utils/getTokens';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
-import { refreshToken } from './redux/actions/auth.actions';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Logout, refreshToken } from './redux/actions/auth.actions';
 import { handleScroll, scrollToTop } from './utils/scroll';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
@@ -17,19 +18,25 @@ import Auth from '../src/pages/Auth/Auth';
 import './App.css';
 
 const App = () => {
-    
+
     const dispatch = useDispatch();
     const [showScrollButton, setShowScrollButton] = useState(false);
+
     const darkMode = useTheme();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const refreshTokenFromCookies = getRefreshToken();
     const accessToken = getAccessToken();
 
     useEffect(() => {
-        if (!accessToken && refreshTokenFromCookies) {
+        if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
             dispatch(refreshToken(refreshTokenFromCookies));
         }
-    }, [accessToken, dispatch]);
+        if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
+            dispatch(Logout(navigate));
+        }
+    }, [accessToken, dispatch, location.pathname]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -52,12 +59,12 @@ const App = () => {
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={isRefreshTokenExpired(refreshTokenFromCookies) ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />;
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
-                
+
             </Container>
         </div>
     );
