@@ -1,7 +1,7 @@
 import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn, signUp } from '../../redux/actions/auth.actions';
+import { logIn, registerUser } from '../../redux/actions/auth.actions';
 import { useTheme } from '../../context/themeContext';
 import React, { useState, useEffect } from 'react';
 import loginArt from '../../assets/loginart.PNG'
@@ -45,7 +45,7 @@ const SignUp = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        isSignup ? dispatch(signUp(form, navigate)) : dispatch(signIn(form, navigate));
+        isSignup ? dispatch(registerUser(form, navigate)) : dispatch(logIn(form, navigate));
     };
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -125,7 +125,7 @@ const SignUp = () => {
                                 </Grid>
 
                                 <Typography variant="body2" className={`subtxt ${darkMode ? 'dark' : ''}`} style={{ marginTop: '8px' }}>
-                                    By signing up, you agree to our <strong>Terms of Service</strong> and{' '}
+                                    By logIng up, you agree to our <strong>Terms of Service</strong> and{' '}
                                     <strong>Privacy Policy</strong>.
                                 </Typography>
 

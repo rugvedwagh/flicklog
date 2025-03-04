@@ -17,7 +17,7 @@ const PostDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const darkMode = useTheme();
     const profile = getProfile();
     const userId = profile?._id;
@@ -61,7 +61,7 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== id);
 
     return (
-        <div id='whole'>
+        <div>
             <div className={`main ${darkMode ? 'dark' : ''}`}>
                 <section className='second'>
                     <img

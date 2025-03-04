@@ -11,19 +11,19 @@ import {
     START_LOADING
 } from '../../constants/loading.constants';
 import {
-    signInApi,
-    signUpApi,
+    logInApi,
+    registerUserApi,
     userInfoApi,
     updateUserDetailsApi,
     refreshTokenApi,
 } from '../../api/user.api';
 import { getProfile } from '../../utils/storage';
 
-const signIn = (formData, navigate) => async (dispatch) => {
+const logIn = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await signInApi(formData);
-        console.log(data)
+
+        const { data } = await logInApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -34,10 +34,11 @@ const signIn = (formData, navigate) => async (dispatch) => {
     }
 };
 
-const signUp = (formData, navigate) => async (dispatch) => {
+const registerUser = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await signUpApi(formData);
+
+        const { data } = await registerUserApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -51,6 +52,7 @@ const signUp = (formData, navigate) => async (dispatch) => {
 const fetchUserData = (id, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
+
         navigate(`/user/i`);
         const { data } = await userInfoApi(id);
         dispatch({ type: USER_INFO, payload: data });
@@ -78,8 +80,10 @@ const Logout = (navigate) => (dispatch) => {
 const updateUserDetails = (id, updatedData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
+
         const { data } = await updateUserDetailsApi(id, updatedData);
         const { password, __v, bookmarks, ...fileredData } = data;
+
         dispatch({ type: UPDATE_USER, payload: fileredData });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -105,8 +109,8 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
 };
 
 export {
-    signIn,
-    signUp,
+    logIn,
+    registerUser,
     fetchUserData,
     updateUserDetails,
     Logout,
