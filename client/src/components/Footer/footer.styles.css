@@ -30,9 +30,11 @@
 
 .brand-name {
     font-family: "EB Garamond", serif !important;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 700;
     margin-bottom: 16px;
+    margin-top: 0;
+    font-style: italic;
 }
 
 .social-icons {

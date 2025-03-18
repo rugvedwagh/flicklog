@@ -276,3 +276,7 @@
 .username:hover{
     color: var(--forrestGreen);
 }
+
+#crossButton{
+    cursor: pointer;
+}

@@ -129,6 +129,7 @@ const Userinfo = () => {
                                     <CancelRoundedIcon
                                         color='error'
                                         onClick={() => removeBookmark(post._id, clientData._id)}
+                                        id="crossButton"
                                     />
                                 </div>
                             ))}
