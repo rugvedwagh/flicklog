@@ -1,9 +1,9 @@
 import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { generateAccessToken } from "../utils/generateAccessToken.js";
+import {redis, redisAvailable} from "../config/redisClient.js";
 import UserModel from "../models/user.model.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
-import redis from "../config/redisClient.js";
 import mongoose from "mongoose";
 
 // Log In Controller
@@ -150,9 +150,11 @@ const fetchUserData = async (req, res) => {
     const cacheKey = `user:${id}`;
 
     try {
-        const cachedUser = await redis.get(cacheKey);
-        if (cachedUser) {
-            return res.status(200).json(JSON.parse(cachedUser));
+        if(redisAvailable){
+            const cachedUser = await redis.get(cacheKey);
+            if (cachedUser) {
+                return res.status(200).json(JSON.parse(cachedUser));
+            }
         }
     } catch (error) {
         console.log(error.message);
@@ -166,12 +168,15 @@ const fetchUserData = async (req, res) => {
         }
 
         try {
-            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+            if(redisAvailable){
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+            }
         } catch (err) {
             console.error(err.message);
         }
 
+        // toObject() : Converts a Mongoose document into a plain JavaScript object.
         const { password, ...userWithoutPassword } = user.toObject();
 
         res.status(200).json(userWithoutPassword);

@@ -45,14 +45,51 @@ const fetchPosts = (page) => async (dispatch, getState) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const { posts, currentPage: storedPage } = getState().postsReducer;
+        const cachedPosts = JSON.parse(localStorage.getItem('cachedPosts')) || {
+            posts: [],
+            pages: {},
+            numberOfPages: 0
+        };
 
-        if (posts.length > 0 && storedPage === page) {
-            dispatch({ type: END_LOADING });
+        if (cachedPosts.pages[page]) {
+            dispatch({
+                type: FETCH_ALL,
+                payload: {
+                    data: cachedPosts.posts,
+                    currentPage: page,
+                    numberOfPages: cachedPosts.numberOfPages,
+                },
+            });
         }
         else {
-            const { data: { data, currentPage, numberOfPages } } = await fetchPostsApi(page);
-            dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
+            const {
+                data: {
+                    data,
+                    currentPage,
+                    numberOfPages
+                }
+            } = await fetchPostsApi(page);
+
+            const updatedPosts = [...cachedPosts.posts, ...data];
+            const updatedPages = { ...cachedPosts.pages, [page]: true };
+
+            localStorage.setItem(
+                'cachedPosts',
+                JSON.stringify({
+                    posts: updatedPosts,
+                    pages: updatedPages,
+                    numberOfPages,
+                })
+            );
+
+            dispatch({
+                type: FETCH_ALL,
+                payload: {
+                    data: updatedPosts,
+                    currentPage,
+                    numberOfPages
+                }
+            });
         }
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || "An error occurred" });

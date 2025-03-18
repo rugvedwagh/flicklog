@@ -17,9 +17,7 @@ import {
 
 const initialState = {
     isLoading: true,
-    posts: JSON.parse(localStorage.getItem("cachedPosts")) || [],
-    currentPage: 1,
-    numberOfPages: 1
+    posts: [],
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -36,8 +34,6 @@ const postsReducer = (state = initialState, action) => {
                 : [...state.posts, ...action.payload.data.filter(
                     (newPost) => !state.posts.some((post) => post._id === newPost._id)
                 )];
-
-            localStorage.setItem("cachedPosts", JSON.stringify(updatedPosts));
 
             return {
                 ...state,

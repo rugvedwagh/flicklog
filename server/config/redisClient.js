@@ -13,14 +13,18 @@ const redis = new Redis({
 	maxRetriesPerRequest: 1,
 	connectTimeout: 500,
 	enableOfflineQueue: false,
-});
+});	
+
+let redisAvailable = true;
 
 redis.on("error", (err) => {
 	console.error("❌ Redis Connection Error:", err)
+	redisAvailable = false;
 });
 
 redis.on("connect", () => {
 	console.log(`✅ Connected to Redis on ${redis.options.host}:${redis.options.port}`)
+	redisAvailable = true;
 });
 
-export default redis;
+export { redis, redisAvailable };

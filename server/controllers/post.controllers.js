@@ -1,9 +1,9 @@
 import PostMessage from "../models/post.model.js";
-import redis from "../config/redisClient.js";
+import { redis, redisAvailable } from "../config/redisClient.js";
 import mongoose from 'mongoose';
 
 // Fetch a post
-const fetchPost = async (req, res) => {
+const fetchPost = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -15,25 +15,31 @@ const fetchPost = async (req, res) => {
     const cacheKey = `post:${id}`;
 
     try {
-        const cachedPost = await redis.get(cacheKey);
-        if (cachedPost) {
-            return res.status(200).json(JSON.parse(cachedPost));
+        if (redisAvailable) {
+            const cachedPost = await redis.get(cacheKey);
+            if (cachedPost) {
+                return res.status(200).json(JSON.parse(cachedPost));
+            }
         }
     } catch (err) {
-        console.error(err.message);
+        console.error("⚠️ Redis error:", err.message);
     }
 
     try {
         const post = await PostMessage.findById(id);
         if (!post) {
-            return res.status(404).json({ message: "Post not found" });
+            const error = new Error("Post not found");
+            error.statusCode = 404;
+            throw error;
         }
 
         try {
-            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
+            if (redisAvailable) {
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
+            }
         } catch (err) {
-            console.error(err.message);
+            console.error("⚠️ Redis set error:", err.message);
         }
 
         res.status(200).json(post);
@@ -44,13 +50,17 @@ const fetchPost = async (req, res) => {
 
 // Fetch All Posts
 const fetchPosts = async (req, res, next) => {
+
     const pageNumber = parseInt(req.query.page, 10) || 1;
+    
     const cacheKey = `posts:page:${pageNumber}`;
 
     try {
-        const cachedPosts = await redis.get(cacheKey);
-        if (cachedPosts) {
-            return res.status(200).json(JSON.parse(cachedPosts));
+        if(redisAvailable){
+            const cachedPosts = await redis.get(cacheKey);
+            if (cachedPosts) {
+                return res.status(200).json(JSON.parse(cachedPosts));
+            }
         }
     } catch (err) {
         console.error(err.message);
@@ -73,8 +83,10 @@ const fetchPosts = async (req, res, next) => {
         };
 
         try {
-            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            if(redisAvailable){
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            }
         } catch (err) {
             console.log("Redis set error:", err.message);
         }
@@ -91,9 +103,11 @@ const fetchPostsBySearch = async (req, res, next) => {
     const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
     try {
-        const cachedResults = await redis.get(cacheKey);
-        if (cachedResults) {
-            return res.status(200).json(JSON.parse(cachedResults));
+        if(redisAvailable){
+            const cachedResults = await redis.get(cacheKey);
+            if (cachedResults) {
+                return res.status(200).json(JSON.parse(cachedResults));
+            }
         }
     } catch (err) {
         console.error(err.message);
@@ -110,8 +124,10 @@ const fetchPostsBySearch = async (req, res, next) => {
         const response = { data: posts };
 
         try {
-            const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-            await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            if(redisAvailable){
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            }
         } catch (err) {
             console.error(err.message);
         }

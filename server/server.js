@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import errorHandler from './middleware/error.middleware.js';
-import notFound from './middleware/notFound.middleware.js'; 
+import notFound from './middleware/notFound.middleware.js';
 import dataBaseConnection from './config/Database.js';
-import redis from './config/redisClient.js'; 
-import userRoutes from './routes/user.routes.js';   
+import { redis } from './config/redisClient.js';
+import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
 
 dotenv.config();
@@ -25,7 +25,7 @@ app.use('/user', userRoutes);
 // Global Not Found and Error Handlers
 app.use(notFound);
 
-let redisMessage = "Redis not connected"; 
+let redisMessage = "Redis not connected";
 
 app.get('/', async (req, res) => {
     res.send(`<h2>Server is running...</h2><p>Redis says: ${redisMessage}</p>`);

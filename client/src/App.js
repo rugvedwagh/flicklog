@@ -21,6 +21,7 @@ const App = () => {
 
     const dispatch = useDispatch();
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const [userLoggedOut, setUserLoggedOut] = useState(false);
 
     const darkMode = useTheme();
     const location = useLocation();
@@ -30,13 +31,25 @@ const App = () => {
     const accessToken = getAccessToken();
 
     useEffect(() => {
-        if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
-            dispatch(refreshToken(refreshTokenFromCookies));
-        }
-        if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
-            dispatch(Logout(navigate));
-        }
-    }, [accessToken, dispatch, location.pathname]);
+        const checkAuth = () => {
+            if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
+                dispatch(refreshToken(refreshTokenFromCookies));
+            } 
+            else if (!refreshTokenFromCookies && !userLoggedOut) {
+                dispatch(Logout(navigate));
+                setUserLoggedOut(true);
+            } 
+            else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
+                dispatch(Logout(navigate));
+            }
+        };
+
+        checkAuth();
+
+        const interval = setInterval(checkAuth, 10 * 60 * 1000);
+
+        return () => clearInterval(interval); 
+    }, [accessToken, refreshTokenFromCookies, dispatch, navigate, userLoggedOut]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
