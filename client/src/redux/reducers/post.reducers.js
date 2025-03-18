@@ -42,11 +42,11 @@ const postsReducer = (state = initialState, action) => {
                 numberOfPages: action.payload.numberOfPages,
             };
 
-
         case FETCH_POST:
             return { ...state, post: action.payload };
 
         case CREATE:
+            localStorage.removeItem('cachedPosts');
             return { ...state, posts: [action.payload, ...state.posts] };
 
         case UPDATE:

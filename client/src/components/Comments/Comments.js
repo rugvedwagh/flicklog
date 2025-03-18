@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import './comments.styles.css';
 
 const CommentsSection = ({ post }) => {
+    
     const dispatch = useDispatch();
     const darkMode = useTheme();
 
@@ -15,15 +16,15 @@ const CommentsSection = ({ post }) => {
     const UserIsAuthenticated = getRefreshToken();
 
     const [comment, setComment] = useState('');
+    const [isFocused, setIsFocused] = useState(false); 
     const [comments, setComments] = useState(post?.comments);
-    const [isFocused, setIsFocused] = useState(false); // Track input focus
 
     const postComment = async () => {
         const finalComment = `${profile?.name}: ${comment}`;
         const newComments = await dispatch(addComment(finalComment, post._id));
         setComments(newComments);
         setComment('');
-        setIsFocused(false); 
+        setIsFocused(false);
     };
 
     return (
@@ -59,20 +60,19 @@ const CommentsSection = ({ post }) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         onFocus={() => setIsFocused(true)}
-                        onBlur={() => !comment.trim() && setIsFocused(false)} // Hide if input is empty
+                        onBlur={() => !comment.trim() && setIsFocused(false)} 
                     />
 
-                    {isFocused && (
-                        <Button
-                            style={{ marginTop: '10px' }}
-                            variant="contained"
-                            fullWidth
-                            disabled={!comment.trim()}
-                            onClick={postComment}
-                        >
-                            Comment
-                        </Button>
-                    )}
+                    {isFocused &&
+                        (
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={postComment}
+                            >
+                                Comment
+                            </Button>
+                        )}
                 </div>
             )}
         </div>
