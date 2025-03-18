@@ -1,3 +1,5 @@
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useTheme } from '../../context/themeContext';
 import React from 'react';
 import './footer.styles.css';
@@ -11,12 +13,11 @@ const Footer = () => {
                     <div className="footer-brand">
                         <h2 className="brand-name">Reminisce</h2>
                         <div className="social-icons">
-                            <a href="/#" className="social-icon"><i className="fab fa-facebook-f"></i></a>
-                            <a href="/#" className="social-icon"><i className="fab fa-youtube"></i></a>
-                            <a href="/#" className="social-icon"><i className="fab fa-linkedin-in"></i></a>
-                            <a href="/#" className="social-icon"><i className="fab fa-instagram"></i></a>
-                            <a href="/#" className="social-icon"><i className="fab fa-xing"></i></a>
-                            <a href="/#" className="social-icon"><i className="fab fa-github"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-youtube"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-instagram"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-github"></i></a>
                         </div>
                         <ul className="legal-links">
                             <li><a href="/#">Trust</a></li>
@@ -34,7 +35,7 @@ const Footer = () => {
                                 <li><a href="/#">Feature stores</a></li>
                                 <li><a href="/#">Semantic cache</a></li>
                                 <li><a href="/#">Caching</a></li>
-                                
+
                             </ul>
                         </div>
 

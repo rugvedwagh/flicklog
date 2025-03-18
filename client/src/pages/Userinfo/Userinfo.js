@@ -84,7 +84,7 @@ const Userinfo = () => {
             <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
                 <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                    {clientData.name.charAt(0).toUpperCase()}
+                    <i class="fa-solid fa-user"></i>
                 </div>
 
                 <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>

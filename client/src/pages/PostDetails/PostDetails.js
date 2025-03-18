@@ -1,9 +1,10 @@
 import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
-import Comments from '../../components/Comments/Comments';
 import React, { useEffect, useState, useCallback } from 'react';
 import { deletePost } from '../../redux/actions/post.actions';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { useParams, useNavigate } from 'react-router-dom';
+import Comments from '../../components/Comments/Comments';
 import { CircularProgress, Divider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
@@ -105,7 +106,6 @@ const PostDetails = () => {
                             <span>
                                 {moment(post.createdAt).fromNow()}
                             </span>
-
                             <span>
                                 {userId === post?.creator && (
                                     <Tooltip title="Delete" arrow placement="top">

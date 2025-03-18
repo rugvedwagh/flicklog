@@ -116,7 +116,7 @@ const Navbar = () => {
                                 alt={profile?.name}
                                 src={profile.imageUrl}
                             >
-                                {profile.name?.charAt(0)}
+                                <i class="fa-solid fa-user"></i>
                             </Avatar>&nbsp;
                             <div className='userinfo'>
                                 <strong>
