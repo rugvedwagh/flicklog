@@ -8,7 +8,8 @@ import {
     FETCH_BY_SEARCH,
     COMMENT,
     LIKED_POSTS,
-    USER_POSTS
+    USER_POSTS,
+    BOOKMARK_POST
 } from "../../constants/post.constants";
 import {
     START_LOADING,
@@ -50,6 +51,12 @@ const postsReducer = (state = initialState, action) => {
             return { ...state, posts: [action.payload, ...state.posts] };
 
         case UPDATE:
+            localStorage.removeItem('cachedPosts');
+            return {
+                ...state,
+                posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
+            };
+
         case LIKE:
             return {
                 ...state,
@@ -57,9 +64,19 @@ const postsReducer = (state = initialState, action) => {
             };
 
         case DELETE:
+            localStorage.removeItem('cachedPosts');
             return {
                 ...state,
                 posts: state.posts.filter((post) => post._id !== action.payload),
+            };
+
+        case BOOKMARK_POST:
+            return {
+                ...state,
+                clientData: {
+                    ...state.clientData,
+                    bookmarks: action.payload.bookmarks,
+                },
             };
 
         case FETCH_BY_SEARCH:

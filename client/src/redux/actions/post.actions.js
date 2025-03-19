@@ -58,7 +58,7 @@ const fetchPosts = (page) => async (dispatch, getState) => {
                     data: cachedPosts.posts,
                     currentPage: page,
                     numberOfPages: cachedPosts.numberOfPages,
-                },
+                }
             });
         }
         else {

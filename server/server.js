@@ -8,6 +8,7 @@ import dataBaseConnection from './config/Database.js';
 import { redis } from './config/redisClient.js';
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
+import authRoutes from './routes/auth.routes.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 // Routes
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
+app.use('/auth', authRoutes)
 
 // Global Not Found and Error Handlers
 app.use(notFound);

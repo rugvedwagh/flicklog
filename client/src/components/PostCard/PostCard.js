@@ -67,7 +67,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     {post.name}
                 </Typography>
 
-                <Typography variant="body">
+                <Typography sx={{fontSize:'14px'}}>
                     {moment(post.createdAt).fromNow()}
                 </Typography>
             </div>
@@ -76,7 +76,7 @@ const PostCard = ({ post, setCurrentId }) => {
                 <div className="overlay2">
                     <Tooltip title="Edit" arrow placement="top">
                         <Button
-                            style={{ color: 'white', marginRight: '-25px' }}
+                            style={{ color: 'white', marginRight: '-20px' }}
                             size="small"
                             onClick={() => setCurrentId(post._id)}
                         >
@@ -87,14 +87,6 @@ const PostCard = ({ post, setCurrentId }) => {
             )}
 
             <section onClick={openPost}>
-                <Typography
-                    color="textSecondary"
-                    variant="body2"
-                    className={`tags ${darkMode ? 'dark' : ''}`}
-                >
-                    {post.tags.map((tag) => `#${tag} `)}
-                </Typography>
-
                 <Typography
                     className={`title ${darkMode ? 'dark' : ''}`}
                     variant="h5"
@@ -147,7 +139,7 @@ const PostCard = ({ post, setCurrentId }) => {
                         </Button>
                     </Tooltip>
                 )}
-           </CardActions>
+            </CardActions>
         </Card>
     );
 };

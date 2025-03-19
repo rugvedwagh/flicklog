@@ -30,23 +30,22 @@
 
 .overlay {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0.2rem;
+    left: 0.5rem;
     color: white;
+    font-family: 'Roboto', sans-serif;
 }
 
 .overlay2 {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 0.2rem;
+    right: 0.5rem;
     color: white;
 }
 
 .title {
-    padding: 0px 1rem 0 1rem;
-    margin-bottom: 0;
+    padding: 0.5rem 0.5rem 0 0.5rem;
     color: var(--black);
-    opacity: 0.9;
     user-select: none;
 }
 
@@ -67,7 +66,7 @@
 }
 
 .msg {
-    padding: 0 1rem;
+    padding: 0rem 0.5rem 0rem 0.5rem;
     margin-top: 0;
     user-select: none;
 }
@@ -84,14 +83,6 @@
     color: var(--subtextColor);
 }
 
-.tags{
-    padding: 5px 16px 0px 16px;
-}
-
-.tags.dark{
-    color: var(--subtextColor);
-}
-
 .MuiTooltip-tooltip	.MuiButton{
     color: var(--black);
 }
@@ -103,7 +94,7 @@ section{
 .cardActions{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start !important;
+    justify-content: flex-start;
 }
 
 .bookmark-button{
@@ -113,3 +104,4 @@ section{
 .bookmark-button.dark{
     color: var(--subtextColor);
 }
+    

@@ -1,10 +1,8 @@
 const errorHandler = (err, req, res, next) => {
-    const statusCode = err.statusCode || 500; 
+    const statusCode = err.statusCode || 500;
     const message = err.message || "Internal server error.";
 
-    const response = {
-        message,
-    };
+    const response = { message };
 
     if (process.env.NODE_ENV !== "production") {
         response.stack = err.stack;

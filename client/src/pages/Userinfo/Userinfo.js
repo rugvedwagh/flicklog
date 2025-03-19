@@ -1,5 +1,5 @@
-import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails } from '../../redux/actions/auth.actions';
+import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { updateUserDetails } from '../../redux/actions/user.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
@@ -72,7 +72,9 @@ const Userinfo = () => {
     }
 
     if (!clientData) {
-        return <h2>User does not exist!</h2>;
+        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+            User not found!
+        </Typography>;
     }
 
     return (

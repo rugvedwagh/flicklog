@@ -2,7 +2,6 @@ import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogC
 import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
 import React, { useEffect, useState, useCallback } from 'react';
 import { deletePost } from '../../redux/actions/post.actions';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { useParams, useNavigate } from 'react-router-dom';
 import Comments from '../../components/Comments/Comments';
 import { CircularProgress, Divider } from '@mui/material';
@@ -53,13 +52,17 @@ const PostDetails = () => {
         navigate('/posts');
     }, [dispatch, id, toggleDeleteDialog]);
 
+    const recommendedPosts = posts.filter(({ _id }) => _id !== id);
+
     if (isLoading) {
         return <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />;
     }
 
-    if (!post) return null;
-
-    const recommendedPosts = posts.filter(({ _id }) => _id !== id);
+    if (!post) {
+        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+            Post not found!
+        </Typography>;
+    }
 
     return (
         <div>

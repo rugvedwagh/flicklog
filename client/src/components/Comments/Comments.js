@@ -39,10 +39,10 @@ const CommentsSection = ({ post }) => {
                             variant="subtitle1"
                         >
                             <strong className={`users-name ${darkMode ? 'dark' : ''}`}>
-                                {comment.split(': ')[0]}:
+                                {comment?.split(': ')[0]}:
                             </strong>
                             <span className={`comment-data ${darkMode ? 'dark' : ''}`}>
-                                {comment.split(':')[1]}
+                                {comment?.split(':')[1]}
                             </span>
                         </Typography>
                     ))

@@ -1,5 +1,6 @@
-import PostMessage from "../models/post.model.js";
 import { redis, redisAvailable } from "../config/redisClient.js";
+import PostMessage from "../models/post.model.js";
+import UserModel from "../models/user.model.js";
 import mongoose from 'mongoose';
 
 // Fetch a post
@@ -52,11 +53,11 @@ const fetchPost = async (req, res, next) => {
 const fetchPosts = async (req, res, next) => {
 
     const pageNumber = parseInt(req.query.page, 10) || 1;
-    
+
     const cacheKey = `posts:page:${pageNumber}`;
 
     try {
-        if(redisAvailable){
+        if (redisAvailable) {
             const cachedPosts = await redis.get(cacheKey);
             if (cachedPosts) {
                 return res.status(200).json(JSON.parse(cachedPosts));
@@ -83,7 +84,7 @@ const fetchPosts = async (req, res, next) => {
         };
 
         try {
-            if(redisAvailable){
+            if (redisAvailable) {
                 const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
                 await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
             }
@@ -103,7 +104,7 @@ const fetchPostsBySearch = async (req, res, next) => {
     const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
     try {
-        if(redisAvailable){
+        if (redisAvailable) {
             const cachedResults = await redis.get(cacheKey);
             if (cachedResults) {
                 return res.status(200).json(JSON.parse(cachedResults));
@@ -124,7 +125,7 @@ const fetchPostsBySearch = async (req, res, next) => {
         const response = { data: posts };
 
         try {
-            if(redisAvailable){
+            if (redisAvailable) {
                 const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
                 await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
             }
@@ -155,6 +156,7 @@ const createPost = async (req, res) => {
 // Update a Post
 const updatePost = async (req, res) => {
     const { id: _id } = req.params;
+
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -173,6 +175,16 @@ const updatePost = async (req, res) => {
         const error = new Error("Post not found");
         error.statusCode = 404;
         throw error;
+    }
+
+    const cacheKey = `post:${_id}`;
+
+    try {
+        if (redisAvailable) {
+            await redis.del(cacheKey);
+        }
+    } catch (err) {
+        console.error("⚠️ Redis set error:", err.message);
     }
 
     res.status(200).json(updatedPost);
@@ -242,6 +254,12 @@ const commentPost = async (req, res) => {
     const { id } = req.params;
     const { value } = req.body;
 
+    if (!value || !value.trim()) {
+        const error = new Error("Comment cannot be empty");
+        error.statusCode = 400;
+        throw error;
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         const error = new Error("Invalid post ID");
         error.statusCode = 400;
@@ -259,7 +277,52 @@ const commentPost = async (req, res) => {
     post.comments.push(value);
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+    const cacheKey = `post:${id}`;
+
+    try {
+        if (redisAvailable) {
+            await redis.del(cacheKey);
+        }
+    } catch (err) {
+        console.error("⚠️ Redis set error:", err.message);
+    }
+
     res.status(200).json(updatedPost);
+};
+
+
+// Bookmark Post Controller
+const bookmarkPost = async (req, res) => {
+    const { postId, userId } = req.body;
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const isAlreadyBookmarked = user.bookmarks.includes(postId);
+
+    if (isAlreadyBookmarked) {
+        user.bookmarks = user.bookmarks.filter((id) => id.toString() !== postId);
+        await user.save();
+
+        res.status(200).json({
+            message: "Bookmark removed successfully",
+            bookmarks: user.bookmarks,
+        });
+    } else {
+        user.bookmarks.push(postId);
+        await user.save();
+
+        res.status(200).json({
+            message: "Bookmark added successfully",
+            bookmarks: user.bookmarks,
+        });
+    }
 };
 
 export {
@@ -271,4 +334,5 @@ export {
     deletePost,
     updatePost,
     createPost,
+    bookmarkPost
 };
