@@ -6,9 +6,9 @@ dotenv.config();
 const dataBaseConnection = async () => {
     try {
         const conn = await mongoose.connect(process.env.DB_URL);
-        console.log(`\n✅ DataBase connected: ${conn.connection.host}`);
+        console.log(`✅ Connected to DataBase on:${conn.connection.host}`);
     } catch (err) {
-        console.error(`\n❌ Error: ${err.message}`);
+        console.error(`❌ Error: ${err.message}`);
         process.exit(1); // Exit process with failure
     }
 };

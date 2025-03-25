@@ -1,9 +1,10 @@
+import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { getAccessToken, getRefreshToken } from './utils/getTokens';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
-import { refreshToken } from './redux/actions/auth.actions';
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { handleScroll, scrollToTop } from './utils/scroll';
+import { Logout, refreshToken } from './redux/actions/auth.actions';
+import { getAccessToken, getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
@@ -17,19 +18,59 @@ import Auth from '../src/pages/Auth/Auth';
 import './App.css';
 
 const App = () => {
-    
-    const dispatch = useDispatch();
-    const [showScrollButton, setShowScrollButton] = useState(false);
-    const darkMode = useTheme();
 
-    const refreshTokenFromCookies = getRefreshToken();
-    const accessToken = getAccessToken();
+    const dispatch = useDispatch();
+
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    const [userLoggedOut, setUserLoggedOut] = useState(false);
+    const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState();
+
+    const darkMode = useTheme();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!accessToken && refreshTokenFromCookies) {
-            dispatch(refreshToken(refreshTokenFromCookies));
+        const fetchRefreshToken = async () => {
+            const token = await getRefreshToken();
+            setRefreshTokenFromCookies(token ?? null);
+        };
+
+        fetchRefreshToken();
+    }, []);
+
+    useEffect(() => {
+        if (refreshTokenFromCookies === '') {
+            return;
         }
-    }, [accessToken, dispatch]);
+
+        if (refreshTokenFromCookies === null) {
+            setUserLoggedOut(true);
+            dispatch(Logout(navigate));
+            return;
+        }
+
+        const checkAuth = async () => {
+
+            const accessToken = getAccessToken();
+
+            if (refreshTokenFromCookies && !isRefreshTokenExpired(refreshTokenFromCookies) && (accessToken && !isAccessTokenExpired(accessToken))) {
+                setUserLoggedOut(false);
+            }
+
+            if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
+                setUserLoggedOut(false);
+                dispatch(refreshToken(refreshTokenFromCookies));
+            }
+            else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies) && userLoggedOut) {
+                setUserLoggedOut(true);
+                dispatch(Logout(navigate));
+            }
+        };
+
+        checkAuth();
+
+        const interval = setInterval(checkAuth, 10 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, [refreshTokenFromCookies]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -50,14 +91,14 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
-                    <Route path="/posts/:id" element={<PostDetails />} />
+                    <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={userLoggedOut ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />;
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
-                
+
             </Container>
         </div>
     );

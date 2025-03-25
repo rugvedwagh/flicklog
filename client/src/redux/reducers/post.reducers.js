@@ -8,7 +8,8 @@ import {
     FETCH_BY_SEARCH,
     COMMENT,
     LIKED_POSTS,
-    USER_POSTS
+    USER_POSTS,
+    BOOKMARK_POST
 } from "../../constants/post.constants";
 import {
     START_LOADING,
@@ -17,16 +18,40 @@ import {
 
 const initialState = {
     isLoading: true,
-    darkMode: true,
-    posts: []
-}
+    posts: [],
+};
 
 const postsReducer = (state = initialState, action) => {
-
     switch (action.type) {
+        case START_LOADING:
+            return { ...state, isLoading: true };
+
+        case END_LOADING:
+            return { ...state, isLoading: false };
+
+        case FETCH_ALL:
+            const updatedPosts = action.payload.currentPage === 1
+                ? action.payload.data
+                : [...state.posts, ...action.payload.data.filter(
+                    (newPost) => !state.posts.some((post) => post._id === newPost._id)
+                )];
+
+            return {
+                ...state,
+                posts: updatedPosts,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
+
+        case FETCH_POST:
+            return { ...state, post: action.payload };
+
+        case CREATE:
+            localStorage.removeItem('cachedPosts');
+            return { ...state, posts: [action.payload, ...state.posts] };
 
         case UPDATE:
-            localStorage.removeItem('postsData')
+            localStorage.removeItem('cachedPosts');
             return {
                 ...state,
                 posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
@@ -39,49 +64,30 @@ const postsReducer = (state = initialState, action) => {
             };
 
         case DELETE:
+            localStorage.removeItem('cachedPosts');
             return {
                 ...state,
-                posts: state.posts.filter((post) => post._id !== action.payload)
+                posts: state.posts.filter((post) => post._id !== action.payload),
             };
 
-        case CREATE:
+        case BOOKMARK_POST:
             return {
                 ...state,
-                posts: [...state.posts, action.payload]
-            };
-
-        case FETCH_ALL:
-            const newPosts = action.payload.data.filter(
-                (newPost) => !state.posts.some((post) => post._id === newPost._id)
-            );
-            return {
-                ...state,
-                posts: [...state.posts, ...newPosts],
-                currentPage: action.payload.currentPage,
-                numberOfPages: action.payload.numberOfPages,
-            };
-
-        case FETCH_POST:
-            return {
-                ...state,
-                post: action.payload
+                clientData: {
+                    ...state.clientData,
+                    bookmarks: action.payload.bookmarks,
+                },
             };
 
         case FETCH_BY_SEARCH:
-            return {
-                ...state,
-                posts: action.payload
-            };
+            return { ...state, posts: action.payload };
 
         case COMMENT:
             return {
                 ...state,
-                posts: state.posts.map((post) => {
-                    if (post._id === action.payload._id) {
-                        return action.payload;
-                    }
-                    return post;
-                }),
+                posts: state.posts.map((post) =>
+                    post._id === action.payload._id ? action.payload : post
+                ),
             };
 
         case LIKED_POSTS:
@@ -96,17 +102,6 @@ const postsReducer = (state = initialState, action) => {
                 posts: state.posts?.filter((post) => post.creator === action.payload)
             }
 
-        case START_LOADING:
-            return {
-                ...state,
-                isLoading: true
-            };
-
-        case END_LOADING:
-            return {
-                ...state,
-                isLoading: false
-            };
 
         default:
             return state;

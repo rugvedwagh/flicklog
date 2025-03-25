@@ -4,18 +4,19 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { likedPosts, userPosts } from '../../redux/actions/post.actions';
-import { fetchUserData, Logout } from '../../redux/actions/auth.actions';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { fetchUserData } from '../../redux/actions/user.actions';
 import { toggleTheme } from '../../redux/actions/theme.actions';
-import React, { useState, useEffect, useCallback } from 'react';
+import { Logout } from '../../redux/actions/auth.actions';
+import { getRefreshToken } from '../../utils/getTokens';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import React, { useState, useEffect, useCallback } from 'react';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
-import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
-import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie'
+import { useTheme } from '../../context/themeContext';
+import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.css';
 
 const Navbar = () => {
@@ -24,14 +25,26 @@ const Navbar = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const UserIsAuthenticated = Cookies.get('refreshToken');
-    const profile = getProfile();
-    const userId = profile?._id;
-
+    const { authData } = useSelector((state) => state.authReducer);
+    
+    const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [profile, setProfile] = useState();
 
+    const userId = profile?._id;
+    
+    useEffect(() => {
+        const fetchRefreshToken = async () => {
+            const refreshToken = await getRefreshToken();
+            setUserIsAuthenticated(refreshToken ?? null);
+            setProfile(getProfile());
+        };
+        
+        fetchRefreshToken();
+    }, [authData]); 
+    
     const toggleView = () => {
         dispatch(toggleTheme());
     };
@@ -42,14 +55,13 @@ const Navbar = () => {
         setOpenDialog(false);
     }, [dispatch, navigate]);
 
-
     useEffect(() => {
         return handleNavbarScroll(setIsVisible);
     }, []);
 
     const handleLoginClick = () => {
-        navigate('/auth')
-    }
+        navigate('/auth');
+    };
 
     const openUser = () => {
         if (userId) {
@@ -67,22 +79,22 @@ const Navbar = () => {
     };
 
     const handleLogoClick = () => {
-        navigate('/posts')
-    }
+        navigate('/posts');
+    };
 
     const handleLikedPosts = () => {
         if (userId) {
             dispatch(likedPosts(userId));
             closeMenu();
         }
-    }
+    };
 
     const handleUserPosts = () => {
         if (userId) {
             dispatch(userPosts(userId));
             closeMenu();
         }
-    }
+    };
 
     const navbarClasses = `navbar ${darkMode ? 'dark' : ''} ${isVisible ? 'visible' : 'hidden'}`;
 
@@ -116,7 +128,7 @@ const Navbar = () => {
                                 alt={profile?.name}
                                 src={profile.imageUrl}
                             >
-                                {profile.name?.charAt(0)}
+                                <i className="fa-solid fa-user"></i>
                             </Avatar>&nbsp;
                             <div className='userinfo'>
                                 <strong>
@@ -160,7 +172,7 @@ const Navbar = () => {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }}>
+                    <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu(); }}>
                         Cancel
                     </Button>
                     <Button variant="contained" onClick={handleLogout} autoFocus>

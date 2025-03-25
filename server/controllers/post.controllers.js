@@ -1,8 +1,10 @@
+import { redis, redisAvailable } from "../config/redisClient.js";
 import PostMessage from "../models/post.model.js";
-import mongoose from "mongoose";
+import UserModel from "../models/user.model.js";
+import mongoose from 'mongoose';
 
-// Fetch a Single Post
-const fetchPost = async (req, res) => {
+// Fetch a post
+const fetchPost = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -11,48 +13,130 @@ const fetchPost = async (req, res) => {
         throw error;
     }
 
-    const post = await PostMessage.findById(id);
-    if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+    const cacheKey = `post:${id}`;
+
+    try {
+        if (redisAvailable) {
+            const cachedPost = await redis.get(cacheKey);
+            if (cachedPost) {
+                return res.status(200).json(JSON.parse(cachedPost));
+            }
+        }
+    } catch (err) {
+        console.error("⚠️ Redis error:", err.message);
     }
 
-    res.status(200).json(post);
+    try {
+        const post = await PostMessage.findById(id);
+        if (!post) {
+            const error = new Error("Post not found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        try {
+            if (redisAvailable) {
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
+            }
+        } catch (err) {
+            console.error("⚠️ Redis set error:", err.message);
+        }
+
+        res.status(200).json(post);
+    } catch (err) {
+        next(err);
+    }
 };
 
-// Fetch All Posts with Pagination
-const fetchPosts = async (req, res) => {
-    const { page = 1 } = req.query;
+// Fetch All Posts
+const fetchPosts = async (req, res, next) => {
 
-    const LIMIT = 6;
-    const startIndex = (Number(page) - 1) * LIMIT;
-    const total = await PostMessage.countDocuments({});
+    const pageNumber = parseInt(req.query.page, 10) || 1;
 
-    const posts = await PostMessage.find()
-        .sort({ _id: -1 })
-        .limit(LIMIT)
-        .skip(startIndex);
+    const cacheKey = `posts:page:${pageNumber}`;
 
-    res.status(200).json({
-        data: posts,
-        currentPage: Number(page),
-        numberOfPages: Math.ceil(total / LIMIT),
-    });
+    try {
+        if (redisAvailable) {
+            const cachedPosts = await redis.get(cacheKey);
+            if (cachedPosts) {
+                return res.status(200).json(JSON.parse(cachedPosts));
+            }
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+
+    try {
+        const LIMIT = 6;
+        const startIndex = (pageNumber - 1) * LIMIT;
+        const total = await PostMessage.countDocuments({});
+
+        const posts = await PostMessage.find()
+            .sort({ _id: -1 })
+            .limit(LIMIT)
+            .skip(startIndex);
+
+        const response = {
+            data: posts,
+            currentPage: pageNumber,
+            numberOfPages: Math.ceil(total / LIMIT),
+        };
+
+        try {
+            if (redisAvailable) {
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            }
+        } catch (err) {
+            console.log("Redis set error:", err.message);
+        }
+
+        res.status(200).json(response);
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Search Posts by Title or Tags
-const fetchPostsBySearch = async (req, res) => {
+const fetchPostsBySearch = async (req, res, next) => {
     const { searchQuery = "", tags = "" } = req.query;
+    const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
-    const title = new RegExp(searchQuery, "i");
-    const tagsArray = tags.split(",").map((tag) => tag.trim());
+    try {
+        if (redisAvailable) {
+            const cachedResults = await redis.get(cacheKey);
+            if (cachedResults) {
+                return res.status(200).json(JSON.parse(cachedResults));
+            }
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
 
-    const posts = await PostMessage.find({
-        $or: [{ title }, { tags: { $in: tagsArray } }],
-    });
+    try {
+        const title = new RegExp(searchQuery, "i");
+        const tagsArray = tags ? tags.split(",").map((tag) => tag.trim()) : [];
 
-    res.status(200).json({ data: posts });
+        const posts = await PostMessage.find({
+            $or: [{ title }, { tags: { $in: tagsArray } }],
+        });
+
+        const response = { data: posts };
+
+        try {
+            if (redisAvailable) {
+                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+
+        res.status(200).json(response);
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Create a New Post
@@ -72,6 +156,7 @@ const createPost = async (req, res) => {
 // Update a Post
 const updatePost = async (req, res) => {
     const { id: _id } = req.params;
+
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -90,6 +175,16 @@ const updatePost = async (req, res) => {
         const error = new Error("Post not found");
         error.statusCode = 404;
         throw error;
+    }
+
+    const cacheKey = `post:${_id}`;
+
+    try {
+        if (redisAvailable) {
+            await redis.del(cacheKey);
+        }
+    } catch (err) {
+        console.error("⚠️ Redis set error:", err.message);
     }
 
     res.status(200).json(updatedPost);
@@ -159,6 +254,12 @@ const commentPost = async (req, res) => {
     const { id } = req.params;
     const { value } = req.body;
 
+    if (!value || !value.trim()) {
+        const error = new Error("Comment cannot be empty");
+        error.statusCode = 400;
+        throw error;
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         const error = new Error("Invalid post ID");
         error.statusCode = 400;
@@ -176,7 +277,52 @@ const commentPost = async (req, res) => {
     post.comments.push(value);
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+    const cacheKey = `post:${id}`;
+
+    try {
+        if (redisAvailable) {
+            await redis.del(cacheKey);
+        }
+    } catch (err) {
+        console.error("⚠️ Redis set error:", err.message);
+    }
+
     res.status(200).json(updatedPost);
+};
+
+
+// Bookmark Post Controller
+const bookmarkPost = async (req, res) => {
+    const { postId, userId } = req.body;
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const isAlreadyBookmarked = user.bookmarks.includes(postId);
+
+    if (isAlreadyBookmarked) {
+        user.bookmarks = user.bookmarks.filter((id) => id.toString() !== postId);
+        await user.save();
+
+        res.status(200).json({
+            message: "Bookmark removed successfully",
+            bookmarks: user.bookmarks,
+        });
+    } else {
+        user.bookmarks.push(postId);
+        await user.save();
+
+        res.status(200).json({
+            message: "Bookmark added successfully",
+            bookmarks: user.bookmarks,
+        });
+    }
 };
 
 export {
@@ -188,4 +334,5 @@ export {
     deletePost,
     updatePost,
     createPost,
+    bookmarkPost
 };

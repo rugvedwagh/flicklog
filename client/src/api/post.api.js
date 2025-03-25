@@ -17,7 +17,7 @@ const fetchPostApi = (id) => API.get(`/posts/${id}`);
 
 const addCommentApi = (value, id) => API.post(`/posts/${id}/commentPost`, { value });   // {value} is in the body and the {id} is in the params!
 
-const bookmarkPostApi = (postId, userId) => API.post('/user/bookmarks/add', { postId, userId });
+const bookmarkPostApi = (postId, userId) => API.post('/posts/bookmarks/add', { postId, userId });
 
 export {
     updatePostApi,

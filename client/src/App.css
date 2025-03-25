@@ -69,6 +69,9 @@ body {
 }
 
 @media (max-width: 600px) {
+    .root-bg, .root-bg.dark{
+        width: 100vw;
+    }
     .scrollup.show {
         height: 1.75em;
         width: 1.75em;
@@ -82,33 +85,13 @@ body {
 
 .root-bg {
     background-color: var(--white);
-    width: 100vw !important;
+    width: calc(100vw - 17px);
     padding: 0 !important;
     margin: 0 !important;
 }
 
 .root-bg.dark {
     background-color: var(--black);
-}
-
-.toggleButton {
-    position: fixed;
-    z-index: 1000;
-    left: 95vw;
-    top: 10vh;
-    background-color: transparent;
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.toggleButton:hover {
-    transform: scale(1.1);
-}
-
-.toggleButton:focus {
-    outline: none;
 }
 
 @media (max-width: 600px) {
@@ -118,10 +101,4 @@ body {
         font-size: 0.8rem;
         padding: 8px 18px;
     }
-}
-
-.tempp {
-    background-color: red;
-    width: 100vw;
-    position: fixed;
 }

@@ -35,16 +35,17 @@ const fetchPost = (id) => async (dispatch) => {
         dispatch({ type: FETCH_POST, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
 };
 
-const fetchPosts = (page) => async (dispatch) => {
+const fetchPosts = (page) => async (dispatch, getState) => {
     try {
         dispatch({ type: START_LOADING });
-        const cachedPosts = JSON.parse(localStorage.getItem('postsData')) || {
+
+        const cachedPosts = JSON.parse(localStorage.getItem('cachedPosts')) || {
             posts: [],
             pages: {},
             numberOfPages: 0
@@ -57,9 +58,10 @@ const fetchPosts = (page) => async (dispatch) => {
                     data: cachedPosts.posts,
                     currentPage: page,
                     numberOfPages: cachedPosts.numberOfPages,
-                },
+                }
             });
-        } else {
+        }
+        else {
             const {
                 data: {
                     data,
@@ -72,26 +74,25 @@ const fetchPosts = (page) => async (dispatch) => {
             const updatedPages = { ...cachedPosts.pages, [page]: true };
 
             localStorage.setItem(
-                'postsData',
+                'cachedPosts',
                 JSON.stringify({
                     posts: updatedPosts,
                     pages: updatedPages,
                     numberOfPages,
                 })
             );
-                
+
             dispatch({
                 type: FETCH_ALL,
                 payload: {
                     data: updatedPosts,
                     currentPage,
                     numberOfPages
-                },
+                }
             });
         }
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.error(error);
+        dispatch({ type: ERROR, payload: error?.response?.data?.message || "An error occurred" });
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -104,7 +105,7 @@ const fetchPostsBySearch = (searchQuery) => async (dispatch) => {
         dispatch({ type: FETCH_BY_SEARCH, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -115,10 +116,9 @@ const createPost = (post) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data } = await createPostApi(post);
         dispatch({ type: CREATE, payload: data });
-        localStorage.removeItem('postsData');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -131,7 +131,7 @@ const updatePost = (id, post) => async (dispatch) => {
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -142,23 +142,21 @@ const deletePost = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         await deletePostApi(id);
         dispatch({ type: DELETE, payload: id });
-        localStorage.removeItem('postsData');
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
 };
 
-// Functions without loading states remain unchanged
 const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await likePostApi(id);
         dispatch({ type: LIKE, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -169,7 +167,7 @@ const addComment = (value, id) => async (dispatch) => {
         return data.comments;
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -179,7 +177,7 @@ const bookmarkPost = (postId, userId) => async (dispatch) => {
         dispatch({ type: BOOKMARK_POST, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -188,7 +186,7 @@ const likedPosts = (data) => async (dispatch) => {
         dispatch({ type: LIKED_POSTS, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -197,7 +195,7 @@ const userPosts = (data) => async (dispatch) => {
         dispatch({ type: USER_POSTS, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 

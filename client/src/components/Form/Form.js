@@ -43,13 +43,13 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     }, [post]);
 
     const clearForm = () => {
-        setCurrentId(0);
         setPostData({
-            title: "",
+            title: '',
             message: '',
-            tags: [],
+            tags: '',
             selectedfile: ''
         });
+        setCurrentId(0);
     };
 
     const toggleForm = () => {
@@ -58,12 +58,12 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        clearForm();
 
         (currentId === 0) ?
             dispatch(createPost({ ...postData, name: profile.name })) :
             dispatch(updatePost(currentId, { ...postData, name: profile.name }));
-
-        clearForm();
     };
 
     if (!UserIsAuthenticated) {

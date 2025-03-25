@@ -29,7 +29,7 @@
     width: 30%;
     margin: 2rem auto;
     background-color: #f9f9f9;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px ;
     padding: 2rem;
     border-radius: 3px;
     font-family: 'Arial', sans-serif;
@@ -37,7 +37,7 @@
 
 .main-cont.dark {
     background-color: var(--black) !important;
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
 }
 
 .upper-div {
@@ -72,12 +72,10 @@
     color: var(--black);
     border-radius: 50%;
     margin: 0.5em auto 0.8em auto;
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
     user-select: none;
 }
 
 .avatar.dark {
-    box-shadow: white 0px 2px 5px -1px, rgba(255, 255, 255, 0.3) 0px 1px 3px -1px !important;
     background-color: var(--antiFlashWhite) !important;
     color: var(--black);
 }
@@ -277,4 +275,8 @@
 
 .username:hover{
     color: var(--forrestGreen);
+}
+
+#crossButton{
+    cursor: pointer;
 }

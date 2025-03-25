@@ -9,7 +9,7 @@ const toggleTheme = () => async (dispatch) => {
         dispatch({ type: TOGGLE_THEME })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.log(error);
+        console.error(error);
     }
 };
 

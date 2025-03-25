@@ -1,13 +1,12 @@
 import axios from 'axios';
-import store from '../redux/store';
-import { refreshToken } from '../redux/actions/auth.actions';
+import { store } from '../redux/store';
+import { Logout, refreshToken } from '../redux/actions/auth.actions';
 import { getProfile } from '../utils/storage';
 import { getRefreshToken } from '../utils/getTokens';
 
 const API = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ?
-        process.env.REACT_APP_API_URL :
-        process.env.REACT_APP_API_URL_DEV
+    baseURL: process.env.REACT_APP_API_URL_DEV,
+    withCredentials: true // ✅ Ensures cookies are sent and received
 });
 
 /*
@@ -33,27 +32,53 @@ API.interceptors.request.use((req) => {
     Purpose: This handles responses, particularly for refreshing expired 
     tokens when a 401 Unauthorized error occurs (typically caused by an expired access token).
 */
-API.interceptors.response.use((response) => response,
+// Flag to prevent multiple simultaneous refresh attempts
+let isRefreshing = false;
+
+API.interceptors.response.use(
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        const profile = getProfile();
-        const refreshTokenFromCookies = getRefreshToken();
 
-        if (profile && error.response.status === 401) {
-            try {
-                await store.dispatch(refreshToken(refreshTokenFromCookies));
-                const updatedProfile = getProfile();
-                const { accessToken } = updatedProfile;
-                originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-
-                return axios(originalRequest);
-            } catch (err) {
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            if (isRefreshing) {
                 return Promise.reject(error);
             }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            try {
+                const refreshTokenFromCookies = await getRefreshToken();
+                
+                if (!refreshTokenFromCookies) {
+                    await store.dispatch(Logout());
+                    return Promise.reject(error);
+                }
+
+                await store.dispatch(refreshToken(refreshTokenFromCookies));
+
+                const updatedProfile = await getProfile();
+                const { accessToken } = updatedProfile;
+
+                originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+                isRefreshing = false;
+
+                return axios(originalRequest);
+
+            } catch (refreshError) {
+                isRefreshing = false;
+                await store.dispatch(Logout());
+                return Promise.reject(refreshError);
+            }
         }
+
         return Promise.reject(error);
     }
 );
+
+
 
 export default API;
 

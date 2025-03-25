@@ -1,103 +1,94 @@
-import React from 'react';
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useTheme } from '../../context/themeContext';
-import twitterlogo from '../../assets/twitterlogo.svg'
-import instalogo from '../../assets/instalogo.svg'
-import fblogo from '../../assets/fblogo.svg'
+import React from 'react';
 import './footer.styles.css';
 
 const Footer = () => {
-
     const darkMode = useTheme();
-    const currentYear = new Date().getFullYear();
-
     return (
-        <div className={`footer ${darkMode ? 'dark' : ''}`}>
-            <div className="col">
-                <h1>Company</h1>
-                <ul>
-                    <li>About</li>
-                    <li>Mission</li>
-                    <li>Services</li>
-                    <li>Social</li>
-                    <li>Get in touch</li>
-                </ul>
-            </div>
+        <footer className={`footer ${darkMode ? 'dark' : ''}`}>
+            <div className="container">
+                <div className="footer-content">
+                    <div className="footer-brand">
+                        <h2 className="brand-name">Reminisce</h2>
+                        <div className="social-icons">
+                            <a href="#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-youtube"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-instagram"></i></a>
+                            <a href="#" className="social-icon"><i className="fa-brands fa-github"></i></a>
+                        </div>
+                        <ul className="legal-links">
+                            <li><a href="/#">Trust</a></li>
+                            <li><a href="/#">Privacy</a></li>
+                            <li><a href="/#">Terms of use</a></li>
+                            <li><a href="/#">Legal notices</a></li>
+                        </ul>
+                    </div>
 
-            <div className="col">
-                <h1>Products</h1>
-                <ul>
-                    <li>About</li>
-                    <li>Mission</li>
-                    <li>Services</li>
-                    <li>Social</li>
-                    <li>Get in touch</li>
-                </ul>
-            </div>
+                    <div className="footer-links-container">
+                        <div className="footer-links-column">
+                            <h3 className="column-title">USE CASES</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Vector database</a></li>
+                                <li><a href="/#">Feature stores</a></li>
+                                <li><a href="/#">Semantic cache</a></li>
+                                <li><a href="/#">Caching</a></li>
 
-            <div className="col">
-                <h1>Accounts</h1>
-                <ul>
-                    <li>About</li>
-                    <li>Mission</li>    
-                    <li>Services</li>
-                    <li>Social</li>
-                    <li>Get in touch</li>
-                </ul>
-            </div>
+                            </ul>
+                        </div>
 
-            <div className="col">
-                <h1>Resources</h1>
-                <ul>
-                    <li>Webmail</li>
-                    <li>Redeem code</li>
-                    <li>WHOIS lookup</li>
-                    <li>Site map</li>
-                    <li>Web templates</li>
-                    <li>Email templates</li>
-                </ul>
-            </div>
+                        <div className="footer-links-column">
+                            <h3 className="column-title">INDUSTRIES</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Financial Services</a></li>
+                                <li><a href="/#">Gaming</a></li>
+                                <li><a href="/#">Healthcare</a></li>
+                                <li><a href="/#">Retail</a></li>
+                            </ul>
+                        </div>
 
-            <div className="col">
-                <h1>Support</h1>
-                <ul>
-                    <li>Contact us</li>
-                    <li>Web chat</li>
-                    <li>Open ticket</li>
-                </ul>
-            </div>
+                        <div className="footer-links-column">
+                            <h3 className="column-title">COMPARE</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Redis vs Elasticache</a></li>
+                                <li><a href="/#">Redis vs Memcached</a></li>
+                                <li><a href="/#">Redis vs Memory Store</a></li>
+                                <li><a href="/#">Redis vs Source Available</a></li>
+                            </ul>
+                        </div>
 
-            <div className="col">
-                <h1>Social</h1>
-                <ul>
-                    <li>
-                        <img
-                            src={fblogo}
-                            alt="Facebook"
-                            width="32"
-                        />
-                    </li>
-                    <li>
-                        <img
-                            src={twitterlogo}
-                            alt="Twitter"
-                            width="32"
-                        />
-                    </li>
-                    <li>
-                        <img
-                            src={instalogo}
-                            alt="Instagram"
-                            width="32"
-                        />
-                    </li>
-                </ul>
+                        <div className="footer-links-column">
+                            <h3 className="column-title">CONNECT</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Community</a></li>
+                                <li><a href="/#">Events & webinars</a></li>
+                                <li><a href="/#">News</a></li>
+                            </ul>
+                        </div>
+
+                        <div className="footer-links-column">
+                            <h3 className="column-title">PARTNERS</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Amazon Web Services</a></li>
+                                <li><a href="/#">Google Cloud</a></li>
+                                <li><a href="/#">Microsoft Azure</a></li>
+                                <li><a href="/#">All partners</a></li>
+                            </ul>
+                        </div>
+
+                        <div className="footer-links-column">
+                            <h3 className="column-title">SUPPORT</h3>
+                            <ul className="footer-links">
+                                <li><a href="/#">Professional services</a></li>
+                                <li><a href="/#">Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="clearfix"></div>
-            <div className="footer-bottom">
-                <p>© {currentYear} Reminisce. All rights reserved.</p>
-                <p>Privacy Policy | Terms of Service</p>
-            </div>
-        </div>
+        </footer>
     );
 };
 

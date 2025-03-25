@@ -7,22 +7,20 @@ import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { getRefreshToken } from '../../utils/getTokens';
 import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
 import moment from 'moment';
-import './post.styles.css';
+import './postcard.styles.css';
 
-const Post = ({ post, setCurrentId }) => {
+const PostCard = ({ post, setCurrentId }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const UserIsAuthenticated = getRefreshToken();
     const profile = getProfile();
     const userId = profile?._id;
 
@@ -43,7 +41,7 @@ const Post = ({ post, setCurrentId }) => {
 
     const handleBookmarkToggle = () => {
         dispatch(bookmarkPost(post._id, userId));
-        setIsBookmarked((prev) => !prev);
+        setIsBookmarked(!isbookmarked);
     };
 
     const handleLike = async () => {
@@ -67,7 +65,7 @@ const Post = ({ post, setCurrentId }) => {
                     {post.name}
                 </Typography>
 
-                <Typography variant="body">
+                <Typography sx={{fontSize:'14px'}}>
                     {moment(post.createdAt).fromNow()}
                 </Typography>
             </div>
@@ -76,7 +74,7 @@ const Post = ({ post, setCurrentId }) => {
                 <div className="overlay2">
                     <Tooltip title="Edit" arrow placement="top">
                         <Button
-                            style={{ color: 'white', marginRight: '-25px' }}
+                            style={{ color: 'white', marginRight: '-20px' }}
                             size="small"
                             onClick={() => setCurrentId(post._id)}
                         >
@@ -87,14 +85,6 @@ const Post = ({ post, setCurrentId }) => {
             )}
 
             <section onClick={openPost}>
-                <Typography
-                    color="textSecondary"
-                    variant="body2"
-                    className={`tags ${darkMode ? 'dark' : ''}`}
-                >
-                    {post.tags.map((tag) => `#${tag} `)}
-                </Typography>
-
                 <Typography
                     className={`title ${darkMode ? 'dark' : ''}`}
                     variant="h5"
@@ -136,7 +126,7 @@ const Post = ({ post, setCurrentId }) => {
                     </Button>
                 </Tooltip>
 
-                {UserIsAuthenticated && (
+                {/* {UserIsAuthenticated && ( */}
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
@@ -146,10 +136,10 @@ const Post = ({ post, setCurrentId }) => {
                             )}
                         </Button>
                     </Tooltip>
-                )}
-           </CardActions>
+                {/* )} */}
+            </CardActions>
         </Card>
     );
 };
 
-export default Post;
+export default PostCard;

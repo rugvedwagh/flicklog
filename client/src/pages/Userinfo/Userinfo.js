@@ -1,11 +1,10 @@
-import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { updateUserDetails, fetchUserData } from '../../redux/actions/auth.actions';
+import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { updateUserDetails } from '../../redux/actions/user.actions';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
-import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
 
@@ -15,8 +14,6 @@ const Userinfo = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const profile = getProfile();
-    const userId = profile._id;
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.authReducer);
 
@@ -28,13 +25,13 @@ const Userinfo = () => {
         email: clientData?.email || ''
     });
 
-    const bookmarkedPosts = () => {
+    const bookmarkedPosts = useMemo(() => {
         return posts.filter((post) => clientData?.bookmarks?.includes(post._id));
-    };
+    }, [posts, clientData]);
 
     const userPostsCount = useMemo(() => {
         return posts.filter((post) => post.creator === clientData?._id).length;
-    }, [posts, clientData?._id]);
+    }, [posts, clientData]);
 
     const openPost = useCallback((postId) => {
         navigate(`/posts/${postId}`);
@@ -68,7 +65,6 @@ const Userinfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserData(userId, navigate))
     }, []);
 
     if (isLoading) {
@@ -76,19 +72,21 @@ const Userinfo = () => {
     }
 
     if (!clientData) {
-        return <h2 sx={{color : 'white'}}>User does not exist!</h2>;
+        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+            User not found!
+        </Typography>;
     }
 
     return (
         <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
             <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
-                <h2>User Profile</h2>
+                <h2>My Profile</h2>
             </div>
 
             <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
                 <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                    {clientData.name.charAt(0).toUpperCase()}
+                    <i class="fa-solid fa-user"></i>
                 </div>
 
                 <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
@@ -117,7 +115,10 @@ const Userinfo = () => {
                 {bookmarkedPosts.length > 0 && showBm ? (
                     <div className="bookmarked-posts">
                         <hr />
-                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>
+                            Bookmarked Posts
+
+                        </h3>
                         <div className="bookmarked-list">
                             {bookmarkedPosts.map((post) => (
                                 <div
@@ -127,7 +128,11 @@ const Userinfo = () => {
                                     <h4 onClick={() => openPost(post._id)}>
                                         {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
                                     </h4>
-                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id, clientData._id)} />
+                                    <CancelRoundedIcon
+                                        color='error'
+                                        onClick={() => removeBookmark(post._id, clientData._id)}
+                                        id="crossButton"
+                                    />
                                 </div>
                             ))}
                         </div>

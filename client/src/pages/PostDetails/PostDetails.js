@@ -1,9 +1,9 @@
 import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
-import CommentsSection from '../../components/Comments/CommentsSection';
 import React, { useEffect, useState, useCallback } from 'react';
 import { deletePost } from '../../redux/actions/post.actions';
 import { useParams, useNavigate } from 'react-router-dom';
+import Comments from '../../components/Comments/Comments';
 import { CircularProgress, Divider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
@@ -13,9 +13,11 @@ import './postdetails.styles.css';
 import moment from 'moment';
 
 const PostDetails = () => {
+
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const darkMode = useTheme();
     const profile = getProfile();
     const userId = profile?._id;
@@ -50,13 +52,17 @@ const PostDetails = () => {
         navigate('/posts');
     }, [dispatch, id, toggleDeleteDialog]);
 
+    const recommendedPosts = posts.filter(({ _id }) => _id !== id);
+
     if (isLoading) {
         return <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />;
     }
 
-    if (!post) return null;
-
-    const recommendedPosts = posts.filter(({ _id }) => _id !== id);
+    if (!post) {
+        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+            Post not found!
+        </Typography>;
+    }
 
     return (
         <div>
@@ -75,22 +81,34 @@ const PostDetails = () => {
                         {post.title}
                     </Typography>
 
-                    <Typography variant='subtitle1' className={`post-meta ${darkMode ? 'dark' : ''}`} >
+                    <Typography
+                        variant='subtitle1'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
 
-                    <Typography component='p' className='postmessage' dangerouslySetInnerHTML={{ __html: post.message }} />
+                    <Typography
+                        component='p'
+                        className='postmessage'
+                        dangerouslySetInnerHTML={{ __html: post.message }}
+                    />
 
-                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
-                        Posted by: <strong>{post.name}</strong>
+                    <Typography
+                        variant='h6'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
+                        Posted by : <strong>{post.name}</strong>
                     </Typography>
 
-                    <Typography variant='h6' className={`post-meta ${darkMode ? 'dark' : ''}`} >
+                    <Typography
+                        variant='h6'
+                        className={`post-meta ${darkMode ? 'dark' : ''}`}
+                    >
                         <div className='dateAndDelete'>
                             <span>
                                 {moment(post.createdAt).fromNow()}
                             </span>
-
                             <span>
                                 {userId === post?.creator && (
                                     <Tooltip title="Delete" arrow placement="top">
@@ -98,7 +116,11 @@ const PostDetails = () => {
                                             size="small"
                                             onClick={toggleDeleteDialog}
                                         >
-                                            <DeleteIcon color='error' fontSize="small" titleAccess="" />
+                                            <DeleteIcon
+                                                color="error"
+                                                fontSize="small"
+                                                titleAccess=""
+                                            />
                                         </Button>
                                     </Tooltip>
                                 )}
@@ -106,8 +128,7 @@ const PostDetails = () => {
                         </div>
                     </Typography>
 
-
-                    <CommentsSection post={post} />
+                    <Comments post={post} />
                 </section>
             </div>
 
@@ -139,7 +160,6 @@ const PostDetails = () => {
                 </Dialog>
             )}
 
-            {/* Recommended Posts */}
             {recommendedPosts.length ? (
                 <div className={`sect ${darkMode ? 'dark' : ''}`}>
                     <Typography gutterBottom variant='h5'>
@@ -150,7 +170,11 @@ const PostDetails = () => {
 
                     <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
                         {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
-                            <Card raised className={`recommended-post ${darkMode ? 'dark' : ''}`} onClick={() => openPost(_id)} key={_id}>
+                            <Card
+                                raised
+                                className={`recommended-post ${darkMode ? 'dark' : ''}`}
+                                onClick={() => openPost(_id)} key={_id}
+                            >
                                 <Typography gutterBottom variant='h6'>{title}</Typography>
 
                                 <img
@@ -160,13 +184,17 @@ const PostDetails = () => {
                                     onClick={() => openPost(_id)}
                                 />
 
-                                <Typography gutterBottom variant='subtitle1'>{likes.length} likes</Typography>
+                                <Typography gutterBottom variant='subtitle1'>
+                                    {likes.length} likes
+                                </Typography>
                             </Card>
                         ))}
                     </div>
                 </div>
             ) : (
-                <Typography variant='h5' className='endmessage' gutterBottom align='center'> No related posts!</Typography>
+                <Typography variant='h5' className='endmessage' gutterBottom align='center'>
+                    No related posts!
+                </Typography>
             )}
         </div>
     );

@@ -1,40 +1,67 @@
-import errorHandler from './middleware/error.middleware.js';
-import notFound from './middleware/notFound.middleware.js'; 
-import dataBaseConnection from './config/Database.js';
-import userRoutes from './routes/user.routes.js';   
-import postRoutes from './routes/post.routes.js';
-import bodyParser from 'body-parser';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import errorHandler from './middleware/error.middleware.js';
+import notFound from './middleware/notFound.middleware.js';
+import dataBaseConnection from './config/Database.js';
+import { redis } from './config/redisClient.js';
+import userRoutes from './routes/user.routes.js';
+import postRoutes from './routes/post.routes.js';
+import authRoutes from './routes/auth.routes.js';
+import cookieParser from "cookie-parser"; 
 
 dotenv.config();
 
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:3000", // ✅ Allow frontend
+        credentials: true, // ✅ Allow cookies to be sent
+    })
+);
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // Routes
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
+app.use('/auth', authRoutes)
 
-// Global Not Found and Error Handlers (ensure notFound is used before errorHandler)
-app.use(notFound);  
+// Global Not Found and Error Handlers
+app.use(notFound);
 
-app.get('/', (req, res) => {
+let redisMessage = "Redis not connected";
+
+app.get('/', async (req, res) => {
     res.send(`<h2>Server is running...</h2>`);
 });
 
-app.use(errorHandler);  
+app.use(errorHandler);
 
-const PORT = process.env.PORT || 6000;  
+const PORT = process.env.PORT;
 
-dataBaseConnection().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server  on port: ${PORT}`);
-    });
+app.listen(PORT, () => {
+    console.log(`\n✅ Server running on port: ${PORT}`);
 });
+
+(async () => {
+    try {
+        await redis.ping();
+    } catch (err) {
+        console.error("⚠️ Redis connection failed:", err.message);
+    }
+})();
+
+(async () => {
+    try {
+        await dataBaseConnection();
+    } catch (err) {
+        console.error("⚠️ MongoDB connection failed:", err.message);
+    }
+})();

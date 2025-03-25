@@ -26,16 +26,6 @@
     animation: slideImage 0.7s ease-in-out;
 }
 
-.searchlogo {
-    color: rgb(107, 107, 107);
-    cursor: pointer;
-}
-
-.searchlogo:hover {
-    color: black;
-    transition: 0.3s ease-in;
-}
-
 .appBarSearch {
     background-color: var(--white) !important;
     display: flex;
@@ -53,7 +43,6 @@
     color: var(--antiFlashWhite) !important;
     background-color: var(--black) !important;
     outline: 1px solid var(--borderColor);
-
 }
 
 .appBarSearch input {
@@ -74,27 +63,10 @@
     flex-direction: row;
 }
 
-.MuiToggleButtonGroup-root {
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-}
-
 @media (max-width: 600px) {
     .gridContainer {
         flex-direction: column-reverse;
     }
-    .MuiToggleButtonGroup-root {
-        width: 9em;
-        height: 3em;
-    }
-}
-
-.togandsearch {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
 
 .search-button{
@@ -115,15 +87,6 @@
 .appBarSearch > .box {
     border: 1px solid var(--borderColor) !important;
 }   
-
-.MuiToggleButtonGroup-root{
-    background-color: var(--white);
-    color: var(--antiFlashWhite) !important;
-}	
-
-.MuiToggleButton-root{
-    color: var(--black) !important;
-}
 
 .box {
     width: 90%;
