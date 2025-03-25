@@ -126,7 +126,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     </Button>
                 </Tooltip>
 
-                {/* {UserIsAuthenticated && ( */}
+                {UserIsAuthenticated && (
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
@@ -136,7 +136,7 @@ const PostCard = ({ post, setCurrentId }) => {
                             )}
                         </Button>
                     </Tooltip>
-                {/* )} */}
+                )}
             </CardActions>
         </Card>
     );
