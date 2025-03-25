@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import API from './index';
-=======
-import API from './index';  
->>>>>>> 22bd4d6f8cf27c0597843aeab4180117aeea7082
 
 // Auth related API calls
 const logInApi = (formData) => API.post('/auth/signin', formData);
