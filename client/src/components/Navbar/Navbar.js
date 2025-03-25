@@ -34,7 +34,7 @@ const Navbar = () => {
     const [profile, setProfile] = useState();
 
     const userId = profile?._id;
-    
+        
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const refreshToken = await getRefreshToken();
