@@ -9,14 +9,23 @@ import { redis } from './config/redisClient.js';
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import cookieParser from "cookie-parser"; 
 
 dotenv.config();
 
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:3000", // ✅ Allow frontend
+        credentials: true, // ✅ Allow cookies to be sent
+    })
+);
+
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // Routes
@@ -30,7 +39,7 @@ app.use(notFound);
 let redisMessage = "Redis not connected";
 
 app.get('/', async (req, res) => {
-    res.send(`<h2>Server is running...</h2><p>Redis says: ${redisMessage}</p>`);
+    res.send(`<h2>Server is running...</h2>`);
 });
 
 app.use(errorHandler);

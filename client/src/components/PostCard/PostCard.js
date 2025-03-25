@@ -22,7 +22,7 @@ const PostCard = ({ post, setCurrentId }) => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const UserIsAuthenticated = getRefreshToken();
+    // const UserIsAuthenticated = getRefreshToken();
     const profile = getProfile();
     const userId = profile?._id;
 
@@ -128,7 +128,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     </Button>
                 </Tooltip>
 
-                {UserIsAuthenticated && (
+                {/* {UserIsAuthenticated && ( */}
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
@@ -138,7 +138,7 @@ const PostCard = ({ post, setCurrentId }) => {
                             )}
                         </Button>
                     </Tooltip>
-                )}
+                {/* )} */}
             </CardActions>
         </Card>
     );

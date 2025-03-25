@@ -29,6 +29,13 @@ const logIn = async (req, res) => {
 
     await oldUser.save();
 
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: "Strict", 
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+    });
+
     res.status(200).json({
         result: oldUser,
         accessToken: accessToken,
@@ -69,6 +76,13 @@ const registerUser = async (req, res) => {
 
     await newUser.save();
 
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     res.status(201).json({
         result: newUser,
         accessToken: accessToken,
@@ -76,13 +90,33 @@ const registerUser = async (req, res) => {
     });
 };
 
+// Logout user controller
+const logoutUser = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        const error = new Error("Refresh token not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    res.clearCookie('refreshToken', {
+        httpOnly: true,  
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'strict', 
+        path: '/',
+    });
+
+    res.status(200).json({ message: 'Logged out successfully' });
+};
+
 // Refresh token controller
 const refreshToken = async (req, res) => {
     let { refreshToken } = req.body;
 
-    if (!refreshToken) {
-        const error = new Error("Refresh token is required");
-        error.statusCode = 400;
+    if (!refreshToken || typeof refreshToken !== "string") {
+        const error = new Error("Refresh token must be a valid string");
+        error.statusCode = 401;
         throw error;
     }
 
@@ -97,17 +131,30 @@ const refreshToken = async (req, res) => {
         throw error;
     }
 
-    const newToken = generateAccessToken(user);
-    const newRefreshToken = generateRefreshToken(user);
+    const newAccessToken = generateAccessToken(user);
 
     res.status(200).json({
-        accessToken: newToken,
-        refreshToken: newRefreshToken
+        accessToken: newAccessToken,
     });
+
 };
-    
+
+const getRefreshToken = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        const error = new Error("No refresh token found in cookies");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    res.status(200).json({ refreshToken });
+};
+
 export {
-    logIn,  
+    logIn,
     registerUser,
-    refreshToken
+    refreshToken,
+    getRefreshToken,
+    logoutUser
 }

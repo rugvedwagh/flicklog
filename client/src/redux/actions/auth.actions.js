@@ -12,9 +12,11 @@ import {
 import {
     refreshTokenApi,
     registerUserApi,
-    logInApi
+    logInApi,
+    logoutApi,
 } from '../../api/auth.api';
 import { getProfile } from '../../utils/storage';
+import { getRefreshToken } from '../../utils/getTokens';
 
 const logIn = (formData, navigate) => async (dispatch) => {
     try {
@@ -46,10 +48,10 @@ const registerUser = (formData, navigate) => async (dispatch) => {
     }
 };
 
-const Logout = (navigate) => (dispatch) => {
+const Logout = (navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        navigate('/');
+        await logoutApi();
         dispatch({ type: LOGOUT });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
@@ -64,13 +66,16 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
         const profile = getProfile();
 
         if (!profile || !refreshTokenFromCookies) {
+            console.error("❌ Missing profile or refresh token");
             return;
         }
+
         const { data } = await refreshTokenApi(refreshTokenFromCookies);
+
         dispatch({ type: REFRESH_TOKEN, payload: data.accessToken });
     } catch (error) {
+        console.error("❌ Error in Refresh Token:", error.response?.data || error);
         dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
-        console.error(error);
     }
 };
 

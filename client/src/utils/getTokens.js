@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import { getRefreshTokenApi } from "../api/auth.api";
 
 const getAccessToken = () => {
     try {
@@ -10,17 +10,22 @@ const getAccessToken = () => {
     }
 };
 
-const getRefreshToken = () => {
+const getRefreshToken = async () => {
     try {
-        const refreshTokenFromCookies = Cookies.get('refreshToken') || '';
-        return refreshTokenFromCookies || null;
+        const response = await getRefreshTokenApi();
+
+        if (!response.data?.refreshToken) {
+            return null;
+        }
+        return response.data.refreshToken;
     } catch (error) {
-        console.log('Error getting refreshToken:', error);
-        return null;
+        console.error("Error fetching refresh token:", error);
+        return null; 
     }
-}
+};
+
 
 export {
     getAccessToken,
-    getRefreshToken,
+    getRefreshToken
 }

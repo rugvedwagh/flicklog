@@ -4,19 +4,29 @@ import { getRefreshToken } from '../../utils/getTokens';
 import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './comments.styles.css';
 
-const CommentsSection = ({ post }) => {
-    
+const CommentsSection = ({ post, refreshToken }) => {
+
     const dispatch = useDispatch();
     const darkMode = useTheme();
 
     const profile = getProfile();
-    const UserIsAuthenticated = getRefreshToken();
+
+    const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
+
+    useEffect(() => {
+        const fetchRefreshToken = async () => {
+            const token = await getRefreshToken();
+            setUserIsAuthenticated(token ?? null);
+        };
+
+        fetchRefreshToken();
+    }, []);
 
     const [comment, setComment] = useState('');
-    const [isFocused, setIsFocused] = useState(false); 
+    const [isFocused, setIsFocused] = useState(false);
     const [comments, setComments] = useState(post?.comments);
 
     const postComment = async () => {
@@ -60,7 +70,7 @@ const CommentsSection = ({ post }) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         onFocus={() => setIsFocused(true)}
-                        onBlur={() => !comment.trim() && setIsFocused(false)} 
+                        onBlur={() => !comment.trim() && setIsFocused(false)}
                     />
 
                     {isFocused &&

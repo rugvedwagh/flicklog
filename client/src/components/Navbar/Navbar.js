@@ -16,17 +16,21 @@ import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie'
 import './navbar.styles.css';
 
-const Navbar = () => {
-
+const Navbar = ({ refreshToken }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const UserIsAuthenticated = Cookies.get('refreshToken');
-    const profile = getProfile();
+    const [UserIsAuthenticated, setUserIsAuthenticated] = useState(null);
+    const [profile, setProfile] = useState(getProfile());
+
+    useEffect(() => {
+        setUserIsAuthenticated(refreshToken);
+        setProfile(getProfile());  
+    }, [refreshToken]);
+
     const userId = profile?._id;
 
     const [openDialog, setOpenDialog] = useState(false);
@@ -43,14 +47,13 @@ const Navbar = () => {
         setOpenDialog(false);
     }, [dispatch, navigate]);
 
-
     useEffect(() => {
         return handleNavbarScroll(setIsVisible);
     }, []);
 
     const handleLoginClick = () => {
-        navigate('/auth')
-    }
+        navigate('/auth');
+    };
 
     const openUser = () => {
         if (userId) {
@@ -68,22 +71,22 @@ const Navbar = () => {
     };
 
     const handleLogoClick = () => {
-        navigate('/posts')
-    }
+        navigate('/posts');
+    };
 
     const handleLikedPosts = () => {
         if (userId) {
             dispatch(likedPosts(userId));
             closeMenu();
         }
-    }
+    };
 
     const handleUserPosts = () => {
         if (userId) {
             dispatch(userPosts(userId));
             closeMenu();
         }
-    }
+    };
 
     const navbarClasses = `navbar ${darkMode ? 'dark' : ''} ${isVisible ? 'visible' : 'hidden'}`;
 
@@ -117,7 +120,7 @@ const Navbar = () => {
                                 alt={profile?.name}
                                 src={profile.imageUrl}
                             >
-                                <i class="fa-solid fa-user"></i>
+                                <i className="fa-solid fa-user"></i>
                             </Avatar>&nbsp;
                             <div className='userinfo'>
                                 <strong>
@@ -161,7 +164,7 @@ const Navbar = () => {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu() }}>
+                    <Button variant="contained" onClick={() => { setOpenDialog(false); closeMenu(); }}>
                         Cancel
                     </Button>
                     <Button variant="contained" onClick={handleLogout} autoFocus>

@@ -1,10 +1,10 @@
 import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { getAccessToken, getRefreshToken } from './utils/getTokens';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
-import { Logout, refreshToken } from './redux/actions/auth.actions';
 import { handleScroll, scrollToTop } from './utils/scroll';
+import { Logout, refreshToken } from './redux/actions/auth.actions';
+import { getAccessToken, getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
@@ -20,36 +20,61 @@ import './App.css';
 const App = () => {
 
     const dispatch = useDispatch();
+
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [userLoggedOut, setUserLoggedOut] = useState(false);
+    const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState();
 
     const darkMode = useTheme();
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const refreshTokenFromCookies = getRefreshToken();
-    const accessToken = getAccessToken();
-
     useEffect(() => {
-        const checkAuth = () => {
+        const fetchRefreshToken = async () => {
+            const token = await getRefreshToken();
+            setRefreshTokenFromCookies(token ?? null); 
+        };
+    
+        fetchRefreshToken();
+    }, []);
+    
+    
+    useEffect(() => {
+        if (refreshTokenFromCookies === '') {
+            console.log('rft hai but abtak nahi aya');
+            return;  
+        }
+        
+        if (refreshTokenFromCookies === null) {
+            console.log('No refresh token found, logging out');
+            setUserLoggedOut(true);
+            dispatch(Logout(navigate));
+            return;
+        }   
+        
+        const checkAuth = async () => {
+            
+            const accessToken = getAccessToken();
+
+            if (refreshTokenFromCookies && !isRefreshTokenExpired(refreshTokenFromCookies) && (accessToken && !isAccessTokenExpired(accessToken))) {
+                console.log('User is logged in.');
+                setUserLoggedOut(false);
+            }
+    
             if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
+                console.log('Access token expired or missing, refreshing...');
                 dispatch(refreshToken(refreshTokenFromCookies));
             } 
-            else if (!refreshTokenFromCookies && !userLoggedOut) {
-                dispatch(Logout(navigate));
-                setUserLoggedOut(true);
-            } 
             else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
+                console.log('Refresh token expired, logging out');
                 dispatch(Logout(navigate));
             }
         };
-
+    
         checkAuth();
-
-        const interval = setInterval(checkAuth, 10 * 60 * 1000);
-
-        return () => clearInterval(interval); 
-    }, [accessToken, refreshTokenFromCookies, dispatch, navigate, userLoggedOut]);
+    
+        const interval = setInterval(checkAuth, 0.5 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, [refreshTokenFromCookies]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -66,13 +91,13 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar />
+                <Navbar refreshToken={refreshTokenFromCookies} />
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
-                    <Route path="/posts/:id" element={<PostDetails />} />
+                    <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={isRefreshTokenExpired(refreshTokenFromCookies) ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={userLoggedOut ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />;
                     <Route path="*" element={<NotFound />} />
                 </Routes>

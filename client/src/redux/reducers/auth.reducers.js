@@ -10,7 +10,6 @@ import {
     START_LOADING,
     END_LOADING
 } from '../../constants/loading.constants';
-import Cookies from 'js-cookie'
 import { getProfile } from '../../utils/storage';
 
 const initialState = {
@@ -27,9 +26,7 @@ const authReducer = (state = initialState, action) => {
         case AUTH:
             const { refreshToken, accessToken, ...rest } = action?.payload;
             const { password, __v, bookmarks, ...fileredData } = rest.result;
-
             localStorage.setItem('profile', JSON.stringify({ ...fileredData, accessToken }));
-            Cookies.set('refreshToken', refreshToken, { expires: 7 });
             return {
                 ...state,
                 authData: fileredData
@@ -49,7 +46,7 @@ const authReducer = (state = initialState, action) => {
         case LOGOUT:
             localStorage.removeItem('profile');
             localStorage.removeItem('cachedPosts')
-            Cookies.remove('refreshToken');
+            // Cookies.remove('refreshToken');
             return {
                 ...state,
                 authData: null,
