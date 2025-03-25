@@ -6,6 +6,7 @@ import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { likedPosts, userPosts } from '../../redux/actions/post.actions';
 import { fetchUserData } from '../../redux/actions/user.actions';
 import { Logout } from '../../redux/actions/auth.actions';
+import { getRefreshToken } from '../../utils/getTokens';
 import { toggleTheme } from '../../redux/actions/theme.actions';
 import React, { useState, useEffect, useCallback } from 'react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
@@ -15,28 +16,35 @@ import { handleNavbarScroll } from '../../utils/scroll';
 import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.css';
 
-const Navbar = ({ refreshToken }) => {
+const Navbar = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const [UserIsAuthenticated, setUserIsAuthenticated] = useState(null);
-    const [profile, setProfile] = useState(getProfile());
-
-    useEffect(() => {
-        setUserIsAuthenticated(refreshToken);
-        setProfile(getProfile());  
-    }, [refreshToken]);
-
-    const userId = profile?._id;
-
+    const { authData } = useSelector((state) => state.authReducer);
+    
+    const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [profile, setProfile] = useState();
 
+    const userId = profile?._id;
+    
+    useEffect(() => {
+        const fetchRefreshToken = async () => {
+            const refreshToken = await getRefreshToken();
+            setUserIsAuthenticated(refreshToken ?? null);
+            setProfile(getProfile());
+        };
+        
+        fetchRefreshToken();
+    }, [authData]); 
+    
     const toggleView = () => {
         dispatch(toggleTheme());
     };

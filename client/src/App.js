@@ -37,7 +37,6 @@ const App = () => {
         fetchRefreshToken();
     }, []);
     
-    
     useEffect(() => {
         if (refreshTokenFromCookies === '') {
             console.log('rft hai but abtak nahi aya');
@@ -72,7 +71,7 @@ const App = () => {
     
         checkAuth();
     
-        const interval = setInterval(checkAuth, 0.5 * 60 * 1000);
+        const interval = setInterval(checkAuth, 10 * 60 * 1000);
         return () => clearInterval(interval);
     }, [refreshTokenFromCookies]);
 
@@ -91,7 +90,7 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar refreshToken={refreshTokenFromCookies} />
+                <Navbar />
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
