@@ -31,10 +31,10 @@ const logIn = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true, 
-        sameSite: "None", 
+        secure: true,
+        sameSite: "None",
         path: '/',
-        maxAge: 7 * 24 * 60 * 60 * 1000 
+        maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.status(200).json({
@@ -79,10 +79,10 @@ const registerUser = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true, 
-        sameSite: "None", 
+        secure: true,
+        sameSite: "None",
         path: '/',
-        maxAge: 7 * 24 * 60 * 60 * 1000 
+        maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.status(201).json({
@@ -101,9 +101,9 @@ const logoutUser = (req, res) => {
     }
 
     res.clearCookie('refreshToken', {
-        httpOnly: true,  
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'strict', 
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
         path: '/',
     });
 
@@ -112,9 +112,15 @@ const logoutUser = (req, res) => {
 
 // Refresh token controller
 const refreshToken = async (req, res) => {
-    let { refreshToken } = req.body;
+    const refreshToken = req.cookies.refreshToken;
 
-    if (!refreshToken || typeof refreshToken !== "string") {
+    if (!refreshToken) {
+        const error = new Error("Refresh token not found");
+        error.statusCode = 401;
+        throw error;
+    }
+
+    if (typeof refreshToken !== "string") {
         const error = new Error("Refresh token must be a valid string");
         error.statusCode = 401;
         throw error;

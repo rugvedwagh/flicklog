@@ -75,12 +75,13 @@ const SignUp = () => {
                                         {isSignup ? 'Sign up' : 'Log in'}
                                     </Typography>
 
-                                    {errorMessage?.length && (
+                                    {errorMessage?.length ? (
                                         <Alert severity="error" sx={{ margin: '10px 0' }}>
                                             {errorMessage}
                                         </Alert>
+                                    ):(
+                                        <></>
                                     )}
-
                                 </div>
 
                                 <Grid container spacing={2}>

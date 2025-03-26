@@ -19,17 +19,17 @@ import { store } from './redux/store';
 import './App.css';
 
 const App = () => {
-    
+
     const dispatch = useDispatch();
-    
+
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState();
-    
+
     const darkMode = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
     const state = store.getState();
-    
+
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const rft = await getRefreshToken();
@@ -55,7 +55,7 @@ const App = () => {
 
             if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
                 console.log('Refreshing acc token')
-                dispatch(refreshToken(refreshTokenFromCookies));
+                dispatch(refreshToken());
             }
             if (!refreshTokenFromCookies || (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies))) {
                 console.log('refreshtoken not found or invalid, logging out...')

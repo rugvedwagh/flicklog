@@ -54,14 +54,13 @@ API.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                const refreshTokenFromCookies = await getRefreshToken();
+                // // const refreshTokenFromCookies = await getRefreshToken();
 
-                if (!refreshTokenFromCookies) {
-                    await store.dispatch(Logout());
-                    return Promise.reject(error);
-                }
-
-                await store.dispatch(refreshToken(refreshTokenFromCookies));
+                // if (!refreshTokenFromCookies) {
+                //     await store.dispatch(Logout());
+                //     return Promise.reject(error);
+                // }
+                await store.dispatch(refreshToken());
 
                 const updatedProfile = await getProfile();
                 const { accessToken } = updatedProfile;
