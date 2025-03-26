@@ -5,17 +5,17 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { likedPosts, userPosts } from '../../redux/actions/post.actions';
 import { fetchUserData } from '../../redux/actions/user.actions';
+import { toggleTheme } from '../../redux/actions/theme.actions';
 import { Logout } from '../../redux/actions/auth.actions';
 import { getRefreshToken } from '../../utils/getTokens';
-import { toggleTheme } from '../../redux/actions/theme.actions';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import React, { useState, useEffect, useCallback } from 'react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
-import { useTheme } from '../../context/themeContext';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
+import { useTheme } from '../../context/themeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.css';
 
@@ -34,14 +34,14 @@ const Navbar = () => {
     const [profile, setProfile] = useState();
 
     const userId = profile?._id;
-    
+        
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const refreshToken = await getRefreshToken();
             setUserIsAuthenticated(refreshToken ?? null);
             setProfile(getProfile());
         };
-        
+
         fetchRefreshToken();
     }, [authData]); 
     

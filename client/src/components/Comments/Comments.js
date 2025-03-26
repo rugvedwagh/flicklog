@@ -1,29 +1,19 @@
 import { Typography, TextField, Button } from '@mui/material';
 import { addComment } from '../../redux/actions/post.actions';
-import { getRefreshToken } from '../../utils/getTokens';
 import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './comments.styles.css';
 
-const CommentsSection = ({ post, refreshToken }) => {
+const CommentsSection = ({ post }) => {
 
     const dispatch = useDispatch();
     const darkMode = useTheme();
 
     const profile = getProfile();
 
-    const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
-
-    useEffect(() => {
-        const fetchRefreshToken = async () => {
-            const token = await getRefreshToken();
-            setUserIsAuthenticated(token ?? null);
-        };
-
-        fetchRefreshToken();
-    }, []);
+    const UserIsAuthenticated = getProfile();
 
     const [comment, setComment] = useState('');
     const [isFocused, setIsFocused] = useState(false);

@@ -16,7 +16,6 @@ import {
     logoutApi,
 } from '../../api/auth.api';
 import { getProfile } from '../../utils/storage';
-import { getRefreshToken } from '../../utils/getTokens';
 
 const logIn = (formData, navigate) => async (dispatch) => {
     try {
@@ -48,7 +47,7 @@ const registerUser = (formData, navigate) => async (dispatch) => {
     }
 };
 
-const Logout = (navigate) => async (dispatch) => {
+const Logout = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         await logoutApi();

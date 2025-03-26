@@ -14,6 +14,7 @@ import { getProfile } from '../../utils/storage';
 
 const initialState = {
     authData: null,
+    // accessToken
     clientData: null,
     isLoading: null,
     errorMessage: null

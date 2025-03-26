@@ -7,7 +7,6 @@ import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { getRefreshToken } from '../../utils/getTokens';
 import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +21,6 @@ const PostCard = ({ post, setCurrentId }) => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    // const UserIsAuthenticated = getRefreshToken();
     const profile = getProfile();
     const userId = profile?._id;
 
@@ -67,7 +65,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     {post.name}
                 </Typography>
 
-                <Typography sx={{fontSize:'14px'}}>
+                <Typography sx={{ fontSize: '14px' }}>
                     {moment(post.createdAt).fromNow()}
                 </Typography>
             </div>
@@ -128,7 +126,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     </Button>
                 </Tooltip>
 
-                {/* {UserIsAuthenticated && ( */}
+                {profile && (
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
@@ -138,7 +136,7 @@ const PostCard = ({ post, setCurrentId }) => {
                             )}
                         </Button>
                     </Tooltip>
-                {/* )} */}
+                )}
             </CardActions>
         </Card>
     );

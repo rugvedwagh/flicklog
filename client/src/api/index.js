@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../redux/store';
-import { refreshToken } from '../redux/actions/auth.actions';
+import { Logout, refreshToken } from '../redux/actions/auth.actions';
 import { getProfile } from '../utils/storage';
 import { getRefreshToken } from '../utils/getTokens';
 
@@ -52,7 +52,7 @@ API.interceptors.response.use(
                 const refreshTokenFromCookies = await getRefreshToken();
                 
                 if (!refreshTokenFromCookies) {
-                    await store.dispatch(logout());
+                    await store.dispatch(Logout());
                     return Promise.reject(error);
                 }
 
@@ -69,7 +69,7 @@ API.interceptors.response.use(
 
             } catch (refreshError) {
                 isRefreshing = false;
-                await store.dispatch(logout());
+                await store.dispatch(Logout());
                 return Promise.reject(refreshError);
             }
         }
@@ -78,15 +78,6 @@ API.interceptors.response.use(
     }
 );
 
-// Logout action (pseudo-code, implement according to your app's auth flow)
-const logout = () => {
-    return async (dispatch) => {
-        // Clear tokens
-        // Redirect to login
-        // Reset store
-        dispatch({ type: 'LOGOUT' });
-    };
-};
 
 export default API;
 

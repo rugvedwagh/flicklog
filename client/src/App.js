@@ -31,40 +31,37 @@ const App = () => {
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const token = await getRefreshToken();
-            setRefreshTokenFromCookies(token ?? null); 
+            setRefreshTokenFromCookies(token ?? null);
         };
-    
+
         fetchRefreshToken();
     }, []);
-    
+
     useEffect(() => {
         if (refreshTokenFromCookies === '') {
-            console.log('rft hai but abtak nahi aya');
-            return;  
+            return;
         }
-        
+
         if (refreshTokenFromCookies === null) {
-            console.log('No refresh token found, logging out');
             setUserLoggedOut(true);
             dispatch(Logout(navigate));
             return;
-        }   
-        
+        }
+
         const checkAuth = async () => {
-            
+
             const accessToken = getAccessToken();
 
             if (refreshTokenFromCookies && !isRefreshTokenExpired(refreshTokenFromCookies) && (accessToken && !isAccessTokenExpired(accessToken))) {
-                console.log('User is logged in.');
                 setUserLoggedOut(false);
             }
-    
+
             if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
-                console.log('Access token expired or missing, refreshing...');
+                setUserLoggedOut(false);
                 dispatch(refreshToken(refreshTokenFromCookies));
-            } 
-            else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
-                console.log('Refresh token expired, logging out');
+            }
+            else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies) && userLoggedOut) {
+                setUserLoggedOut(true);
                 dispatch(Logout(navigate));
             }
         };
