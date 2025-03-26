@@ -5,8 +5,8 @@ import { getProfile } from '../utils/storage';
 import { getRefreshToken } from '../utils/getTokens';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL_DEV,
-    withCredentials: true // ✅ Ensures cookies are sent and received
+    baseURL: process.env.REACT_APP_API_URL,
+    withCredentials: true 
 });
 
 /*
