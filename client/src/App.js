@@ -10,29 +10,30 @@ import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from './context/themeContext';
 import Footer from './components/Footer/Footer';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar'
 import { useDispatch } from 'react-redux';
 import { Container } from '@mui/material';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
+import { store } from './redux/store';
 import './App.css';
 
 const App = () => {
-
+    
     const dispatch = useDispatch();
-
+    
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState();
-
+    
     const darkMode = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
-
+    const state = store.getState();
+    
     useEffect(() => {
         const fetchRefreshToken = async () => {
-            const token = await getRefreshToken();
-            console.log(token)
-            setRefreshTokenFromCookies(token ?? null);
+            const rft = await getRefreshToken();
+            setRefreshTokenFromCookies(rft ?? null);
         };
 
         fetchRefreshToken();
@@ -50,19 +51,13 @@ const App = () => {
         }
 
         const checkAuth = async () => {
-            const accessToken = getAccessToken();
-
-            if (refreshTokenFromCookies && !isRefreshTokenExpired(refreshTokenFromCookies) && (accessToken && !isAccessTokenExpired(accessToken))) {
-                console.log('User Logged in')
-            }
-            console.log(accessToken)
-            console.log(isAccessTokenExpired(accessToken))
+            const accessToken = getAccessToken(state);
 
             if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
                 console.log('Refreshing acc token')
                 dispatch(refreshToken(refreshTokenFromCookies));
             }
-            if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
+            if (!refreshTokenFromCookies || (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies))) {
                 console.log('refreshtoken not found or invalid, logging out...')
                 dispatch(Logout());
             }
