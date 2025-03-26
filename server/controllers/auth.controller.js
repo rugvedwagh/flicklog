@@ -31,8 +31,9 @@ const logIn = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: "Strict", 
+        secure: true, 
+        sameSite: "None", 
+        path: '/',
         maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 
@@ -78,9 +79,10 @@ const registerUser = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: true, 
+        sameSite: "None", 
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 
     res.status(201).json({
