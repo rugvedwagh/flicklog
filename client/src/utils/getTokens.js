@@ -1,11 +1,10 @@
 import { getRefreshTokenApi } from "../api/auth.api";
 
-const getAccessToken = () => {
+const getAccessToken = (state) => {
     try {
-        const profile = JSON.parse(localStorage.getItem('profile')) || '';
-        return profile?.accessToken || null;
+        return state.authReducer.accessToken || null;
     } catch (error) {
-        console.error('Error parsing profile from localStorage:', error);
+        console.error('Error retrieving access token:', error);
         return null;
     }
 };
@@ -19,11 +18,10 @@ const getRefreshToken = async () => {
         }
         return response.data.refreshToken;
     } catch (error) {
-        console.error("Error fetching refresh token:", error);
-        return null; 
+        console.error("Error retrieving refresh token:", error);
+        return null;
     }
 };
-
 
 export {
     getAccessToken,

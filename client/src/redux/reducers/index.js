@@ -1,14 +1,23 @@
 import { combineReducers } from "redux";
-import authReducer from "./auth";
-import postsReducer from "./posts";
-import themeReducer from "./theme";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
-const reducers = combineReducers(
-    {
-        postsReducer,
-        authReducer,
-        themeReducer
-    }
-);
+import authReducer from "./auth.reducers";
+import postsReducer from "./post.reducers";
+import themeReducer from "./theme.reducers";
+import userReducer from "./user.reducers";
 
-export default reducers;
+const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["posts"], 
+};
+
+const rootReducer = combineReducers({
+    postsReducer,  
+    authReducer,    
+    themeReducer,
+    userReducer,
+});
+
+export default persistReducer(persistConfig, rootReducer);

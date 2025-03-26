@@ -128,7 +128,7 @@ const Navbar = () => {
                                 alt={profile?.name}
                                 src={profile.imageUrl}
                             >
-                                <i className="fa-solid fa-user"></i>
+                                <i className="fa-solid fa-user" style={{color:'#1a1a1a'}}></i>
                             </Avatar>&nbsp;
                             <div className='userinfo'>
                                 <strong>

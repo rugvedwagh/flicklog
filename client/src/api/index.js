@@ -3,10 +3,11 @@ import { store } from '../redux/store';
 import { Logout, refreshToken } from '../redux/actions/auth.actions';
 import { getProfile } from '../utils/storage';
 import { getRefreshToken } from '../utils/getTokens';
+import { getAccessToken } from '../utils/getTokens';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true 
+    baseURL: process.env.REACT_APP_API_URL_DEV,
+    withCredentials: true
 });
 
 /*
@@ -17,13 +18,17 @@ const API = axios.create({
     requests have the proper authentication token.
 */
 API.interceptors.request.use((req) => {
-    const profile = getProfile();
+    const state = store.getState();
 
-    if (profile) {
-        const { accessToken } = profile;
+    const accessToken = getAccessToken(state); 
+
+    if (accessToken) {
         req.headers['Authorization'] = `Bearer ${accessToken}`;
     }
+
     return req;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 /*
@@ -50,7 +55,7 @@ API.interceptors.response.use(
 
             try {
                 const refreshTokenFromCookies = await getRefreshToken();
-                
+
                 if (!refreshTokenFromCookies) {
                     await store.dispatch(Logout());
                     return Promise.reject(error);

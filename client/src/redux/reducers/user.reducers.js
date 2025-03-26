@@ -16,7 +16,7 @@ const initialState = {
     errorMessage: null
 }
 
-const authReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
@@ -29,11 +29,10 @@ const authReducer = (state = initialState, action) => {
         case UPDATE_USER: {
             const updatedAuthData = action.payload;
             const existingProfile = getProfile();
-            
+
             const updatedProfile = {
                 ...existingProfile,
                 ...updatedAuthData,
-                accessToken: existingProfile.accessToken
             };
             localStorage.setItem("profile", JSON.stringify(updatedProfile));
 
@@ -67,4 +66,4 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export default authReducer;
+export default userReducer;

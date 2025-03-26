@@ -1,9 +1,7 @@
 import {
     AUTH,
     LOGOUT,
-    USER_INFO,
     ERROR,
-    UPDATE_USER,
     REFRESH_TOKEN
 } from '../../constants/auth.constants';
 import {
@@ -14,7 +12,7 @@ import { getProfile } from '../../utils/storage';
 
 const initialState = {
     authData: null,
-    // accessToken
+    accessToken: null,
     clientData: null,
     isLoading: null,
     errorMessage: null
@@ -27,16 +25,16 @@ const authReducer = (state = initialState, action) => {
         case AUTH:
             const { refreshToken, accessToken, ...rest } = action?.payload;
             const { password, __v, bookmarks, ...fileredData } = rest.result;
-            localStorage.setItem('profile', JSON.stringify({ ...fileredData, accessToken }));
+            localStorage.setItem('profile', JSON.stringify({ ...fileredData }));
             return {
                 ...state,
-                authData: fileredData
+                authData: fileredData,
+                accessToken: action?.payload?.accessToken
             };
 
         case REFRESH_TOKEN:
             const updatedProfile = {
                 ...getProfile(),
-                accessToken: action.payload,
             };
             localStorage.setItem('profile', JSON.stringify(updatedProfile));
             return {
@@ -47,35 +45,12 @@ const authReducer = (state = initialState, action) => {
         case LOGOUT:
             localStorage.removeItem('profile');
             localStorage.removeItem('cachedPosts')
-            // Cookies.remove('refreshToken');
             return {
                 ...state,
                 authData: null,
-                clientData: null
-            };
-
-        case USER_INFO:
-            return {
-                ...state,
-                clientData: action.payload
-            };
-
-        case UPDATE_USER: {
-            const updatedAuthData = action.payload;
-            const existingProfile = getProfile();
-            const updatedProfile = {
-                ...existingProfile,
-                ...updatedAuthData,
-                accessToken: existingProfile.accessToken
-            };
-            localStorage.setItem("profile", JSON.stringify(updatedProfile));
-
-            return {
-                ...state,
-                clientData: updatedAuthData,
+                clientData: null,
                 errorMessage: ''
             };
-        }
 
         case ERROR:
             return {

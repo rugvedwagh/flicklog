@@ -65,9 +65,9 @@ const App = () => {
                 dispatch(Logout(navigate));
             }
         };
-    
+
         checkAuth();
-    
+
         const interval = setInterval(checkAuth, 10 * 60 * 1000);
         return () => clearInterval(interval);
     }, [refreshTokenFromCookies]);

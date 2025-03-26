@@ -55,13 +55,17 @@ const PostDetails = () => {
     const recommendedPosts = posts.filter(({ _id }) => _id !== id);
 
     if (isLoading) {
-        return <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />;
+        return (
+            <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />
+        )
     }
 
     if (!post) {
-        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
-            Post not found!
-        </Typography>;
+        return (
+            <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+                Post not found!
+            </Typography>
+        )
     }
 
     return (

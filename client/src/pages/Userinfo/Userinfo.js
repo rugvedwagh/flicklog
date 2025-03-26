@@ -15,7 +15,7 @@ const Userinfo = () => {
     const darkMode = useTheme();
 
     const { posts } = useSelector((state) => state.postsReducer);
-    const { clientData, isLoading } = useSelector((state) => state.authReducer);
+    const { clientData, isLoading } = useSelector((state) => state.userReducer);
 
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -68,13 +68,17 @@ const Userinfo = () => {
     }, []);
 
     if (isLoading) {
-        return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
+        return (
+            <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
+        )
     }
 
     if (!clientData) {
-        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
-            User not found!
-        </Typography>;
+        return (
+            <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
+                User not found!
+            </Typography>
+        )
     }
 
     return (
@@ -86,7 +90,7 @@ const Userinfo = () => {
             <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
 
                 <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                 </div>
 
                 <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
@@ -112,32 +116,36 @@ const Userinfo = () => {
                     </li>
                 </ul>
 
-                {bookmarkedPosts.length > 0 && showBm ? (
-                    <div className="bookmarked-posts">
-                        <hr />
-                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>
-                            Bookmarked Posts
+                {bookmarkedPosts.length > 0 && showBm
+                    ? (
+                        <div className="bookmarked-posts">
+                            <hr />
+                            <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>
+                                Bookmarked Posts
 
-                        </h3>
-                        <div className="bookmarked-list">
-                            {bookmarkedPosts.map((post) => (
-                                <div
-                                    key={post._id}
-                                    className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
-                                >
-                                    <h4 onClick={() => openPost(post._id)}>
-                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
-                                    </h4>
-                                    <CancelRoundedIcon
-                                        color='error'
-                                        onClick={() => removeBookmark(post._id, clientData._id)}
-                                        id="crossButton"
-                                    />
-                                </div>
-                            ))}
+                            </h3>
+                            <div className="bookmarked-list">
+                                {bookmarkedPosts.map((post) => (
+                                    <div
+                                        key={post._id}
+                                        className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
+                                    >
+                                        <h4 onClick={() => openPost(post._id)}>
+                                            {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                        </h4>
+                                        <CancelRoundedIcon
+                                            color='error'
+                                            onClick={() => removeBookmark(post._id, clientData._id)}
+                                            id="crossButton"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ) : null}
+                    )
+                    :
+                    null
+                }
             </div>
 
             <Dialog open={editDialogOpen} onClose={handleCancel}>

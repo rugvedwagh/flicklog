@@ -20,7 +20,7 @@ const fetchUserData = (id, navigate) => async (dispatch) => {
         const { data } = await userInfoApi(id);
         dispatch({ type: USER_INFO, payload: data });
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
@@ -36,7 +36,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
 
         dispatch({ type: UPDATE_USER, payload: fileredData });
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message || 'An error occurred' });
+        dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
     } finally {
         dispatch({ type: END_LOADING });

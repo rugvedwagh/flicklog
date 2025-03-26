@@ -1,26 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
-import { combineReducers } from "redux";
-import { thunk } from "redux-thunk";
-import authReducer from "./reducers/auth.reducers";
-import postsReducer from "./reducers/post.reducers";
-import themeReducer from "./reducers/theme.reducers";
-
-const persistConfig = {
-    key: "root",
-    storage,
-    whitelist: ["posts"], 
-};
-
-const rootReducer = combineReducers({
-    postsReducer: persistReducer(persistConfig, postsReducer), 
-    authReducer,
-    themeReducer
-});
+import { persistStore } from "redux-persist";
+import { thunk } from "redux-thunk"; 
+import rootReducer from "./reducers/index";
 
 const store = createStore(
-    rootReducer,
+    rootReducer, 
     compose(applyMiddleware(thunk))
 );
 

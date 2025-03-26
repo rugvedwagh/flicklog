@@ -259,3 +259,7 @@
 .menuRoot.dark .MuiMenuItem-root:hover {
     background-color: #333;
 }
+
+.userinfo{
+    margin-left: 0.5rem;
+}
