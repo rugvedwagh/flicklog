@@ -6,7 +6,7 @@ import { getRefreshToken } from '../utils/getTokens';
 import { getAccessToken } from '../utils/getTokens';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL_DEV,
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 });
 
