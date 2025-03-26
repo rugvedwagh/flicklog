@@ -97,9 +97,7 @@ const logoutUser = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token not found");
-        error.statusCode = 404;
-        throw error;
+        res.status(200).json({ message: 'Logged out successfully' });
     }
 
     res.clearCookie('refreshToken', {
@@ -145,7 +143,7 @@ const getRefreshToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        const error = new Error("No refresh token found in cookies");
+        const error = new Error("Refresh token not found");
         error.statusCode = 404;
         throw error;
     }

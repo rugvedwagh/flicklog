@@ -1,5 +1,5 @@
 import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
@@ -22,53 +22,55 @@ const App = () => {
     const dispatch = useDispatch();
 
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [userLoggedOut, setUserLoggedOut] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState();
 
     const darkMode = useTheme();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const token = await getRefreshToken();
+            console.log(token)
             setRefreshTokenFromCookies(token ?? null);
         };
 
         fetchRefreshToken();
-    }, []);
+    }, [location.pathname]);
 
     useEffect(() => {
+
         if (refreshTokenFromCookies === '') {
             return;
         }
 
         if (refreshTokenFromCookies === null) {
-            setUserLoggedOut(true);
             dispatch(Logout(navigate));
             return;
         }
 
         const checkAuth = async () => {
-
             const accessToken = getAccessToken();
 
             if (refreshTokenFromCookies && !isRefreshTokenExpired(refreshTokenFromCookies) && (accessToken && !isAccessTokenExpired(accessToken))) {
-                setUserLoggedOut(false);
+                console.log('User Logged in')
             }
+            console.log(accessToken)
+            console.log(isAccessTokenExpired(accessToken))
 
             if ((!accessToken || isAccessTokenExpired(accessToken)) && refreshTokenFromCookies) {
-                setUserLoggedOut(false);
+                console.log('Refreshing acc token')
                 dispatch(refreshToken(refreshTokenFromCookies));
             }
-            else if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies) && userLoggedOut) {
-                setUserLoggedOut(true);
-                dispatch(Logout(navigate));
+            if (refreshTokenFromCookies && isRefreshTokenExpired(refreshTokenFromCookies)) {
+                console.log('refreshtoken not found or invalid, logging out...')
+                dispatch(Logout());
             }
         };
 
         checkAuth();
 
-        const interval = setInterval(checkAuth, 10 * 60 * 1000);
+        const interval = setInterval(checkAuth, 0.1 * 60 * 1000);
         return () => clearInterval(interval);
     }, [refreshTokenFromCookies]);
 
@@ -88,15 +90,17 @@ const App = () => {
                 />
 
                 <Navbar />
+
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={userLoggedOut ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />;
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+
                 <Footer />
 
             </Container>

@@ -65,7 +65,7 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
         const profile = getProfile();
 
         if (!profile || !refreshTokenFromCookies) {
-            console.error("❌ Missing profile or refresh token");
+            console.error("Missing profile or refresh token");
             return;
         }
 
@@ -73,7 +73,7 @@ const refreshToken = (refreshTokenFromCookies) => async (dispatch) => {
 
         dispatch({ type: REFRESH_TOKEN, payload: data.accessToken });
     } catch (error) {
-        console.error("❌ Error in Refresh Token:", error.response?.data || error);
+        console.error("Error in Refresh Token:", error.response?.data || error);
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
     }
 };

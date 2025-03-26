@@ -26,7 +26,7 @@ const Navbar = () => {
     const darkMode = useTheme();
 
     const { authData } = useSelector((state) => state.authReducer);
-    
+
     const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
@@ -34,7 +34,7 @@ const Navbar = () => {
     const [profile, setProfile] = useState();
 
     const userId = profile?._id;
-        
+
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const refreshToken = await getRefreshToken();
@@ -43,8 +43,8 @@ const Navbar = () => {
         };
 
         fetchRefreshToken();
-    }, [authData]); 
-    
+    }, [authData]);
+
     const toggleView = () => {
         dispatch(toggleTheme());
     };
@@ -101,7 +101,7 @@ const Navbar = () => {
     return (
         <div className={navbarClasses}>
             <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                reminisce
+                {/* reminisce */}
             </div>
 
             {UserIsAuthenticated && profile ? (
@@ -128,7 +128,7 @@ const Navbar = () => {
                                 alt={profile?.name}
                                 src={profile.imageUrl}
                             >
-                                <i className="fa-solid fa-user" style={{color:'#1a1a1a'}}></i>
+                                <i className="fa-solid fa-user" style={{ color: '#1a1a1a' }}></i>
                             </Avatar>&nbsp;
                             <div className='userinfo'>
                                 <strong>
