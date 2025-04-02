@@ -145,7 +145,8 @@ const refreshToken = async (req, res) => {
 
 };
 
-const getRefreshToken = (req, res) => {
+// fetch Refresh token controller
+const fetchRefreshToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
@@ -161,6 +162,6 @@ export {
     logIn,
     registerUser,
     refreshToken,
-    getRefreshToken,
+    fetchRefreshToken,
     logoutUser
 }

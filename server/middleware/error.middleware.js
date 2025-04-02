@@ -1,6 +1,6 @@
 const errorHandler = (err, req, res, next) => {
     if (res.headersSent) {
-        return next(err); // Pass to default Express error handler
+        return next(err); 
     }
 
     const statusCode = err.statusCode || 500;

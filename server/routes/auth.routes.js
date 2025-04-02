@@ -2,7 +2,7 @@ import {
     logIn,
     registerUser,
     refreshToken,
-    getRefreshToken,
+    fetchRefreshToken,
     logoutUser
 } from "../controllers/auth.controller.js";
 import express from 'express';
@@ -15,7 +15,7 @@ router.post("/signin", asyncHandler(logIn));
 
 router.post("/signup", asyncHandler(registerUser));
 
-router.get("/get-refresh-token", asyncHandler(getRefreshToken));
+router.get("/get-refresh-token", asyncHandler(fetchRefreshToken));
 
 router.post("/refresh-token", asyncHandler(refreshToken));
 

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { store } from '../redux/store';
 import { Logout, refreshToken } from '../redux/actions/auth.actions';
 import { getProfile } from '../utils/storage';
-import { getRefreshToken } from '../utils/getTokens';
 import { getAccessToken } from '../utils/getTokens';
 
 const API = axios.create({
@@ -54,12 +53,6 @@ API.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                // // const refreshTokenFromCookies = await getRefreshToken();
-
-                // if (!refreshTokenFromCookies) {
-                //     await store.dispatch(Logout());
-                //     return Promise.reject(error);
-                // }
                 await store.dispatch(refreshToken());
 
                 const updatedProfile = await getProfile();
