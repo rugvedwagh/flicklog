@@ -13,7 +13,7 @@ const Home = () => {
     const location = useLocation();
     const darkMode = useTheme();
 
-    const [currentId, setCurrentId] = useState(null);
+    const [currentId, setCurrentId] = useState(0);
     const [formOpen, setformOpen] = useState(false);
 
     const profile = getProfile();

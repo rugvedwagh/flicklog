@@ -18,7 +18,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     const darkMode = useTheme();
 
     const profile = getProfile();
-    const UserIsAuthenticated = getRefreshToken()
+    const userId = profile._id;
 
     const post = useSelector((state) => (currentId ?
         state.postsReducer.posts.find((message) => message._id === currentId)
@@ -43,13 +43,13 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     }, [post]);
 
     const clearForm = () => {
+        setCurrentId(0);
         setPostData({
             title: '',
             message: '',
             tags: '',
             selectedfile: ''
         });
-        setCurrentId(0);
     };
 
     const toggleForm = () => {
@@ -58,15 +58,16 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         clearForm();
 
         (currentId === 0) ?
-            dispatch(createPost({ ...postData, name: profile.name })) :
+            dispatch(createPost({ ...postData, name: profile.name }))
+            :
             dispatch(updatePost(currentId, { ...postData, name: profile.name }));
     };
 
-    if (!UserIsAuthenticated) {
+    if (!userId) {
         return (
             <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Typography variant="h6" align="center">
