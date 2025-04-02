@@ -12,14 +12,14 @@ const CommentsSection = ({ post }) => {
     const darkMode = useTheme();
 
     const profile = getProfile();
-
-    const UserIsAuthenticated = getProfile();
+    const userId = profile._id
 
     const [comment, setComment] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const [comments, setComments] = useState(post?.comments);
 
     const postComment = async () => {
+        if (!userId) return;
         const finalComment = `${profile?.name}: ${comment}`;
         const newComments = await dispatch(addComment(finalComment, post._id));
         setComments(newComments);
@@ -49,7 +49,7 @@ const CommentsSection = ({ post }) => {
                 }
             </div>
 
-            {UserIsAuthenticated && (
+            {userId && (
                 <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
                     <TextField
                         fullWidth
