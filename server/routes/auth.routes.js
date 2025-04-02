@@ -11,9 +11,9 @@ import asyncHandler from "../middleware/async.middleware.js";
 
 const router = express.Router();
 
-router.post("/signin", asyncHandler(logIn));
+router.post("/registerUser", asyncHandler(registerUser));
 
-router.post("/signup", asyncHandler(registerUser));
+router.post("/signin", asyncHandler(logIn));
 
 router.get("/get-refresh-token", asyncHandler(fetchRefreshToken));
 
