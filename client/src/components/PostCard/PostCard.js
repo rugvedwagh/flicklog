@@ -22,10 +22,7 @@ const PostCard = ({ post, setCurrentId }) => {
     const darkMode = useTheme();
 
     let profile = getProfile();
-    console.log(profile)
-    if(profile){
-        profile = 1
-    }
+
     const userId = profile?._id;
 
     const { clientData } = useSelector((state) => state.authReducer);
@@ -130,7 +127,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     </Button>
                 </Tooltip>
 
-                {profile!==1 && (
+                {userId && (
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (

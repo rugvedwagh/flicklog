@@ -33,13 +33,9 @@ const authReducer = (state = initialState, action) => {
             };
 
         case REFRESH_TOKEN:
-            const updatedProfile = {
-                ...getProfile(),
-            };
-            localStorage.setItem('profile', JSON.stringify(updatedProfile));
             return {
                 ...state,
-                accessToken: action.payload,
+                accessToken: action?.payload || state.accessToken,
             };
 
         case LOGOUT:
@@ -48,6 +44,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 authData: null,
+                accessToken: null,
                 clientData: null,
                 errorMessage: ''
             };

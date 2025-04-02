@@ -97,7 +97,7 @@ const logoutUser = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        res.status(200).json({ message: 'Logged out successfully' });
+        return res.status(200).json({ message: 'Logged out successfully' }); 
     }
 
     res.clearCookie('refreshToken', {
@@ -107,7 +107,7 @@ const logoutUser = (req, res) => {
         path: '/',
     });
 
-    res.status(200).json({ message: 'Logged out successfully' });
+    return res.status(200).json({ message: 'Logged out successfully' }); 
 };
 
 // Refresh token controller
