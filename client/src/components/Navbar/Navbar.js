@@ -101,7 +101,7 @@ const Navbar = () => {
     return (
         <div className={navbarClasses}>
             <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                {/* reminisce */}
+                reminisce 
             </div>
 
             {UserIsAuthenticated && profile ? (
