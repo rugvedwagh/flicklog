@@ -97,17 +97,17 @@ const logoutUser = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        return res.status(200).json({ message: 'Logged out successfully' }); 
+        return res.status(200).json({ message: "Logged out successfully" }); 
     }
 
-    res.clearCookie('refreshToken', {
+    res.clearCookie("refreshToken", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === "production",
         sameSite: 'strict',
         path: '/',
     });
 
-    return res.status(200).json({ message: 'Logged out successfully' }); 
+    return res.status(200).json({ message: "Logged out successfully" }); 
 };
 
 // Refresh token controller

@@ -59,12 +59,12 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        clearForm();
-
         (currentId === 0) ?
             dispatch(createPost({ ...postData, name: profile.name }))
             :
             dispatch(updatePost(currentId, { ...postData, name: profile.name }));
+
+        clearForm();
     };
 
     if (!userId) {

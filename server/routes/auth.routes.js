@@ -4,7 +4,7 @@ import {
     refreshToken,
     fetchRefreshToken,
     logoutUser
-} from "../controllers/auth.controller.js";
+} from "../controllers/auth.controllers.js";
 import express from 'express';
 import asyncHandler from "../middleware/async.middleware.js";
 
