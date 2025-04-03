@@ -22,7 +22,6 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            console.log(action?.payload)
             const { accessToken, ...filteredData } = action?.payload;
             localStorage.setItem('profile', JSON.stringify( filteredData.result ));
             return {    
