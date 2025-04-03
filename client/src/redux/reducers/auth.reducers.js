@@ -8,7 +8,6 @@ import {
     START_LOADING,
     END_LOADING
 } from '../../constants/loading.constants';
-import { getProfile } from '../../utils/storage';
 
 const initialState = {
     authData: null,
@@ -23,19 +22,19 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            const { refreshToken, accessToken, ...rest } = action?.payload;
-            const { password, __v, bookmarks, ...fileredData } = rest.result;
-            localStorage.setItem('profile', JSON.stringify({ ...fileredData }));
-            return {
+            console.log(action?.payload)
+            const { accessToken, ...filteredData } = action?.payload;
+            localStorage.setItem('profile', JSON.stringify( filteredData.result ));
+            return {    
                 ...state,
-                authData: fileredData,
-                accessToken: action?.payload?.accessToken
+                authData: filteredData.result,
+                accessToken: accessToken
             };
 
         case REFRESH_TOKEN:
             return {
                 ...state,
-                accessToken: action?.payload || state.accessToken,
+                accessToken: action?.payload,
             };
 
         case LOGOUT:

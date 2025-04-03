@@ -7,7 +7,6 @@ import { likedPosts, userPosts } from '../../redux/actions/post.actions';
 import { fetchUserData } from '../../redux/actions/user.actions';
 import { toggleTheme } from '../../redux/actions/theme.actions';
 import { Logout } from '../../redux/actions/auth.actions';
-import { getRefreshToken } from '../../utils/getTokens';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import React, { useState, useEffect, useCallback } from 'react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
@@ -27,7 +26,6 @@ const Navbar = () => {
 
     const { authData } = useSelector((state) => state.authReducer);
 
-    const [UserIsAuthenticated, setUserIsAuthenticated] = useState();
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,13 +34,11 @@ const Navbar = () => {
     const userId = profile?._id;
 
     useEffect(() => {
-        const fetchRefreshToken = async () => {
-            const refreshToken = await getRefreshToken();
-            setUserIsAuthenticated(refreshToken ?? null);
+        const fetchProfile = async () => {
             setProfile(getProfile());
         };
 
-        fetchRefreshToken();
+        fetchProfile();
     }, [authData]);
 
     const toggleView = () => {
@@ -104,7 +100,7 @@ const Navbar = () => {
                 reminisce 
             </div>
 
-            {UserIsAuthenticated && profile ? (
+            {userId ? (
                 <div className='profile'>
                     <Avatar
                         onClick={handleMenuClick}

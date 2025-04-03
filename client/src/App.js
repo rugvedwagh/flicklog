@@ -4,7 +4,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
 import { Logout, refreshToken } from './redux/actions/auth.actions';
-import { getAccessToken, getRefreshToken } from './utils/getTokens';
+import { getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import Auth from '../src/pages/Auth/Auth';
 import './App.css';
 
 const App = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

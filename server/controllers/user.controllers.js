@@ -1,5 +1,5 @@
 
-import {redis, redisAvailable} from "../config/redisClient.js";
+import { redis, redisAvailable } from "../config/redisClient.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
 
@@ -41,43 +41,36 @@ const fetchUserData = async (req, res) => {
 
     const cacheKey = `user:${id}`;
 
-    try {
-        if(redisAvailable){
-            const cachedUser = await redis.get(cacheKey);
-            if (cachedUser) {
-                return res.status(200).json(JSON.parse(cachedUser));
-            }
+    if (redisAvailable) {
+        const cachedUser = await redis.get(cacheKey);
+        if (cachedUser) {
+            return res.status(200).json(JSON.parse(cachedUser));
         }
-    } catch (error) {
-        console.log(error.message);
     }
 
-    try {
-        const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id);
 
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        try {
-            if(redisAvailable){
-                const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-                await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
-            }
-        } catch (err) {
-            console.error(err.message);
-        }
-
-        // toObject() : Converts a Mongoose document into a plain JavaScript object.
-        const { password, ...userWithoutPassword } = user.toObject();
-
-        res.status(200).json(userWithoutPassword);
-
-    } catch (err) {
-        next(err)
+    if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
     }
+
+    if (redisAvailable) {
+        const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
+        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+
+        if(!cacheSuccess){
+            const error = new Error("Failed to cache paginated posts");
+            error.statusCode = 500;
+            throw error;
+        }
+    }
+
+    const { password, refreshToken, ...filteredData } = user.toObject();
+
+    res.status(200).json(filteredData);
 };
-
 
 export {
     updateUser,

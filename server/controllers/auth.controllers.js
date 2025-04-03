@@ -37,11 +37,15 @@ const logIn = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    res.status(200).json({
-        result: oldUser,
-        accessToken: accessToken,
-        refreshToken
-    });
+    const userObj = oldUser.toObject();
+    const { password: pass, bookmarks, __v, updatedAt, refreshToken: _, ...filteredUserData } = userObj;
+
+    const authData = {
+        result: filteredUserData,
+        accessToken: accessToken
+    }
+
+    res.status(200).json(authData);
 };
 
 // Sign Up Controller
@@ -85,11 +89,13 @@ const registerUser = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    res.status(201).json({
+    const authData = {
         result: newUser,
         accessToken: accessToken,
         refreshToken
-    });
+    }
+
+    res.status(201).json(authData);
 };
 
 // Logout user controller
@@ -97,7 +103,7 @@ const logoutUser = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        return res.status(200).json({ message: "Logged out successfully" }); 
+        return res.status(200).json({ message: "Logged out successfully" });
     }
 
     res.clearCookie("refreshToken", {
@@ -107,7 +113,9 @@ const logoutUser = (req, res) => {
         path: '/',
     });
 
-    return res.status(200).json({ message: "Logged out successfully" }); 
+    const message = { message: "Logged out successfully" }
+
+    return res.status(200).json(message);
 };
 
 // Refresh token controller
@@ -139,10 +147,11 @@ const refreshToken = async (req, res) => {
 
     const newAccessToken = generateAccessToken(user);
 
-    res.status(200).json({
-        accessToken: newAccessToken,
-    });
+    const accessToken = {
+        accessToken: newAccessToken
+    }
 
+    res.status(200).json(accessToken);
 };
 
 // fetch Refresh token controller

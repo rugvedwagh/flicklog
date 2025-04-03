@@ -22,10 +22,9 @@ const PostCard = ({ post, setCurrentId }) => {
     const darkMode = useTheme();
 
     let profile = getProfile();
-
     const userId = profile?._id;
 
-    const { clientData } = useSelector((state) => state.authReducer);
+    const clientData  = useSelector((state) => state.authReducer.clientData);
 
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
@@ -131,7 +130,7 @@ const PostCard = ({ post, setCurrentId }) => {
                     <Tooltip title="Bookmark" arrow placement="top">
                         <Button onClick={handleBookmarkToggle}>
                             {isbookmarked ? (
-                                <BookmarkIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                <BookmarkIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small"  />
                             ) : (
                                 <BookmarkBorderOutlinedIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             )}

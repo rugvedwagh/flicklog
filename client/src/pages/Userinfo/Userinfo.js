@@ -1,37 +1,44 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
-import { updateUserDetails } from '../../redux/actions/user.actions';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { fetchUserData, updateUserDetails } from '../../redux/actions/user.actions';
+import React, { useState, useEffect, useCallback } from 'react';
 import { bookmarkPost } from '../../redux/actions/post.actions';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
+import formatDate from '../../utils/formatDate';
+import { useSelector, useDispatch } from 'react-redux';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
 
 const Userinfo = () => {
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
 
+    const profile = getProfile();
+    const userId = profile._id;
+
+    const accessToken = useSelector(state => state.authReducer.accessToken);
     const { posts } = useSelector((state) => state.postsReducer);
     const { clientData, isLoading } = useSelector((state) => state.userReducer);
 
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
 
     const [formData, setFormData] = useState({
         name: clientData?.name || '',
         email: clientData?.email || ''
     });
 
-    const bookmarkedPosts = useMemo(() => {
-        return posts.filter((post) => clientData?.bookmarks?.includes(post._id));
-    }, [posts, clientData]);
+    useEffect(() => {
+        if (clientData?.bookmarks) {
+            setBookmarkedPosts(posts.filter(post => clientData.bookmarks.includes(post._id)));
+        }
+    }, [clientData, posts]);
 
-    const userPostsCount = useMemo(() => {
-        return posts.filter((post) => post.creator === clientData?._id).length;
-    }, [posts, clientData]);
+    const userPostsCount = posts.filter((post) => post.creator === clientData?._id).length;
 
     const openPost = useCallback((postId) => {
         navigate(`/posts/${postId}`);
@@ -59,26 +66,22 @@ const Userinfo = () => {
         setEditDialogOpen(false);
     }, []);
 
-    const removeBookmark = (postId, userId) => {
-        dispatch(bookmarkPost(postId, userId));
-    }
+    const removeBookmark = (postId) => {
+        dispatch(bookmarkPost(postId, clientData._id));
+        setBookmarkedPosts((prev) => prev.filter(post => post._id !== postId));
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+        dispatch(fetchUserData(userId, navigate));
+    }, [accessToken]);
 
     if (isLoading) {
-        return (
-            <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />
-        )
+        return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />;
     }
 
     if (!clientData) {
-        return (
-            <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
-                User not found!
-            </Typography>
-        )
+        return <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>User not found!</Typography>;
     }
 
     return (
@@ -88,101 +91,50 @@ const Userinfo = () => {
             </div>
 
             <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
-
                 <div className={`avatar ${darkMode ? 'dark' : ''}`}>
                     <i className="fa-solid fa-user"></i>
                 </div>
-
                 <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
-
                 <ul>
-                    <li>
-                        <strong>Email:</strong> <span>{clientData.email}</span>
-                    </li>
-                    <li>
-                        <strong>Posts:</strong> <span>{userPostsCount}</span>
-                    </li>
-                    <li>
-                        <strong>Version:</strong> <span>{clientData.__v}</span>
-                    </li>
-                    <li>
-                        <strong>Bookmarked Posts:</strong> <span>{clientData.bookmarks?.length}</span>
-                    </li>
+                    <li><strong>Email:</strong> <span>{clientData.email}</span></li>
+                    <li><strong>Posts:</strong> <span>{userPostsCount}</span></li>
+                    <li><strong>Version:</strong> <span>{clientData.__v}</span></li>
+                    <li><strong>Bookmarked Posts:</strong> <span>{bookmarkedPosts.length}</span></li>
+                    <li><strong>Last updated on:</strong> <span>{formatDate(clientData.updatedAt)}</span></li>
                     <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
-                        <Button>
-                            {showBm ? <span>Hide</span> : <span>Show bookmarked posts</span>}
-                        </Button>
-                        <Button onClick={handleEditUser}><span>Edit</span></Button>
+                        <Button>{showBm ? 'Hide' : 'Show bookmarked posts'}</Button>
+                        <Button onClick={handleEditUser}>Edit</Button>
                     </li>
                 </ul>
 
-                {bookmarkedPosts.length > 0 && showBm
-                    ? (
-                        <div className="bookmarked-posts">
-                            <hr />
-                            <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>
-                                Bookmarked Posts
-
-                            </h3>
-                            <div className="bookmarked-list">
-                                {bookmarkedPosts.map((post) => (
-                                    <div
-                                        key={post._id}
-                                        className={`bookmarked-post ${darkMode ? 'dark' : ''}`}
-                                    >
-                                        <h4 onClick={() => openPost(post._id)}>
-                                            {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
-                                        </h4>
-                                        <CancelRoundedIcon
-                                            color='error'
-                                            onClick={() => removeBookmark(post._id, clientData._id)}
-                                            id="crossButton"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                {bookmarkedPosts.length > 0 && showBm && (
+                    <div className="bookmarked-posts">
+                        <hr />
+                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                        <div className="bookmarked-list">
+                            {bookmarkedPosts.map((post) => (
+                                <div key={post._id} className={`bookmarked-post ${darkMode ? 'dark' : ''}`}>
+                                    <h4 onClick={() => openPost(post._id)}>
+                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                    </h4>
+                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id)} id="crossButton" />
+                                </div>
+                            ))}
                         </div>
-                    )
-                    :
-                    null
-                }
+                    </div>
+                )}
             </div>
 
             <Dialog open={editDialogOpen} onClose={handleCancel}>
-
                 <DialogTitle>Edit User Info</DialogTitle>
-
                 <DialogContent>
-                    <TextField
-                        name="name"
-                        label="Username"
-                        value={formData.name}
-                        onChange={handleFormChange}
-                        fullWidth
-                        margin="normal"
-                    />
-
-                    <TextField
-                        name="email"
-                        label="Email"
-                        value={formData.email}
-                        onChange={handleFormChange}
-                        fullWidth
-                        margin="normal"
-                    />
-
+                    <TextField name="name" label="Username" value={formData.name} onChange={handleFormChange} fullWidth margin="normal" />
+                    <TextField name="email" label="Email" value={formData.email} onChange={handleFormChange} fullWidth margin="normal" />
                 </DialogContent>
-
                 <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
-                        Cancel
-                    </Button>
-
-                    <Button onClick={saveChanges} color="primary" variant="contained">
-                        Save
-                    </Button>
+                    <Button onClick={handleCancel} color="secondary">Cancel</Button>
+                    <Button onClick={saveChanges} color="primary" variant="contained">Save</Button>
                 </DialogActions>
-
             </Dialog>
         </div>
     );
