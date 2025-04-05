@@ -1,17 +1,4 @@
-@keyframes blooming {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0%);
-        opacity: 1;
-    }
-}
-
 .paper {
-    animation: blooming 0.7s ease;
     padding: 0 !important;
 }
 
@@ -38,7 +25,7 @@
 }
 
 .descinp {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     border-radius: 3px !important;
     width: 100%;
     min-height: 350px !important;
@@ -78,7 +65,7 @@
     position: relative;
     top: 2%;
     left: 49%;
-    transform: translate(135%, -50%);   
+    transform: translate(135%, -50%);
     cursor: pointer;
     opacity: 0.5;
 }

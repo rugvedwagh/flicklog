@@ -78,7 +78,6 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     return (
         <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} >
             <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
-
                 <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}>
                     <CloseOutlinedIcon color='black' />
                 </div>
