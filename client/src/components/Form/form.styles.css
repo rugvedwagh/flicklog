@@ -38,9 +38,11 @@
 }
 
 .descinp {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     border-radius: 3px !important;
+    width: 100%;
     min-height: 350px !important;
+    overflow-y: scroll;
 }
 
 .descinp.dark {
@@ -49,11 +51,13 @@
 }
 
 .fileInput {
-    width: 97%;
+    width: 100%;
+    border: 1px solid var(--borderColor);
     margin: 10px 0;
 }
 
 .buttonSubmit {
+    width: 80% !important;
     background-color: var(--forrestGreen) !important;
     margin-bottom: 10px !important;
 }
@@ -72,8 +76,8 @@
 
 .close {
     position: relative;
-    top: 50%;
-    left: 50%;
+    top: 2%;
+    left: 49%;
     transform: translate(135%, -50%);   
     cursor: pointer;
     opacity: 0.5;

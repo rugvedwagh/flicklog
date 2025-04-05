@@ -94,7 +94,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     fullWidth
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-                    style={{ marginBottom: '7px', fontSize: '18px' }}
+                    style={{ marginBottom: '10px', fontSize: '18px' }}
                 />
 
                 <ReactQuill
@@ -160,7 +160,8 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     fullWidth
                     style={{
                         backgroundColor: 'white',
-                        color: 'black'
+                        color: 'black',
+                        width: '80%'
                     }}
                 >
                     clear
