@@ -27,7 +27,7 @@ const Home = () => {
     }
 
     return (
-        <Container maxWidth='xl' style={{ marginTop: '1.4rem' }}>
+        <Container maxWidth='xl' disableGutters style={{ marginTop: '1.4rem', padding: "0 0.1rem" }}>
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                 <Grid item xs={12} sm={6} md={9}>
