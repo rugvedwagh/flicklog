@@ -8,11 +8,12 @@
     border-radius: 3px;
     height: 100%;   
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
-    outline: 1px solid var(--borderColor);
+    outline: none;
 }
 
 .card.dark{
     background-color: var(--cardColour) !important;
+    outline: 1px solid var(--borderColor);
 }
 
 .card:hover{
@@ -46,7 +47,7 @@
 
 .title {
     padding: 0.5rem 0.5rem 0 0.5rem;
-    color: var(--black);
+    color: var(--borderColor);
     user-select: none;
 }
 
