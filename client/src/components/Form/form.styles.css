@@ -16,7 +16,7 @@
 }
 
 .form.dark {
-    background-color: var(--black);
+    background-color: var(--cardColour);
 }
 
 .form.dark .MuiTextField-root {
@@ -65,7 +65,7 @@
     position: relative;
     top: 2%;
     left: 49%;
-    transform: translate(135%, -50%);
+    transform: translate(130%, -35%);
     cursor: pointer;
     opacity: 0.5;
 }

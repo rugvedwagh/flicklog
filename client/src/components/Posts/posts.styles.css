@@ -10,10 +10,6 @@
     text-align: center;
 }
 
-.infinite-scroll-component{
-    padding: 0 0.5rem;
-} 
-
 .infloader {
     margin: 3rem 50%;
     color: var(--forrestGreen) !important;
