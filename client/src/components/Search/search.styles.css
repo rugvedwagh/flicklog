@@ -32,7 +32,7 @@
     margin-right: 10px;
 }
 
-.appBarSearch .MuiTextField-root{
+.appBarSearch > .MuiTextField-root{
     height: 3em;
 }
 

@@ -78,7 +78,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     return (
         <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} >
             <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
-
+                
                 <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}>
                     <CloseOutlinedIcon color='black' />
                 </div>
@@ -94,7 +94,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     fullWidth
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-                    style={{ marginBottom: '7px', fontSize: '18px' }}
+                    style={{ marginBottom: '10px', fontSize: '18px' }}
                 />
 
                 <ReactQuill
@@ -146,9 +146,6 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     size='large'
                     type='submit'
                     fullWidth
-                    style={{
-
-                    }}
                 >
                     Post
                 </Button>
@@ -160,7 +157,8 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     fullWidth
                     style={{
                         backgroundColor: 'white',
-                        color: 'black'
+                        color: 'black',
+                        width: '80%'
                     }}
                 >
                     clear

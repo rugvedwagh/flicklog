@@ -48,7 +48,7 @@
     color: var(--antiFlashWhite);
 }
 
-.commentsInnerContainer .MuiTypography-h6 {
+.commentsInnerContainer > .MuiTypography-h6 {
     font-size: 1.1rem;
     color: #333;
     padding: 10px;

@@ -22,8 +22,17 @@
     }
 }
 
-.form{
-    animation: slideImage 0.7s ease-in-out;
+.form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    border: 1px solid var(--borderColor);
+    border-radius: 3px;
+    padding: 10px;
+    height: 95%;
+    overflow-y: scroll;
 }
 
 .appBarSearch {
@@ -32,14 +41,13 @@
     flex-direction: row;
     padding: 1.5em;
     border-radius: 3px;
-    animation: flower 0.6s ease;
     gap: 10px;
     margin-bottom: 1em;
     color: var(--black) !important;
     font-family: 'Roboto', sans-serif;
 }
 
-.appBarSearch.dark{
+.appBarSearch.dark {
     color: var(--antiFlashWhite) !important;
     background-color: var(--black) !important;
     outline: 1px solid var(--borderColor);
@@ -50,11 +58,11 @@
     margin-right: 10px;
 }
 
-.appBarSearch .MuiTextField-root{
+.appBarSearch .MuiTextField-root {
     height: 3em;
 }
 
-.appBarSearch.dark .MuiTextField-root{
+.appBarSearch.dark .MuiTextField-root {
     background-color: var(--antiFlashWhite) !important;
     border-radius: 3px;
 }
@@ -69,24 +77,24 @@
     }
 }
 
-.search-button{
-    color:var(--black) !important;
+.search-button {
+    color: var(--black) !important;
     background-color: var(--white) !important;
     border: none;
     padding-right: 0 !important;
 }
 
-.search-button.dark{
+.search-button.dark {
     background-color: var(--antiFlashWhite) !important;
 }
 
-.search-button.dark .box{
+.search-button.dark .box {
     border: 1px solid var(--borderColor) !important;
 }
 
-.appBarSearch > .box {
+.appBarSearch>.box {
     border: 1px solid var(--borderColor) !important;
-}   
+}
 
 .box {
     width: 90%;
@@ -98,7 +106,7 @@
     padding: 1em 0 1em 1em;
 }
 
-.box > input {
+.box>input {
     flex: 1;
     height: 1em;
     border: none;
@@ -108,20 +116,20 @@
     width: 100%;
 }
 
-.appBarSearch > h4{
+.appBarSearch>h4 {
     color: var(--forrestGreen);
     animation: slideImage 0.3s ease-in-out;
     cursor: pointer;
 }
 
-.appBarSearch.dark > h4{
+.appBarSearch.dark>h4 {
     color: var(--antiFlashWhite);
 }
 
-.appBarSearch.dark .box{
+.appBarSearch.dark .box {
     background-color: var(--antiFlashWhite);
 }
 
-.appBarSearch.dark .box input{
+.appBarSearch.dark .box input {
     background-color: var(--antiFlashWhite);
 }

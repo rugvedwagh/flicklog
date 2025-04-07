@@ -3,7 +3,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import React from 'react';
 
-
 const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPassword }) => (
     <Grid item xs={12} sm={half ? 6 : 12}>
         <TextField

@@ -71,7 +71,7 @@ const PostDetails = () => {
     return (
         <div>
             <div className={`main ${darkMode ? 'dark' : ''}`}>
-                <section className='second'>
+                <section className={`second ${isFullScreen ? 'fullscreen' : ''}`}>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
                         src={post.selectedfile}

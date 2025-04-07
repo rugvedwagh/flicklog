@@ -62,7 +62,7 @@ const SignUp = () => {
                     <Grid item xs={12} md={6}>
                         <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={0} >
 
-                            <form className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
+                            <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
 
                                     <LockOutlinedIcon />

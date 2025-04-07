@@ -1,17 +1,4 @@
-@keyframes blooming {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0%);
-        opacity: 1;
-    }
-}
-
 .paper {
-    animation: blooming 0.7s ease;
     padding: 0 !important;
 }
 
@@ -25,7 +12,7 @@
     flex-wrap: wrap;
     justify-content: center;
     background-color: var(--white);
-    width: 95% !important;
+    width: 60% !important;
 }
 
 .form.dark {
@@ -38,9 +25,11 @@
 }
 
 .descinp {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
     border-radius: 3px !important;
+    width: 100%;
     min-height: 350px !important;
+    overflow-y: scroll;
 }
 
 .descinp.dark {
@@ -49,11 +38,13 @@
 }
 
 .fileInput {
-    width: 97%;
+    width: 100%;
+    border: 1px solid var(--borderColor);
     margin: 10px 0;
 }
 
 .buttonSubmit {
+    width: 80% !important;
     background-color: var(--forrestGreen) !important;
     margin-bottom: 10px !important;
 }
@@ -72,9 +63,9 @@
 
 .close {
     position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(135%, -50%);   
+    top: 2%;
+    left: 49%;
+    transform: translate(135%, -50%);
     cursor: pointer;
     opacity: 0.5;
 }
