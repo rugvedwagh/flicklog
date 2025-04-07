@@ -27,13 +27,11 @@
     background-color: var(--antiFlashWhite);
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
-    animation: btow 0.2s ease-in;
 }
 
 .commentsOuterContainer.dark {
     background-color: var(--black); 
     color: white;
-    animation: grow 0.2s ease-in;
 }
 
 .commentsInnerContainer {

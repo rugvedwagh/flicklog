@@ -11,7 +11,7 @@
 }
 
 .card.dark{
-    background-color: var(--black) ;
+    background-color: var(--cardColour) ;
 }
 
 .card:hover{
