@@ -92,7 +92,8 @@ body {
 }
 
 .root-bg.dark {
-    background-color: var(--black);
+    /* background-color: var(--black); */
+    background-image: linear-gradient(to bottom, #1a1a1a, #1a1a1a, #1a1a1a, #1a1a1a, #1a1a1a, #181818, #292929, #3b3b3b, #676767, #979797, #cacaca, #ffffff);
 }
 
 @media (max-width: 600px) {
