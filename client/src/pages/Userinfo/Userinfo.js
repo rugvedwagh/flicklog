@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
 
 const Userinfo = () => {
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
@@ -85,57 +85,59 @@ const Userinfo = () => {
     }
 
     return (
-        <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
-            <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
-                <h2>My Profile</h2>
-            </div>
-
-            <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
-                <div className={`avatar ${darkMode ? 'dark' : ''}`}>
-                    <i className="fa-solid fa-user"></i>
+        <div className='outer-cont'>
+            <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
+                <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
+                    <h2>My Profile</h2>
                 </div>
-                <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
-                <ul>
-                    <li><strong>Email:</strong> <span>{clientData.email}</span></li>
-                    <li><strong>Posts:</strong> <span>{userPostsCount}</span></li>
-                    <li><strong>Version:</strong> <span>{clientData.__v}</span></li>
-                    <li><strong>Bookmarked Posts:</strong> <span>{bookmarkedPosts.length}</span></li>
-                    <li><strong>Last updated on:</strong> <span>{formatDate(clientData.updatedAt)}</span></li>
-                    <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
-                        <Button>{showBm ? 'Hide' : 'Show bookmarked posts'}</Button>
-                        <Button onClick={handleEditUser}>Edit</Button>
-                    </li>
-                </ul>
 
-                {bookmarkedPosts.length > 0 && showBm && (
-                    <div className="bookmarked-posts">
-                        <hr />
-                        <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
-                        <div className="bookmarked-list">
-                            {bookmarkedPosts.map((post) => (
-                                <div key={post._id} className={`bookmarked-post ${darkMode ? 'dark' : ''}`}>
-                                    <h4 onClick={() => openPost(post._id)}>
-                                        {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
-                                    </h4>
-                                    <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id)} id="crossButton" />
-                                </div>
-                            ))}
-                        </div>
+                <div className={`lower-div ${darkMode ? 'dark' : ''}`}>
+                    <div className={`avatar ${darkMode ? 'dark' : ''}`}>
+                        <i className="fa-solid fa-user"></i>
                     </div>
-                )}
-            </div>
+                    <h3 className={`username ${darkMode ? 'dark' : ''}`}>{clientData.name}</h3>
+                    <ul>
+                        <li><strong>Email:</strong> <span>{clientData.email}</span></li>
+                        <li><strong>Posts:</strong> <span>{userPostsCount}</span></li>
+                        <li><strong>Version:</strong> <span>{clientData.__v}</span></li>
+                        <li><strong>Bookmarked Posts:</strong> <span>{bookmarkedPosts.length}</span></li>
+                        <li><strong>Last updated on:</strong> <span>{formatDate(clientData.updatedAt)}</span></li>
+                        <li onClick={() => setShowBm((prev) => !prev)} sx={{ display: 'flex' }}>
+                            <Button>{showBm ? 'Hide' : 'Show bookmarked posts'}</Button>
+                            <Button onClick={handleEditUser}>Edit</Button>
+                        </li>
+                    </ul>
 
-            <Dialog open={editDialogOpen} onClose={handleCancel}>
-                <DialogTitle>Edit User Info</DialogTitle>
-                <DialogContent>
-                    <TextField name="name" label="Username" value={formData.name} onChange={handleFormChange} fullWidth margin="normal" />
-                    <TextField name="email" label="Email" value={formData.email} onChange={handleFormChange} fullWidth margin="normal" />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">Cancel</Button>
-                    <Button onClick={saveChanges} color="primary" variant="contained">Save</Button>
-                </DialogActions>
-            </Dialog>
+                    {bookmarkedPosts.length > 0 && showBm && (
+                        <div className="bookmarked-posts">
+                            <hr />
+                            <h3 className={`bookmark-heading ${darkMode ? 'dark' : ''}`}>Bookmarked Posts</h3>
+                            <div className="bookmarked-list">
+                                {bookmarkedPosts.map((post) => (
+                                    <div key={post._id} className={`bookmarked-post ${darkMode ? 'dark' : ''}`}>
+                                        <h4 onClick={() => openPost(post._id)}>
+                                            {post.title.length > 40 ? post.title.slice(0, 40) + "..." : post.title}
+                                        </h4>
+                                        <CancelRoundedIcon color='error' onClick={() => removeBookmark(post._id)} id="crossButton" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <Dialog open={editDialogOpen} onClose={handleCancel}>
+                    <DialogTitle>Edit User</DialogTitle>
+                    <DialogContent>
+                        <TextField name="name" label="Username" value={formData.name} onChange={handleFormChange} fullWidth margin="normal" />
+                        <TextField name="email" label="Email" value={formData.email} onChange={handleFormChange} fullWidth margin="normal" />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCancel} color="secondary">Cancel</Button>
+                        <Button onClick={saveChanges} color="primary" variant="contained">Save</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         </div>
     );
 };

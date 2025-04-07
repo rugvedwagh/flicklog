@@ -53,6 +53,26 @@
     outline: 1px solid var(--borderColor);
 }
 
+.coming-soon {
+    background-color: var(--white) !important;
+    display: flex;
+    flex-direction: row;
+    padding: 1.5em;
+    border-radius: 3px;
+    gap: 10px;
+    margin-bottom: 1em;
+    color: var(--black) !important;
+    font-family: 'Roboto', sans-serif;
+    height: 20vw;
+    text-align: center;
+}
+
+.coming-soon.dark {
+    color: var(--antiFlashWhite) !important;
+    background-color: var(--black) !important;
+    outline: 1px solid var(--borderColor);
+}
+
 .appBarSearch input {
     flex-grow: 1;
     margin-right: 10px;

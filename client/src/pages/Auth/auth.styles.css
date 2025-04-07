@@ -17,12 +17,11 @@
     justify-content: center;
     background-color: var(--white) !important;
     font-family: 'Roboto', sans-serif;
-    /* width: 90%; */
     padding: 1em;
 }
 
 .paper.dark{
-    background-color: var(--black) !important;
+    background-color: var(--cardColour) !important;
     box-shadow: none !important;
 }
 
@@ -35,12 +34,12 @@
 }
 
 .form-auth {
-    width: 90%;
+    width: 95%;
     background-color: var(--white);
 }
 
 .form-auth.dark{
-    background-color: var(--black);
+    background-color: var(--cardColour);
 }
 
 .submit {
@@ -81,7 +80,7 @@
 }
 
 .paper-container.dark{
-    background-color: var(--black);
+    background-color: var(--cardColour);
 }
 
 .image-container {

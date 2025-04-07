@@ -23,10 +23,11 @@
 .commentsOuterContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
+    margin: 1em 0 0.5em 0;
     background-color: var(--antiFlashWhite);
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    outline: 1px solid var(--borderColor);
 }
 
 .commentsOuterContainer.dark {

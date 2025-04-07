@@ -41,6 +41,7 @@
     padding-top: 30px;
     border-radius: 3px;
     background-color: var(--white);
+    outline: 1px solid var(--borderColor);
 }
 
 .main.dark {

@@ -27,7 +27,7 @@ const Home = () => {
     }
 
     return (
-        <Container maxWidth='xl' disableGutters style={{ marginTop: '1.4rem'}}>
+        <Container maxWidth='xl' disableGutters style={{ marginTop: '1.4rem' }}>
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                 <Grid item xs={12} sm={6} md={9}>
@@ -44,6 +44,11 @@ const Home = () => {
                         ) : (
                             <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                         )}
+                    </AppBar>
+                    <AppBar className={`coming-soon ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >
+                        <h4>
+                            Coming soon...
+                        </h4>
                     </AppBar>
                 </Grid>
             </Grid>

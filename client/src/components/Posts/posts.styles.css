@@ -52,3 +52,7 @@
 .endmsg.dark {
     color: var(--subtextColor);
 }
+
+.infinite-scroll-component{
+    padding: 0 0.3rem;
+}
