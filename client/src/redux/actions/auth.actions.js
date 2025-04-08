@@ -15,7 +15,6 @@ import {
     logInApi,
     logoutApi,
 } from '../../api/auth.api';
-import { getProfile } from '../../utils/storage';
 
 const logIn = (formData, navigate) => async (dispatch) => {
     try {

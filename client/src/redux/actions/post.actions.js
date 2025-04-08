@@ -44,7 +44,6 @@ const fetchPost = (id) => async (dispatch) => {
 const fetchPosts = (page) => async (dispatch, getState) => {
     try {
         dispatch({ type: START_LOADING });
-
         const cachedPosts = JSON.parse(localStorage.getItem('cachedPosts')) || {
             posts: [],
             pages: {},

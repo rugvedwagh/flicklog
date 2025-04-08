@@ -12,11 +12,10 @@ import {
     updateUserDetailsApi
 } from '../../api/user.api';
 
-const fetchUserData = (id, navigate) => async (dispatch) => {
+const fetchUserData = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        navigate(`/user/i`);
         const { data } = await userInfoApi(id);
         dispatch({ type: USER_INFO, payload: data });
     } catch (error) {

@@ -34,7 +34,7 @@ const Home = () => {
                     <Posts setCurrentId={setCurrentId} darkMode={darkMode} />
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={3}>
+                <Grid item xs={12} sm={4} md={3} className='utitlity-comps'>
 
                     <Search darkMode={darkMode} />
 
@@ -42,7 +42,9 @@ const Home = () => {
                         {!formOpen && profile ? (
                             <h4 onClick={handleDrop}>Want to share something?</h4>
                         ) : (
-                            <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                            <div className='blurbg'>
+                                <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
+                            </div>
                         )}
                     </AppBar>
                     <AppBar className={`coming-soon ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >

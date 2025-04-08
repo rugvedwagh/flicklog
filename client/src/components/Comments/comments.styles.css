@@ -30,6 +30,10 @@
     outline: 1px solid var(--borderColor);
 }
 
+.commentsInnerContainer::-webkit-scrollbar {
+    width: 0px;
+}
+
 .commentsOuterContainer.dark {
     background-color: var(--black); 
     color: white;

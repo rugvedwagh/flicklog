@@ -62,6 +62,7 @@ const Navbar = () => {
     const openUser = () => {
         if (userId) {
             dispatch(fetchUserData(userId, navigate));
+            navigate('/user/i')
             closeMenu();
         }
     };

@@ -10,14 +10,11 @@
     }
 }
 
-@keyframes slideImage {
+@keyframes prakat {
     0% {
-        transform: translateY(-100%);
         opacity: 0;
     }
-
     100% {
-        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -34,6 +31,7 @@
     border-radius: 3px;
     font-family: 'Arial', sans-serif;
     outline: 1px solid var(--borderColor);
+    animation: prakat 0.3s ease-in;
 }
 
 .main-cont.dark {
