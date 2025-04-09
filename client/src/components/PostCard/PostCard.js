@@ -7,7 +7,6 @@ import { bookmarkPost } from '../../redux/actions/post.actions';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useTheme } from '../../context/themeContext';
 import { getProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
@@ -15,11 +14,10 @@ import Likes from './Likes/Likes';
 import moment from 'moment';
 import './postcard.styles.css';
 
-const PostCard = ({ post, setCurrentId }) => {
+const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const darkMode = useTheme();
 
     let profile = getProfile();
     const userId = profile?._id;
@@ -32,7 +30,7 @@ const PostCard = ({ post, setCurrentId }) => {
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
     useEffect(() => {
-        setIsBookmarked(clientData?.bookmarks?.includes(post._id))
+        setIsBookmarked(bookmarks?.includes(post._id))
     }, [clientData, post._id]);
 
     const openPost = () => {
