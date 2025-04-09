@@ -56,7 +56,7 @@ const PostCard = ({ post, setCurrentId }) => {
             <CardMedia
                 onClick={openPost}
                 className="media"
-                image={post.selectedfile ||     defimg}
+                image={post.selectedfile || defimg}
                 title={post.title || "Default Title"}
             />
 
