@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useId } from 'react';
 import { Grid, CircularProgress, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +25,7 @@ const Posts = ({ setCurrentId }) => {
     useEffect(() => {
         dispatch(fetchUserData(userId))
         dispatch(fetchPosts(currentPage));
-    }, [dispatch, currentPage]);
+    }, [currentPage]);
 
     const fetchMorePosts = useCallback(() => {
         if (currentPage < numberOfPages) {
