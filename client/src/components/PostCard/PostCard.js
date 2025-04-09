@@ -97,7 +97,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                         variant="body2"
                         component="p"
                         className={`msg-text ${darkMode ? 'dark' : ''}`}
-                        dangerouslySetInnerHTML={{ __html: post.message.slice(0, 85) + ' ...' }}
+                        dangerouslySetInnerHTML={{ __html: post.message.slice(0, 115) + ' ...' }}
                     />
                 </div>
             </section>

@@ -62,6 +62,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
             :
             dispatch(updatePost(currentId, { ...postData, name: profile.name }));
 
+        toggleForm();   
         clearForm();
     };
 
@@ -147,7 +148,7 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
                     type='submit'
                     fullWidth
                 >
-                    Post
+                    {currentId ? 'Save' : 'Post'}
                 </Button>
 
                 <Button
