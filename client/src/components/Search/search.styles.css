@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem;
     border-radius: 5px;
     background-color: var(--antiFlashWhite);
     margin-right: 1rem;
@@ -20,7 +19,7 @@
     font-size: 1rem;
     background-color: var(--antiFlashWhite);
     color: var(--textColor, #333);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
@@ -47,4 +46,8 @@
     color: var(--black);
     background-color: var(--antiFlashWhite);
     align-items: center;
+}
+
+.box .MuiSvgIcon-root:hover {
+    color: var(--forrestGreen);
 }

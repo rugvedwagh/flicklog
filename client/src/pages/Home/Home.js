@@ -32,7 +32,7 @@ const Home = () => {
 
             <Grid container justify="space-between" alignItems="stretch" spacing={3} className='gridContainer'>
                 <Grid item xs={12} sm={9} md={12}>
-                    <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >
+                    {/* <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >
                         {!formOpen && profile ? (
                             <h4 onClick={handleDrop}>&nbsp;Add New post</h4>
                         ) : (
@@ -40,7 +40,7 @@ const Home = () => {
                                 <Form className='form' darkMode={darkMode} currentId={currentId} setCurrentId={setCurrentId} setformOpen={setformOpen} />
                             </div>
                         )}
-                    </AppBar>
+                    </AppBar> */}
                     <Posts setCurrentId={setCurrentId} darkMode={darkMode} />
                 </Grid>
             </Grid>
