@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="container">
                 <div className="footer-content">
                     <div className="footer-brand">
-                        <h2 className="brand-name">Reminisce</h2>
+                        <h2 className="brand-name">Flicklog</h2>
                         <div className="social-icons">
                             <a href="#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
                             <a href="#" className="social-icon"><i className="fa-brands fa-youtube"></i></a>

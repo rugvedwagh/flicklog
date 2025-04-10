@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Avatar, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -12,13 +12,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
+import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
 import { useTheme } from '../../context/themeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.css';
 
-const Navbar = () => {
+const Navbar = ({ setformOpen }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -93,16 +94,21 @@ const Navbar = () => {
         }
     };
 
+    const openForm = () => {
+        setformOpen(true)
+    }
+
     const navbarClasses = `navbar ${darkMode ? 'dark' : ''} ${isVisible ? 'visible' : 'hidden'}`;
 
     return (
         <div className={navbarClasses}>
             <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                flicklog 
+                flicklog
             </div>
 
             {userId ? (
                 <div className='profile'>
+                    <Search darkMode={darkMode} />
                     <Avatar
                         onClick={handleMenuClick}
                         className={`profileAvatar ${darkMode ? 'dark' : ''}`}
@@ -137,6 +143,7 @@ const Navbar = () => {
                             </div>
                         </MenuItem>
                         <MenuItem onClick={openUser}><AccountCircleOutlinedIcon />&nbsp; My account</MenuItem>
+                        {/* <MenuItem onClick={openForm}><AddCircleOutlineOutlinedIcon />&nbsp; New post</MenuItem> */}
                         <MenuItem onClick={handleLikedPosts}><ThumbUpAltOutlinedIcon />&nbsp; Liked posts</MenuItem>
                         <MenuItem onClick={handleUserPosts}><EditNoteOutlinedIcon />&nbsp; My posts</MenuItem>
                         <MenuItem><SettingsOutlinedIcon />&nbsp; Settings</MenuItem>
