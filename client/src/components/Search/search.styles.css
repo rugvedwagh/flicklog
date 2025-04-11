@@ -1,73 +1,53 @@
-
-.searchlogo {
-    color: rgb(107, 107, 107);
-    cursor: pointer;
-}
-
-.searchlogo:hover {
-    color: black;
-    transition: 0.3s ease-in;
-}
-
-.appBarSearch {
-    background-color: var(--white) !important;
+.box {
     display: flex;
-    flex-direction: row;
-    /* padding: 1.5em; */
-    border-radius: 3px;
-    animation: flower 0.6s ease;
-    gap: 10px;
-    margin-bottom: 1em;
-    color: var(--black) !important;
-    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 5px;
+    background-color: var(--antiFlashWhite);
+    margin-right: 1rem;
+    gap: 0;
 }
 
-.appBarSearch.dark{
-    color: var(--antiFlashWhite) !important;
-    background-color: var(--black) !important;
+.box.dark {
+    background-color: var(--black);
 }
 
-.appBarSearch input {
-    flex-grow: 1;
-    margin-right: 10px;
+.box .input {
+    flex: 1;
+    height: 1.1rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    background-color: var(--antiFlashWhite);
+    color: var(--textColor, #333);
+    padding: 0.5rem 1rem;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-.appBarSearch > .MuiTextField-root{
-    height: 3em;
-}
-
-.appBarSearch.dark .MuiTextField-root{
-    background-color: var(--antiFlashWhite) !important;
-    border-radius: 3px;
-}
-
-.search-button{
-    color:var(--black) !important;
-    background-color: var(--white) !important;
-    padding-right: 0 !important;
+.box.dark>.input {
+    background-color: var(--antiFlashWhite);
+    outline: none;
     border: none;
+    color: var(--black);
 }
 
-.search-button.dark{
-    background-color: var(--antiFlashWhite) !important;
-}
-
-.search-button.dark .box{
-    border: 1px solid var(--borderColor) !important;
-}
-
-.appBarSearch > .box {
-    border: 1px solid var(--borderColor) !important;
-}   
-
-.appBarSearch > h4{
+.box .MuiSvgIcon-root {
+    background-color: var(--antiFlashWhite);
+    padding: 0.25rem 0.55rem;
     cursor: pointer;
+    border-radius: 30px;
+    font-size: 1.6rem;
+    color: var(--forrestGreen);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
-.appBarSearch.dark .box{
+.box.dark .MuiSvgIcon-root {
+    color: var(--black);
     background-color: var(--antiFlashWhite);
+    align-items: center;
 }
 
-.appBarSearch.dark .box input{
-    background-color: var(--antiFlashWhite);
+.box .MuiSvgIcon-root:hover {
+    color: var(--forrestGreen);
 }

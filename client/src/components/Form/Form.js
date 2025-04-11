@@ -10,7 +10,7 @@ import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
 import './form.styles.css';
 
-const Form = ({ currentId, setCurrentId, setformOpen }) => {
+const Form = ({ currentId, setCurrentId, setformopen }) => {
 
     const dispatch = useDispatch();
     const darkMode = useTheme();
@@ -51,7 +51,8 @@ const Form = ({ currentId, setCurrentId, setformOpen }) => {
     };
 
     const toggleForm = () => {
-        setformOpen(false);
+        console.log('in the clsoe form')
+        setformopen(false);
     }
 
     const handleSubmit = (e) => {

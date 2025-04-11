@@ -1,19 +1,22 @@
 import { Avatar, Button, Menu, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { likedPosts, userPosts } from '../../redux/actions/post.actions';
-import { fetchUserData } from '../../redux/actions/user.actions';
-import { toggleTheme } from '../../redux/actions/theme.actions';
 import { Logout } from '../../redux/actions/auth.actions';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import React, { useState, useEffect, useCallback } from 'react';
+import { fetchUserData } from '../../redux/actions/user.actions';
+import { toggleTheme } from '../../redux/actions/theme.actions';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import React, { useState, useEffect, useCallback } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
+import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
 import { getProfile } from '../../utils/storage';
+import { useForm } from '../../context/formContext';
 import { useTheme } from '../../context/themeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.css';
@@ -25,6 +28,7 @@ const Navbar = () => {
     const darkMode = useTheme();
 
     const { authData } = useSelector((state) => state.authReducer);
+    const { formopen, setformopen } = useForm();
 
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
@@ -93,16 +97,23 @@ const Navbar = () => {
         }
     };
 
+    const openForm = () => {
+        setformopen(true)
+        console.log(formopen);
+    }
+
     const navbarClasses = `navbar ${darkMode ? 'dark' : ''} ${isVisible ? 'visible' : 'hidden'}`;
 
     return (
         <div className={navbarClasses}>
             <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                flicklog 
+                flicklog
             </div>
 
             {userId ? (
                 <div className='profile'>
+                    <Search darkMode={darkMode} />
+
                     <Avatar
                         onClick={handleMenuClick}
                         className={`profileAvatar ${darkMode ? 'dark' : ''}`}
@@ -137,6 +148,7 @@ const Navbar = () => {
                             </div>
                         </MenuItem>
                         <MenuItem onClick={openUser}><AccountCircleOutlinedIcon />&nbsp; My account</MenuItem>
+                        <MenuItem onClick={openForm}><AddCircleOutlineOutlinedIcon />&nbsp; New post</MenuItem>
                         <MenuItem onClick={handleLikedPosts}><ThumbUpAltOutlinedIcon />&nbsp; Liked posts</MenuItem>
                         <MenuItem onClick={handleUserPosts}><EditNoteOutlinedIcon />&nbsp; My posts</MenuItem>
                         <MenuItem><SettingsOutlinedIcon />&nbsp; Settings</MenuItem>

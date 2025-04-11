@@ -16,11 +16,13 @@ import { Container } from '@mui/material';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
 import './App.css';
+import { useForm } from './context/formContext';
 
 const App = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const location = useLocation();
     const darkMode = useTheme();
 
@@ -28,6 +30,8 @@ const App = () => {
 
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState('');
+
+    const { formopen, setformopen} = useForm();
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
@@ -77,18 +81,19 @@ const App = () => {
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
             <Container maxWidth="lg">
+                
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
                     onClick={scrollToTop}
                 />
 
-                <Navbar />
-
-                <Routes>
+                <Navbar setformopen={setformopen}/>
+                                                   
+                <Routes>                           
                     <Route path="/" element={<Navigate to="/posts" />} />
-                    <Route path="/posts/search" element={<Home />} />
+                    <Route path="/posts/search" element={<Home setformOpen={setformopen} formOpen={formopen} />} />
                     <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
-                    <Route path="/posts" element={<Home />} />
+                    <Route path="/posts" element={<Home  setformOpen={setformopen} formOpen={formopen} />} />
                     <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
@@ -96,7 +101,7 @@ const App = () => {
 
                 <Footer />
             </Container>
-        </div>
+        </div >
     );
 };
 
