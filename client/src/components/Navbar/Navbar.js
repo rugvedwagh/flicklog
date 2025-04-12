@@ -53,6 +53,7 @@ const Navbar = () => {
         dispatch(Logout(navigate));
         closeMenu();
         setOpenDialog(false);
+        navigate('/auth')
     }, [dispatch, navigate]);
 
     useEffect(() => {

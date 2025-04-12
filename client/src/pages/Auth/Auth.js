@@ -48,6 +48,8 @@ const SignUp = () => {
         isSignup ? dispatch(registerUser(form, navigate)) : dispatch(logIn(form, navigate));
     };
 
+    const isRelevantAuthError = errorMessage?.length && !errorMessage.includes("Refresh");
+
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
@@ -75,12 +77,12 @@ const SignUp = () => {
                                         {isSignup ? 'Sign up' : 'Log in'}
                                     </Typography>
 
-                                    {errorMessage?.length ? (
+                                    {isRelevantAuthError ? (
                                         <Alert severity="error" sx={{ margin: '10px 0' }}>
                                             {errorMessage}
                                         </Alert>
-                                    ):(
-                                        <></>
+                                    ) : (
+                                        null
                                     )}
                                 </div>
 
