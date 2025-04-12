@@ -75,10 +75,9 @@
 }
 
 .close {
-    position: relative;
-    top: 2%;
-    left: 48%;
-    transform: translate(130%, -35%);
+    position: absolute;
+    top: 1%;
+    left: 97%;
     cursor: pointer;
     opacity: 0.5;
 }

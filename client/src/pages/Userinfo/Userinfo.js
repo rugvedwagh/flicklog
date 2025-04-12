@@ -1,5 +1,6 @@
 import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { fetchUserData, updateUserDetails } from '../../redux/actions/user.actions';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import React, { useState, useEffect, useCallback } from 'react';
 import { bookmarkPost } from '../../redux/actions/post.actions';
 import { useTheme } from '../../context/themeContext';
@@ -86,6 +87,10 @@ const Userinfo = () => {
 
     return (
         <div className='outer-cont'>
+            <ArrowBackOutlinedIcon id='backbutton' onClick={()=>{
+                navigate(-1)
+            }} />
+            
             <div className={`main-cont ${darkMode ? 'dark' : ''}`}>
                 <div className={`upper-div ${darkMode ? 'dark' : ''}`}>
                     <h2>My Profile</h2>

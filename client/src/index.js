@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from "react-dom/client";
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
+import { FormProvider } from "./context/formContext";
 import React from "react";
 import App from "./App";
 
@@ -14,9 +15,12 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
                 <ThemeProvider>
-                    <App />
+                    <FormProvider>
+                        <App />
+                    </FormProvider>
                 </ThemeProvider>
             </BrowserRouter>
         </PersistGate>
-    </Provider>,
+    </Provider>
+
 );

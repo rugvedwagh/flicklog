@@ -13,6 +13,7 @@ import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
 import moment from 'moment';
 import './postcard.styles.css';
+import { useForm } from '../../context/formContext';
 
 const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
 
@@ -26,6 +27,8 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
 
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
+
+    const { formopen, setformopen } = useForm();
 
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
@@ -74,7 +77,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                         <Button
                             style={{ color: 'white', marginRight: '-20px' }}
                             size="small"
-                            onClick={() => setCurrentId(post._id)}
+                            onClick={() => {setCurrentId(post._id);setformopen(true)}}
                         >
                             <MoreHorizIcon fontSize="medium" />
                         </Button>

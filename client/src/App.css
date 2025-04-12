@@ -103,3 +103,30 @@ body {
         padding: 8px 18px;
     }
 }
+
+.addnewpost{
+    position: fixed !important;
+    bottom: 100px;
+    right: 25px;
+    z-index: 999;
+    transition: 0.3s ease-in;
+    background-color: var(--antiFlashWhite);
+    color: var(--forrestGreen);
+    color: var(--borderColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.addnewpost:hover{
+    opacity: 1;
+    transition: 0.3s ease-in;
+}
+
+.closeformbutton{
+    position: fixed !important;
+    bottom: 725px;
+    right: 235px;
+    z-index: 99999;
+}

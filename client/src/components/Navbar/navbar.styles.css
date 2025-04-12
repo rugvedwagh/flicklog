@@ -10,7 +10,7 @@
     align-items: center !important;
     height: 4em;
     padding: 0 0.2em;
-    z-index: 1000;
+    z-index: 997;
     transition: transform 0.4s ease-in-out;
     border-bottom: 1px solid var(--borderColor);
 }
@@ -64,8 +64,8 @@
 }
 
 .profileAvatar {
-    width: 45px;
-    height: 45px;
+    width: 40px !important;
+    height: 40px !important;
     background-color: var(--forrestGreen) !important;
     color: var(--antiFlashWhite) !important;
     cursor: pointer;
@@ -74,7 +74,7 @@
 }
 
 .profileAvatar.dark {
-    background-color: var(--subtextColor) !important;
+    background-color: var(--antiFlashWhite) !important;
     color: var(--black) !important;
 }
 
@@ -225,7 +225,7 @@
 
 .toggleButton {
     position: fixed;
-    z-index: 1000;
+    z-index: 998;
     left: 95vw;
     top: 10vh;
     background-color: transparent;

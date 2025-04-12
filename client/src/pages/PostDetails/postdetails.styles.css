@@ -321,3 +321,11 @@
     justify-content: space-between;
     width: 100%;
 }
+
+#goback{    
+    position: relative;
+    left: -47%;
+    color: var(--antiFlashWhite);
+    background-color: transparent;
+    cursor: pointer;
+}
