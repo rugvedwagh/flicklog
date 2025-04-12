@@ -53,7 +53,7 @@ const SignUp = () => {
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
-        <Container component="main" maxWidth="md" style={{ marginTop: '5%', paddingTop: '7rem' }}>
+        <Container component="main" maxWidth="md" style={{ marginTop: '1%', paddingTop: '7rem' }}>
             <Paper className={`paper-container ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Grid container spacing={0} alignItems="center">
 
