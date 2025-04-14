@@ -14,6 +14,12 @@ const verifyToken = async (req, res, next) => {
         }
 
         const accessToken = authorizationHeader.split(" ")[1];
+        
+        if (!accessToken) {
+            const error = new Error("Access token is missing in Authorization header");
+            error.statusCode = 401;
+            return next(error);
+        }
         const isCustomAuth = accessToken.length < 500;
 
         let decodedData;

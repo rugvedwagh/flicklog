@@ -1,9 +1,9 @@
-import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
-import { Logout, refreshToken } from './redux/actions/auth.actions';
+import { Logout } from './redux/actions/auth.actions';
 import { getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
@@ -11,12 +11,11 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from './context/themeContext';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Container } from '@mui/material';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
 import './App.css';
-import { useForm } from './context/formContext';
 
 const App = () => {
 
@@ -26,12 +25,8 @@ const App = () => {
     const location = useLocation();
     const darkMode = useTheme();
 
-    const accessToken = useSelector(state => state.authReducer.accessToken);
-
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState('');
-
-    const { formopen, setformopen } = useForm();
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
@@ -58,19 +53,6 @@ const App = () => {
 
         checkRefreshToken();
     }, [refreshTokenFromCookies]);
-
-    useEffect(() => {
-        const checkAccessToken = async () => {
-            if (!accessToken || isAccessTokenExpired(accessToken)) {
-                await dispatch(refreshToken());
-            }
-        };
-
-        checkAccessToken();
-
-        const interval = setInterval(checkAccessToken, 10 * 60 * 1000);
-        return () => clearInterval(interval);
-    }, [accessToken]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);

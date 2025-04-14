@@ -13,11 +13,11 @@ const Footer = () => {
                     <div className="footer-brand">
                         <h2 className="brand-name">Flicklog</h2>
                         <div className="social-icons">
-                            <a href="#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" className="social-icon"><i className="fa-brands fa-youtube"></i></a>
-                            <a href="#" className="social-icon"><i className="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#" className="social-icon"><i className="fa-brands fa-instagram"></i></a>
-                            <a href="#" className="social-icon"><i className="fa-brands fa-github"></i></a>
+                            <a href="/#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
+                            <a href="/#" className="social-icon"><i className="fa-brands fa-youtube"></i></a>
+                            <a href="/#" className="social-icon"><i className="fa-brands fa-linkedin-in"></i></a>
+                            <a href="/#" className="social-icon"><i className="fa-brands fa-instagram"></i></a>
+                            <a href="/#" className="social-icon"><i className="fa-brands fa-github"></i></a>
                         </div>
                         <ul className="legal-links">
                             <li><a href="/#">Trust</a></li>
