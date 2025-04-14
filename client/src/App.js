@@ -32,8 +32,8 @@ const App = () => {
     const [show, setShow] = useState(true)
 
     const { errorMessage } = useSelector((state) => state.authReducer)
-    
-    const isRelevantErrorAlertCondition = errorMessage && show && location.pathname !== '/auth' && !errorMessage.includes("Token");
+
+    const isRelevantErrorAlertCondition = errorMessage && show && location.pathname !== '/auth' && !errorMessage?.includes("Token");
 
     useEffect(() => {
         if (!errorMessage) return;
@@ -42,7 +42,7 @@ const App = () => {
 
         const timer = setTimeout(() => {
             setShow(false);
-        }, 3000);
+        }, 5000);
 
         return () => clearTimeout(timer);
     }, [errorMessage, errorMessage?.length]);
@@ -82,7 +82,7 @@ const App = () => {
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
             {isRelevantErrorAlertCondition && (
-                <Alert variant="filled" severity="error">
+                <Alert variant="filled" severity="error" style={{ textAlign: 'center' }}>
                     {errorMessage}
                 </Alert>
             )}
