@@ -152,7 +152,7 @@ const Navbar = () => {
                         <MenuItem onClick={openForm}><AddCircleOutlineOutlinedIcon />&nbsp; New post</MenuItem>
                         <MenuItem onClick={handleLikedPosts}><ThumbUpAltOutlinedIcon />&nbsp; Liked posts</MenuItem>
                         <MenuItem onClick={handleUserPosts}><EditNoteOutlinedIcon />&nbsp; My posts</MenuItem>
-                        <MenuItem><SettingsOutlinedIcon />&nbsp; Settings</MenuItem>
+                        <MenuItem onClick={() => { navigate('/user/i') }}><SettingsOutlinedIcon />&nbsp; Settings</MenuItem>
                         <MenuItem onClick={toggleView}>
                             {darkMode ? <><LightModeIcon />&nbsp; Light Mode</> : <><DarkModeIcon />&nbsp; Dark Mode</>}
                         </MenuItem>

@@ -13,9 +13,11 @@ import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import { useDispatch } from 'react-redux';
 import { Container } from '@mui/material';
+import { Alert } from '@mui/material';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
 import './App.css';
+import { useSelector } from 'react-redux';
 
 const App = () => {
 
@@ -25,8 +27,25 @@ const App = () => {
     const location = useLocation();
     const darkMode = useTheme();
 
-    const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState('');
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    const [show, setShow] = useState(true)
+
+    const { errorMessage } = useSelector((state) => state.authReducer)
+    
+    const isRelevantErrorAlertCondition = errorMessage && show && location.pathname !== '/auth' && !errorMessage.includes("Token");
+
+    useEffect(() => {
+        if (!errorMessage) return;
+
+        setShow(true);
+
+        const timer = setTimeout(() => {
+            setShow(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [errorMessage, errorMessage?.length]);
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
@@ -62,6 +81,11 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
+            {isRelevantErrorAlertCondition && (
+                <Alert variant="filled" severity="error">
+                    {errorMessage}
+                </Alert>
+            )}
             <Container maxWidth="lg">
 
                 <KeyboardArrowUpIcon

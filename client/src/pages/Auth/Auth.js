@@ -48,7 +48,7 @@ const SignUp = () => {
         isSignup ? dispatch(registerUser(form, navigate)) : dispatch(logIn(form, navigate));
     };
 
-    const isRelevantAuthError = errorMessage?.length && !errorMessage.includes("Refresh");
+    const isRelevantAuthError = errorMessage?.length && !errorMessage.includes("Token");
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 

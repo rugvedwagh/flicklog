@@ -130,3 +130,12 @@ body {
     right: 235px;
     z-index: 99999;
 }
+
+.MuiAlert-filledError {
+    position: fixed;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    animation: prakat 0.4s ease-in-out;
+}
