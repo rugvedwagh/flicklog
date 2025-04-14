@@ -87,12 +87,12 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar/>
+                <Navbar />
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
-                    <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
+                    <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
                     <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
