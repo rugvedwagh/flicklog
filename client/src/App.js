@@ -16,8 +16,8 @@ import { Container } from '@mui/material';
 import { Alert } from '@mui/material';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
-import './App.css';
 import { useSelector } from 'react-redux';
+import './App.css';
 
 const App = () => {
 

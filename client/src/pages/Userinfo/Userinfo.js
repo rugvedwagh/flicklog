@@ -1,4 +1,4 @@
-import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Alert } from '@mui/material';
+import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { fetchUserData, updateUserDetails } from '../../redux/actions/user.actions';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import React, { useState, useEffect, useCallback } from 'react';
