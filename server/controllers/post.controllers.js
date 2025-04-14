@@ -111,7 +111,7 @@ const fetchPostsBySearch = async (req, res) => {
     });
 
     if (!posts.length) {
-        const error = new Error("No posts found");
+        const error = new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`);
         error.statusCode = 404;
         throw error;
     }
