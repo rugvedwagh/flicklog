@@ -20,9 +20,9 @@ const Userinfo = () => {
     const profile = getProfile();
     const userId = profile._id;
 
+    const { clientData, isLoading } = useSelector((state) => state.userReducer);
     const accessToken = useSelector(state => state.authReducer.accessToken);
     const { posts } = useSelector((state) => state.postsReducer);
-    const { clientData, isLoading } = useSelector((state) => state.userReducer);
 
     const [showBm, setShowBm] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
