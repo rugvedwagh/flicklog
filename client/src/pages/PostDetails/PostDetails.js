@@ -1,4 +1,5 @@
 import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
 import React, { useEffect, useState, useCallback } from 'react';
 import { deletePost } from '../../redux/actions/post.actions';
@@ -71,6 +72,9 @@ const PostDetails = () => {
     return (
         <div>
             <div className={`main ${darkMode ? 'dark' : ''}`}>
+                <ArrowBackOutlinedIcon id='goback' onClick={() => {
+                    navigate(-1)
+                }} />
                 <section className={`second ${isFullScreen ? 'fullscreen' : ''}`}>
                     <img
                         className={`imag ${isFullScreen ? 'fullscreen' : ''}`}

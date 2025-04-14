@@ -31,7 +31,7 @@ const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState('');
 
-    const { formopen, setformopen} = useForm();
+    const { formopen, setformopen } = useForm();
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
@@ -81,19 +81,19 @@ const App = () => {
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
             <Container maxWidth="lg">
-                
+
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
                     onClick={scrollToTop}
                 />
 
-                <Navbar setformopen={setformopen}/>
-                                                   
-                <Routes>                           
+                <Navbar/>
+
+                <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
-                    <Route path="/posts/search" element={<Home setformOpen={setformopen} formOpen={formopen} />} />
+                    <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails refreshToken={refreshToken} />} />
-                    <Route path="/posts" element={<Home  setformOpen={setformopen} formOpen={formopen} />} />
+                    <Route path="/posts" element={<Home />} />
                     <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />

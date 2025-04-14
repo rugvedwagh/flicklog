@@ -51,7 +51,6 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
     };
 
     const toggleForm = () => {
-        console.log('in the clsoe form')
         setformopen(false);
     }
 

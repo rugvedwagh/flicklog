@@ -287,3 +287,12 @@
     border-radius: 3px;
     padding-top: 1rem;
 }
+
+#backbutton{    
+    color: var(--white);
+    cursor: pointer;
+    position: relative;
+    top: 0%;
+    left: 2%;
+    background-color: transparent;
+}

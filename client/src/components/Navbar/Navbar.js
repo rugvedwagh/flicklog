@@ -53,6 +53,7 @@ const Navbar = () => {
         dispatch(Logout(navigate));
         closeMenu();
         setOpenDialog(false);
+        navigate('/auth')
     }, [dispatch, navigate]);
 
     useEffect(() => {
@@ -98,8 +99,8 @@ const Navbar = () => {
     };
 
     const openForm = () => {
-        setformopen(true)
-        console.log(formopen);
+        setformopen(true);
+        closeMenu();
     }
 
     const navbarClasses = `navbar ${darkMode ? 'dark' : ''} ${isVisible ? 'visible' : 'hidden'}`;
@@ -107,7 +108,7 @@ const Navbar = () => {
     return (
         <div className={navbarClasses}>
             <div className={`brandContainer ${darkMode ? 'dark' : ''}`} onClick={handleLogoClick}>
-                flicklog
+                Flicklog
             </div>
 
             {userId ? (

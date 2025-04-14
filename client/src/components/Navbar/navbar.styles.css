@@ -64,8 +64,8 @@
 }
 
 .profileAvatar {
-    width: 45px;
-    height: 45px;
+    width: 40px !important;
+    height: 40px !important;
     background-color: var(--forrestGreen) !important;
     color: var(--antiFlashWhite) !important;
     cursor: pointer;
@@ -74,7 +74,7 @@
 }
 
 .profileAvatar.dark {
-    background-color: var(--subtextColor) !important;
+    background-color: var(--antiFlashWhite) !important;
     color: var(--black) !important;
 }
 

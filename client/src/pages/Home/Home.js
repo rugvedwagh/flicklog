@@ -15,7 +15,6 @@ const Home = () => {
 
     const [currentId, setCurrentId] = useState(0);
     const {formopen, setformopen} = useForm();
-    console.log(formopen)
 
     const profile = getProfile();
 
