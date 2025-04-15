@@ -2,7 +2,7 @@ import { Container, Grid, AppBar } from '@mui/material';
 import { useTheme } from '../../context/themeContext';
 import { useForm } from '../../context/formContext';
 import React, { useState, useEffect } from 'react';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 import Posts from '../../components/Posts/Posts';
 import { useLocation } from 'react-router-dom';
 import Form from '../../components/Form/Form';
@@ -16,7 +16,7 @@ const Home = () => {
     const [currentId, setCurrentId] = useState(0);
     const {formopen, setformopen} = useForm();
 
-    const profile = getProfile();
+    const profile = fetchUserProfile();
 
     useEffect(() => {
         window.scrollTo(0, 0);

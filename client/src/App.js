@@ -3,13 +3,16 @@ import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
-import { Logout } from './redux/actions/auth.actions';
+import { Logout, clearError } from './redux/actions/auth.actions';
 import { getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from './context/themeContext';
+import { fetchUserProfile } from './utils/storage';
 import Footer from './components/Footer/Footer';
+import { useRef } from 'react';
+import { Collapse } from '@mui/material';
 import Navbar from './components/Navbar/Navbar';
 import { useDispatch } from 'react-redux';
 import { Container } from '@mui/material';
@@ -24,16 +27,19 @@ const App = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const profile = fetchUserProfile();
     const location = useLocation();
     const darkMode = useTheme();
 
-    const [refreshTokenFromCookies, setRefreshTokenFromCookies] = useState('');
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [show, setShow] = useState(true)
+    const [showWelcome, setShowWelcome] = useState(false);
+    const [refreshToken, setRefreshToken] = useState('');
+    const [show, setShow] = useState(true);
+    const welcomeRef = useRef(false);
 
-    const { errorMessage } = useSelector((state) => state.authReducer)
+    let { errorMessage } = useSelector((state) => state.authReducer)
 
-    const isRelevantErrorAlertCondition = errorMessage && show && location.pathname !== '/auth' && !errorMessage?.includes("Token");
+    const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
     useEffect(() => {
         if (!errorMessage) return;
@@ -42,36 +48,34 @@ const App = () => {
 
         const timer = setTimeout(() => {
             setShow(false);
+            dispatch(clearError());
         }, 5000);
 
         return () => clearTimeout(timer);
-    }, [errorMessage, errorMessage?.length]);
+    }, [errorMessage]);
 
     useEffect(() => {
         const fetchRefreshToken = async () => {
             const rft = await getRefreshToken();
-            setRefreshTokenFromCookies(rft ?? null);
+            setRefreshToken(rft ?? null);
         };
 
         fetchRefreshToken();
     }, [location.pathname]);
 
     useEffect(() => {
-        if (refreshTokenFromCookies === '') return;
+        if (refreshToken === '') return;
 
-        if (refreshTokenFromCookies === null) {
+        if (refreshToken === null) {
             dispatch(Logout(navigate));
             return;
         }
 
-        const checkRefreshToken = async () => {
-            if (!refreshTokenFromCookies || isRefreshTokenExpired(refreshTokenFromCookies)) {
-                dispatch(Logout(navigate));
-            }
-        };
+        if (!refreshToken || isRefreshTokenExpired(refreshToken)) {
+            dispatch(Logout(navigate));
+        }
 
-        checkRefreshToken();
-    }, [refreshTokenFromCookies]);
+    }, [refreshToken]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -79,13 +83,34 @@ const App = () => {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    useEffect(() => {
+        const hasShownWelcome = sessionStorage.getItem('welcomeShown');
+        if (!hasShownWelcome && profile?.name) {
+            setShowWelcome(true);
+            sessionStorage.setItem('welcomeShown', 'true');
+            welcomeRef.current = true;
+
+            const timer = setTimeout(() => setShowWelcome(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [profile?.name]);
+
+
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
-            {isRelevantErrorAlertCondition && (
+            <Collapse in={isValidErrorAlertCondition}>
                 <Alert variant="filled" severity="error" style={{ textAlign: 'center' }}>
                     {errorMessage}
                 </Alert>
-            )}
+            </Collapse>
+            <Collapse in={showWelcome}>
+                <Alert variant="filled" icon={false} severity="success">
+                    Welcome back, <strong>
+                        {profile?.name?.charAt(0).toUpperCase() + profile?.name?.slice(1).toLowerCase()}
+                    </strong>
+                </Alert>
+            </Collapse>
+
             <Container maxWidth="lg">
 
                 <KeyboardArrowUpIcon
@@ -93,14 +118,14 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar />
+                <Navbar refreshToken={refreshToken} />
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={!refreshToken ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>

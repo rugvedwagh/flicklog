@@ -1,4 +1,4 @@
-import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } from '@mui/material';
+import { Button, Paper, Grid, Typography, Container, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn, registerUser } from '../../redux/actions/auth.actions';
@@ -23,11 +23,11 @@ const SignUp = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const [form, setForm] = useState(initialState);
-    const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isSignup, setIsSignup] = useState(false);
+    const [form, setForm] = useState(initialState);
 
-    const { errorMessage, isLoading } = useSelector((state) => state.authReducer);
+    const { isLoading } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -48,8 +48,6 @@ const SignUp = () => {
         isSignup ? dispatch(registerUser(form, navigate)) : dispatch(logIn(form, navigate));
     };
 
-    const isRelevantAuthError = errorMessage?.length && !errorMessage.includes("Token");
-
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
@@ -66,7 +64,6 @@ const SignUp = () => {
 
                             <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
-
                                     <LockOutlinedIcon />
 
                                     <Typography
@@ -76,14 +73,6 @@ const SignUp = () => {
                                     >
                                         {isSignup ? 'Sign up' : 'Log in'}
                                     </Typography>
-
-                                    {isRelevantAuthError ? (
-                                        <Alert severity="error" sx={{ margin: '10px 0' }}>
-                                            {errorMessage}
-                                        </Alert>
-                                    ) : (
-                                        null
-                                    )}
                                 </div>
 
                                 <Grid container spacing={2}>

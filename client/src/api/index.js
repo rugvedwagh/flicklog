@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { store } from '../redux/store';
 import { Logout, refreshToken } from '../redux/actions/auth.actions';
-import { getProfile } from '../utils/storage';
+import { fetchUserProfile } from '../utils/storage';
 import { getAccessToken } from '../utils/getTokens';
 
 const API = axios.create({
@@ -55,7 +55,7 @@ API.interceptors.response.use(
             try {
                 await store.dispatch(refreshToken());
 
-                const updatedProfile = await getProfile();
+                const updatedProfile = await fetchUserProfile();
                 const { accessToken } = updatedProfile;
 
                 originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;

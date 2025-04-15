@@ -7,7 +7,7 @@ import {
     START_LOADING,
     END_LOADING
 } from '../../constants/loading.constants';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 
 const initialState = {
     authData: null,
@@ -28,7 +28,7 @@ const userReducer = (state = initialState, action) => {
 
         case UPDATE_USER: {
             const updatedAuthData = action.payload;
-            const existingProfile = getProfile();
+            const existingProfile = fetchUserProfile();
 
             const updatedProfile = {
                 ...existingProfile,

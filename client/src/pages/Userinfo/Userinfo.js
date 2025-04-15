@@ -7,7 +7,7 @@ import { useTheme } from '../../context/themeContext';
 import formatDate from '../../utils/formatDate';
 import { useSelector, useDispatch } from 'react-redux';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import './userinfo.styles.css';
 
@@ -17,11 +17,11 @@ const Userinfo = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const profile = getProfile();
+    const profile = fetchUserProfile();
     const userId = profile._id;
 
     const { clientData, isLoading } = useSelector((state) => state.userReducer);
-    const accessToken = useSelector(state => state.authReducer.accessToken);
+    const { accessToken } = useSelector(state => state.authReducer);
     const { posts } = useSelector((state) => state.postsReducer);
 
     const [showBm, setShowBm] = useState(false);
@@ -74,8 +74,10 @@ const Userinfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserData(userId, navigate));
-    }, [accessToken]);
+        if (!clientData || clientData._id !== userId) {
+            dispatch(fetchUserData(userId, navigate));
+        }
+    }, [dispatch, userId, navigate, accessToken]);
 
     if (isLoading) {
         return <CircularProgress className={`loading ${darkMode ? 'dark' : ''}`} size="3rem" />;

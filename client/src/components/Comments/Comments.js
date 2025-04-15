@@ -1,7 +1,7 @@
 import { Typography, TextField, Button } from '@mui/material';
 import { addComment } from '../../redux/actions/post.actions';
 import { useTheme } from '../../context/themeContext';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import './comments.styles.css';
@@ -11,7 +11,7 @@ const CommentsSection = ({ post }) => {
     const dispatch = useDispatch();
     const darkMode = useTheme();
 
-    const profile = getProfile();
+    const profile = fetchUserProfile();
     const userId = profile._id
 
     const [comment, setComment] = useState('');

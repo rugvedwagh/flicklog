@@ -15,20 +15,19 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 import { useForm } from '../../context/formContext';
 import { useTheme } from '../../context/themeContext';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './navbar.styles.css';
 
-const Navbar = () => {
+const Navbar = ({ refreshToken }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const { authData } = useSelector((state) => state.authReducer);
-    const { formopen, setformopen } = useForm();
+    const { setformopen } = useForm();
 
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
@@ -39,17 +38,17 @@ const Navbar = () => {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            setProfile(getProfile());
+            setProfile(fetchUserProfile());
         };
-
         fetchProfile();
-    }, [authData]);
+    }, [refreshToken]);
 
     const toggleView = () => {
         dispatch(toggleTheme());
     };
 
     const handleLogout = useCallback(() => {
+        sessionStorage.removeItem('welcomeShown');
         dispatch(Logout(navigate));
         closeMenu();
         setOpenDialog(false);

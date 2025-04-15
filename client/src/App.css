@@ -25,7 +25,7 @@ body {
     overflow: visible;
 }
 
-.root-bg.dark .MuiContainer-maxWidthLg .scrollup{
+.root-bg.dark .MuiContainer-maxWidthLg .scrollup {
     background-color: var(--black);
     color: var(--antiFlashWhite);
     outline: 1px solid var(--borderColor);
@@ -48,7 +48,7 @@ body {
         transform: translateY(-100%);
         opacity: 0;
     }
-    
+
     100% {
         transform: translateY(0%);
         opacity: 1;
@@ -82,9 +82,12 @@ body {
 }
 
 @media (max-width: 600px) {
-    .root-bg, .root-bg.dark{
+
+    .root-bg,
+    .root-bg.dark {
         width: 100vw;
     }
+
     .scrollup.show {
         height: 1.75em;
         width: 1.75em;
@@ -116,7 +119,7 @@ body {
     }
 }
 
-.addnewpost{
+.addnewpost {
     position: fixed !important;
     bottom: 100px;
     right: 25px;
@@ -131,22 +134,24 @@ body {
     cursor: pointer;
 }
 
-.addnewpost:hover{
+.addnewpost:hover {
     opacity: 1;
     transition: 0.3s ease-in;
 }
 
-.closeformbutton{
+.closeformbutton {
     position: fixed !important;
     bottom: 725px;
     right: 235px;
     z-index: 99999;
 }
 
-.MuiAlert-filledError{
+.MuiAlert-filledError,
+.MuiAlert-filledSuccess {
     display: flex;
     flex-direction: row;
     justify-content: center;
     border-radius: 0 !important;
     animation: slideErrorDown 0.3s ease-in;
+    font-size: 18px !important;
 }

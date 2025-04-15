@@ -3,8 +3,8 @@ import { TextField, Button, Typography, Paper } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
-import React, { useState, useEffect } from 'react';
-import { getProfile } from '../../utils/storage';
+import React, { useState, useEffect, useRef } from 'react';
+import { fetchUserProfile } from '../../utils/storage';
 import 'react-quill/dist/quill.snow.css';
 import FileBase from 'react-file-base64';
 import ReactQuill from 'react-quill';
@@ -15,12 +15,14 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
     const dispatch = useDispatch();
     const darkMode = useTheme();
 
-    const profile = getProfile();
+    const profile = fetchUserProfile();
     const userId = profile._id;
 
-    const post = useSelector((state) => (currentId ?
-        state.postsReducer.posts.find((message) => message._id === currentId)
-        : null));
+    const post = useSelector((state) =>
+        currentId
+            ? state.postsReducer.posts.find((message) => message._id === currentId)
+            : null
+    );
 
     const [postData, setPostData] = useState({
         title: '',
@@ -28,6 +30,8 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
         tags: '',
         selectedfile: '',
     });
+
+    const titleInputRef = useRef(null); // 👈 Create ref
 
     useEffect(() => {
         if (post) {
@@ -39,6 +43,13 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
             });
         }
     }, [post]);
+
+    // 👇 Focus title input when form loads
+    useEffect(() => {
+        setTimeout(() => {
+            titleInputRef.current?.focus();
+        }, 100);
+    }, [currentId]);
 
     const clearForm = () => {
         setCurrentId(0);
@@ -52,17 +63,16 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
 
     const toggleForm = () => {
         setformopen(false);
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        (currentId === 0) ?
-            dispatch(createPost({ ...postData, name: profile.name }))
-            :
-            dispatch(updatePost(currentId, { ...postData, name: profile.name }));
+        currentId === 0
+            ? dispatch(createPost({ ...postData, name: profile.name }))
+            : dispatch(updatePost(currentId, { ...postData, name: profile.name }));
 
-        toggleForm();   
+        toggleForm();
         clearForm();
     };
 
@@ -77,9 +87,9 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
     }
 
     return (
-        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6} >
+        <Paper className={`paper ${darkMode ? 'dark' : ''}`} elevation={6}>
             <form autoComplete="off" noValidate className={`form ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
-                
+
                 <div className={`close ${darkMode ? 'dark' : ''}`} onClick={toggleForm}>
                     <CloseOutlinedIcon color='black' />
                 </div>
@@ -93,6 +103,7 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
                     variant='outlined'
                     label="Title"
                     fullWidth
+                    inputRef={titleInputRef} // 👈 Attach ref here
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
                     style={{ marginBottom: '10px', fontSize: '18px' }}
@@ -107,19 +118,17 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
                         toolbar: [
                             [{ header: [1, 2, false] }],
                             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
                             ['link', 'image'],
                             ['clean'],
                         ],
                     }}
-
                     formats={[
                         'header',
                         'bold', 'italic', 'underline', 'strike', 'blockquote',
                         'list', 'bullet', 'indent',
                         'link', 'image',
                     ]}
-
                     placeholder='Description'
                 />
 

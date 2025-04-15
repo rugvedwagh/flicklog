@@ -9,7 +9,7 @@ import { CircularProgress, Divider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/themeContext';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
 import './postdetails.styles.css';
 import moment from 'moment';
 
@@ -20,7 +20,7 @@ const PostDetails = () => {
     const navigate = useNavigate();
 
     const darkMode = useTheme();
-    const profile = getProfile();
+    const profile = fetchUserProfile();
     const userId = profile?._id;
 
     const [isFullScreen, setIsFullScreen] = useState(false);

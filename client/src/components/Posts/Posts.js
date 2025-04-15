@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useId } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Grid, CircularProgress, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts } from '../../redux/actions/post.actions.js';
 import { fetchUserData } from '../../redux/actions/user.actions.js'
-import { getProfile } from '../../utils/storage.js';
+import { fetchUserProfile } from '../../utils/storage.js';
 import { useTheme } from '../../context/themeContext.js';
 import PostCard from '../PostCard/PostCard.js'
 import './posts.styles.css';
@@ -14,7 +14,7 @@ const Posts = ({ setCurrentId }) => {
     const dispatch = useDispatch();
     const darkMode = useTheme()
 
-    const profile = getProfile();
+    const profile = fetchUserProfile();
     const userId = profile?._id;
 
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.postsReducer);

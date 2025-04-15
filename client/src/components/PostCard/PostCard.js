@@ -1,26 +1,27 @@
 import { Card, CardActions, CardMedia, Button, Typography, Tooltip } from '@mui/material';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import React, { useState, useEffect, useMemo } from 'react';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
+import { useDispatch, useSelector } from 'react-redux';
 import { likePost } from '../../redux/actions/post.actions';
 import { bookmarkPost } from '../../redux/actions/post.actions';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useDispatch, useSelector } from 'react-redux';
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { getProfile } from '../../utils/storage';
+import { fetchUserProfile } from '../../utils/storage';
+import { useForm } from '../../context/formContext';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg'
 import Likes from './Likes/Likes';
-import moment from 'moment';
 import './postcard.styles.css';
-import { useForm } from '../../context/formContext';
+import moment from 'moment';
+
 
 const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let profile = getProfile();
+    let profile = fetchUserProfile();
     const userId = profile?._id;
 
     const clientData = useSelector((state) => state.authReducer.clientData);
@@ -28,7 +29,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
 
-    const { formopen, setformopen } = useForm();
+    const { setformopen } = useForm();
 
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
@@ -70,20 +71,6 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                     {moment(post.createdAt).fromNow()}
                 </Typography>
             </div>
-
-            {userId === post?.creator && (
-                <div className="overlay2">
-                    <Tooltip title="Edit" arrow placement="top">
-                        <Button
-                            style={{ color: 'white', marginRight: '-20px' }}
-                            size="small"
-                            onClick={() => {setCurrentId(post._id);setformopen(true)}}
-                        >
-                            <MoreHorizIcon fontSize="medium" />
-                        </Button>
-                    </Tooltip>
-                </div>
-            )}
 
             <section onClick={openPost}>
                 <Typography
@@ -135,6 +122,17 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                             ) : (
                                 <BookmarkBorderOutlinedIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
                             )}
+                        </Button>
+                    </Tooltip>
+                )}
+
+                {userId === post?.creator && (
+                    <Tooltip title="Edit" arrow placement="top">
+                        <Button
+                            size="small"
+                            onClick={() => { setCurrentId(post._id); setformopen(true) }}
+                        >
+                            <EditIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize='small' />
                         </Button>
                     </Tooltip>
                 )}

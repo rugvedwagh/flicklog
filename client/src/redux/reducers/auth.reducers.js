@@ -2,7 +2,8 @@ import {
     AUTH,
     LOGOUT,
     ERROR,
-    REFRESH_TOKEN
+    REFRESH_TOKEN,
+    CLEAR_ERROR
 } from '../../constants/auth.constants';
 import {
     START_LOADING,
@@ -33,6 +34,7 @@ const authReducer = (state = initialState, action) => {
         case REFRESH_TOKEN:
             return {
                 ...state,
+                authData: 'proxyAuthData',
                 accessToken: action?.payload,
             };
 
@@ -44,6 +46,13 @@ const authReducer = (state = initialState, action) => {
                 authData: null,
                 accessToken: null,
                 clientData: null,
+                errorMessage: ''
+            };
+
+        case CLEAR_ERROR:
+            console.log('here');
+            return {
+                ...state,
                 errorMessage: ''
             };
 

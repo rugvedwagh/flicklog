@@ -69,9 +69,14 @@ const refreshToken = () => async (dispatch) => {
     }
 };
 
+const clearError = () => ({
+    type: 'CLEAR_ERROR'
+});
+
 export {
     logIn,
     registerUser,
     Logout,
+    clearError,
     refreshToken,
 }

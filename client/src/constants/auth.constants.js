@@ -4,6 +4,7 @@ const AUTH = 'AUTH'
 const ERROR = 'ERROR'
 const UPDATE_USER = 'UPDATE_USER'
 const REFRESH_TOKEN = 'REFRESH_TOKEN'
+const CLEAR_ERROR = 'CLEAR_ERROR'
 
 export {
     USER_INFO,
@@ -11,5 +12,6 @@ export {
     AUTH,
     ERROR,
     REFRESH_TOKEN,
+    CLEAR_ERROR,
     UPDATE_USER
 }

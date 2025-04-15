@@ -1,4 +1,4 @@
-const getProfile = () => {
+const fetchUserProfile = () => {
     try {
         const profile = JSON.parse(localStorage.getItem('profile')) || {};
         return profile;
@@ -9,5 +9,5 @@ const getProfile = () => {
 }
 
 export {
-    getProfile
+    fetchUserProfile
 }
