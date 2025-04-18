@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
+import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
+import { refreshToken } from './redux/actions/auth.actions';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
@@ -33,11 +34,12 @@ const App = () => {
 
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
-    const [refreshToken, setRefreshToken] = useState('');
+    const [refreshTokenFromCookies, setrefreshTokenFromCookies] = useState('');
     const [show, setShow] = useState(true);
     const welcomeRef = useRef(false);
 
     let { errorMessage } = useSelector((state) => state.authReducer)
+    const accessToken = useSelector(state => state.authReducer.accessToken);
 
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
@@ -55,27 +57,40 @@ const App = () => {
     }, [errorMessage]);
 
     useEffect(() => {
-        const fetchRefreshToken = async () => {
+        const fetchrefreshTokenFromCookies = async () => {
             const rft = await getRefreshToken();
-            setRefreshToken(rft ?? null);
+            setrefreshTokenFromCookies(rft ?? null);
         };
 
-        fetchRefreshToken();
+        fetchrefreshTokenFromCookies();
     }, [location.pathname]);
 
     useEffect(() => {
-        if (refreshToken === '') return;
+        if (refreshTokenFromCookies === '') return;
 
-        if (refreshToken === null) {
+        if (refreshTokenFromCookies === null) {
             dispatch(Logout(navigate));
             return;
         }
 
-        if (!refreshToken || isRefreshTokenExpired(refreshToken)) {
+        if (!refreshTokenFromCookies || isRefreshTokenExpired(refreshTokenFromCookies)) {
             dispatch(Logout(navigate));
         }
 
-    }, [refreshToken]);
+    }, [refreshTokenFromCookies]);
+
+    useEffect(() => {
+        const checkAccessToken = async () => {
+            if (!accessToken || isAccessTokenExpired(accessToken)) {
+                await dispatch(refreshToken());
+            }
+        };
+
+        checkAccessToken();
+
+        const interval = setInterval(checkAccessToken, 10 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, [accessToken]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -94,7 +109,6 @@ const App = () => {
             return () => clearTimeout(timer);
         }
     }, [profile?.name]);
-
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
@@ -118,14 +132,14 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar refreshToken={refreshToken} />
+                <Navbar refreshTokenFromCookies={refreshTokenFromCookies} />
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!refreshToken ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
