@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 import './navbar.styles.css';
 import { useSelector } from 'react-redux';
 
-const Navbar = ({ refreshToken }) => {
+const Navbar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

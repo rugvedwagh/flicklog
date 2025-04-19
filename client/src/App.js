@@ -31,7 +31,7 @@ const App = () => {
     const location = useLocation();
     const darkMode = useTheme();
 
-    const [refreshTokenFromCookies, setrefreshTokenFromCookies] = useState('');
+    const [refreshToken, setrefreshToken] = useState('');
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [show, setShow] = useState(true);
@@ -56,27 +56,27 @@ const App = () => {
     }, [errorMessage]);
 
     useEffect(() => {
-        const fetchrefreshTokenFromCookies = async () => {
+        const fetchrefreshToken = async () => {
             const rft = await getRefreshToken();
-            setrefreshTokenFromCookies(rft ?? null);
+            setrefreshToken(rft ?? null);
         };
 
-        fetchrefreshTokenFromCookies();
+        fetchrefreshToken();
     }, [location.pathname]);
 
     useEffect(() => {
-        if (refreshTokenFromCookies === '') return;
+        if (refreshToken === '') return;
 
-        if (refreshTokenFromCookies === null) {
+        if (refreshToken === null) {
             dispatch(Logout(navigate));
             return;
         }
 
-        if (!refreshTokenFromCookies || isRefreshTokenExpired(refreshTokenFromCookies)) {
+        if (!refreshToken || isRefreshTokenExpired(refreshToken)) {
             dispatch(Logout(navigate));
         }
 
-    }, [refreshTokenFromCookies]);
+    }, [refreshToken]);
 
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
@@ -119,14 +119,14 @@ const App = () => {
                     onClick={scrollToTop}
                 />
 
-                <Navbar refreshTokenFromCookies={refreshTokenFromCookies} />
+                <Navbar />
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!refreshTokenFromCookies ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/auth" element={!refreshToken ? <Auth /> : <Navigate to="/posts" />} />
                     <Route path="user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
