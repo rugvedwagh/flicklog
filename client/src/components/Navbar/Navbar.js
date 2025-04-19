@@ -13,13 +13,14 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import React, { useState, useEffect, useCallback } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { handleNavbarScroll } from '../../utils/scroll';
-import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserProfile } from '../../utils/storage';
+import Search from '../Search/Search';
 import { useForm } from '../../context/formContext';
 import { useTheme } from '../../context/themeContext';
+import { fetchUserProfile } from '../../utils/storage';
 import { useDispatch } from 'react-redux';
 import './navbar.styles.css';
+import { useSelector } from 'react-redux';
 
 const Navbar = ({ refreshToken }) => {
 
@@ -32,16 +33,18 @@ const Navbar = ({ refreshToken }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [profile, setProfile] = useState();
+    const [profile, setProfile] = useState(null);
 
     const userId = profile?._id;
+
+    const { authData } = useSelector((state) => state.authReducer)
 
     useEffect(() => {
         const fetchProfile = async () => {
             setProfile(fetchUserProfile());
         };
         fetchProfile();
-    }, [refreshToken]);
+    }, [authData]);
 
     const toggleView = () => {
         dispatch(toggleTheme());

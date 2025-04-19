@@ -50,7 +50,6 @@ const authReducer = (state = initialState, action) => {
             };
 
         case CLEAR_ERROR:
-            console.log('here');
             return {
                 ...state,
                 errorMessage: ''
