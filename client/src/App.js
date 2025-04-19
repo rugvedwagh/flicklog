@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { isAccessTokenExpired, isRefreshTokenExpired } from './utils/checkTokenExpiry';
-import { refreshToken } from './redux/actions/auth.actions';
+import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
@@ -32,14 +31,14 @@ const App = () => {
     const location = useLocation();
     const darkMode = useTheme();
 
+    const [refreshTokenFromCookies, setrefreshTokenFromCookies] = useState('');
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
-    const [refreshTokenFromCookies, setrefreshTokenFromCookies] = useState('');
     const [show, setShow] = useState(true);
+
     const welcomeRef = useRef(false);
 
     let { errorMessage } = useSelector((state) => state.authReducer)
-    const accessToken = useSelector(state => state.authReducer.accessToken);
 
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
@@ -80,19 +79,6 @@ const App = () => {
     }, [refreshTokenFromCookies]);
 
     useEffect(() => {
-        const checkAccessToken = async () => {
-            if (!accessToken || isAccessTokenExpired(accessToken)) {
-                await dispatch(refreshToken());
-            }
-        };
-
-        checkAccessToken();
-
-        const interval = setInterval(checkAccessToken, 10 * 60 * 1000);
-        return () => clearInterval(interval);
-    }, [accessToken]);
-
-    useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
@@ -100,6 +86,7 @@ const App = () => {
 
     useEffect(() => {
         const hasShownWelcome = sessionStorage.getItem('welcomeShown');
+
         if (!hasShownWelcome && profile?.name) {
             setShowWelcome(true);
             sessionStorage.setItem('welcomeShown', 'true');
