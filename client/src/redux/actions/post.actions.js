@@ -26,7 +26,7 @@ import {
     START_LOADING,
     END_LOADING
 } from '../../constants/loading.constants';
-import { ERROR } from '../../constants/auth.constants';
+import { ERROR, SUCCESS_MESSAGE } from '../../constants/auth.constants';
 
 const fetchPost = (id) => async (dispatch) => {
     try {
@@ -102,6 +102,7 @@ const fetchPostsBySearch = (searchQuery) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data: { data } } = await fetchPostsBySearchApi(searchQuery);
         dispatch({ type: FETCH_BY_SEARCH, payload: data });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Found some posts matching your query" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -115,6 +116,7 @@ const createPost = (post) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data } = await createPostApi(post);
         dispatch({ type: CREATE, payload: data });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Post created successfully" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -128,6 +130,7 @@ const updatePost = (id, post) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data } = await updatePostApi(id, post);
         dispatch({ type: UPDATE, payload: data });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Post updated successfully" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -141,6 +144,7 @@ const deletePost = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         await deletePostApi(id);
         dispatch({ type: DELETE, payload: id });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Post deleted successfully" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -183,6 +187,7 @@ const bookmarkPost = (postId, userId) => async (dispatch) => {
 const likedPosts = (data) => async (dispatch) => {
     try {
         dispatch({ type: LIKED_POSTS, payload: data });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Showing posts liked by you" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -192,6 +197,7 @@ const likedPosts = (data) => async (dispatch) => {
 const userPosts = (data) => async (dispatch) => {
     try {
         dispatch({ type: USER_POSTS, payload: data });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Showing your posts" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);

@@ -3,7 +3,7 @@ import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PostDetails from '../src/pages/PostDetails/PostDetails';
 import { handleScroll, scrollToTop } from './utils/scroll';
-import { Logout, clearError } from './redux/actions/auth.actions';
+import { Logout, clearError, clearSuccess } from './redux/actions/auth.actions';
 import { getRefreshToken } from './utils/getTokens';
 import NotFound from '../src/pages/Notfound/NotFound';
 import Userinfo from '../src/pages/Userinfo/Userinfo';
@@ -35,10 +35,13 @@ const App = () => {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [show, setShow] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const welcomeRef = useRef(false);
 
     let { errorMessage } = useSelector((state) => state.authReducer)
+    let { successMessage } = useSelector((state) => state.authReducer)
+    console.log(successMessage)
 
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
@@ -54,6 +57,19 @@ const App = () => {
 
         return () => clearTimeout(timer);
     }, [errorMessage]);
+
+    useEffect(() => {
+        if (!successMessage) return;
+
+        setShowSuccess(true);
+
+        const timer = setTimeout(() => {
+            setShowSuccess(false);
+            dispatch(clearSuccess());
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [successMessage]);
 
     useEffect(() => {
         const fetchrefreshToken = async () => {
@@ -96,9 +112,36 @@ const App = () => {
             return () => clearTimeout(timer);
         }
     }, [profile?.name]);
+    
+    useEffect(() => {
+        const hasShownWelcome = sessionStorage.getItem('welcomeShown');
+
+        if (!hasShownWelcome && profile?.name) {
+            setShowWelcome(true);
+            sessionStorage.setItem('welcomeShown', 'true');
+            welcomeRef.current = true;
+
+            const timer = setTimeout(() => setShowWelcome(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [profile?.name]);
+
+    useEffect(()=>{
+        if(successMessage){
+            setShowSuccess(true)
+
+            const timer = setTimeout(() => setShowSuccess(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    },[successMessage])
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
+            <Collapse in={showSuccess}>
+                <Alert variant="filled" severity="success" style={{ textAlign: 'center' }}>
+                    {successMessage}
+                </Alert>
+            </Collapse>
             <Collapse in={isValidErrorAlertCondition}>
                 <Alert variant="filled" severity="error" style={{ textAlign: 'center' }}>
                     {errorMessage}

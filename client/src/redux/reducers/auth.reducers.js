@@ -3,7 +3,9 @@ import {
     LOGOUT,
     ERROR,
     REFRESH_TOKEN,
-    CLEAR_ERROR
+    CLEAR_ERROR,
+    CLEAR_SUCCESS,
+    SUCCESS_MESSAGE
 } from '../../constants/auth.constants';
 import {
     START_LOADING,
@@ -15,6 +17,7 @@ const initialState = {
     accessToken: null,
     clientData: null,
     isLoading: null,
+    successMessage: null,
     errorMessage: null
 }
 
@@ -60,6 +63,18 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 errorMessage: action.payload
             };
+
+        case SUCCESS_MESSAGE:
+            return {
+                ...state,
+                successMessage: action.payload
+            }
+
+        case CLEAR_SUCCESS:
+            return {
+                ...state,
+                successMessage: ''
+            }
 
         case START_LOADING:
             return {

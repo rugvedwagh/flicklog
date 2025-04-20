@@ -1,8 +1,11 @@
 import {
     AUTH,
+    CLEAR_ERROR,
+    CLEAR_SUCCESS,
     ERROR,
     LOGOUT,
     REFRESH_TOKEN,
+    SUCCESS_MESSAGE,
 } from '../../constants/auth.constants';
 import {
     END_LOADING,
@@ -51,6 +54,7 @@ const Logout = () => async (dispatch) => {
         dispatch({ type: START_LOADING });
         await logoutApi();
         dispatch({ type: LOGOUT });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Logged out successfully" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -70,13 +74,18 @@ const refreshToken = () => async (dispatch) => {
 };
 
 const clearError = () => ({
-    type: 'CLEAR_ERROR'
+    type: CLEAR_ERROR
 });
+
+const clearSuccess = () => ({
+    type: CLEAR_SUCCESS
+})
 
 export {
     logIn,
     registerUser,
     Logout,
     clearError,
+    clearSuccess,
     refreshToken,
 }

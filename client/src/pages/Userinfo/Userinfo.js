@@ -1,4 +1,4 @@
-import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Collapse, Alert } from '@mui/material';
+import { CircularProgress, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { fetchUserData, updateUserDetails } from '../../redux/actions/user.actions';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -62,9 +62,6 @@ const Userinfo = () => {
     const saveChanges = useCallback(() => {
         dispatch(updateUserDetails(clientData._id, formData));
         setEditDialogOpen(false);
-        setShowWelcome(true)
-        const timer = setTimeout(() => setShowWelcome(false), 4000);
-            return () => clearTimeout(timer);
     }, [dispatch, clientData, formData]);
 
     const handleCancel = useCallback(() => {
@@ -93,11 +90,6 @@ const Userinfo = () => {
 
     return (
         <div className='outer-cont'>
-        <Collapse in={showWelcome}>
-            <Alert variant="filled" icon={false} severity="success">
-                Profile edited successfully
-            </Alert>
-        </Collapse>
             <ArrowBackOutlinedIcon id='backbutton' onClick={() => {
                 navigate(-1)
             }} />
