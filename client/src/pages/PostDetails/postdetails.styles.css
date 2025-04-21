@@ -130,7 +130,7 @@
     height: auto;
     position: absolute;
     top: 30%;
-    left: 50%;
+    left: 48.6%;
     transform: translate(-50%, -50%);
     color: var(--forrestGreen) !important;
     z-index: 1000;
@@ -143,9 +143,7 @@
 @media (max-width: 600px) {
     .loader {
         top: 40%;
-        left: 43%;
-        transform: translate(-50%, -50%);
-        margin-bottom: 15em !important;
+        left: 44.5%;
     }
 }
 

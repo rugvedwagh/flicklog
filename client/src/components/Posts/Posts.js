@@ -37,7 +37,7 @@ const Posts = ({ setCurrentId }) => {
         <div>
             {isLoading && currentPage === 1 ? (
                 <CircularProgress
-                    className={`loading ${darkMode ? 'dark' : ''}`}
+                    className={`loading-posts ${darkMode ? 'dark' : ''}`}
                     size="3rem"
                     color="grey"
                 />

@@ -122,10 +122,11 @@
 }
 
 .loading {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 48.6%;
+    top: 40%; 
     color: var(--borderColor) !important;
-    transition: translate(-50%, -50%);
-    left: 0% !important;
-    top: 80% !important; 
 }
 
 .loading.dark {
@@ -138,7 +139,8 @@
     }
 
     .loading {
-        margin-top: 50%;
+        left: 44.5%;
+        top: 40%;
     }
 }
 

@@ -1,7 +1,8 @@
-@keyframes prakat{
+@keyframes prakat {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -20,7 +21,7 @@
 }
 
 .infloader {
-    margin: 3rem 50%;
+    margin: 3rem 48.6%;
     color: var(--forrestGreen) !important;
 }
 
@@ -28,20 +29,22 @@
     color: var(--antiFlashWhite) !important;
 }
 
-.loading {
-    position: relative;
-    margin: 20% 50%;
+.loading-posts {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 40%;
+    left: 48.6%;
     color: var(--forrestGreen) !important;
 }
 
-.loading.dark {
+.loading-posts.dark {
     color: var(--antiFlashWhite) !important;
 }
 
 @media (max-width: 600px) {
-    .loading {
-        margin: 20% 45%;
-        margin-bottom: 400px;
+    .loading-posts {
+        left: 44.5%;
+        top: 40%;
     }
 
     .infloader {
@@ -62,6 +65,6 @@
     color: var(--subtextColor);
 }
 
-.infinite-scroll-component{
-    animation : prakat 0.7s ease-in;
+.infinite-scroll-component {
+    animation: prakat 0.7s ease-in;
 }
