@@ -124,7 +124,7 @@
 .loading {
     position: absolute;
     transform: translate(-50%, -50%);
-    left: 48.6%;
+    left: 49%;
     top: 40%; 
     color: var(--borderColor) !important;
 }

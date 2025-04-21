@@ -21,7 +21,7 @@
 }
 
 .infloader {
-    margin: 3rem 48.6%;
+    margin: 3rem 49%;
     color: var(--forrestGreen) !important;
 }
 
@@ -33,7 +33,7 @@
     position: absolute;
     transform: translate(-50%, -50%);
     top: 40%;
-    left: 48.6%;
+    left: 49%;
     color: var(--forrestGreen) !important;
 }
 

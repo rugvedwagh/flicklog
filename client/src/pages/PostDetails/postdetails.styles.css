@@ -130,7 +130,7 @@
     height: auto;
     position: absolute;
     top: 30%;
-    left: 48.6%;
+    left: 49%;
     transform: translate(-50%, -50%);
     color: var(--forrestGreen) !important;
     z-index: 1000;
