@@ -14,6 +14,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -36,7 +37,7 @@
 
 .main-cont.dark {
     background-color: var(--cardColour) !important;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .upper-div {
@@ -123,9 +124,8 @@
 
 .loading {
     position: absolute;
-    transform: translate(-50%, -50%);
-    left: 49%;
-    top: 40%; 
+    left: calc(50% - 15px);
+    top: 40%;
     color: var(--borderColor) !important;
 }
 
@@ -224,9 +224,11 @@
     cursor: pointer;
     max-width: 80%;
 }
-.bookmarked-post h4:hover{
+
+.bookmarked-post h4:hover {
     color: var(--forrestGreen);
 }
+
 .bookmarked-post.dark {
     background-color: var(--black);
     color: var(--antiFlashWhite);
@@ -270,19 +272,19 @@
     cursor: pointer;
 }
 
-.username.dark{
+.username.dark {
     color: var(--antiFlashWhite);
 }
 
-.username:hover{
+.username:hover {
     color: var(--forrestGreen);
 }
 
-#crossButton{
+#crossButton {
     cursor: pointer;
 }
 
-.outer-cont{
+.outer-cont {
     width: 100%;
     height: 150vh;
     outline: 1px solid var(--borderColor);
@@ -290,7 +292,7 @@
     padding-top: 1rem;
 }
 
-#backbutton{    
+#backbutton {
     color: var(--white);
     cursor: pointer;
     position: relative;

@@ -26,6 +26,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -40,7 +41,7 @@
     border-radius: 3px;
     background-color: var(--white);
     outline: 1px solid var(--borderColor);
-    animation : prakat 0.4s ease-in;
+    animation: prakat 0.4s ease-in;
 }
 
 .main.dark {
@@ -130,7 +131,7 @@
     height: auto;
     position: absolute;
     top: 30%;
-    left: 49%;
+    left: calc(50% - 15px);
     transform: translate(-50%, -50%);
     color: var(--forrestGreen) !important;
     z-index: 1000;
@@ -320,7 +321,7 @@
     width: 100%;
 }
 
-#goback{    
+#goback {
     position: relative;
     left: -47%;
     color: var(--antiFlashWhite);

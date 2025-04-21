@@ -33,7 +33,7 @@
     position: absolute;
     transform: translate(-50%, -50%);
     top: 40%;
-    left: 49%;
+    left: calc(50% - 15px);
     color: var(--forrestGreen) !important;
 }
 
