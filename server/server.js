@@ -6,8 +6,8 @@ import cookieParser from 'cookie-parser';
 
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/notFound.middleware.js';
-import dataBaseConnection from './config/Database.js';
-import { redis } from './config/redisClient.js';
+import connectDatabase from './config/Database.js';
+import { connectRedis } from './config/redisClient.js';
 
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
@@ -57,20 +57,5 @@ app.listen(PORT, () => {
     console.log(`\n✅ Server running on port: ${PORT}`);
 });
 
-// Redis connection check
-(async () => {
-    try {
-        await redis.ping();
-    } catch (err) {
-        console.error("⚠️ Redis connection failed:", err.message);
-    }
-})();
-
-// MongoDB connection check
-(async () => {
-    try {
-        await dataBaseConnection();
-    } catch (err) {
-        console.error("⚠️ MongoDB connection failed:", err.message);
-    }
-})();
+connectDatabase();
+connectRedis();

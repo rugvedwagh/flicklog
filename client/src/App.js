@@ -41,7 +41,6 @@ const App = () => {
 
     let { errorMessage } = useSelector((state) => state.authReducer)
     let { successMessage } = useSelector((state) => state.authReducer)
-    console.log(successMessage)
 
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 

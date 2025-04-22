@@ -1,5 +1,4 @@
-
-import { redis, redisAvailable } from "../config/redisClient.js";
+import { getRedis, redisAvailable } from "../config/redisClient.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
 
@@ -42,7 +41,7 @@ const fetchUserData = async (req, res) => {
     const cacheKey = `user:${id}`;
 
     if (redisAvailable) {
-        const cachedUser = await redis.get(cacheKey);
+        const cachedUser = await getRedis().get(cacheKey);
         if (cachedUser) {
             return res.status(200).json(JSON.parse(cachedUser));
         }
@@ -58,10 +57,10 @@ const fetchUserData = async (req, res) => {
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+        const cacheSuccess = await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
 
-        if(!cacheSuccess){
-            const error = new Error("Failed to cache paginated posts");
+        if (!cacheSuccess) {
+            const error = new Error("Failed to cache user data");
             error.statusCode = 500;
             throw error;
         }

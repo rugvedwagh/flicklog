@@ -1,4 +1,4 @@
-import { redis, redisAvailable } from "../config/redisClient.js";
+import { getRedis, redisAvailable } from "../config/redisClient.js";
 import PostMessage from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
 import mongoose from 'mongoose';
@@ -8,15 +8,13 @@ const fetchPost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
     }
 
     const cacheKey = `post:${id}`;
 
     if (redisAvailable) {
-        const cachedPost = await redis.get(cacheKey);
+        const cachedPost = await getRedis().get(cacheKey);
         if (cachedPost) {
             return res.status(200).json(JSON.parse(cachedPost));
         }
@@ -25,20 +23,12 @@ const fetchPost = async (req, res) => {
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
     }
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
-
-        if (!cacheSuccess) {
-            const error = new Error("Failed to cache post");
-            error.statusCode = 500;
-            throw error;
-        }
+        await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(post));
     }
 
     res.status(200).json(post);
@@ -50,7 +40,7 @@ const fetchPosts = async (req, res) => {
     const cacheKey = `posts:page:${pageNumber}`;
 
     if (redisAvailable) {
-        const cachedPosts = await redis.get(cacheKey);
+        const cachedPosts = await getRedis().get(cacheKey);
         if (cachedPosts) {
             return res.status(200).json(JSON.parse(cachedPosts));
         }
@@ -59,16 +49,13 @@ const fetchPosts = async (req, res) => {
     const LIMIT = 6;
     const startIndex = (pageNumber - 1) * LIMIT;
     const total = await PostMessage.countDocuments({});
-
     const posts = await PostMessage.find()
         .sort({ _id: -1 })
         .limit(LIMIT)
         .skip(startIndex);
 
     if (!posts.length) {
-        const error = new Error("No posts found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("No posts found"), { statusCode: 404 });
     }
 
     const response = {
@@ -79,13 +66,7 @@ const fetchPosts = async (req, res) => {
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
-
-        if (!cacheSuccess) {
-            const error = new Error("Failed to cache paginated posts");
-            error.statusCode = 500;
-            throw error;
-        }
+        await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
     }
 
     res.status(200).json(response);
@@ -97,7 +78,7 @@ const fetchPostsBySearch = async (req, res) => {
     const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
     if (redisAvailable) {
-        const cachedResults = await redis.get(cacheKey);
+        const cachedResults = await getRedis().get(cacheKey);
         if (cachedResults) {
             return res.status(200).json(JSON.parse(cachedResults));
         }
@@ -111,22 +92,17 @@ const fetchPostsBySearch = async (req, res) => {
     });
 
     if (!posts.length) {
-        const error = new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`);
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(
+            new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`),
+            { statusCode: 404 }
+        );
     }
 
     const response = { data: posts };
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
-
-        if (!cacheSuccess) {
-            const error = new Error("Failed to cache search results");
-            error.statusCode = 500;
-            throw error;
-        }
+        await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(response));
     }
 
     res.status(200).json(response);
@@ -149,13 +125,10 @@ const createPost = async (req, res) => {
 // Update a Post
 const updatePost = async (req, res) => {
     const { id: _id } = req.params;
-
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -165,19 +138,17 @@ const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
     }
 
     const cacheKey = `post:${_id}`;
 
-    try {
-        if (redisAvailable) {
-            await redis.del(cacheKey);
+    if (redisAvailable) {
+        try {
+            await getRedis().del(cacheKey);
+        } catch (err) {
+            console.error("⚠️ Redis delete error:", err.message);
         }
-    } catch (err) {
-        console.error("⚠️ Redis set error:", err.message);
     }
 
     res.status(200).json(updatedPost);
@@ -188,22 +159,16 @@ const deletePost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
     }
 
     const deletedPost = await PostMessage.findByIdAndDelete(id);
 
     if (!deletedPost) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
     }
 
-    res.status(200).json({
-        message: "Post deleted successfully!",
-    });
+    res.status(200).json({ message: "Post deleted successfully!" });
 };
 
 // Like or Unlike a Post
@@ -211,35 +176,27 @@ const likePost = async (req, res) => {
     const { id } = req.params;
 
     if (!req.userId) {
-        const error = new Error("Unauthenticated");
-        error.statusCode = 401;
-        throw error;
+        throw Object.assign(new Error("Unauthenticated"), { statusCode: 401 });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
     }
 
     const post = await PostMessage.findById(id);
-
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
     }
 
     const index = post.likes.findIndex((userId) => userId === String(req.userId));
 
     if (index === -1) {
-        post.likes.push(req.userId); // Like the post
+        post.likes.push(req.userId);
     } else {
         post.likes = post.likes.filter((userId) => userId !== String(req.userId));
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
-
     res.status(200).json(updatedPost);
 };
 
@@ -249,42 +206,32 @@ const commentPost = async (req, res) => {
     const { value } = req.body;
 
     if (!value || !value.trim()) {
-        const error = new Error("Comment cannot be empty");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Comment cannot be empty"), { statusCode: 400 });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
     }
 
     const post = await PostMessage.findById(id);
-
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
     }
 
     post.comments.push(value);
 
     const cacheKey = `post:${id}`;
-
-    try {
-        if (redisAvailable) {
-            await redis.del(cacheKey);
+    if (redisAvailable) {
+        try {
+            await getRedis().del(cacheKey);
+        } catch (err) {
+            console.error("⚠️ Redis delete error:", err.message);
         }
-    } catch (err) {
-        console.error("⚠️ Redis set error:", err.message);
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
-
     res.status(200).json(updatedPost);
 };
-
 
 // Bookmark Post Controller
 const bookmarkPost = async (req, res) => {
@@ -293,9 +240,7 @@ const bookmarkPost = async (req, res) => {
     const user = await UserModel.findById(userId);
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        throw Object.assign(new Error("User not found"), { statusCode: 404 });
     }
 
     const isAlreadyBookmarked = user.bookmarks.includes(postId);
@@ -308,9 +253,7 @@ const bookmarkPost = async (req, res) => {
 
     await user.save();
 
-    const updatedBookmarks = user.bookmarks;
-
-    res.status(200).json({ updatedBookmarks });
+    res.status(200).json({ updatedBookmarks: user.bookmarks });
 };
 
 export {
