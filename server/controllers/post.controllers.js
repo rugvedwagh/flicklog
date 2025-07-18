@@ -8,7 +8,9 @@ const fetchPost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const cacheKey = `post:${id}`;
@@ -23,7 +25,9 @@ const fetchPost = async (req, res) => {
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     if (redisAvailable) {
@@ -55,7 +59,9 @@ const fetchPosts = async (req, res) => {
         .skip(startIndex);
 
     if (!posts.length) {
-        throw Object.assign(new Error("No posts found"), { statusCode: 404 });
+        const error = new Error("No posts found");
+        error.statusCode = 404;
+        throw error;
     }
 
     const response = {
@@ -92,10 +98,9 @@ const fetchPostsBySearch = async (req, res) => {
     });
 
     if (!posts.length) {
-        throw Object.assign(
-            new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`),
-            { statusCode: 404 }
-        );
+        const error = new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`);
+        error.statusCode = 404;
+        throw error;
     }
 
     const response = { data: posts };
@@ -128,7 +133,9 @@ const updatePost = async (req, res) => {
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -138,7 +145,9 @@ const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     const cacheKey = `post:${_id}`;
@@ -159,13 +168,17 @@ const deletePost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const deletedPost = await PostMessage.findByIdAndDelete(id);
 
     if (!deletedPost) {
-        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     res.status(200).json({ message: "Post deleted successfully!" });
@@ -176,16 +189,22 @@ const likePost = async (req, res) => {
     const { id } = req.params;
 
     if (!req.userId) {
-        throw Object.assign(new Error("Unauthenticated"), { statusCode: 401 });
+        const error = new Error("Unauthenticated");
+        error.statusCode = 401;
+        throw error;
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     const index = post.likes.findIndex((userId) => userId === String(req.userId));
@@ -206,16 +225,22 @@ const commentPost = async (req, res) => {
     const { value } = req.body;
 
     if (!value || !value.trim()) {
-        throw Object.assign(new Error("Comment cannot be empty"), { statusCode: 400 });
+        const error = new Error("Comment cannot be empty");
+        error.statusCode = 400;
+        throw error;
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw Object.assign(new Error("Invalid post ID"), { statusCode: 400 });
+        const error = new Error("Invalid post ID");
+        error.statusCode = 400;
+        throw error;
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        throw Object.assign(new Error("Post not found"), { statusCode: 404 });
+        const error = new Error("Post not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     post.comments.push(value);
@@ -240,7 +265,9 @@ const bookmarkPost = async (req, res) => {
     const user = await UserModel.findById(userId);
 
     if (!user) {
-        throw Object.assign(new Error("User not found"), { statusCode: 404 });
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
     }
 
     const isAlreadyBookmarked = user.bookmarks.includes(postId);

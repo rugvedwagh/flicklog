@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import fs from 'fs';
+import https from 'https';
+import http from 'http';
 
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/notFound.middleware.js';
@@ -25,37 +28,47 @@ app.use(
     })
 );
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-
-// Optional logging middleware for debugging (can remove in prod)
-// app.use((req, res, next) => {
-//     console.log(`[${req.method}] ${req.originalUrl}`);
-//     next();
-// });
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 // Routes
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
 
-// Root route
-app.get('/', async (req, res) => {
-    res.send(`<h3>Server is running...</h3>`);
+// Root
+app.get('/', (req, res) => {
+    res.send(`<h3>✅ Server is running in ${process.env.NODE_ENV || 'development'} mode</h3>`);
 });
 
-// Not Found handler (if no route matched)
+// Not Found
 app.use(notFound);
 
-// Global Error handler (always last)
+// Error handler (must be last)
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log(`\n✅ Server running on port: ${PORT}`);
-});
-
+// Connect to DB & Redis
 connectDatabase();
 connectRedis();
+
+// Server logic
+const PORT = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV === 'development') {
+    // Local HTTPS setup
+    const sslOptions = {
+        key: fs.readFileSync('./certs/key.pem'),
+        cert: fs.readFileSync('./certs/cert.pem'),
+    };
+
+    https.createServer(sslOptions, app).listen(443, () => {
+        console.log(`🔐 HTTPS Dev Server running at https://localhost`);
+    });
+
+} else {
+    // Production (e.g., Render) - No HTTPS setup needed
+    app.listen(PORT, () => {
+        console.log(`🚀 Production server running on port ${PORT}`);
+    });
+}

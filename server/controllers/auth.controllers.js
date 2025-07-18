@@ -30,10 +30,10 @@ const logIn = async (req, res) => {
     await oldUser.save();
 
     res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        path: '/',
+        httpOnly: true,     // Prevents JavaScript on the frontend from accessing the cookie (helps mitigate XSS)
+        secure: true,       // Ensures the cookie is only sent over HTTPS (not sent over HTTP)
+        sameSite: "None",   // Allows cross-site requests (required when frontend and backend are on different domains)
+        path: '/',          // Cookie is valid for all routes on the domain
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 

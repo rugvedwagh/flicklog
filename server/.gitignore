@@ -8,6 +8,8 @@ node_modules/
 # Build output (if using TypeScript or build tools)
 dist/
 
+certs/
+
 # Logs
 logs
 *.log
