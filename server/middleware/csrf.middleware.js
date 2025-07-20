@@ -23,7 +23,7 @@ const setCsrfToken = (req, res, next) => {
         res.cookie('XSRF-TOKEN', token, {
             httpOnly: false,  // JS can access it
             secure: true,     // Only over HTTPS
-            sameSite: 'None',
+            sameSite: 'Lax',
             path: '/',
             maxAge: 7 * 24 * 60 * 60 * 1000 // optional
         });
