@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import https from 'https';
-import http from 'http';
 
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/notFound.middleware.js';
@@ -63,12 +62,12 @@ if (process.env.NODE_ENV === 'development') {
     };
 
     https.createServer(sslOptions, app).listen(443, () => {
-        console.log(`🔐 HTTPS Dev Server running at https://localhost`);
+        console.log(`\n✅ HTTPS Dev Server running at https://localhost`);
     });
 
 } else {
     // Production (e.g., Render) - No HTTPS setup needed
     app.listen(PORT, () => {
-        console.log(`🚀 Production server running on port ${PORT}`);
+        console.log(`\n🚀 Production server running on port ${PORT}`);
     });
 }

@@ -36,6 +36,7 @@ const App = () => {
     const [showWelcome, setShowWelcome] = useState(false);
     const [show, setShow] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [logoutDone, setLogoutDone] = useState(false);
 
     const welcomeRef = useRef(false);
 
