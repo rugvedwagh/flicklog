@@ -31,8 +31,6 @@ API.interceptors.request.use((req) => {
         req.headers['X-XSRF-TOKEN'] = xsrfToken;
     }
 
-    console.log('Request Headers:', req.headers);
-
     return req;
 }, (error) => {
     return Promise.reject(error);
