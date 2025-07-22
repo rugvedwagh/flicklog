@@ -20,21 +20,21 @@ API.interceptors.request.use((req) => {
     const state = store.getState();
 
     const accessToken = getAccessToken(state);
-
     if (accessToken) {
         req.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
-    const xsrfToken = Cookies.get('XSRF-TOKEN'); // always get the latest value
-    console.log('Xsrf token', xsrfToken);
+    const xsrfToken = sessionStorage.getItem('csrfToken'); 
+
     if (xsrfToken) {
-        req.headers['X-XSRF-TOKEN'] = xsrfToken;
+        req.headers['X-XSRF-TOKEN'] = xsrfToken; 
     }
 
     return req;
 }, (error) => {
     return Promise.reject(error);
 });
+
 
 /*
     Add a response interceptor for handling token refresh logic

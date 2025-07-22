@@ -16,10 +16,13 @@ const userSchema = mongoose.Schema({
     id: {
         type: String
     },
+    csrfToken: {
+        type: String 
+    },
     bookmarks: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Post" 
+            ref: "Post"
         }
     ]
 });

@@ -2,15 +2,14 @@ import { getRedis, redisAvailable } from "../config/redisClient.js";
 import PostMessage from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
 import mongoose from 'mongoose';
+import { createHttpError } from "../utils/httpError.js";
 
 // Fetch a post
 const fetchPost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Invalid post ID", 400);
     }
 
     const cacheKey = `post:${id}`;
@@ -25,9 +24,7 @@ const fetchPost = async (req, res) => {
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Post not found", 404);
     }
 
     if (redisAvailable) {
@@ -59,9 +56,7 @@ const fetchPosts = async (req, res) => {
         .skip(startIndex);
 
     if (!posts.length) {
-        const error = new Error("No posts found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("No posts found", 404);
     }
 
     const response = {
@@ -98,9 +93,10 @@ const fetchPostsBySearch = async (req, res) => {
     });
 
     if (!posts.length) {
-        const error = new Error(`No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`);
-        error.statusCode = 404;
-        throw error;
+        createHttpError(
+            `No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`,
+            404
+        );
     }
 
     const response = { data: posts };
@@ -133,9 +129,7 @@ const updatePost = async (req, res) => {
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Invalid post ID", 400);
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -145,9 +139,7 @@ const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Post not found", 404);
     }
 
     const cacheKey = `post:${_id}`;
@@ -168,17 +160,13 @@ const deletePost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Invalid post ID", 400);
     }
 
     const deletedPost = await PostMessage.findByIdAndDelete(id);
 
     if (!deletedPost) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Post not found", 404);
     }
 
     res.status(200).json({ message: "Post deleted successfully!" });
@@ -189,22 +177,16 @@ const likePost = async (req, res) => {
     const { id } = req.params;
 
     if (!req.userId) {
-        const error = new Error("Unauthenticated");
-        error.statusCode = 401;
-        throw error;
+        createHttpError("Unauthenticated", 401);
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Invalid post ID", 400);
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Post not found", 404);
     }
 
     const index = post.likes.findIndex((userId) => userId === String(req.userId));
@@ -225,22 +207,16 @@ const commentPost = async (req, res) => {
     const { value } = req.body;
 
     if (!value || !value.trim()) {
-        const error = new Error("Comment cannot be empty");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Comment cannot be empty", 400);
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid post ID");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Invalid post ID", 400);
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        const error = new Error("Post not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Post not found", 404);
     }
 
     post.comments.push(value);
@@ -265,9 +241,7 @@ const bookmarkPost = async (req, res) => {
     const user = await UserModel.findById(userId);
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("User not found", 404);
     }
 
     const isAlreadyBookmarked = user.bookmarks.includes(postId);

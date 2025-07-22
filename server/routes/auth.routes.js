@@ -1,24 +1,24 @@
+import express from 'express';
 import {
     logIn,
-    registerUser,
+    register,
     refreshToken,
     fetchRefreshToken,
     logoutUser
 } from "../controllers/auth.controllers.js";
-import express from 'express';
+
 import asyncHandler from "../middleware/async.middleware.js";
-import { verifyCsrfToken, setCsrfToken } from "../middleware/csrf.middleware.js";
+import verifyCsrfToken from "../middleware/csrf.middleware.js";
 
 const router = express.Router();
 
-router.post("/registerUser", asyncHandler(registerUser));
+// Public routes
+router.post("/register", asyncHandler(register));
+router.post("/login", asyncHandler(logIn));
+router.get("/refresh-token", asyncHandler(fetchRefreshToken));
 
-router.post("/signin", setCsrfToken, asyncHandler(logIn));
-
-router.get("/get-refresh-token", asyncHandler(fetchRefreshToken));
-
-router.post("/refresh-token", verifyCsrfToken, asyncHandler(refreshToken));
-
-router.post("/logout-user", verifyCsrfToken, asyncHandler(logoutUser));
+// Protected routes
+router.post("/refresh-token/secure", verifyCsrfToken, asyncHandler(refreshToken));
+router.post("/logout", verifyCsrfToken, asyncHandler(logoutUser));
 
 export default router;

@@ -1,42 +1,29 @@
-import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model.js';
 
-const verifyCsrfToken = (req, res, next) => {
+const verifyCsrfToken = async (req, res, next) => {
+    const csrfToken = req.headers['x-xsrf-token'];
+    const refreshToken = req.cookies?.refreshToken;
 
-    const csrfCookie = req.cookies['XSRF-TOKEN'];
-    const csrfHeader = req.headers['x-xsrf-token'];
-
-    console.log('CSRF Cookie:', csrfCookie);
-    console.log('CSRF Header:', csrfHeader);
-
-    if (!csrfCookie || !csrfHeader || csrfCookie !== csrfHeader) {
-        const err = new Error('Invalid CSRF token');
-        err.statusCode = 403;
-        return next(err);
+    if (!csrfToken || !refreshToken) {
+        return res.status(403).json({ message: "Missing CSRF or refresh token" });
     }
 
-    next();
-};
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const userId = decoded.id;
 
+        const user = await User.findById(userId);
 
-const setCsrfToken = (req, res, next) => {
-    const existingToken = req.cookies['XSRF-TOKEN'];
+        if (!user || user.csrfToken !== csrfToken) {
+            return res.status(403).json({ message: "Invalid CSRF token" });
+        }
 
-    if (!existingToken) {
-        const token = crypto.randomBytes(32).toString('hex');
-        res.cookie('XSRF-TOKEN', token, {
-            httpOnly: false,
-            secure: true,
-            sameSite: 'None',
-            path: '/',
-            domain: process.env.cookieDomain,
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-
-        console.log('New CSRF token set:', token);
+        req.userId = userId;
+        next();
+    } catch {
+        return res.status(403).json({ message: "Invalid or expired token" });
     }
-
-    next();
 };
 
-
-export { verifyCsrfToken, setCsrfToken };
+export default verifyCsrfToken;

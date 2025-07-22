@@ -1,5 +1,7 @@
 import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { generateAccessToken } from "../utils/generateAccessToken.js";
+import { generateCsrfToken } from "../utils/generateCsrfToken.js";
+import { createHttpError } from "../utils/httpError.js";
 import UserModel from "../models/user.model.js";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -10,61 +12,60 @@ const logIn = async (req, res) => {
     const { email, password } = req.body;
 
     const oldUser = await UserModel.findOne({ email });
-
     if (!oldUser) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("User not found", 404);
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
-
     if (!isPasswordCorrect) {
-        const error = new Error("Incorrect password");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Incorrect password", 400);
     }
 
     const accessToken = generateAccessToken(oldUser);
     const refreshToken = generateRefreshToken(oldUser);
+    const csrfToken = generateCsrfToken(32);
 
+    oldUser.csrfToken = csrfToken;
     await oldUser.save();
 
     res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,     // Prevents JavaScript on the frontend from accessing the cookie (helps mitigate XSS)
-        secure: true,       // Ensures the cookie is only sent over HTTPS (not sent over HTTP)
-        sameSite: "None",   // Allows cross-site requests (required when frontend and backend are on different domains)
-        path: '/',          // Cookie is valid for all routes on the domain
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        path: '/',
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     const userObj = oldUser.toObject();
-    const { password: pass, bookmarks, __v, updatedAt, refreshToken: _, ...filteredUserData } = userObj;
+    const {
+        password: pass,
+        bookmarks,
+        __v,
+        updatedAt,
+        refreshToken: _,
+        csrfToken: _csrf, 
+        ...filteredUserData
+    } = userObj;
 
-    const authData = {
+    res.status(200).json({
         result: filteredUserData,
-        accessToken: accessToken
-    }
-
-    res.status(200).json(authData);
+        accessToken,
+        csrfToken // sent separately
+    });
 };
 
 // Sign Up Controller
-const registerUser = async (req, res) => {
+const register = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
     const oldUser = await UserModel.findOne({ email });
 
     if (oldUser) {
-        const error = new Error("Email is already in use");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Email is already in use", 400);
     }
 
     if (password !== confirmPassword) {
-        const error = new Error("Passwords don't match");
-        error.statusCode = 400;
-        throw error;
+        createHttpError("Passwords don't match", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -79,7 +80,9 @@ const registerUser = async (req, res) => {
 
     const accessToken = generateAccessToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
+    const csrfToken = generateCsrfToken(32);
 
+    newUser.csrfToken = csrfToken;
     await newUser.save();
 
     res.cookie("refreshToken", refreshToken, {
@@ -93,20 +96,36 @@ const registerUser = async (req, res) => {
     const authData = {
         result: newUser,
         accessToken: accessToken,
-        refreshToken
+        refreshToken,
+        csrfToken
     }
 
     res.status(201).json(authData);
 };
 
 // Logout user controller
-const logoutUser = (req, res) => {
+const logoutUser = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
+    let user = null;
 
-    if (!refreshToken) {
-        return res.status(200).json({ message: "Logged out successfully" });
+    if (refreshToken) {
+        try {
+            const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+            const userId = decoded?.id;
+
+            if (userId) {
+                user = await UserModel.findById(userId);
+                if (user) {
+                    user.csrfToken = undefined;
+                    await user.save();
+                }
+            }
+        } catch (err) {
+            console.log("Refresh token invalid or expired:", err.message);
+        }
     }
 
+    // Clear the cookie regardless
     res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: true,
@@ -114,16 +133,7 @@ const logoutUser = (req, res) => {
         path: '/',
     });
 
-    res.clearCookie('XSRF-TOKEN', {
-        httpOnly: false,
-        secure: true,
-        sameSite: 'None',
-        path: '/'   
-    });     
-
-    const message = { message: "Logged out successfully" }
-
-    return res.status(200).json(message);
+    return res.status(200).json({ message: "Logged out successfully" });
 };
 
 // Refresh token controller
@@ -131,15 +141,11 @@ const refreshToken = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token not found");
-        error.statusCode = 401;
-        throw error;
+        createHttpError("Refresh token not found", 401);
     }
 
     if (typeof refreshToken !== "string") {
-        const error = new Error("Refresh token must be a valid string");
-        error.statusCode = 401;
-        throw error;
+        createHttpError("Refresh token must be a valid string", 401);
     }
 
     const decodeToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
@@ -148,9 +154,7 @@ const refreshToken = async (req, res) => {
     const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("User not found", 404);
     }
 
     const newAccessToken = generateAccessToken(user);
@@ -167,9 +171,7 @@ const fetchRefreshToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token not found");
-        error.statusCode = 404;
-        throw error;
+        createHttpError("Refresh token not found", 404);
     }
 
     res.status(200).json({ refreshToken });
@@ -179,21 +181,21 @@ const getCsrfToken = (req, res) => {
     const csrfToken = crypto.randomBytes(32).toString('hex');
 
     res.cookie('XSRF-TOKEN', csrfToken, {
-        httpOnly: false,     // Must be accessible by JS to send in header
-        secure: true,        // HTTPS only
+        httpOnly: false,
+        secure: true,
         sameSite: 'None',
         path: '/',
-        maxAge: 3600000      // 1 hour
+        maxAge: 3600000
     });
 
-    res.status(200).json({ csrfToken }); // optional
+    res.status(200).json({ csrfToken });
 };
 
 export {
     logIn,
-    registerUser,
+    register,
     refreshToken,
     fetchRefreshToken,
     getCsrfToken,
     logoutUser
-}
+};

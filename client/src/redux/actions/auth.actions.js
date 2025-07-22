@@ -14,31 +14,38 @@ import {
 
 import {
     refreshTokenApi,
-    registerUserApi,
+    registerApi,
     logInApi,
     logoutApi,
 } from '../../api/auth.api';
 
 const logIn = (formData, navigate) => async (dispatch) => {
-    try {
-        dispatch({ type: START_LOADING });
+    dispatch({ type: START_LOADING });
 
+    try {
         const { data } = await logInApi(formData);
+        const { csrfToken } = data;
+
+        if (csrfToken) {
+            sessionStorage.setItem('csrfToken', csrfToken);
+        }
+
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message });
-        console.error(error);
+        const message = error?.response?.data?.message;
+        dispatch({ type: ERROR, payload: message });
+        console.error('Login error:', error);
     } finally {
         dispatch({ type: END_LOADING });
     }
 };
 
-const registerUser = (formData, navigate) => async (dispatch) => {
+const register = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const { data } = await registerUserApi(formData);
+        const { data } = await registerApi(formData);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -83,7 +90,7 @@ const clearSuccess = () => ({
 
 export {
     logIn,
-    registerUser,
+    register,
     Logout,
     clearError,
     clearSuccess,

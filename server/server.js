@@ -57,7 +57,6 @@ connectRedis();
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV === 'development') {
-    // Local HTTPS setup
     const sslOptions = {
         key: fs.readFileSync('./certs/key.pem'),
         cert: fs.readFileSync('./certs/cert.pem'),
@@ -68,7 +67,6 @@ if (process.env.NODE_ENV === 'development') {
     });
 
 } else {
-    // Production (e.g., Render) - No HTTPS setup needed
     app.listen(PORT, () => {
         console.log(`\n🚀 Production server running on port ${PORT}`);
     });
