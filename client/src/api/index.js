@@ -26,6 +26,7 @@ API.interceptors.request.use((req) => {
     }
 
     const xsrfToken = Cookies.get('XSRF-TOKEN'); // always get the latest value
+    console.log('Xsrf token', xsrfToken);
     if (xsrfToken) {
         req.headers['X-XSRF-TOKEN'] = xsrfToken;
     }
