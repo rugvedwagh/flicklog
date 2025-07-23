@@ -45,7 +45,7 @@ const authReducer = (state = initialState, action) => {
         case LOGOUT:
             localStorage.removeItem('profile');
             localStorage.removeItem('cachedPosts');
-            sessionStorage.removeItem('csrfToken');
+            localStorage.removeItem('csrfToken');
             return {
                 ...state,
                 authData: null,

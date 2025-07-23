@@ -10,27 +10,20 @@ import { fetchUserProfile } from '../../utils/storage';
 import { useForm } from '../../context/formContext';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import defimg from '../../assets/defimg.jpg'
+import defimg from '../../assets/defimg.jpg';
 import Likes from './Likes/Likes';
 import './postcard.styles.css';
 import moment from 'moment';
 
-
 const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     let profile = fetchUserProfile();
     const userId = profile?._id;
-
     const clientData = useSelector((state) => state.authReducer.clientData);
-
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
-
     const { setformopen } = useForm();
-
     const hasLikedPost = useMemo(() => post.likes.includes(userId), [post.likes, userId]);
 
     useEffect(() => {
@@ -63,74 +56,97 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
             />
 
             <div className="overlay">
-                <Typography variant="h6">
+                <Typography variant="subtitle1" fontWeight="600">
                     {post.name}
                 </Typography>
-
-                <Typography sx={{ fontSize: '14px' }}>
+                <Typography variant="caption" sx={{ opacity: 0.8 }}>
                     {moment(post.createdAt).fromNow()}
                 </Typography>
             </div>
 
-            <section onClick={openPost}>
+            <section onClick={openPost} className="content-section">
                 <Typography
                     className={`title ${darkMode ? 'dark' : ''}`}
-                    variant="h5"
-                    gutterBottom
+                    variant="h6"
+                    sx={{
+                        fontWeight: 600,
+                        lineHeight: 1.3,
+                    }}
                 >
                     {post.title.slice(0, 25)}
                 </Typography>
 
+                <div className="tags-container">
+                    {post.tags?.map((tag) => (
+                        <Typography
+                            key={tag}
+                            variant="caption"
+                            className={`tag ${darkMode ? 'dark' : ''}`}
+                        >
+                            #{tag}
+                        </Typography>
+                    ))}
+                </div>
+
                 <div className="msg">
                     <Typography
-                        color="textSecondary"
                         variant="body2"
                         component="p"
                         className={`msg-text ${darkMode ? 'dark' : ''}`}
-                        dangerouslySetInnerHTML={{ __html: post.message.slice(0, 115) + ' ...' }}
+                        sx={{
+                            lineHeight: 1.5,
+                            letterSpacing: 0.2,
+                            padding: '0 1rem'  // Added consistent padding
+                        }}
+                        dangerouslySetInnerHTML={{ __html: post.message.slice(0, 135) + ' ...' }}
                     />
                 </div>
             </section>
 
-            <CardActions className="cardActions">
-                <Tooltip title="Like" arrow placement="top">
-                    <Button size="small" onClick={handleLike}>
-                        <Likes
-                            likes={likes}
-                            id={userId}
-                            darkMode={darkMode}
-                        />
-                    </Button>
-                </Tooltip>
-
-                <Tooltip title="Comments" arrow placement="top">
-                    <Button>
-                        <div style={{ display: 'flex', alignItems: 'center' }} onClick={openPost}>
-                            <CommentOutlinedIcon className={`comment-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            <span style={{ fontSize: '15px', opacity: '0.8' }} className={`comment-button ${darkMode ? 'dark' : ''}`}>
-                                &nbsp;{post?.comments?.length}
-                            </span>
-                        </div>
-                    </Button>
-                </Tooltip>
-
-                {userId && (
-                    <Tooltip title="Bookmark" arrow placement="top">
-                        <Button onClick={handleBookmarkToggle}>
-                            {isbookmarked ? (
-                                <BookmarkIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            ) : (
-                                <BookmarkBorderOutlinedIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
-                            )}
+            <CardActions className="cardActions" sx={{ padding: '0.5rem 1rem !important' }}>
+                {/* Left-aligned buttons */}
+                <div style={{ display: 'flex', flexGrow: 1 }}>
+                    <Tooltip title="Like" arrow placement="top">
+                        <Button size="small" onClick={handleLike} sx={{ minWidth: 0 }}>
+                            <Likes
+                                likes={likes}
+                                id={userId}
+                                darkMode={darkMode}
+                            />
                         </Button>
                     </Tooltip>
-                )}
 
+                    <Tooltip title="Comments" arrow placement="top">
+                        <Button size="small" sx={{ minWidth: 0 }}>
+                            <div className="comment-wrapper" onClick={openPost}>
+                                <CommentOutlinedIcon className={`comment-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                <span className={`comment-count ${darkMode ? 'dark' : ''}`}>
+                                    &nbsp;{post?.comments?.length}
+                                </span>
+                            </div>
+                        </Button>
+                    </Tooltip>
+
+                    {userId && (
+                        <Tooltip title={isbookmarked ? "Remove bookmark" : "Add bookmark"} arrow placement="top">
+                            <Button size="small" onClick={handleBookmarkToggle} sx={{ minWidth: 0 }}>
+                                {isbookmarked ? (
+                                    <BookmarkIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                ) : (
+                                    <BookmarkBorderOutlinedIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize="small" />
+                                )}
+                            </Button>
+                        </Tooltip>
+                    )}
+                </div>
+
+                {/* Right-aligned edit button */}
                 {userId === post?.creator && (
                     <Tooltip title="Edit" arrow placement="top">
                         <Button
                             size="small"
                             onClick={() => { setCurrentId(post._id); setformopen(true) }}
+                            sx={{ minWidth: 0, marginLeft: 'auto' }}
                         >
                             <EditIcon className={`bookmark-button ${darkMode ? 'dark' : ''}`} fontSize='small' />
                         </Button>

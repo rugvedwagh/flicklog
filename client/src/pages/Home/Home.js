@@ -23,7 +23,7 @@ const Home = () => {
     }, [location]);
 
     return (
-        <Container maxWidth='xl' disableGutters style={{ marginTop: '1.4rem' }}>
+        <Container maxWidth='xl'  style={{ marginTop: '1.7rem' }}>
 
                 {formopen && profile && (
                     <AppBar className={`appBarSearch ${darkMode ? 'dark' : ''}`} elevation={6} position='static' >

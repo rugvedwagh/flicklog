@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const formatDate = (isoDate) => {
     const date = new Date(isoDate);
     const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month 
@@ -7,4 +9,12 @@ const formatDate = (isoDate) => {
     return `${dd}-${mm}-${yyyy}`;
 };
 
-export default formatDate;
+const formatPostedDate = (date) => {
+    if (!date) return "Unknown date"
+    return moment(date).format("MMMM D, YYYY")
+}
+
+export {
+    formatDate,
+    formatPostedDate
+};

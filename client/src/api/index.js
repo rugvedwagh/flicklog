@@ -24,7 +24,7 @@ API.interceptors.request.use((req) => {
         req.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
-    const xsrfToken = sessionStorage.getItem('csrfToken'); 
+    const xsrfToken = localStorage.getItem('csrfToken'); 
 
     if (xsrfToken) {
         req.headers['X-XSRF-TOKEN'] = xsrfToken; 

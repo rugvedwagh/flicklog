@@ -26,9 +26,7 @@ const logIn = (formData, navigate) => async (dispatch) => {
         const { data } = await logInApi(formData);
         const { csrfToken } = data;
 
-        if (csrfToken) {
-            sessionStorage.setItem('csrfToken', csrfToken);
-        }
+        localStorage.setItem('csrfToken', csrfToken);
 
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');

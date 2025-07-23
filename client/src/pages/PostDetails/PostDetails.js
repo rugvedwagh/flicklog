@@ -1,211 +1,223 @@
-import { Card, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { fetchPost, fetchPostsBySearch } from '../../redux/actions/post.actions';
-import React, { useEffect, useState, useCallback } from 'react';
-import { deletePost } from '../../redux/actions/post.actions';
-import { useParams, useNavigate } from 'react-router-dom';
-import Comments from '../../components/Comments/Comments';
-import { CircularProgress, Divider } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTheme } from '../../context/themeContext';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { fetchUserProfile } from '../../utils/storage';
-import './postdetails.styles.css';
-import moment from 'moment';
+import {
+    Card,
+    Button,
+    Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Tooltip,
+    CircularProgress,
+    Divider,
+} from "@mui/material"
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
+import { fetchPost, fetchPostsBySearch } from "../../redux/actions/post.actions"
+import { useEffect, useState, useCallback } from "react"
+import { deletePost } from "../../redux/actions/post.actions"
+import { useParams, useNavigate } from "react-router-dom"
+import Comments from "../../components/Comments/Comments"
+import { formatPostedDate } from "../../utils/formatDate"
+import { useDispatch, useSelector } from "react-redux"
+import { useTheme } from "../../context/themeContext"
+import DeleteIcon from "@mui/icons-material/Delete"
+import { fetchUserProfile } from "../../utils/storage"
+import "./postdetails.styles.css"
 
 const PostDetails = () => {
-
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const darkMode = useTheme();
-    const profile = fetchUserProfile();
-    const userId = profile?._id;
-
-    const [isFullScreen, setIsFullScreen] = useState(false);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-    const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
+    const { id } = useParams()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const darkMode = useTheme()
+    const profile = fetchUserProfile()
+    const userId = profile?._id
+    const [isFullScreen, setIsFullScreen] = useState(false)
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const { post, posts, isLoading } = useSelector((state) => state.postsReducer)
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        dispatch(fetchPost(id));
-    }, [id, dispatch]);
+        window.scrollTo(0, 0)
+        dispatch(fetchPost(id))
+    }, [id, dispatch])
 
     useEffect(() => {
         if (post) {
-            dispatch(fetchPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
+            dispatch(fetchPostsBySearch({ search: "none", tags: post?.tags.join(",") }))
         }
-    }, [post, dispatch]);
+    }, [post, dispatch])
 
-    const openPost = (_id) => navigate(`/posts/${_id}`);
-
-    const handleImageClick = () => setIsFullScreen((prev) => !prev);
+    const openPost = (_id) => navigate(`/posts/${_id}`)
+    const handleImageClick = () => setIsFullScreen((prev) => !prev)
 
     const toggleDeleteDialog = useCallback(() => {
-        setOpenDeleteDialog((prev) => !prev);
-    }, []);
+        setOpenDeleteDialog((prev) => !prev)
+    }, [])
 
     const handleDeletePost = useCallback(() => {
-        dispatch(deletePost(id));
-        toggleDeleteDialog();
-        navigate('/posts');
-    }, [dispatch, id, toggleDeleteDialog]);
+        dispatch(deletePost(id))
+        toggleDeleteDialog()
+        navigate("/posts")
+    }, [dispatch, id, toggleDeleteDialog])
 
-    const recommendedPosts = posts.filter(({ _id }) => _id !== id);
+    const recommendedPosts = posts.filter(({ _id }) => _id !== id)
 
     if (isLoading) {
         return (
-            <CircularProgress className={`loader ${darkMode ? 'dark' : ''}`} size='3rem' />
+            <div className="loading-container">
+                <CircularProgress className={`loader ${darkMode ? "dark" : ""}`} size="3rem" />
+            </div>
         )
     }
 
     if (!post) {
         return (
-            <Typography sx={{ margin: '5rem 35%', color: '#666666' }} variant='h4'>
-                Post not found!
-            </Typography>
+            <div className="error-container">
+                <Typography variant="h4" className="error-text">
+                    Post not found!
+                </Typography>
+            </div>
         )
     }
 
     return (
-        <div>
-            <div className={`main ${darkMode ? 'dark' : ''}`}>
-                <ArrowBackOutlinedIcon id='goback' onClick={() => {
-                    navigate(-1)
-                }} />
-                <section className={`second ${isFullScreen ? 'fullscreen' : ''}`}>
-                    <img
-                        className={`imag ${isFullScreen ? 'fullscreen' : ''}`}
-                        src={post.selectedfile}
-                        alt=''
-                        onClick={handleImageClick}
-                    />
-                </section>
-
-                <section className='first'>
-                    <Typography className={`posttitle ${darkMode ? 'dark' : ''}`} >
-                        {post.title}
-                    </Typography>
-
-                    <Typography
-                        variant='subtitle1'
-                        className={`post-meta ${darkMode ? 'dark' : ''}`}
-                    >
-                        {post.tags.map((tag) => `#${tag} `)}
-                    </Typography>
-
-                    <Typography
-                        component='p'
-                        className='postmessage'
-                        dangerouslySetInnerHTML={{ __html: post.message }}
-                    />
-
-                    <Typography
-                        variant='h6'
-                        className={`post-meta ${darkMode ? 'dark' : ''}`}
-                    >
-                        Posted by : <strong>{post.name}</strong>
-                    </Typography>
-
-                    <Typography
-                        variant='h6'
-                        className={`post-meta ${darkMode ? 'dark' : ''}`}
-                    >
-                        <div className='dateAndDelete'>
-                            <span>
-                                {moment(post.createdAt).fromNow()}
-                            </span>
-                            <span>
-                                {userId === post?.creator && (
-                                    <Tooltip title="Delete" arrow placement="top">
-                                        <Button
-                                            size="small"
-                                            onClick={toggleDeleteDialog}
-                                        >
-                                            <DeleteIcon
-                                                color="error"
-                                                fontSize="small"
-                                                titleAccess=""
-                                            />
-                                        </Button>
-                                    </Tooltip>
-                                )}
-                            </span>
-                        </div>
-                    </Typography>
-
-                    <Comments post={post} />
-                </section>
+        <div className={`page-wrapper ${darkMode ? "dark" : ""}`}>
+            <div className="header-section-postdetails">
+                <Button className={`back-button ${darkMode ? "dark" : ""}`} onClick={() => navigate(-1)} size="small">
+                    <ArrowBackOutlinedIcon />
+                </Button>
             </div>
 
+            <div className={`main-content ${darkMode ? "dark" : ""}`}>
+                <div className={`hero-section ${darkMode ? "dark" : ""}`}>
+                    <div className="hero-content">
+                        <div className="hero-text">
+                            <Typography className={`post-title ${darkMode ? "dark" : ""}`}>{post.title}</Typography>
+
+                            <div className={`post-meta-section ${darkMode ? "dark" : ""}`}>
+                                <div className="meta-left">
+                                    <Typography className={`post-author ${darkMode ? "dark" : ""}`}>
+                                        By <strong>{post.name}</strong>
+                                    </Typography>
+                                    <Typography className={`post-date ${darkMode ? "dark" : ""}`}>
+                                        {formatPostedDate(post.createdAt.slice(0, 10))}
+                                    </Typography>
+                                </div>
+                            </div>
+
+                            <div className="tags-section">
+                                {post.tags.map((tag, index) => (
+                                    <span key={index} className={`tag ${darkMode ? "dark" : ""}`}>
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className={`hero-image-container ${isFullScreen ? "fullscreen" : ""}`}>
+                            <img
+                                className={`hero-image ${isFullScreen ? "fullscreen" : ""}`}
+                                src={post.selectedfile || "/placeholder.svg"}
+                                alt={post.title}
+                                onClick={handleImageClick}
+                            />
+                            {isFullScreen && <div className="fullscreen-overlay" onClick={handleImageClick} />}
+                        </div>
+                    </div>
+
+                    {userId === post?.creator && (
+                        <Tooltip title="Delete Post" arrow placement="top">
+                            <Button
+                                className={`delete-button-corner ${darkMode ? "dark" : ""}`}
+                                onClick={toggleDeleteDialog}
+                                size="small"
+                            >
+                                <DeleteIcon />
+                            </Button>
+                        </Tooltip>
+                    )}
+
+                    <Typography
+                        component="div"
+                        className={`post-content ${darkMode ? "dark" : ""}`}
+                        dangerouslySetInnerHTML={{ __html: post.message }}
+                    />
+                </div>
+
+                <div className={`comments-section ${darkMode ? "dark" : ""}`}>
+                    <Comments post={post} />
+                </div>
+            </div>
+
+            {recommendedPosts.length > 0 && (
+                <div className={`recommended-section ${darkMode ? "dark" : ""}`}>
+                    <div className="recommended-header">
+                        <Typography variant="h4" className={`section-title ${darkMode ? "dark" : ""}`}>
+                            You might also like
+                        </Typography>
+                        <Divider className={`section-divider ${darkMode ? "dark" : ""}`} />
+                    </div>
+
+                    <div className="recommended-grid">
+                        {recommendedPosts.slice(0, 6).map(({ title, likes, selectedfile, _id }) => (
+                            <Card key={_id} className={`recommended-card ${darkMode ? "dark" : ""}`} onClick={() => openPost(_id)}>
+                                <div className="card-image-container">
+                                    <img src={selectedfile || "/placeholder.svg"} className="card-image" alt={title} />
+                                    <div className="card-overlay">
+                                        <Typography className="overlay-text">Read More</Typography>
+                                    </div>
+                                </div>
+                                <div className="card-content">
+                                    <Typography className={`card-title ${darkMode ? "dark" : ""}`}>
+                                        {title.length > 60 ? title.slice(0, 60) + "..." : title}
+                                    </Typography>
+                                    <Typography className={`card-likes ${darkMode ? "dark" : ""}`}>
+                                        {likes.length} {likes.length === 1 ? "like" : "likes"}
+                                    </Typography>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {recommendedPosts.length === 0 && (
+                <div className="no-recommendations">
+                    <Typography variant="h5" className={`no-rec-text ${darkMode ? "dark" : ""}`}>
+                        No related posts found
+                    </Typography>
+                </div>
+            )}
+
+            {/* Delete Dialog */}
             {userId === post?.creator && (
                 <Dialog
                     open={openDeleteDialog}
                     onClose={toggleDeleteDialog}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
+                    aria-labelledby="delete-dialog-title"
+                    aria-describedby="delete-dialog-description"
+                    maxWidth="sm"
+                    fullWidth
                 >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Are you sure you want to delete this post?"}
+                    <DialogTitle id="delete-dialog-title" className={darkMode ? "dark" : ""}>
+                        Delete Post
                     </DialogTitle>
-
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            This action cannot be undone.
+                        <DialogContentText id="delete-dialog-description" className={darkMode ? "dark" : ""}>
+                            Are you sure you want to delete this post? This action cannot be undone.
                         </DialogContentText>
                     </DialogContent>
-
                     <DialogActions>
-                        <Button onClick={toggleDeleteDialog} variant="contained">
+                        <Button onClick={toggleDeleteDialog} variant="outlined">
                             Cancel
                         </Button>
-                        <Button onClick={handleDeletePost} variant="contained">
+                        <Button onClick={handleDeletePost} variant="contained" color="error">
                             Delete
                         </Button>
                     </DialogActions>
                 </Dialog>
             )}
-
-            {recommendedPosts.length ? (
-                <div className={`sect ${darkMode ? 'dark' : ''}`}>
-                    <Typography gutterBottom variant='h5'>
-                        You might also like
-                    </Typography>
-
-                    <Divider />
-
-                    <div className={`recommended-posts ${darkMode ? 'dark' : ''}`}>
-                        {recommendedPosts.map(({ title, likes, selectedfile, _id }) => (
-                            <Card
-                                raised
-                                className={`recommended-post ${darkMode ? 'dark' : ''}`}
-                                onClick={() => openPost(_id)} key={_id}
-                            >
-                                <Typography gutterBottom variant='h6'>{title}</Typography>
-
-                                <img
-                                    src={selectedfile}
-                                    className='recimg'
-                                    alt='alt.img'
-                                    onClick={() => openPost(_id)}
-                                />
-
-                                <Typography gutterBottom variant='subtitle1'>
-                                    {likes.length} likes
-                                </Typography>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                <Typography variant='h5' className='endmessage' gutterBottom align='center'>
-                    No related posts!
-                </Typography>
-            )}
         </div>
-    );
-};
+    )
+}
 
-export default PostDetails;
+export default PostDetails
