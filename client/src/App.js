@@ -1,53 +1,51 @@
+import React, { useEffect, useState, useRef } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { isRefreshTokenExpired } from './utils/checkTokenExpiry';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import PostDetails from '../src/pages/PostDetails/PostDetails';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { isAccessTokenExpired } from './utils/checkTokenExpiry';
 import { handleScroll, scrollToTop } from './utils/scroll';
-import { Logout, clearError, clearSuccess } from './redux/actions/auth.actions';
-import { getRefreshToken } from './utils/getTokens';
-import NotFound from '../src/pages/Notfound/NotFound';
-import Userinfo from '../src/pages/Userinfo/Userinfo';
-import React, { useEffect, useState } from 'react';
+import { Logout, clearError, clearSuccess, refreshToken } from './redux/actions/auth.actions';
+
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Collapse, Container, Alert } from '@mui/material';
+import { getAccessToken } from './utils/getTokens';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import { useTheme } from './context/themeContext';
 import { fetchUserProfile } from './utils/storage';
-import Footer from './components/Footer/Footer';
-import { useRef } from 'react';
-import { Collapse } from '@mui/material';
-import Navbar from './components/Navbar/Navbar';
-import { useDispatch } from 'react-redux';
-import { Container } from '@mui/material';
-import { Alert } from '@mui/material';
+import { store } from './redux/store';
 import Home from '../src/pages/Home/Home';
 import Auth from '../src/pages/Auth/Auth';
-import { useSelector } from 'react-redux';
+import PostDetails from '../src/pages/PostDetails/PostDetails';
+import NotFound from '../src/pages/Notfound/NotFound';
+import Userinfo from '../src/pages/Userinfo/Userinfo';
+
 import './App.css';
 
 const App = () => {
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const profile = fetchUserProfile();
-    const location = useLocation();
     const darkMode = useTheme();
+    const profile = fetchUserProfile();
+    const welcomeRef = useRef(false);
 
-    const [refreshToken, setrefreshToken] = useState('');
+    const { accessToken } = useSelector((state) => state.authReducer);
+    const { errorMessage, successMessage } = useSelector((state) => state.authReducer);
+
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [show, setShow] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
 
-    const welcomeRef = useRef(false);
-
-    let { errorMessage, successMessage } = useSelector((state) => state.authReducer)
-
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
+    // --- Show error alert ---
     useEffect(() => {
         if (!errorMessage) return;
 
         setShow(true);
-
         const timer = setTimeout(() => {
             setShow(false);
             dispatch(clearError());
@@ -56,11 +54,11 @@ const App = () => {
         return () => clearTimeout(timer);
     }, [errorMessage]);
 
+    // --- Show success alert ---
     useEffect(() => {
         if (!successMessage) return;
 
         setShowSuccess(true);
-
         const timer = setTimeout(() => {
             setShowSuccess(false);
             dispatch(clearSuccess());
@@ -69,35 +67,33 @@ const App = () => {
         return () => clearTimeout(timer);
     }, [successMessage]);
 
+    // --- Refresh access token if missing or expired ---
     useEffect(() => {
-        const fetchrefreshToken = async () => {
-            const rft = await getRefreshToken();
-            setrefreshToken(rft ?? null);
+        const refreshAccessTokenIfNeeded = async () => {
+
+            if (isAccessTokenExpired(accessToken)) {
+                await dispatch(refreshToken());
+
+                setTimeout(() => {
+                    const updatedToken = getAccessToken(store.getState());
+                    if (!updatedToken || isAccessTokenExpired(updatedToken)) {
+                        dispatch(Logout());
+                    }
+                }, 0);
+            }
         };
 
-        fetchrefreshToken();
-    }, [location.pathname]);
+        refreshAccessTokenIfNeeded();
+    }, [accessToken, dispatch, navigate]);
 
-    useEffect(() => {
-        if (refreshToken === '') return;
-
-        if (refreshToken === null) {
-            dispatch(Logout(navigate));
-            return;
-        }
-
-        if (!refreshToken || isRefreshTokenExpired(refreshToken)) {
-            dispatch(Logout(navigate));
-        }
-
-    }, [refreshToken]);
-
+    // --- Scroll-to-top button logic ---
     useEffect(() => {
         const onScroll = handleScroll(setShowScrollButton);
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // --- Welcome message only once per session ---
     useEffect(() => {
         const hasShownWelcome = sessionStorage.getItem('welcomeShown');
 
@@ -113,16 +109,21 @@ const App = () => {
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
+            {/* Success Message */}
             <Collapse in={showSuccess}>
                 <Alert variant="filled" severity="success" style={{ textAlign: 'center' }}>
                     {successMessage}
                 </Alert>
             </Collapse>
+
+            {/* Error Message */}
             <Collapse in={isValidErrorAlertCondition}>
                 <Alert variant="filled" severity="error" style={{ textAlign: 'center' }}>
                     {errorMessage}
                 </Alert>
             </Collapse>
+
+            {/* Welcome Message */}
             <Collapse in={showWelcome}>
                 <Alert variant="filled" icon={false} severity="success">
                     Welcome back, <strong>
@@ -132,27 +133,29 @@ const App = () => {
             </Collapse>
 
             <Container maxWidth="lg">
-
+                {/* Scroll to Top Button */}
                 <KeyboardArrowUpIcon
                     className={showScrollButton ? 'scrollup show' : 'scrollup hide'}
                     onClick={scrollToTop}
                 />
 
+                {/* Navigation */}
                 <Navbar />
 
+                {/* Routes */}
                 <Routes>
                     <Route path="/" element={<Navigate to="/posts" />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
                     <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!refreshToken ? <Auth /> : <Navigate to="/posts" />} />
-                    <Route path="user/i" element={<Userinfo />} />
+                    <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
+                    <Route path="/user/i" element={<Userinfo />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
 
                 <Footer />
             </Container>
-        </div >
+        </div>
     );
 };
 

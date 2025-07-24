@@ -29,6 +29,11 @@ API.interceptors.request.use((req) => {
         req.headers['X-XSRF-TOKEN'] = xsrfToken; 
     }
 
+    const sessionId = localStorage.getItem('sessionId');
+    if( sessionId ) {
+        req.headers['X-Session-Id'] = sessionId; 
+    }
+
     return req;
 }, (error) => {
     return Promise.reject(error);

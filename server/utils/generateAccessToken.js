@@ -7,7 +7,7 @@ const generateAccessToken = (user) => {
             id: user._id,
             iat: Math.floor(Date.now() / 1000)
         },
-        process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+        process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
 };
 
 export default generateAccessToken;

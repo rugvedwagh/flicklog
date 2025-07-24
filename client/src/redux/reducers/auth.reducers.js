@@ -27,7 +27,6 @@ const authReducer = (state = initialState, action) => {
 
         case AUTH:
             const { accessToken, csrfToken,  ...filteredData } = action?.payload;
-            console.log('Auth data:', filteredData);
             localStorage.setItem('profile', JSON.stringify(filteredData.result));
             return {
                 ...state,
@@ -46,6 +45,7 @@ const authReducer = (state = initialState, action) => {
             localStorage.removeItem('profile');
             localStorage.removeItem('cachedPosts');
             localStorage.removeItem('csrfToken');
+            localStorage.removeItem('sessionId');
             return {
                 ...state,
                 authData: null,

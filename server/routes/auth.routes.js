@@ -19,6 +19,6 @@ router.get("/refresh-token", asyncHandler(fetchRefreshToken));
 
 // Protected routes
 router.post("/refresh-token/secure", verifyCsrfToken, asyncHandler(refreshToken));
-router.post("/logout", verifyCsrfToken, asyncHandler(logoutUser));
+router.post("/logout", asyncHandler(logoutUser));
 
 export default router;
