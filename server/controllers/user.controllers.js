@@ -1,7 +1,7 @@
 import { getRedis, redisAvailable } from "../config/redisClient.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
-import { createHttpError } from "../utils/httpError.js";
+import createHttpError from "../utils/httpError.js";
 
 // Update User Controller
 const updateUser = async (req, res) => {

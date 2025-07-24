@@ -128,16 +128,17 @@
 
 .comment-input {
     transition: all 0.3s ease;
+    border-radius: 13px !important;
 }
 
 .comment-input .MuiOutlinedInput-root {
     background-color: var(--white);
-    border-radius: 3px !important;
+    border-radius: 10px !important;
     transition: all 0.3s ease;
 }
 
 .comment-input.dark .MuiOutlinedInput-root {
-    background-color: var(--black);
+    background-color: var(--borderColor);
     color: var(--antiFlashWhite);
 }
 
@@ -252,14 +253,14 @@
     gap: 1rem;
     margin-bottom: 1.5rem;
     padding: 1rem;
-    background-color: #f8f9fa;
+    background-color: var(--antiFlashWhite);
     border-radius: 12px;
     transition: all 0.3s ease;
     animation: slideIn 0.4s ease;
 }
 
 .comment-item.dark {
-    background-color: var(--black);
+    background-color: var(--borderColor);
 }
 
 .comment-avatar {

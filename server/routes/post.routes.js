@@ -10,7 +10,7 @@ import {
     commentPost,
     bookmarkPost
 } from "../controllers/post.controllers.js";
-import { verifyAccessToken } from "../middleware/auth.middleware.js";
+import verifyAccessToken from "../middleware/auth.middleware.js";
 import asyncHandler from "../middleware/async.middleware.js";
 
 const router = express.Router();

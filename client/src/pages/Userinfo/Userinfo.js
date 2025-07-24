@@ -108,7 +108,7 @@ const Userinfo = () => {
     return (
         <div className={`page-container ${darkMode ? "dark" : ""}`}>
             <div className="header-section">
-                <ArrowBackOutlinedIcon className={`back-button ${darkMode ? "dark" : ""}`} onClick={() => navigate(-1)} />
+                <ArrowBackOutlinedIcon className={`back-button-userinfo ${darkMode ? "dark" : ""}`} onClick={() => navigate(-1)} />
             </div>
 
             <div className={`profile-container ${darkMode ? "dark" : ""}`}>
@@ -212,7 +212,7 @@ const Userinfo = () => {
                     <Button onClick={handleCancel} color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={saveChanges} color="primary" variant="contained">
+                    <Button onClick={saveChanges} sx={{ backgroundColor: '#1a1a1a' }} variant="contained">
                         Save Changes
                     </Button>
                 </DialogActions>

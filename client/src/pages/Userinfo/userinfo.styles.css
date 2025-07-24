@@ -42,24 +42,27 @@
     gap: 1rem;
 }
 
-.back-button {
+.back-button-userinfo {
     color: var(--borderColor);
+    background-color: var(--cardColour);
     cursor: pointer;
     font-size: 2rem !important;
     border-radius: 50%;
     transition: all 0.3s ease;
+    padding: 0.5rem;
+    transition: all 0.3s ease !important;
 }
 
-.back-button:hover {
+.back-button-userinfo:hover {
     background-color: var(--borderColor);
     color: var(--antiFlashWhite);
 }
 
-.back-button.dark {
+.back-button-userinfo.dark {
     color: var(--antiFlashWhite);
 }
 
-.back-button.dark:hover {
+.back-button-userinfo.dark:hover {
     background-color: var(--antiFlashWhite);
     color: var(--black);
 }
@@ -151,6 +154,8 @@
     border-radius: 25px !important;
     font-weight: 600 !important;
     transition: all 0.3s ease !important;
+    margin-top: 1.2rem !important;
+    
 }
 
 .edit-profile-btn:hover {
@@ -338,7 +343,7 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     transition: all 0.3s ease;
-    border: 1px solid #e9ecef;
+    border: 1px solid var(--antiFlashWhite);
 }
 
 .bookmark-item:hover {
@@ -351,7 +356,7 @@
 }
 
 .bookmark-item.dark:hover {
-    background-color: var(--subtextColor);
+    background-color: var(--cardColour);
 }
 
 .bookmark-content {

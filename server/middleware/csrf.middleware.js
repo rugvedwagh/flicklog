@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
 
 const verifyCsrfToken = async (req, res, next) => {
+    
     const csrfToken = req.headers['x-xsrf-token'];
     const refreshToken = req.cookies?.refreshToken;
 

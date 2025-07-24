@@ -36,12 +36,10 @@ const App = () => {
     const [showWelcome, setShowWelcome] = useState(false);
     const [show, setShow] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
-    const [logoutDone, setLogoutDone] = useState(false);
 
     const welcomeRef = useRef(false);
 
-    let { errorMessage } = useSelector((state) => state.authReducer)
-    let { successMessage } = useSelector((state) => state.authReducer)
+    let { errorMessage, successMessage } = useSelector((state) => state.authReducer)
 
     const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
 
@@ -112,28 +110,6 @@ const App = () => {
             return () => clearTimeout(timer);
         }
     }, [profile?.name]);
-    
-    useEffect(() => {
-        const hasShownWelcome = sessionStorage.getItem('welcomeShown');
-
-        if (!hasShownWelcome && profile?.name) {
-            setShowWelcome(true);
-            sessionStorage.setItem('welcomeShown', 'true');
-            welcomeRef.current = true;
-
-            const timer = setTimeout(() => setShowWelcome(false), 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [profile?.name]);
-
-    useEffect(()=>{
-        if(successMessage){
-            setShowSuccess(true)
-
-            const timer = setTimeout(() => setShowSuccess(false), 4000);
-            return () => clearTimeout(timer);
-        }
-    },[successMessage])
 
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>

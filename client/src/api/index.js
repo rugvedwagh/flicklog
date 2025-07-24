@@ -2,7 +2,6 @@ import axios from 'axios';
 import { store } from '../redux/store';
 import { Logout, refreshToken } from '../redux/actions/auth.actions';
 import { getAccessToken } from '../utils/getTokens';
-import Cookies from 'js-cookie';
 
 const API = axios.create({
     baseURL: process.env.REACT_APP_API_URL,

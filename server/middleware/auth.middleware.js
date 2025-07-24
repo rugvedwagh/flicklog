@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const verifyAccessToken = async (req, res, next) => {
+
     try {
         const authorizationHeader = req.headers.authorization;
 
@@ -40,4 +41,4 @@ const verifyAccessToken = async (req, res, next) => {
     }
 };
 
-export { verifyAccessToken };
+export default verifyAccessToken;

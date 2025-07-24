@@ -180,6 +180,11 @@ const Navbar = () => {
                             <span>My Account</span>
                         </MenuItem>
 
+                        <MenuItem onClick={openForm} className={`menu-item ${darkMode ? "dark" : ""}`}>
+                            <AddCircleOutlineOutlinedIcon className="menu-icon" />
+                            <span>New post</span>
+                        </MenuItem>
+
                         <MenuItem onClick={handleUserPosts} className={`menu-item ${darkMode ? "dark" : ""}`}>
                             <EditNoteOutlinedIcon className="menu-icon" />
                             <span>My Posts</span>
@@ -212,9 +217,9 @@ const Navbar = () => {
                     </Menu>
                 </div>
             ) : (
-                <Button 
-                    variant="contained" 
-                    onClick={handleLoginClick} 
+                <Button
+                    variant="contained"
+                    onClick={handleLoginClick}
                     className={`login-btn ${darkMode ? "dark" : ""}`}
                     sx={{ marginLeft: 'auto' }}
                 >

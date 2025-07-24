@@ -1,7 +1,7 @@
-import { generateRefreshToken } from "../utils/generateRefreshToken.js";
-import { generateAccessToken } from "../utils/generateAccessToken.js";
-import { generateCsrfToken } from "../utils/generateCsrfToken.js";
-import { createHttpError } from "../utils/httpError.js";
+import generateRefreshToken from "../utils/generateRefreshToken.js";
+import generateAccessToken from "../utils/generateAccessToken.js";
+import generateCsrfToken from "../utils/generateCsrfToken.js";
+import createHttpError from "../utils/httpError.js";
 import UserModel from "../models/user.model.js";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -43,7 +43,7 @@ const logIn = async (req, res) => {
         __v,
         updatedAt,
         refreshToken: _,
-        csrfToken: _csrf, 
+        csrfToken: _csrf,
         ...filteredUserData
     } = userObj;
 

@@ -9,4 +9,4 @@ const generateRefreshToken = (user) => {
         process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 };
 
-export { generateRefreshToken };
+export default generateRefreshToken;

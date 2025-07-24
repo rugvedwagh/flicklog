@@ -4,4 +4,4 @@ const createHttpError = (message, statusCode = 500) => {
     throw error;
 };
 
-export { createHttpError };
+export default createHttpError;
