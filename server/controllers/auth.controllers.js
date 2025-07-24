@@ -16,6 +16,10 @@ const logIn = async (req, res) => {
         createHttpError("User not found", 404);
     }
 
+    if (oldUser.csrfToken) {
+        return res.status(403).json({ message: "User already logged in." });
+    }
+
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
     if (!isPasswordCorrect) {
         createHttpError("Incorrect password", 400);
@@ -50,7 +54,7 @@ const logIn = async (req, res) => {
     res.status(200).json({
         result: filteredUserData,
         accessToken,
-        csrfToken // sent separately
+        csrfToken
     });
 };
 

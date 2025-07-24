@@ -30,7 +30,6 @@ const Userinfo = () => {
     const { accessToken } = useSelector((state) => state.authReducer)
     const { posts } = useSelector((state) => state.postsReducer)
     const [showBm, setShowBm] = useState(false)
-    const [showWelcome, setShowWelcome] = useState(false)
     const [editDialogOpen, setEditDialogOpen] = useState(false)
     const [bookmarkedPosts, setBookmarkedPosts] = useState([])
     const [formData, setFormData] = useState({
