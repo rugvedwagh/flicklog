@@ -96,7 +96,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                         sx={{
                             lineHeight: 1.5,
                             letterSpacing: 0.2,
-                            padding: '0 1rem'  // Added consistent padding
+                            padding: '0 1rem'  
                         }}
                         dangerouslySetInnerHTML={{ __html: post.message.slice(0, 135) + ' ...' }}
                     />

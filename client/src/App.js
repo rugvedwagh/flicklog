@@ -49,7 +49,7 @@ const App = () => {
         const timer = setTimeout(() => {
             setShow(false);
             dispatch(clearError());
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [errorMessage]);
@@ -62,7 +62,7 @@ const App = () => {
         const timer = setTimeout(() => {
             setShowSuccess(false);
             dispatch(clearSuccess());
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [successMessage]);

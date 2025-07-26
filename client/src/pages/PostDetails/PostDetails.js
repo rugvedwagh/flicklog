@@ -106,7 +106,7 @@ const PostDetails = () => {
 
                             <div className="tags-section">
                                 {post.tags.map((tag, index) => (
-                                    <span key={index} className={`tag ${darkMode ? "dark" : ""}`}>
+                                    <span key={index} className={`tag-postdetails ${darkMode ? "dark" : ""}`}>
                                         #{tag}
                                     </span>
                                 ))}

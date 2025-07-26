@@ -155,15 +155,20 @@
     font-weight: 600 !important;
     font-size: 1.1rem !important;
     margin: 0 !important;
+    text-align: left;
 }
 
 .input-label.dark {
     color: var(--antiFlashWhite) !important;
 }
 
+.title-input{
+    border-radius: 12px !important;
+}
+
 .title-input .MuiOutlinedInput-root {
     background-color: var(--antiFlashWhite);
-    border-radius: 3px !important;
+    border-radius: 12px !important;
     font-size: 1.1rem;
     transition: all 0.3s ease;
 }
@@ -183,7 +188,7 @@
 }
 
 .editor-container {
-    border-radius: 3px;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--borderColor);
     transition: all 0.3s ease;
@@ -226,9 +231,13 @@
     color: var(--black);
 }
 
+.tags-input{
+    border-radius: 12px !important;
+}
+
 .tags-input .MuiOutlinedInput-root {
     background-color: var(--antiFlashWhite);
-    border-radius: 3px !important;
+    border-radius: 12px !important;
     transition: all 0.3s ease;
 }
 

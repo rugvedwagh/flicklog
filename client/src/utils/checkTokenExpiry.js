@@ -1,8 +1,8 @@
 import { jwtDecode } from "jwt-decode";
 
 const isAccessTokenExpired = (token) => {
-    if (!token) return true; 
-    
+    if (!token) return true;
+
     try {
         const decoded = jwtDecode(token);
         return decoded.exp * 1000 < Date.now();
@@ -12,6 +12,8 @@ const isAccessTokenExpired = (token) => {
 };
 
 const isRefreshTokenExpired = (token) => {
+    if (!token) return true;
+
     try {
         const decodedRefreshToken = jwtDecode(token);
         return decodedRefreshToken.exp * 1000 < Date.now();

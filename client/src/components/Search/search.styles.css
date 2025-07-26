@@ -1,53 +1,89 @@
-.box {
+.search-box {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    border-radius: 5px;
+    border-radius: 30px;
+    overflow: hidden;
     background-color: var(--antiFlashWhite);
-    margin-right: 1rem;
-    gap: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    max-width: 500px;
+    width: 100%;
+    margin: 0rem;
 }
 
-.box.dark {
-    background-color: var(--black);
-}
 
-.box .input {
+.search-input {
     flex: 1;
-    height: 1.1rem;
-    border-radius: 30px;
-    font-size: 1rem;
-    background-color: var(--antiFlashWhite);
-    color: var(--textColor, #333);
-    padding: 0.5rem 1rem;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-.box.dark>.input {
-    background-color: var(--antiFlashWhite);
-    outline: none;
     border: none;
-    color: var(--black);
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    background-color: transparent;
+    color: var(--textColor, #333);
+    outline: none;
 }
 
-.box .MuiSvgIcon-root {
-    background-color: var(--antiFlashWhite);
-    padding: 0.25rem 0.55rem;
+.search-box.dark .search-input {
+    color: var(--borderColor);
+}
+
+.search-icon-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem;
     cursor: pointer;
-    border-radius: 30px;
-    font-size: 1.6rem;
-    color: var(--forrestGreen);
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-
-.box.dark .MuiSvgIcon-root {
-    color: var(--black);
-    background-color: var(--antiFlashWhite);
+    display: flex;
     align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease; 
 }
 
-.box .MuiSvgIcon-root:hover {
+.search-icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.search-icon {
+    font-size: 1.5rem;
     color: var(--forrestGreen);
+}
+
+.search-icon.dark{
+    color: var(--black) !important;
+}
+
+.search-box.dark .search-icon {
+    color: var(--antiFlashWhite);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .search-box {
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .search-icon {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        flex-direction: row;
+        margin: 0.5rem;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .search-icon {
+        font-size: 1.2rem;
+    }
 }

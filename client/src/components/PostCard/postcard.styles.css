@@ -171,14 +171,20 @@
 .tag {
     color: var(--borderColor);
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 0.2rem 0.5rem;
+    padding: 0.1rem 0.6rem !important;
     border-radius: 4px;
     font-size: 0.7rem;
     font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tag:hover{
+    transform: translateY(-2px);
+    background-color: var(--white);
 }
 
 .tag.dark {
-    color: var(--antiFlashWhite);
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--antiFlashWhite) !important;
+    background-color: var(--borderColor) !important;
 }
 

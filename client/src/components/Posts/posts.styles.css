@@ -67,4 +67,5 @@
 
 .infinite-scroll-component {
     animation: prakat 0.7s ease-in;
+    padding: 8px;
 }

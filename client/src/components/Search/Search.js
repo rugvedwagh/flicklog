@@ -10,13 +10,10 @@ const Search = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();
-
     const [searchInput, setSearchInput] = useState('');
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            searchPost();
-        }
+        if (event.key === 'Enter') searchPost();
     };
 
     const searchPost = () => {
@@ -33,17 +30,18 @@ const Search = () => {
     };
 
     return (
-        <section className={`box ${darkMode ? 'dark' : ''}`}>
+        <section className={`search-box ${darkMode ? 'dark' : ''}`}>
             <input
                 type="text"
                 placeholder="Search"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="input"
+                className="search-input"
             />
-
-            <SearchOutlinedIcon onClick={searchPost}/>
+            <button className="search-icon-btn" onClick={searchPost} aria-label="Search">
+                <SearchOutlinedIcon className={`search-icon ${darkMode ? 'dark' : ''}`} />
+            </button>
         </section>
     );
 };

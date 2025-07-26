@@ -81,10 +81,14 @@ const Userinfo = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        if (!clientData || clientData._id !== userId) {
-            dispatch(fetchUserData(userId, navigate))
+        const refetchUserData = async () => {
+            await dispatch(fetchUserData(userId, accessToken))
         }
-    }, [dispatch, userId, navigate, accessToken])
+
+        if (!clientData) {
+            refetchUserData()
+        }
+    }, [])
 
     if (isLoading) {
         return (

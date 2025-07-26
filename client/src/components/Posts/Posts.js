@@ -50,7 +50,7 @@ const Posts = ({ setCurrentId }) => {
                         <CircularProgress
                             className={`infloader ${darkMode ? 'dark' : ''}`}
                             size="3rem"
-                        />
+                        />  
                     }
                     endMessage={
                         <Typography
