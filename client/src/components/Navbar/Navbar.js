@@ -35,6 +35,7 @@ import "./navbar.styles.css";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const darkMode = useTheme();

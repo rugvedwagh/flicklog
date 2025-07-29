@@ -46,13 +46,11 @@
   z-index: 997;
   transition: all 0.3s ease;
   border-bottom: 0.25px solid var(--borderColor) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .navbar.dark {
   background-color: var(--black);
   border-bottom-color: var(--subtextColor);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .navbar.visible {
@@ -65,7 +63,6 @@
   animation: slideUp 0.4s ease;
 }
 
-/* Brand Section */
 .brand-container {
   cursor: pointer;
   transition: transform 0.3s ease;

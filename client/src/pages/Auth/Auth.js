@@ -121,14 +121,6 @@ const SignUp = () => {
                                     <strong>Privacy Policy</strong>.
                                 </Typography>
 
-                                {/* <Button
-                                    type="submit"
-                                    fullWidth
-                                    className={`submit ${darkMode ? 'dark' : ''}`}
-                                    variant="contained"
-                                >
-                                    {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" />}
-                                </Button> */}
                                 <Button
                                     type="submit"
                                     fullWidth
