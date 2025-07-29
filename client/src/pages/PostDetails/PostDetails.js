@@ -136,6 +136,8 @@ const PostDetails = () => {
                         </Tooltip>
                     )}
 
+                </div>
+                <div className={`content-section ${darkMode ? "dark" : ""}`}>
                     <Typography
                         component="div"
                         className={`post-content ${darkMode ? "dark" : ""}`}

@@ -327,7 +327,7 @@
     gap: 0.75rem;
 }
 
-.tag-postdetails{
+.tag-postdetails {
     background-color: var(--antiFlashWhite);
     color: var(--borderColor);
     padding: 0.5rem 1rem;
@@ -353,7 +353,7 @@
 }
 
 .fullscreen-overlay {
-    position: absolute-postdetails;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -534,6 +534,21 @@
     color: var(--subtextColor) !important;
 }
 
+
+.content-section {
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.6s ease 0.4s both;
+}
+
+.content-section.dark {
+    background-color: var(--cardColour)!important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
 
@@ -605,7 +620,7 @@
         font-size: 0.9rem !important;
     }
 
-    .tag-postdetails{
+    .tag-postdetails {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
     }

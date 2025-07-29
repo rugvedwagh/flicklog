@@ -51,7 +51,7 @@ const SignUp = () => {
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
-        <Container component="main" maxWidth="lg" style={{ marginTop: '1%', paddingTop: '6rem' }}>
+        <Container component="main" maxWidth="lg" style={{ marginTop: '1%', paddingTop: '4rem' }}>
             <Paper className={`paper-container ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Grid container spacing={0} alignItems="center">
 
@@ -64,7 +64,7 @@ const SignUp = () => {
 
                             <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
-                                    <LockOutlinedIcon />
+                                    <LockOutlinedIcon sx={{ color: 'white' }} />
 
                                     <Typography
                                         className={`typography ${darkMode ? 'dark' : ''}`}
@@ -121,13 +121,22 @@ const SignUp = () => {
                                     <strong>Privacy Policy</strong>.
                                 </Typography>
 
-                                <Button
+                                {/* <Button
                                     type="submit"
                                     fullWidth
                                     className={`submit ${darkMode ? 'dark' : ''}`}
                                     variant="contained"
                                 >
                                     {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" />}
+                                </Button> */}
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    className={`submit ${darkMode ? 'dark' : ''}`}
+                                    variant="contained"
+                                    style={{ borderRadius: '1.2rem', fontWeight: 600, letterSpacing: 0.2, padding: '0.85rem', fontSize: '1.08rem', margin: '12px 0 22px 0', boxShadow: '0 2px 10px 0 rgba(76,175,80,0.08)' }}
+                                >
+                                    {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp;{isLoading && <CircularProgress size="1.6rem" />}
                                 </Button>
 
                                 <Grid style={{ margin: '16px 0' }} container justify="flex-end">
