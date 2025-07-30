@@ -1,43 +1,18 @@
-@keyframes fadeIn {
+@keyframes glowAppear {
     0% {
         opacity: 0;
-        transform: translateY(20px);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
     }
-
     100% {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes scaleIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 }
 
 .page-wrapper {
     min-height: 100vh;
     background-color: var(--white);
-    transition: all 0.3s ease;
+    animation: 0.6s ease glowAppear !important;
 }
 
 .page-wrapper.dark {
@@ -50,7 +25,6 @@
     left: 50%;
     transform: translate(0%, -65%);
 }
-
 
 .loader {
     color: var(--forrestGreen) !important;
@@ -112,7 +86,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 9rem 2rem 9rem;
-    animation: fadeIn 0.6s ease;
+    animation: glowAppear 0.6s ease;
 }
 
 .hero-section {
@@ -121,7 +95,7 @@
     padding: 2.5rem;
     margin-bottom: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.6s ease;
+    animation: glowAppear 0.6s ease;
     position: relative;
 }
 
@@ -327,7 +301,7 @@
     gap: 0.75rem;
 }
 
-.tag-postdetails{
+.tag-postdetails {
     background-color: var(--antiFlashWhite);
     color: var(--borderColor);
     padding: 0.5rem 1rem;
@@ -353,7 +327,7 @@
 }
 
 .fullscreen-overlay {
-    position: absolute-postdetails;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -379,7 +353,7 @@
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.6s ease 0.6s both;
+    animation: glowAppear 0.6s ease 0.6s both;
 }
 
 .comments-section.dark {
@@ -391,7 +365,7 @@
     max-width: 1200px;
     margin: 4rem auto 2rem auto;
     padding: 0 2rem;
-    animation: fadeIn 0.6s ease 0.8s both;
+    animation: glowAppear 0.6s ease 0.8s both;
 }
 
 .recommended-header {
@@ -605,7 +579,7 @@
         font-size: 0.9rem !important;
     }
 
-    .tag-postdetails{
+    .tag-postdetails {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
     }
@@ -639,4 +613,13 @@
 #delete-dialog-title,
 #delete-dialog-description {
     color: var(--black) !important;
+}
+
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+img[loading="lazy"]:not([src=""]) {
+    opacity: 1;
 }

@@ -10,14 +10,14 @@
     }
 }
 
-@keyframes slideAccessories {
+@keyframes glowAppear {
     0% {
-        transform: translateY(100%);
         opacity: 0;
+        box-shadow: 0 0 0 rgba(0,0,0,0);
     }
     100% {
-        transform: translateY(0%);
         opacity: 1;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 }
 
@@ -138,7 +138,7 @@
 
 .appBarSearch>h4 {
     color: var(--forrestGreen);
-    animation: slideAccessories 0.3s ease-in-out;
+    animation: glowAppear 0.3s ease-in-out;
     cursor: pointer;
 }
 
@@ -166,5 +166,5 @@
 }
 
 .utitlity-comps{
-    animation: slideAccessories 0.4s ease-in;
+    animation: glowAppear 0.4s ease-in;
 }

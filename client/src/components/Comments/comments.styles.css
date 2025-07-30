@@ -1,24 +1,11 @@
-@keyframes fadeIn {
+@keyframes glowAppear {
     0% {
         opacity: 0;
-        transform: translateY(10px);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
     }
-
     100% {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 }
 
@@ -39,7 +26,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--borderColor);
     overflow: hidden;
-    animation: fadeIn 0.6s ease;
+    animation: glowAppear 0.6s ease;
     font-family: "EB Garamond", serif !important;
 }
 
@@ -98,8 +85,8 @@
 }
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background-color: var(--cardColour);
     display: flex;
@@ -167,7 +154,7 @@
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
-    animation: fadeIn 0.3s ease;
+    animation: glowAppear 0.3s ease;
 }
 
 .cancel-btn {
@@ -256,7 +243,7 @@
     background-color: var(--antiFlashWhite);
     border-radius: 12px;
     transition: all 0.3s ease;
-    animation: slideIn 0.4s ease;
+    animation: glowAppear 0.4s ease;
 }
 
 .comment-item.dark {

@@ -6,6 +6,9 @@ import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import https from 'https';
 
+import helmet from 'helmet';
+import compression from 'compression';
+
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/notFound.middleware.js';
 import connectDatabase from './config/Database.js';
@@ -21,7 +24,12 @@ const app = express();
 
 app.set('trust proxy', 1); // Trust first proxy (Render)
 
-// Middleware
+// === Security & Performance Middleware ===
+app.use(helmet());
+app.use(compression());
+app.disable('x-powered-by'); // Hide Express info from headers
+
+// === CORS & Parsing Middleware ===
 app.use(
     cors({
         origin: process.env.FRONTEND_DOMAIN,
@@ -33,27 +41,25 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
-// Routes
+// === Routes ===
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
 
-// Root
+// === Root Route ===
 app.get('/', (req, res) => {
     res.send(`<h3>✅ Server is running in ${process.env.NODE_ENV || 'development'} mode</h3>`);
 });
 
-// Not Found
+// === 404 + Error Handling Middleware ===
 app.use(notFound);
-
-// Error handler (must be last)
 app.use(errorHandler);
 
-// Connect to DB & Redis
+// === Connect to DB & Redis ===
 connectDatabase();
 connectRedis();
 
-// Server logic
+// === Server Startup ===
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV === 'development') {

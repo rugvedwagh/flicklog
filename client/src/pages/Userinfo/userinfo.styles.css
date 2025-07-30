@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+@keyframes glowAppear {
     0% {
         opacity: 0;
         transform: translateY(20px);
@@ -7,18 +7,6 @@
     100% {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
     }
 }
 
@@ -44,7 +32,7 @@
 
 .back-button-userinfo {
     color: var(--borderColor);
-    background-color: var(--cardColour);
+    background-color: var(--antiFlashWhite);
     cursor: pointer;
     font-size: 2rem !important;
     border-radius: 50%;
@@ -59,6 +47,7 @@
 }
 
 .back-button-userinfo.dark {
+    background-color: var(--cardColour  );
     color: var(--antiFlashWhite);
 }
 
@@ -98,7 +87,7 @@
     padding: 2rem;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.6s ease;
+    animation: glowAppear 0.6s ease;
     border: 1px solid var(--borderColor);
 }
 
@@ -114,15 +103,16 @@
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    background: linear-gradient(135deg, var(--subtextColor), var(--borderColor));
-    color: var(--antiFlashWhite);
+    /* background: linear-gradient(135deg, var(--subtextColor), var(--borderColor)); */
+    background-color: var(--antiFlashWhite);
+    color: var(--white);
     border-radius: 50%;
     margin: 0 auto 1.5rem auto;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .avatar-large.dark {
-    background: linear-gradient(135deg, var(--antiFlashWhite), var(--subtextColor));
+    background-color: var(--borderColor);
+    /* background: linear-gradient(135deg, var(--antiFlashWhite), var(--subtextColor)); */
     color: var(--black);
 }
 
@@ -178,7 +168,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    animation: slideIn 0.6s ease 0.2s both;
+    animation: glowAppear 0.6s ease 0.2s both;
 }
 
 .stat-card {
@@ -234,7 +224,7 @@
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.6s ease 0.4s both;
+    animation: glowAppear 0.6s ease 0.4s both;
     border: 1px solid var(--borderColor);
     height: fit-content;
 }
@@ -250,7 +240,7 @@
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.6s ease 0.6s both;
+    animation: glowAppear 0.6s ease 0.6s both;
     border: 1px solid var(--borderColor);
 }
 
@@ -340,23 +330,24 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    background-color: #f8f9fa;
+    background-color: var(--white);
     border-radius: 8px;
     transition: all 0.3s ease;
     border: 1px solid var(--antiFlashWhite);
 }
 
 .bookmark-item:hover {
-    background-color: var(--borderColor);
+    background-color: var(--antiFlashWhite) !important;
 }
 
 .bookmark-item.dark {
-    background-color: var(--black);
+    background-color: var(--cardColour) !important;
     border-color: var(--subtextColor);
 }
 
 .bookmark-item.dark:hover {
-    background-color: var(--cardColour);
+    color: var(--antiFlashWhite);
+    background-color: var(--black) !important;
 }
 
 .bookmark-content {

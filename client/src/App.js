@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,16 +14,16 @@ import Footer from './components/Footer/Footer';
 import { useTheme } from './context/themeContext';
 import { fetchUserProfile } from './utils/storage';
 import { store } from './redux/store';
-import Home from '../src/pages/Home/Home';
-import Auth from '../src/pages/Auth/Auth';
-import PostDetails from '../src/pages/PostDetails/PostDetails';
-import NotFound from '../src/pages/Notfound/NotFound';
-import Userinfo from '../src/pages/Userinfo/Userinfo';
 
 import './App.css';
 
+const Home = lazy(() => import('./pages/Home/Home'));
+const Auth = lazy(() => import('./pages/Auth/Auth'));
+const PostDetails = lazy(() => import('./pages/PostDetails/PostDetails'));
+const NotFound = lazy(() => import('./pages/Notfound/NotFound'));
+const Userinfo = lazy(() => import('./pages/Userinfo/Userinfo'));
+
 const App = () => {
-    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -70,7 +70,6 @@ const App = () => {
     // --- Refresh access token if missing or expired ---
     useEffect(() => {
         const refreshAccessTokenIfNeeded = async () => {
-
             if (isAccessTokenExpired(accessToken)) {
                 await dispatch(refreshToken());
 
@@ -143,15 +142,17 @@ const App = () => {
                 <Navbar />
 
                 {/* Routes */}
-                <Routes>
-                    <Route path="/" element={<Navigate to="/posts" />} />
-                    <Route path="/posts/search" element={<Home />} />
-                    <Route path="/posts/:id" element={<PostDetails />} />
-                    <Route path="/posts" element={<Home />} />
-                    <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
-                    <Route path="/user/i" element={<Userinfo />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                <Suspense fallback={<div className="loading-screen">Loading...</div>}>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/posts" />} />
+                        <Route path="/posts/search" element={<Home />} />
+                        <Route path="/posts/:id" element={<PostDetails />} />
+                        <Route path="/posts" element={<Home />} />
+                        <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
+                        <Route path="/user/i" element={<Userinfo />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Suspense>
 
                 <Footer />
             </Container>

@@ -1,11 +1,11 @@
 @keyframes slideleft {
     0% {
-        transform-auth: scale(0);
+        transform: scale(0);
         opacity: 0;
     }
 
     100% {
-        transform-auth: scale(1);
+        transform: scale(1);
         opacity: 1;
     }
 }
