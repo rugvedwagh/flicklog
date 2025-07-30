@@ -26,7 +26,7 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case AUTH:
-            const { accessToken, csrfToken,  ...filteredData } = action?.payload;
+            const { accessToken, csrfToken, ...filteredData } = action?.payload;
             localStorage.setItem('profile', JSON.stringify(filteredData.result));
             return {
                 ...state,

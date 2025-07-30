@@ -86,12 +86,10 @@
     gap: 0.5rem;
 }
 
-/* Add this new style */
-.cardActions > div {
+.cardActions>div {
     display: flex;
     gap: 0.5rem;
 }
-
 
 .comment-button {
     color: var(--borderColor);
@@ -133,33 +131,35 @@
     .card {
         border-radius: 6px;
     }
-    
+
     .media {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
     }
-    
+
     .overlay {
         top: 0.5rem;
         left: 0.5rem;
         padding: 0.2rem 0.4rem;
     }
-    
-    .title, 
-    .msg-text {
-        padding: 0 0.8rem !important;
+
+    .title {
+        padding: 0.5rem 0.8rem !important;
     }
-    
+
     .cardActions {
         padding: 0.5rem 0.8rem !important;
     }
-    
+
     .MuiButton-root {
         padding: 4px 6px !important;
     }
+
+    .tags-container {
+        padding: 0.2rem 0.8rem !important;
+    }
 }
 
-/* Add these styles to your postcard.styles.css */
 .tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -178,7 +178,7 @@
     transition: all 0.3s ease;
 }
 
-.tag:hover{
+.tag:hover {
     transform: translateY(-2px);
     background-color: var(--white);
 }
@@ -187,4 +187,3 @@
     color: var(--antiFlashWhite) !important;
     background-color: var(--borderColor) !important;
 }
-

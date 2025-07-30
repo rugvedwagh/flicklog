@@ -12,29 +12,37 @@ import bcrypt from "bcrypt";
 const logIn = async (req, res) => {
     const { email, password } = req.body;
 
-    const oldUser = await User.findOne({ email });
-    if (!oldUser) {
+    if(!email || !password) {
+        createHttpError("Email and password are required", 400);
+    }
+
+    if( password.length < 4) {
+        createHttpError("Password must be at least 4 characters long", 400);
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
         createHttpError("User not found", 404);
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
     if (!isPasswordCorrect) {
         createHttpError("Incorrect password", 400);
     }
 
     const sessionId = uuidv4();
     const csrfToken = generateCsrfToken(32);
-    const refreshToken = generateRefreshToken(oldUser);
-    const accessToken = generateAccessToken(oldUser);
+    const refreshToken = generateRefreshToken(existingUser);
+    const accessToken = generateAccessToken(existingUser);
 
-    oldUser.sessions.push({
+    existingUser.sessions.push({
         csrfToken,
         refreshToken,
         sessionId,
         userAgent: req.headers["user-agent"]
     });
 
-    await oldUser.save();
+    await existingUser.save();
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -44,17 +52,18 @@ const logIn = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const userObj = oldUser.toObject();
+    const userObj = existingUser.toObject();
     const {
         password: pass,
         bookmarks,
         __v,
         sessions,
-        ...filteredUserData
+        csrfToken: csrf,
+        ...filteredData
     } = userObj;
 
     res.status(200).json({
-        result: filteredUserData,
+        result: filteredData,
         accessToken,
         csrfToken,
         sessionId
@@ -65,9 +74,16 @@ const logIn = async (req, res) => {
 const register = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
-    const oldUser = await User.findOne({ email });
+    if(!email || !password || !confirmPassword || !firstName || !lastName) {
+        createHttpError("All fields are required", 400);
+    }
 
-    if (oldUser) {
+    if( password.length < 4) {
+        createHttpError("Password must be at least 4 characters long", 400);
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
         createHttpError("Email is already in use", 400);
     }
 
@@ -83,31 +99,44 @@ const register = async (req, res) => {
         name: `${firstName} ${lastName}`,
     });
 
-    await newUser.save();
-
-    const accessToken = generateAccessToken(newUser);
-    const refreshToken = generateRefreshToken(newUser);
+    const sessionId = uuidv4();
     const csrfToken = generateCsrfToken(32);
+    const refreshToken = generateRefreshToken(newUser);
+    const accessToken = generateAccessToken(newUser);
 
-    newUser.csrfToken = csrfToken;
+    newUser.sessions.push({
+        csrfToken,
+        refreshToken,
+        sessionId,
+        userAgent: req.headers["user-agent"]
+    });
+
     await newUser.save();
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        path: '/',
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const authData = {
-        result: newUser,
-        accessToken: accessToken,
-        refreshToken,
-        csrfToken
-    }
+    const userObj = newUser.toObject();
+    const {
+        password: pass,
+        bookmarks,
+        __v,
+        sessions,
+        csrfToken: csrf,
+        ...filteredData
+    } = userObj;
 
-    res.status(201).json(authData);
+    res.status(201).json({
+        result: filteredData,
+        accessToken,
+        csrfToken,
+        sessionId
+    });
 };
 
 // Logout user controller

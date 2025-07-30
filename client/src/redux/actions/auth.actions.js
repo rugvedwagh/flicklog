@@ -45,6 +45,10 @@ const register = (formData, navigate) => async (dispatch) => {
         dispatch({ type: START_LOADING });
 
         const { data } = await registerApi(formData);
+        const { csrfToken, sessionId } = data;
+
+        localStorage.setItem('csrfToken', csrfToken);
+        localStorage.setItem('sessionId', sessionId);
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {

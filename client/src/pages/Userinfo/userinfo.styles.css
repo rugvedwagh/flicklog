@@ -33,6 +33,7 @@
 .back-button-userinfo {
     color: var(--borderColor);
     background-color: var(--antiFlashWhite);
+    background-color: var(--antiFlashWhite);
     cursor: pointer;
     font-size: 2rem !important;
     border-radius: 50%;
@@ -47,7 +48,7 @@
 }
 
 .back-button-userinfo.dark {
-    background-color: var(--cardColour  );
+    background-color: var(--cardColour);
     color: var(--antiFlashWhite);
 }
 
@@ -337,7 +338,7 @@
 }
 
 .bookmark-item:hover {
-    background-color: var(--antiFlashWhite) !important;
+    background-color: var(--antiFlashWhite);
 }
 
 .bookmark-item.dark {
@@ -346,8 +347,7 @@
 }
 
 .bookmark-item.dark:hover {
-    color: var(--antiFlashWhite);
-    background-color: var(--black) !important;
+    background-color: var(--borderColor) !important;
 }
 
 .bookmark-content {

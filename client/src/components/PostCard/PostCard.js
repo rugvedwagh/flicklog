@@ -64,7 +64,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                 </Typography>
             </div>
 
-            <section onClick={openPost} className="content-section">
+            <section onClick={openPost} className="content-sectio">
                 <Typography
                     className={`title ${darkMode ? 'dark' : ''}`}
                     variant="h6"
