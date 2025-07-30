@@ -14,7 +14,7 @@ router
     .patch(verifyAccessToken, asyncHandler(updateUser));
 
 router
-    .route("/i/:id")
+    .route("/info/:id")
     .get(verifyAccessToken, asyncHandler(fetchUserData));
 
 export default router;

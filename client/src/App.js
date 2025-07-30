@@ -48,11 +48,16 @@ const App = () => {
         !errorMessage.includes("Token") &&
         !(errorMessage.includes("Session") && location.pathname === '/auth');
 
+    const isValidSuccessMessage =
+        successMessage &&
+        showSuccess &&
+        !(successMessage.includes("Found") && location.pathname.startsWith('/posts/'));
+
     // --- Show alerts ---
     useEffect(() => {
         let errorTimer, successTimer;
 
-        if (errorMessage && !errorMessage?.includes("Token")) {
+        if (errorMessage) {
             setShow(true);
             errorTimer = setTimeout(() => {
                 setShow(false);
@@ -116,7 +121,7 @@ const App = () => {
     return (
         <div className={`root-bg ${darkMode ? 'dark' : ''}`}>
             {/* Success Message */}
-            <Collapse in={showSuccess}>
+            <Collapse in={isValidSuccessMessage}>
                 <Alert variant="filled" severity="success" style={{ textAlign: 'center' }}>
                     {successMessage}
                 </Alert>
@@ -149,14 +154,14 @@ const App = () => {
                 <Navbar />
 
                 {/* Routes */}
-                <Suspense fallback={<div className="loading-screen"><CircularProgress sx={{ color: 'white' }}/></div>}>
+                <Suspense fallback={<div className="loading-screen">loading...</div>}>
                     <Routes>
                         <Route path="/" element={<Navigate to="/posts" />} />
                         <Route path="/posts/search" element={<Home />} />
                         <Route path="/posts/:id" element={<PostDetails />} />
                         <Route path="/posts" element={<Home />} />
                         <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
-                        <Route path="/user/i" element={<Userinfo />} />
+                        <Route path="/user/info" element={<Userinfo />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Suspense>

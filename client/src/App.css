@@ -26,9 +26,8 @@ body {
 }
 
 .root-bg.dark .MuiContainer-maxWidthLg .scrollup {
-    background-color: var(--black);
-    color: var(--antiFlashWhite);
-    outline: 1px solid var(--borderColor);
+    background-color: var(--cardColour);
+    color: var(--forrestGreen);
 }
 
 @keyframes flower {
@@ -156,10 +155,7 @@ body {
     font-size: 18px !important;
 }
 
-.loading-screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%, -50%);
-    
+.loading-screen{
+    color: transparent !important;
+    display: none !important;
 }

@@ -77,7 +77,7 @@ const Navbar = () => {
     const openUser = () => {
         if (userId) {
             dispatch(fetchUserData(userId, navigate));
-            navigate("/user/i");
+            navigate("/user/info");
             closeMenu();
         }
     };
@@ -196,7 +196,7 @@ const Navbar = () => {
                             <span>Liked Posts</span>
                         </MenuItem>
 
-                        <MenuItem onClick={() => navigate("/user/i")} className={`menu-item ${darkMode ? "dark" : ""}`}>
+                        <MenuItem onClick={() => navigate("/user/info")} className={`menu-item ${darkMode ? "dark" : ""}`}>
                             <SettingsOutlinedIcon className="menu-icon" />
                             <span>Settings</span>
                         </MenuItem>

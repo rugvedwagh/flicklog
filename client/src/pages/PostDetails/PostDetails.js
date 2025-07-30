@@ -137,6 +137,7 @@ const PostDetails = () => {
                     )}
 
                 </div>
+                
                 <div className={`content-section-postdetails ${darkMode ? "dark" : ""}`}>
                     <Typography
                         component="div"

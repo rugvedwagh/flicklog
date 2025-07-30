@@ -53,7 +53,7 @@
 }
 
 .brand-text.dark {
-  color: var(--antiFlashWhite) !important;
+  color: var(--forrestGreen) !important;
 }
 
 /* Navbar Content */
@@ -126,7 +126,7 @@
 
 .profile-avatar.dark {
   background-color: var(--antiFlashWhite) !important;
-  color: var(--black) !important;
+  color: var(--forrestGreen) !important;
 }
 
 .profile-avatar.dark:hover {
@@ -177,7 +177,7 @@
 
 .menu-paper.dark {
   background-color: var(--black) !important;
-  border-color: var(--subtextColor);
+  border-color: var(--borderColor);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -246,7 +246,7 @@
 }
 
 .menu-divider.dark {
-  background-color: var(--subtextColor) !important;
+  background-color: var(--borderColor) !important;
 }
 
 .menu-item {
