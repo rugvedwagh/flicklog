@@ -45,6 +45,7 @@
 .submit {
     margin: 16px 0 !important;
     background-color: var(--forrestGreen) !important;
+    border-radius: 12px;
 }
 
 .submit.dark{
@@ -119,5 +120,5 @@
 
 .MuiTextField-root{
     background-color: var(--antiFlashWhite);
-    border-radius: 3px;
+    border-radius: 12px;
 }

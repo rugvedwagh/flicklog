@@ -189,8 +189,30 @@ const Userinfo = () => {
             </div>
 
             {/* Edit Dialog */}
-            <Dialog open={editDialogOpen} onClose={handleCancel} maxWidth="sm" fullWidth>
-                <DialogTitle>Edit Profile</DialogTitle>
+            <Dialog
+                open={editDialogOpen}
+                onClose={handleCancel}
+                maxWidth="sm"
+                fullWidth
+                PaperProps={{
+                    style: {
+                        borderRadius: '20px',
+                        padding: '20px',
+                        backgroundColor: darkMode ? '#1e1e1e' : '#fefefe',
+                        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                    },
+                }}
+            >
+                <DialogTitle
+                    sx={{
+                        fontWeight: 'bold',
+                        fontSize: '1.5rem',
+                        color: darkMode ? '#fff' : '#333',
+                    }}
+                >
+                    Edit Profile
+                </DialogTitle>
+
                 <DialogContent>
                     <TextField
                         name="name"
@@ -198,8 +220,20 @@ const Userinfo = () => {
                         value={formData.name}
                         onChange={handleFormChange}
                         fullWidth
-                        margin="normal"
+                        margin="dense"
                         variant="outlined"
+                        InputProps={{
+                            style: {
+                                borderRadius: 12,
+                                backgroundColor: darkMode ? '#2c2c2c' : '#fff',
+                                color: darkMode ? '#ccc' : '#333',
+                            },
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: darkMode ? '#aaa' : '#666',
+                            },
+                        }}
                     />
                     <TextField
                         name="email"
@@ -207,15 +241,55 @@ const Userinfo = () => {
                         value={formData.email}
                         onChange={handleFormChange}
                         fullWidth
-                        margin="normal"
+                        margin="dense"
                         variant="outlined"
+                        InputProps={{
+                            style: {
+                                borderRadius: 12,
+                                backgroundColor: darkMode ? '#2c2c2c' : '#fff',
+                                color: darkMode ? '#ccc' : '#333',
+                            },
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: darkMode ? '#aaa' : '#666',
+                            },
+                        }}
                     />
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
+
+                <DialogActions sx={{ justifyContent: 'space-between', marginTop: 1 }}>
+                    <Button
+                        onClick={handleCancel}
+                        variant="outlined"
+                        sx={{
+                            borderRadius: 8,
+                            textTransform: 'none',
+                            borderColor: darkMode ? '#777' : '#ccc',
+                            color: darkMode ? '#ccc' : '#333',
+                            '&:hover': {
+                                borderColor: darkMode ? '#999' : '#999',
+                            },
+                        }}
+                    >
                         Cancel
                     </Button>
-                    <Button onClick={saveChanges} sx={{ backgroundColor: '#1a1a1a' }} variant="contained">
+
+                    <Button
+                        onClick={saveChanges}
+                        variant="contained"
+                        sx={{
+                            backgroundColor: darkMode ? '#e7e9ea' : '#2e6f40',
+                            color: darkMode ? '#1a1a1a' : '#e7e9ea',
+                            borderRadius: 8,
+                            textTransform: 'none',
+                            boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
+                            '&:hover': {
+                                backgroundColor:  darkMode ? '#2e6f40' : '#e7e9ea',
+                                color: darkMode ? '#fff' : '#2e6f40',
+                            },
+                        }}
+                    >
                         Save Changes
                     </Button>
                 </DialogActions>

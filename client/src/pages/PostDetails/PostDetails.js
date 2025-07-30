@@ -136,6 +136,8 @@ const PostDetails = () => {
                         </Tooltip>
                     )}
 
+                </div>
+                <div className={`content-section-postdetails ${darkMode ? "dark" : ""}`}>
                     <Typography
                         component="div"
                         className={`post-content ${darkMode ? "dark" : ""}`}
@@ -161,13 +163,7 @@ const PostDetails = () => {
                         {recommendedPosts.slice(0, 6).map(({ title, likes, selectedfile, _id }) => (
                             <Card key={_id} className={`recommended-card ${darkMode ? "dark" : ""}`} onClick={() => openPost(_id)}>
                                 <div className="card-image-container">
-                                    <img
-                                        src={selectedfile || "/placeholder.svg"}
-                                        className="card-image"
-                                        alt={title}
-                                        loading="lazy"
-                                    />
-
+                                    <img src={selectedfile || "/placeholder.svg"} className="card-image" alt={title} />
                                     <div className="card-overlay">
                                         <Typography className="overlay-text">Read More</Typography>
                                     </div>

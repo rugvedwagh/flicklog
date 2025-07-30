@@ -11,6 +11,7 @@ import { Collapse, Container, Alert } from '@mui/material';
 import { getAccessToken } from './utils/getTokens';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { CircularProgress } from '@mui/material';
 import { useTheme } from './context/themeContext';
 import { fetchUserProfile } from './utils/storage';
 import { store } from './redux/store';
@@ -24,8 +25,10 @@ const NotFound = lazy(() => import('./pages/Notfound/NotFound'));
 const Userinfo = lazy(() => import('./pages/Userinfo/Userinfo'));
 
 const App = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const darkMode = useTheme();
     const profile = fetchUserProfile();
@@ -39,33 +42,37 @@ const App = () => {
     const [show, setShow] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
 
-    const isValidErrorAlertCondition = errorMessage && show && !errorMessage?.includes("Token");
+    const isValidErrorAlertCondition =
+        errorMessage &&
+        show &&
+        !errorMessage.includes("Token") &&
+        !(errorMessage.includes("Session") && location.pathname === '/auth');
 
-    // --- Show error alert ---
+    // --- Show alerts ---
     useEffect(() => {
-        if (!errorMessage) return;
+        let errorTimer, successTimer;
 
-        setShow(true);
-        const timer = setTimeout(() => {
-            setShow(false);
-            dispatch(clearError());
-        }, 3000);
+        if (errorMessage && !errorMessage?.includes("Token")) {
+            setShow(true);
+            errorTimer = setTimeout(() => {
+                setShow(false);
+                dispatch(clearError());
+            }, 3000);
+        }
 
-        return () => clearTimeout(timer);
-    }, [errorMessage]);
+        if (successMessage) {
+            setShowSuccess(true);
+            successTimer = setTimeout(() => {
+                setShowSuccess(false);
+                dispatch(clearSuccess());
+            }, 3000);
+        }
 
-    // --- Show success alert ---
-    useEffect(() => {
-        if (!successMessage) return;
-
-        setShowSuccess(true);
-        const timer = setTimeout(() => {
-            setShowSuccess(false);
-            dispatch(clearSuccess());
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, [successMessage]);
+        return () => {
+            if (errorTimer) clearTimeout(errorTimer);
+            if (successTimer) clearTimeout(successTimer);
+        };
+    }, [errorMessage, successMessage, dispatch]);
 
     // --- Refresh access token if missing or expired ---
     useEffect(() => {
@@ -142,7 +149,7 @@ const App = () => {
                 <Navbar />
 
                 {/* Routes */}
-                <Suspense fallback={<div className="loading-screen">Loading...</div>}>
+                <Suspense fallback={<div className="loading-screen"><CircularProgress sx={{ color: 'white' }}/></div>}>
                     <Routes>
                         <Route path="/" element={<Navigate to="/posts" />} />
                         <Route path="/posts/search" element={<Home />} />

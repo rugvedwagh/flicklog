@@ -56,7 +56,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4b4b4b;
+    color: var(--subtextColor);
     transition: background 0.2s, color 0.2s, transform 0.2s;
     font-size: 1.15rem;
     border: 1.5px solid transparent;
@@ -97,7 +97,6 @@
 
 .legal-links a:hover {
     color: var(--forrestGreen);
-    text-decoration: underline;
 }
 
 /* Columns */

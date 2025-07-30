@@ -64,7 +64,7 @@ const SignUp = () => {
 
                             <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
-                                    <LockOutlinedIcon />
+                                    <LockOutlinedIcon sx={{ color: 'white' }} />
 
                                     <Typography
                                         className={`typography ${darkMode ? 'dark' : ''}`}

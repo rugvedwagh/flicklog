@@ -155,3 +155,11 @@ body {
     animation: slideErrorDown 0.3s ease-in;
     font-size: 18px !important;
 }
+
+.loading-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%, -50%);
+    
+}
