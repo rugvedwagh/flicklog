@@ -316,7 +316,7 @@
 .tag-postdetails {
     background-color: var(--antiFlashWhite);
     color: var(--borderColor);
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
