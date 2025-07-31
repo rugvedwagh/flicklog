@@ -309,6 +309,7 @@
     max-height: 400px;
     overflow-y: auto;
     padding-right: 0.5rem;
+    animation: glowAppear 0.4s ease;
 }
 
 .bookmarks-list::-webkit-scrollbar {

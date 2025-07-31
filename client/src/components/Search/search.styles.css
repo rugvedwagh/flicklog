@@ -9,8 +9,9 @@
     max-width: 500px;
     width: 100%;
     margin: 0rem;
+    flex-wrap: nowrap;
+    height: 38px
 }
-
 
 .search-input {
     flex: 1;
@@ -20,8 +21,10 @@
     background-color: transparent;
     color: var(--textColor, #333);
     outline: none;
+    min-width: 0; /* important for flexbox shrinking */
 }
 
+/* Dark Mode input color */
 .search-box.dark .search-input {
     color: var(--borderColor);
 }
@@ -29,15 +32,18 @@
 .search-icon-btn {
     background-color: transparent;
     border: none;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem; /* increased horizontal padding for easier tapping */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease; 
+    transition: background-color 0.2s ease;
+    min-width: 44px; /* minimum touch target for accessibility */
+    min-height: 44px;
 }
 
+/* Hover effect */
 .search-icon-btn:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
@@ -47,7 +53,7 @@
     color: var(--forrestGreen);
 }
 
-.search-icon.dark{
+.search-icon.dark {
     color: var(--forrestGreen) !important;
 }
 
@@ -60,11 +66,20 @@
     .search-box {
         margin: 0.5rem 0;
         width: 100%;
+        /* allow wrapping in tight spaces to avoid cutoff */
+        flex-wrap: nowrap;
+        max-width: 100%;
     }
 
     .search-input {
         font-size: 0.95rem;
         padding: 0.5rem 0.8rem;
+    }
+
+    .search-icon-btn {
+        padding: 0.5rem 0.8rem; /* maintain padding */
+        min-width: 40px;
+        min-height: 40px;
     }
 
     .search-icon {
@@ -74,13 +89,21 @@
 
 @media (max-width: 480px) {
     .search-box {
-        flex-direction: row;
+        flex-direction: row; /* already row, no change */
         margin: 0.5rem;
+        max-width: 100%;
+        flex-wrap: nowrap;
     }
 
     .search-input {
         font-size: 0.9rem;
         padding: 0.4rem 0.6rem;
+    }
+
+    .search-icon-btn {
+        padding: 0.4rem 0.6rem;
+        min-width: 36px;
+        min-height: 36px;
     }
 
     .search-icon {
