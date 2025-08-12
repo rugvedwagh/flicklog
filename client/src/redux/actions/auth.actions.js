@@ -26,6 +26,7 @@ const logIn = (formData, navigate) => async (dispatch) => {
         const { data } = await logInApi(formData);
         const { csrfToken, sessionId } = data;
 
+        localStorage.setItem('profile', JSON.stringify(data.result));
         localStorage.setItem('csrfToken', csrfToken);
         localStorage.setItem('sessionId', sessionId);
 
@@ -63,6 +64,10 @@ const Logout = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         await logoutApi();
+        localStorage.removeItem('profile');
+        localStorage.removeItem('cachedPosts');
+        localStorage.removeItem('csrfToken');
+        localStorage.removeItem('sessionId');
         dispatch({ type: LOGOUT });
         dispatch({ type: SUCCESS_MESSAGE, payload: "Logged out successfully" })
     } catch (error) {

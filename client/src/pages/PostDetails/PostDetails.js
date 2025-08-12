@@ -200,6 +200,7 @@ const PostDetails = () => {
                     aria-describedby="delete-dialog-description"
                     maxWidth="sm"
                     fullWidth
+                    classes={{ paper: darkMode ? "dark" : "" }}
                 >
                     <DialogTitle id="delete-dialog-title" className={darkMode ? "dark" : ""}>
                         Delete Post

@@ -134,9 +134,8 @@
   border-color: var(--antiFlashWhite);
 }
 
-/* Login Button */
 .login-btn {
-  background-color: var(--borderColor) !important;
+  background-color: var(--forrestGreen) !important;
   color: var(--antiFlashWhite) !important;
   border-radius: 25px !important;
   padding: 0.75rem 2rem !important;
@@ -153,8 +152,8 @@
 }
 
 .login-btn.dark {
-  background-color: var(--antiFlashWhite) !important;
-  color: var(--black) !important;
+  background-color: var(--forrestGreen) !important;
+  color: var(--antiFlashWhite) !important;
 }
 
 .login-btn.dark:hover {
@@ -172,7 +171,8 @@
   border-radius: 16px !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
   border: 1px solid var(--borderColor);
-  min-width: 280px;
+  min-width: 300px;
+  width: 20%;
   animation: glowAppear 0.3s ease;
 }
 

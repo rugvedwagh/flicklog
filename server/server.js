@@ -11,8 +11,8 @@ import compression from 'compression';
 
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/notFound.middleware.js';
-import connectDatabase from './config/Database.js';
-import { connectRedis } from './config/redisClient.js';
+import DatabaseConnection from './config/Database.js';
+import { RedisConnection } from './config/redisClient.js';
 
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
@@ -56,8 +56,8 @@ app.use(notFound);
 app.use(errorHandler);
 
 // === Connect to DB & Redis ===
-connectDatabase();
-connectRedis();
+DatabaseConnection();
+RedisConnection();
 
 // === Server Startup ===
 const PORT = process.env.PORT || 5000;
@@ -77,3 +77,4 @@ if (process.env.NODE_ENV === 'development') {
         console.log(`\n🚀 Production server running on port ${PORT}`);
     });
 }
+

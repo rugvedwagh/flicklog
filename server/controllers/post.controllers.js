@@ -25,7 +25,7 @@ const fetchPost = async (req, res) => {
 
     if (!post) {
         createHttpError("Post not found", 404);
-    }
+    } 
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;

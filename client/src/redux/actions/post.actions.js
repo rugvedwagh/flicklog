@@ -165,12 +165,16 @@ const likePost = (id) => async (dispatch) => {
 
 const addComment = (value, id) => async (dispatch) => {
     try {
+        dispatch({ type: START_LOADING });
         const { data } = await addCommentApi(value, id);
         dispatch({ type: COMMENT, payload: data });
         return data.comments;
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
+    }
+    finally{
+        dispatch({ type: END_LOADING });
     }
 };
 

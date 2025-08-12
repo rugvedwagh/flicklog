@@ -34,7 +34,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         const { data } = await updateUserDetailsApi(id, updatedData);
         const { password, __v, bookmarks, ...fileredData } = data;
 
-        dispatch({ type: SUCCESS_MESSAGE, payload : 'User udpated successfully' })
+        dispatch({ type: SUCCESS_MESSAGE, payload : 'User updated successfully' })
         dispatch({ type: UPDATE_USER, payload: fileredData });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });

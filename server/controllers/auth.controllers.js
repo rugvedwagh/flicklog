@@ -8,41 +8,42 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 
-// Log In Controller
 const logIn = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password: plainTextPassword } = req.body;
 
-    if(!email || !password) {
-        createHttpError("Email and password are required", 400);
+    if (!email || !plainTextPassword) {
+        return res.status(400).json({ message: "Email and password are required" });
     }
 
-    if( password.length < 4) {
-        createHttpError("Password must be at least 4 characters long", 400);
+    if (plainTextPassword.length < 4) {
+        return res.status(400).json({ message: "Password must be at least 4 characters long" });
     }
 
-    const existingUser = await User.findOne({ email });
-    if (!existingUser) {
-        createHttpError("User not found", 404);
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+    const isPasswordCorrect = await bcrypt.compare(plainTextPassword, user.password);
+
     if (!isPasswordCorrect) {
-        createHttpError("Incorrect password", 400);
+        return res.status(400).json({ message: "Incorrect password" });
     }
 
     const sessionId = uuidv4();
     const csrfToken = generateCsrfToken(32);
-    const refreshToken = generateRefreshToken(existingUser);
-    const accessToken = generateAccessToken(existingUser);
+    const refreshToken = generateRefreshToken(user);
+    const accessToken = generateAccessToken(user);
 
-    existingUser.sessions.push({
+    user.sessions.push({
         csrfToken,
         refreshToken,
         sessionId,
         userAgent: req.headers["user-agent"]
     });
 
-    await existingUser.save();
+    await user.save();
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -52,33 +53,25 @@ const logIn = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const userObj = existingUser.toObject();
-    const {
-        password: pass,
-        bookmarks,
-        __v,
-        sessions,
-        csrfToken: csrf,
-        ...filteredData
-    } = userObj;
+    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...result } = user.toObject();
 
     res.status(200).json({
-        result: filteredData,
+        result,
         accessToken,
         csrfToken,
         sessionId
     });
 };
 
-// Sign Up Controller
+// Register Controller
 const register = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
-    if(!email || !password || !confirmPassword || !firstName || !lastName) {
+    if (!email || !password || !confirmPassword || !firstName || !lastName) {
         createHttpError("All fields are required", 400);
     }
 
-    if( password.length < 4) {
+    if (password.length < 4) {
         createHttpError("Password must be at least 4 characters long", 400);
     }
 
@@ -121,18 +114,10 @@ const register = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const userObj = newUser.toObject();
-    const {
-        password: pass,
-        bookmarks,
-        __v,
-        sessions,
-        csrfToken: csrf,
-        ...filteredData
-    } = userObj;
+    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...userData } = newUser.toObject();
 
     res.status(201).json({
-        result: filteredData,
+        result: userData,
         accessToken,
         csrfToken,
         sessionId
@@ -153,7 +138,7 @@ const logoutUser = async (req, res) => {
         createHttpError("User not found", 404);
     }
 
-    user.sessions = user.sessions.filter(s => s.sessionId !== sessionId);
+    user.sessions = user.sessions.filter(session => session.sessionId !== sessionId);
     await user.save();
 
     res.clearCookie("refreshToken", {

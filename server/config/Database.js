@@ -3,14 +3,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const dataBaseConnection = async () => {
+const DatabaseConnection = async () => {
     try {
-        const conn = await mongoose.connect(process.env.DB_URL);
-        console.log(`✅ Connected to DataBase on:${conn.connection.host}`);
-    } catch (err) {
-        console.error(`❌ Error: ${err.message}`);
-        process.exit(1); // Exit process with failure
+        const connection = await mongoose.connect(process.env.DB_URL);
+        console.info(`✅ Connected to database at ${connection.connection.host}`);
+    } catch (error) {
+        console.error(`❌ Database connection error: ${error.message}`);
+        process.exit(1);
     }
 };
 
-export default dataBaseConnection;
+export default DatabaseConnection;

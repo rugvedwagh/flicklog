@@ -22,30 +22,24 @@ const initialState = {
 }
 
 const authReducer = (state = initialState, action) => {
-
     switch (action.type) {
-
-        case AUTH:
-            const { accessToken, csrfToken, ...filteredData } = action?.payload;
-            localStorage.setItem('profile', JSON.stringify(filteredData.result));
+        case AUTH: {
+            const { accessToken, csrfToken, sessionId, ...otherData } = action.payload;
             return {
                 ...state,
-                authData: filteredData.result,
-                accessToken: accessToken
+                authData: otherData.result,
+                accessToken
             };
+        }
 
         case REFRESH_TOKEN:
             return {
                 ...state,
                 authData: 'proxyAuthData',
-                accessToken: action?.payload,
+                accessToken: action.payload,
             };
 
         case LOGOUT:
-            localStorage.removeItem('profile');
-            localStorage.removeItem('cachedPosts');
-            localStorage.removeItem('csrfToken');
-            localStorage.removeItem('sessionId');
             return {
                 ...state,
                 authData: null,
@@ -70,13 +64,13 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 successMessage: action.payload
-            }
+            };
 
         case CLEAR_SUCCESS:
             return {
                 ...state,
                 successMessage: ''
-            }
+            };
 
         case START_LOADING:
             return {

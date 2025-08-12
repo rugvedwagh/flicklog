@@ -3,7 +3,7 @@ import Redis from "ioredis";
 let redis;
 let redisAvailable = false;
 
-const connectRedis = () => {
+const RedisConnection = () => {    
     redis = new Redis({
         host: process.env.REDIS_HOST || "127.0.0.1",
         port: process.env.REDIS_PORT || 6379,
@@ -33,4 +33,4 @@ const connectRedis = () => {
 // Getter for redis instance
 const getRedis = () => redis;
 
-export { connectRedis, getRedis, redisAvailable };
+export { RedisConnection, getRedis, redisAvailable };

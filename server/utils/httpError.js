@@ -1,7 +1,7 @@
-const createHttpError = (message, statusCode = 500) => {
-    const error = new Error(message);
-    error.statusCode = statusCode;
-    throw error;
+const createHttpError = (msg, code = 500) => {
+    const httpError = new Error(msg);
+    httpError.statusCode = code;
+    throw httpError;
 };
 
 export default createHttpError;

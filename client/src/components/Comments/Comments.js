@@ -1,13 +1,14 @@
 import { Typography, TextField, Button } from "@mui/material"
 import { addComment } from "../../redux/actions/post.actions"
+import { CircularProgress } from "@mui/material"
 import { useTheme } from "../../context/themeContext"
 import { fetchUserProfile } from "../../utils/storage"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import "./comments.styles.css"
 
 const CommentsSection = ({ post }) => {
-    
+
     const dispatch = useDispatch()
     const darkMode = useTheme()
     const profile = fetchUserProfile()
@@ -15,6 +16,8 @@ const CommentsSection = ({ post }) => {
     const [comment, setComment] = useState("")
     const [isFocused, setIsFocused] = useState(false)
     const [comments, setComments] = useState(post?.comments)
+
+    const { isLoading } = useSelector((state) => state.postsReducer)
 
     const postComment = async () => {
         if (!userId) return
@@ -72,7 +75,7 @@ const CommentsSection = ({ post }) => {
                                     disabled={!comment.trim()}
                                     className={`post-btn ${darkMode ? "dark" : ""}`}
                                 >
-                                    Post Comment
+                                    Post Comment &nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" sx={{ color: '#1a1a1a' }} />}
                                 </Button>
                             </div>
                         )}

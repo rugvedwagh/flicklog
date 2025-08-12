@@ -178,7 +178,7 @@
     bottom: 1rem !important;
     left: 1rem !important;
     /* background-color: #dc3545 !important; */
-    color: white !important;
+    color: var(--cardColour) !important;
     border-radius: 50% !important;
     min-width: auto !important;
     width: 40px !important;
@@ -187,6 +187,10 @@
     transition: all 0.3s ease !important;
     opacity: 0.7;
     z-index: 10;
+}
+
+.delete-button-corner.dark{
+    color: var(--antiFlashWhite) !important;
 }
 
 .delete-button-corner:hover {
@@ -623,23 +627,3 @@
         height: 150px;
     }
 }
-
-/* Dialog Styles */
-.MuiDialog-paper.dark {
-    background-color: var(--cardColour) !important;
-}
-
-.MuiDialogTitle-root.dark {
-    color: var(--antiFlashWhite) !important;
-}
-
-.MuiDialogContentText-root.dark {
-    color: var(--subtextColor) !important;
-}
-
-#delete-dialog-title,
-#delete-dialog-description {
-    color: var(--black) !important;
-}
-
-
