@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom"
 import "./userinfo.styles.css"
 
 const Userinfo = () => {
-    
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const darkMode = useTheme()
@@ -93,13 +93,11 @@ const Userinfo = () => {
 
     if (isLoading) {
         return (
-            <div className="loading-container">
-                <CircularProgress className={`loading ${darkMode ? "dark" : ""}`} size="3rem" />
-            </div>
+            <CircularProgress className={`loading ${darkMode ? "dark" : ""}`} size="3rem" />
         )
     }
 
-    if (!clientData) {  
+    if (!clientData) {
         return (
             <div className="error-container">
                 <Typography variant="h4" className="error-text">
@@ -287,7 +285,7 @@ const Userinfo = () => {
                             boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
                             fontWeight: '600',
                             '&:hover': {
-                                backgroundColor:  darkMode ? '#2e6f40' : '#e7e9ea',
+                                backgroundColor: darkMode ? '#2e6f40' : '#e7e9ea',
                                 color: darkMode ? '#fff' : '#2e6f40',
                             },
                         }}

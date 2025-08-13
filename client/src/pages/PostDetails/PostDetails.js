@@ -63,9 +63,7 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <div className="loading-container">
-                <CircularProgress className={`loader ${darkMode ? "dark" : ""}`} size="3rem" />
-            </div>
+            <CircularProgress className={`loader ${darkMode ? "dark" : ""}`} size="3rem" />
         )
     }
 
@@ -211,7 +209,7 @@ const PostDetails = () => {
                         },
                     }}
                 >
-                    <DialogTitle className={darkMode ? "dark" : ""} sx={{fontWeight:'600'}}>
+                    <DialogTitle className={darkMode ? "dark" : ""} sx={{ fontWeight: '600' }}>
                         Delete Post
                     </DialogTitle>
                     <DialogContent id="delete-dialog-content">
@@ -227,7 +225,7 @@ const PostDetails = () => {
                             border: 'none',
                             color: darkMode ? '#e7e9ea' : '#1a1a1a',
                             backgroundColor: darkMode ? '#2a2a2a' : '#e7e9ea',
-                            fontWeight:'600',
+                            fontWeight: '600',
                             '&:hover': {
                                 backgroundColor: darkMode ? '#3a3a3a' : '#f0f0f0',
                                 border: 'none'
@@ -241,14 +239,14 @@ const PostDetails = () => {
                             sx={{
                                 borderRadius: '20px',
                                 border: 'none',
-                                color:  '#e7e9ea',
+                                color: '#e7e9ea',
                                 backgroundColor: '#FF0000',
-                                opacity:'0.7',
-                                fontWeight:'600',
+                                opacity: '0.7',
+                                fontWeight: '600',
                                 '&:hover': {
                                     backgroundColor: '#FF0000',
                                     border: 'none',
-                                    opacity:'1'
+                                    opacity: '1'
                                 }
                             }}
                         >

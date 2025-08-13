@@ -395,19 +395,11 @@
     color: var(--subtextColor);
 }
 
-.loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .loading {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(0%, 0%);
     color: var(--forrestGreen);
 }
 
