@@ -13,7 +13,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
 import { useState, useEffect, useCallback } from "react"
 import { bookmarkPost } from "../../redux/actions/post.actions"
 import { useTheme } from "../../context/themeContext"
-import { formatDate } from "../../utils/formatDate"
+import { formatDate } from "../../utils/format-date"
 import { useSelector, useDispatch } from "react-redux"
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded"
 import { fetchUserProfile } from "../../utils/storage"
@@ -99,7 +99,7 @@ const Userinfo = () => {
         )
     }
 
-    if (!clientData) {
+    if (!clientData) {  
         return (
             <div className="error-container">
                 <Typography variant="h4" className="error-text">
@@ -285,6 +285,7 @@ const Userinfo = () => {
                             borderRadius: 8,
                             textTransform: 'none',
                             boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
+                            fontWeight: '600',
                             '&:hover': {
                                 backgroundColor:  darkMode ? '#2e6f40' : '#e7e9ea',
                                 color: darkMode ? '#fff' : '#2e6f40',

@@ -1,8 +1,8 @@
-import { getRedis, redisAvailable } from "../config/redisClient.js";
+import { getRedis, redisAvailable } from "../config/redis-connection.js";
 import PostMessage from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
 import mongoose from 'mongoose';
-import createHttpError from "../utils/httpError.js";
+import createHttpError from "../utils/create-error.js";
 
 // Fetch a post
 const fetchPost = async (req, res) => {

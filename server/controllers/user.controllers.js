@@ -1,7 +1,7 @@
-import { getRedis, redisAvailable } from "../config/redisClient.js";
+import { getRedis, redisAvailable } from "../config/redis-connection.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
-import createHttpError from "../utils/httpError.js";
+import createHttpError from "../utils/create-error.js";
 
 // Update User Controller
 const updateUser = async (req, res) => {
@@ -62,7 +62,7 @@ const fetchUserData = async (req, res) => {
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+        const cacheSuccess = await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(userObject));
 
         if (!cacheSuccess) {
             createHttpError("Failed to cache user data", 500);

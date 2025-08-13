@@ -2,16 +2,15 @@ import React, { useEffect, useState, useRef, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { isAccessTokenExpired } from './utils/checkTokenExpiry';
+import { isAccessTokenExpired } from './utils/check-token-expiry';
 import { handleScroll, scrollToTop } from './utils/scroll';
 import { Logout, clearError, clearSuccess, refreshToken } from './redux/actions/auth.actions';
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Collapse, Container, Alert } from '@mui/material';
-import { getAccessToken } from './utils/getTokens';
+import { getAccessToken } from './utils/get-tokens';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import { CircularProgress } from '@mui/material';
 import { useTheme } from './context/themeContext';
 import { fetchUserProfile } from './utils/storage';
 import { store } from './redux/store';
@@ -158,7 +157,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Navigate to="/posts" />} />
                         <Route path="/posts/search" element={<Home />} />
-                        <Route path="/posts/:id" element={<PostDetails />} />
+                        <Route path="/posts/:id/:slug" element={<PostDetails />} />
                         <Route path="/posts" element={<Home />} />
                         <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
                         <Route path="/user/info" element={<Userinfo />} />

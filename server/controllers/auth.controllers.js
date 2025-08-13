@@ -1,7 +1,5 @@
-import generateRefreshToken from "../utils/generateRefreshToken.js";
-import generateAccessToken from "../utils/generateAccessToken.js";
-import generateCsrfToken from "../utils/generateCsrfToken.js";
-import createHttpError from "../utils/httpError.js";
+import { generateRefreshToken, generateAccessToken, generateCsrfToken } from "../utils/generate-tokens.js";
+import createHttpError from "../utils/create-error.js";
 import User from "../models/user.model.js";
 import crypto from 'crypto';
 import { v4 as uuidv4 } from "uuid";

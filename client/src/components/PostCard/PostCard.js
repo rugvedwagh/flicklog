@@ -16,11 +16,14 @@ import './postcard.styles.css';
 import moment from 'moment';
 
 const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     let profile = fetchUserProfile();
     const userId = profile?._id;
     const clientData = useSelector((state) => state.authReducer.clientData);
+    
     const [likes, setLikes] = useState(post?.likes);
     const [isbookmarked, setIsBookmarked] = useState(false);
     const { setformopen } = useForm();
@@ -31,7 +34,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
     }, [clientData, post._id]);
 
     const openPost = () => {
-        navigate(`/posts/${post._id}`);
+        navigate(`/posts/${post._id}/${post.slug}`);
     };
 
     const handleBookmarkToggle = () => {

@@ -250,7 +250,7 @@ const Navbar = () => {
                             closeMenu();
                         }}
                         variant="outlined"
-                        className={`cancel-btn ${darkMode ? "dark" : ""}`}
+                        className={`cancel-butn ${darkMode ? "dark" : ""}`}
                     >
                         Cancel
                     </Button>

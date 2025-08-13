@@ -13,7 +13,7 @@ const fetchPostsBySearchApi = (searchQuery) => API.get(`/posts/search?searchQuer
 
 const fetchPostsApi = (page) => API.get(`/posts?page=${page}`);
 
-const fetchPostApi = (id) => API.get(`/posts/${id}`);
+const fetchPostApi = (id) => API.get(`/posts/${id}/:slug?`);
 
 const addCommentApi = (value, id) => API.post(`/posts/${id}/commentPost`, { value });   // {value} is in the body and the {id} is in the params!
 

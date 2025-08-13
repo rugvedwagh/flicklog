@@ -319,7 +319,7 @@
 }
 
 .dialog-text {
-  color: var(--subtextColor) !important;
+  color: var(--black) !important;
 }
 
 .dialog-text.dark {
@@ -331,26 +331,26 @@
   gap: 1rem !important;
 }
 
-.cancel-btn {
-  border-color: var(--subtextColor) !important;
-  color: var(--subtextColor) !important;
+.cancel-butn {
+  color: var(--borderColor) !important;
+  border: none !important;
   border-radius: 25px !important;
   padding: 0.5rem 1.5rem !important;
   font-weight: 600 !important;
   text-transform: none !important;
+  background-color: var(--antiFlashWhite) !important;
 }
 
-.cancel-btn:hover {
-  background-color: var(--subtextColor) !important;
-  color: var(--antiFlashWhite) !important;
+.cancel-butn:hover{
+  background-color: var(--antiFlashWhite);
 }
 
-.cancel-btn.dark {
+.cancel-butn.dark {
   border-color: var(--antiFlashWhite) !important;
-  color: var(--antiFlashWhite) !important;
+  color: var(--borderColor) !important;
 }
 
-.cancel-btn.dark:hover {
+.cancel-butn.dark:hover {
   background-color: var(--antiFlashWhite) !important;
   color: var(--black) !important;
 }
@@ -471,7 +471,7 @@
     align-items: stretch;
   }
 
-  .cancel-btn,
+  .cancel-butn,
   .confirm-btn {
     width: 100%;
     text-align: center;

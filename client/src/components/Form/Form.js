@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "../../context/themeContext"
 import { useState, useEffect, useRef } from "react"
 import { fetchUserProfile } from "../../utils/storage"
+import { generateSlug } from "../../utils/create-slug"
 import "react-quill/dist/quill.snow.css"
 import FileBase from "react-file-base64"
 import ReactQuill from "react-quill"
@@ -21,10 +22,11 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
 
     const [postData, setPostData] = useState({
         title: "",
+        slug: "",
         message: "",
         tags: "",
         selectedfile: "",
-    })
+    });
 
     const titleInputRef = useRef(null)
 
@@ -61,6 +63,7 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
         currentId === 0
             ? dispatch(createPost({ ...postData, name: profile.name }))
             : dispatch(updatePost(currentId, { ...postData, name: profile.name }))
@@ -112,9 +115,17 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
                             fullWidth
                             inputRef={titleInputRef}
                             value={postData.title}
-                            onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+                            onChange={(e) => {
+                                const newTitle = e.target.value;
+                                setPostData({
+                                    ...postData,
+                                    title: newTitle,
+                                    slug: generateSlug(newTitle) // auto-generate slug
+                                });
+                            }}
                             className={`title-input ${darkMode ? "dark" : ""}`}
                         />
+
                     </div>
 
                     {/* Content Editor */}

@@ -49,17 +49,21 @@
 }
 
 .social-icon {
-    background: rgba(100, 100, 100, 0.07);
+    background: var(--antiFlashWhite);
     border-radius: 100px;
     height: 38px;
     width: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--subtextColor);
+    color: var(--forrestGreen);
     transition: background 0.2s, color 0.2s, transform 0.2s;
     font-size: 1.15rem;
     border: 1.5px solid transparent;
+}
+
+.footer.dark .social-icon{
+    background-color: var(--cardColour);
 }
 
 .social-icon:focus {

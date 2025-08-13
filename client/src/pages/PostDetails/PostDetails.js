@@ -17,7 +17,7 @@ import { useEffect, useState, useCallback } from "react"
 import { deletePost } from "../../redux/actions/post.actions"
 import { useParams, useNavigate } from "react-router-dom"
 import Comments from "../../components/Comments/Comments"
-import { formatPostedDate } from "../../utils/formatDate"
+import { formatPostedDate } from "../../utils/format-date"
 import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "../../context/themeContext"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -137,7 +137,7 @@ const PostDetails = () => {
                     )}
 
                 </div>
-                
+
                 <div className={`content-section-postdetails ${darkMode ? "dark" : ""}`}>
                     <Typography
                         component="div"
@@ -200,23 +200,61 @@ const PostDetails = () => {
                     aria-describedby="delete-dialog-description"
                     maxWidth="sm"
                     fullWidth
-                    classes={{ paper: darkMode ? "dark" : "" }}
+                    PaperProps={{
+                        style: {
+                            borderRadius: '20px',
+                            padding: '20px',
+                            backgroundColor: darkMode ? '#1e1e1e' : '#fefefe',
+                            color: darkMode ? 'white' : '#1e1e1e',
+                            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                            border: '1px solid #e7e9ea'
+                        },
+                    }}
                 >
-                    <DialogTitle id="delete-dialog-title" className={darkMode ? "dark" : ""}>
+                    <DialogTitle className={darkMode ? "dark" : ""} sx={{fontWeight:'600'}}>
                         Delete Post
                     </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="delete-dialog-description" className={darkMode ? "dark" : ""}>
+                    <DialogContent id="delete-dialog-content">
+                        <DialogContentText id="delete-dialog-description" className={darkMode ? "dark" : ""} sx={{
+                            color: darkMode ? '#e7e9ea' : '#1a1a1a'
+                        }}>
                             Are you sure you want to delete this post? This action cannot be undone.
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={toggleDeleteDialog} variant="outlined">
+                        <Button onClick={toggleDeleteDialog} variant="outlined" sx={{
+                            borderRadius: '20px',
+                            border: 'none',
+                            color: darkMode ? '#e7e9ea' : '#1a1a1a',
+                            backgroundColor: darkMode ? '#2a2a2a' : '#e7e9ea',
+                            fontWeight:'600',
+                            '&:hover': {
+                                backgroundColor: darkMode ? '#3a3a3a' : '#f0f0f0',
+                                border: 'none'
+                            }
+                        }}>
                             Cancel
                         </Button>
-                        <Button onClick={handleDeletePost} variant="contained" color="error">
+                        <Button
+                            onClick={toggleDeleteDialog}
+                            variant="outlined"
+                            sx={{
+                                borderRadius: '20px',
+                                border: 'none',
+                                color:  '#e7e9ea',
+                                backgroundColor: '#FF0000',
+                                opacity:'0.7',
+                                fontWeight:'600',
+                                '&:hover': {
+                                    backgroundColor: '#FF0000',
+                                    border: 'none',
+                                    opacity:'1'
+                                }
+                            }}
+                        >
                             Delete
                         </Button>
+
                     </DialogActions>
                 </Dialog>
             )}

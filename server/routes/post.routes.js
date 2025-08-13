@@ -19,14 +19,15 @@ const router = express.Router();
 
 router.get("/search", asyncHandler(fetchPostsBySearch));
 
-router
+router.get("/:id/:slug", asyncHandler(fetchPost));
+
+router  
     .route("/")
     .get(asyncHandler(fetchPosts))
     .post(verifyAccessToken, asyncHandler(createPost));
 
 router
     .route("/:id")
-    .get(asyncHandler(fetchPost))
     .patch(verifyAccessToken, asyncHandler(updatePost))
     .delete(verifyAccessToken, asyncHandler(deletePost));
 

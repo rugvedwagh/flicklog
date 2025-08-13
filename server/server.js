@@ -10,9 +10,9 @@ import helmet from 'helmet';
 import compression from 'compression';
 
 import errorHandler from './middleware/error.middleware.js';
-import notFound from './middleware/notFound.middleware.js';
-import DatabaseConnection from './config/Database.js';
-import { RedisConnection } from './config/redisClient.js';
+import notFound from './middleware/not-found.middleware.js';
+import DatabaseConnection from './config/database-config.js';
+import { RedisConnection } from './config/redis-connection.js';
 
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
