@@ -1,11 +1,12 @@
 @keyframes glowAppear {
     0% {
         opacity: 0;
-        box-shadow: 0 0 0 rgba(0,0,0,0);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     }
+
     100% {
         opacity: 1;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 }
 
@@ -185,7 +186,7 @@
     z-index: 10;
 }
 
-.delete-button-corner.dark{
+.delete-button-corner.dark {
     color: var(--antiFlashWhite) !important;
 }
 
@@ -531,7 +532,7 @@
 }
 
 .content-section-postdetails.dark {
-    background-color: var(--cardColour)!important;
+    background-color: var(--cardColour) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 

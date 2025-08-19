@@ -57,6 +57,7 @@
 .typography {
     margin: 16px 0px 16px 0px !important;
     color: var(--black) !important;
+    font-weight: 600;
 }
 
 .typography.dark{

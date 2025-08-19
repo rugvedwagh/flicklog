@@ -1,5 +1,4 @@
 import {
-    CircularProgress,
     TextField,
     Button,
     Dialog,
@@ -19,6 +18,7 @@ import CancelRoundedIcon from "@mui/icons-material/CancelRounded"
 import { fetchUserProfile } from "../../utils/storage"
 import { useNavigate } from "react-router-dom"
 import "./userinfo.styles.css"
+import UserInfoSkeleton from "../../components/Skeletons/UserInfoSkeleton"
 
 const Userinfo = () => {
 
@@ -83,7 +83,7 @@ const Userinfo = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         const refetchUserData = async () => {
-            await dispatch(fetchUserData(userId, accessToken))
+            await dispatch(fetchUserData(userId))
         }
 
         if (!clientData) {
@@ -93,7 +93,7 @@ const Userinfo = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress className={`loading ${darkMode ? "dark" : ""}`} size="3rem" />
+            <UserInfoSkeleton darkMode={darkMode} />
         )
     }
 

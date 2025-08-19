@@ -1,5 +1,4 @@
 import { Button, Paper, Grid, Typography, Container, CircularProgress } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn, register } from '../../redux/actions/auth.actions';
 import { useTheme } from '../../context/themeContext';
@@ -64,7 +63,6 @@ const SignUp = () => {
 
                             <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
-                                    <LockOutlinedIcon sx={{ color: 'white' }} />
 
                                     <Typography
                                         className={`typography ${darkMode ? 'dark' : ''}`}

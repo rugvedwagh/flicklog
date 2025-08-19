@@ -8,7 +8,6 @@ import {
     DialogContentText,
     DialogTitle,
     Tooltip,
-    CircularProgress,
     Divider,
 } from "@mui/material"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
@@ -21,8 +20,10 @@ import { formatPostedDate } from "../../utils/format-date"
 import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "../../context/themeContext"
 import DeleteIcon from "@mui/icons-material/Delete"
+import { Skeleton } from "@mui/material"
 import { fetchUserProfile } from "../../utils/storage"
 import "./postdetails.styles.css"
+import PostDetailsSkeleton from "../../components/Skeletons/PostDetailsSkeleton"
 
 const PostDetails = () => {
     const { id } = useParams()
@@ -36,8 +37,8 @@ const PostDetails = () => {
     const { post, posts, isLoading } = useSelector((state) => state.postsReducer)
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        dispatch(fetchPost(id))
+        window.scrollTo(0, 0);
+        dispatch(fetchPost(id));
     }, [id, dispatch])
 
     useEffect(() => {
@@ -63,7 +64,7 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <CircularProgress className={`loader ${darkMode ? "dark" : ""}`} size="3rem" />
+            <PostDetailsSkeleton darkMode={darkMode} />
         )
     }
 
@@ -234,7 +235,7 @@ const PostDetails = () => {
                             Cancel
                         </Button>
                         <Button
-                            onClick={toggleDeleteDialog}
+                            onClick={handleDeletePost}
                             variant="outlined"
                             sx={{
                                 borderRadius: '20px',
