@@ -4,28 +4,32 @@ import { CircularProgress } from "@mui/material"
 import { useTheme } from "../../context/themeContext"
 import { fetchUserProfile } from "../../utils/storage"
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "./comments.styles.css"
 
 const CommentsSection = ({ post }) => {
-
     const dispatch = useDispatch()
     const darkMode = useTheme()
     const profile = fetchUserProfile()
     const userId = profile._id
     const [comment, setComment] = useState("")
     const [isFocused, setIsFocused] = useState(false)
-    const [comments, setComments] = useState(post?.comments)
 
-    const { isLoading } = useSelector((state) => state.postsReducer)
+    const { isLoading, posts } = useSelector((state) => state.postsReducer)
+
+    const updatedPost = posts.find(p => p._id === post._id)
+    const comments = updatedPost?.comments || post?.comments
 
     const postComment = async () => {
-        if (!userId) return
-        const finalComment = `${profile?.name}: ${comment}`
-        const newComments = await dispatch(addComment(finalComment, post._id))
-        setComments(newComments)
-        setComment("")
-        setIsFocused(false)
+        if (!userId || !comment.trim()) return
+
+        try {
+            await dispatch(addComment(`${profile?.name}: ${comment}`, post._id))
+            setComment("")
+            setIsFocused(false)
+        } catch (error) {
+            console.error("Failed to post comment:", error)
+        }
     }
 
     return (
@@ -72,10 +76,11 @@ const CommentsSection = ({ post }) => {
                                 <Button
                                     variant="contained"
                                     onClick={postComment}
-                                    disabled={!comment.trim()}
+                                    disabled={!comment.trim() || isLoading}
                                     className={`post-btn ${darkMode ? "dark" : ""}`}
                                 >
-                                    Post Comment &nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" sx={{ color: '#1a1a1a' }} />}
+                                    Post Comment &nbsp;&nbsp;
+                                    {isLoading && <CircularProgress size="1.6rem" sx={{ color: '#1a1a1a' }} />}
                                 </Button>
                             </div>
                         )}

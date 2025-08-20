@@ -4,9 +4,13 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.1",
     "axios": "^1.7.9",
-    "concurrently": "^9.1.2",
     "ioredis": "^5.4.2",
     "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "scripts": {
+    "start": "concurrently \"npm start --prefix client\" \"npm start --prefix server\""
   }
 }
-

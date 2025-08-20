@@ -20,7 +20,6 @@ import { formatPostedDate } from "../../utils/format-date"
 import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "../../context/themeContext"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Skeleton } from "@mui/material"
 import { fetchUserProfile } from "../../utils/storage"
 import "./postdetails.styles.css"
 import PostDetailsSkeleton from "../../components/Skeletons/PostDetailsSkeleton"
@@ -168,7 +167,7 @@ const PostDetails = () => {
                                         <Typography className="overlay-text">Read More</Typography>
                                     </div>
                                 </div>
-                                <div className="card-content">
+                                <div className="card-content-pd">
                                     <Typography className={`card-title ${darkMode ? "dark" : ""}`}>
                                         {title.length > 60 ? title.slice(0, 60) + "..." : title}
                                     </Typography>

@@ -481,7 +481,7 @@
     letter-spacing: 1px;
 }
 
-.card-content {
+.card-content-pd {
     padding: 1.5rem;
 }
 
@@ -612,7 +612,7 @@
         font-size: 0.8rem;
     }
 
-    .card-content {
+    .card-content-pd {
         padding: 1rem;
     }
 
