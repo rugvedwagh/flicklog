@@ -12,6 +12,9 @@ import {
 } from "@mui/material"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
 import { fetchPost, fetchPostsBySearch } from "../../redux/actions/post.actions"
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import PostDetailsSkeleton from "../../components/Skeletons/PostDetailsSkeleton"
 import { useEffect, useState, useCallback } from "react"
 import { deletePost } from "../../redux/actions/post.actions"
 import { useParams, useNavigate } from "react-router-dom"
@@ -20,10 +23,8 @@ import { formatPostedDate } from "../../utils/format-date"
 import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "../../context/themeContext"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Skeleton } from "@mui/material"
 import { fetchUserProfile } from "../../utils/storage"
 import "./postdetails.styles.css"
-import PostDetailsSkeleton from "../../components/Skeletons/PostDetailsSkeleton"
 
 const PostDetails = () => {
     const { id } = useParams()
@@ -143,6 +144,30 @@ const PostDetails = () => {
                         className={`post-content ${darkMode ? "dark" : ""}`}
                         dangerouslySetInnerHTML={{ __html: post.message }}
                     />
+                    {/* </div> */}
+                    <div className={`post-stats-main ${darkMode ? "dark" : ""}`}>
+                        <div className="stats-container">
+                            <div className="stat-item-main">
+                                <ThumbUpAltOutlinedIcon className="stat-icon-main" />
+                                <div className="stat-content">
+                                    <Typography className={`stat-count-main ${darkMode ? "dark" : ""}`}>
+                                        {post.likes?.length > 0 ? post.likes?.length : ""}
+                                    </Typography>
+                                </div>
+                            </div>
+
+                            <div className="stat-divider"></div>
+
+                            <div className="stat-item-main">
+                                <CommentOutlinedIcon className="stat-icon-main" />
+                                <div className="stat-content">
+                                    <Typography className={`stat-count-main ${darkMode ? "dark" : ""}`}>
+                                        {post.comments?.length > 0 ? post.comments?.length : ""}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className={`comments-section ${darkMode ? "dark" : ""}`}>
@@ -168,7 +193,7 @@ const PostDetails = () => {
                                         <Typography className="overlay-text">Read More</Typography>
                                     </div>
                                 </div>
-                                <div className="card-content">
+                                <div className="card-content-pd">
                                     <Typography className={`card-title ${darkMode ? "dark" : ""}`}>
                                         {title.length > 60 ? title.slice(0, 60) + "..." : title}
                                     </Typography>
@@ -257,6 +282,7 @@ const PostDetails = () => {
                     </DialogActions>
                 </Dialog>
             )}
+
         </div>
     )
 }
