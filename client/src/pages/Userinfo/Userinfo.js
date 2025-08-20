@@ -119,6 +119,7 @@ const Userinfo = () => {
                     <div className={`avatar-large ${darkMode ? "dark" : ""}`}>
                         <i className="fa-solid fa-user"></i>
                     </div>
+
                     <h2 className={`username-large ${darkMode ? "dark" : ""}`}>{clientData.name}</h2>
                     <p className={`user-email ${darkMode ? "dark" : ""}`}>{clientData.email}</p>
                     <Button variant="outlined" onClick={handleEditUser} className={`edit-profile-btn ${darkMode ? "dark" : ""}`}>
@@ -197,8 +198,9 @@ const Userinfo = () => {
                     style: {
                         borderRadius: '20px',
                         padding: '20px',
-                        backgroundColor: darkMode ? '#1e1e1e' : '#fefefe',
+                        backgroundColor: darkMode ? '#2a2a2a' : '#e7e9ea',
                         boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                        border: '1px solid #e7e9ea'
                     },
                 }}
             >
@@ -224,7 +226,7 @@ const Userinfo = () => {
                         InputProps={{
                             style: {
                                 borderRadius: 12,
-                                backgroundColor: darkMode ? '#2c2c2c' : '#fff',
+                                backgroundColor: darkMode ? '#1a1a1a' : '#fff',
                                 color: darkMode ? '#ccc' : '#333',
                             },
                         }}
@@ -245,7 +247,7 @@ const Userinfo = () => {
                         InputProps={{
                             style: {
                                 borderRadius: 12,
-                                backgroundColor: darkMode ? '#2c2c2c' : '#fff',
+                                backgroundColor: darkMode ? '#1a1a1a' : '#fff',
                                 color: darkMode ? '#ccc' : '#333',
                             },
                         }}
