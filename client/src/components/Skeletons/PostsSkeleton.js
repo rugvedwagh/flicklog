@@ -1,5 +1,5 @@
 import "./Skeletons.css"
-import "../../components/Posts/posts.styles.css"
+import "../../components/Posts/posts.styles.css";
 import { Grid, Skeleton } from "@mui/material";
 
 const CardSkeleton = ({ darkMode }) => {
