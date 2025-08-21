@@ -112,10 +112,10 @@ const register = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...userData } = newUser.toObject();
+    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...result } = newUser.toObject();
 
     res.status(201).json({
-        result: userData,
+        result,
         accessToken,
         csrfToken,
         sessionId

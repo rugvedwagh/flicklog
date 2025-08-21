@@ -5,7 +5,7 @@ import { Grid, Skeleton } from "@mui/material";
 const CardSkeleton = ({ darkMode }) => {
     return (
         <div className={`postcard ${darkMode ? "dark" : ""}`} style={{ marginTop: 18, border: '1px solid #99999948', borderRadius: 8 }}>
-            <Skeleton animation="wave" variant="rounded" height={280} sx={{ borderRadius: 2, borderBottom: "1px solid #99999917" }} />
+            <Skeleton animation="wave" variant="rounded" height={250} sx={{ borderRadius: 2, borderBottom: "1px solid #99999917" }} />
             <div className={`postcard-content ${darkMode ? "dark" : ""}`} style={{ padding: 12 }}>
                 <Skeleton animation="wave" variant="text" height={28} width="70%" />
                 <Skeleton animation="wave" variant="text" height={20} width="90%" />

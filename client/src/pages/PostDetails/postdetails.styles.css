@@ -625,12 +625,11 @@
     }
 }
 
-/* Post Stats Main Section - Compact Left-Aligned Version */
 .post-stats-main {
     background-color: var(--white);
     border-radius: 40px;
     padding: 0.5rem 0.75rem;
-    margin: 1rem 0;
+    margin: 1rem auto;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
     animation: glowAppear 0.6s ease 0.5s both;
     width: fit-content;
@@ -638,7 +637,7 @@
 
 .post-stats-main.dark {
     background-color: var(--cardColour);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 8px rgba(85, 85, 85, 0.274) !important;
 }
 
 .stats-container {
@@ -654,14 +653,6 @@
     padding: 0.3rem 0.6rem;
     border-radius: 8px;
     transition: all 0.2s ease;
-}
-
-.stat-item-main:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-}
-
-.post-stats-main.dark .stat-item-main:hover {
-    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .stat-icon-main {
@@ -702,12 +693,10 @@
     color: var(--subtextColor) !important;
 }
 
-/* Remove the divider line */
 .stat-divider {
     display: none;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .post-stats-main {
         padding: 0.6rem 0.8rem;

@@ -9,16 +9,16 @@ import {
 } from "@mui/material"
 import { fetchUserData, updateUserDetails } from "../../redux/actions/user.actions"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { bookmarkPost } from "../../redux/actions/post.actions"
 import { useTheme } from "../../context/themeContext"
 import { formatDate } from "../../utils/format-date"
 import { useSelector, useDispatch } from "react-redux"
+import UserInfoSkeleton from "../../components/Skeletons/UserInfoSkeleton"
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded"
 import { fetchUserProfile } from "../../utils/storage"
 import { useNavigate } from "react-router-dom"
 import "./userinfo.styles.css"
-import UserInfoSkeleton from "../../components/Skeletons/UserInfoSkeleton"
 
 const Userinfo = () => {
 
@@ -28,18 +28,20 @@ const Userinfo = () => {
     const profile = fetchUserProfile()
     const userId = profile._id
     const { clientData, isLoading } = useSelector((state) => state.userReducer)
-    const { accessToken } = useSelector((state) => state.authReducer)
     const { posts } = useSelector((state) => state.postsReducer)
     const [showBm, setShowBm] = useState(false)
     const [editDialogOpen, setEditDialogOpen] = useState(false)
-    const [bookmarkedPosts, setBookmarkedPosts] = useState([])
+    const [bookmarkedPosts, setBookmarkedPosts] = useState(posts.filter((post) => clientData.bookmarks.includes(post._id)))
     const [formData, setFormData] = useState({
         name: clientData?.name || "",
         email: clientData?.email || "",
     })
 
+    const profileHeaderRef = useRef(null);
+
     useEffect(() => {
         if (clientData?.bookmarks) {
+            console.log("updating bookmarked posts")
             setBookmarkedPosts(posts.filter((post) => clientData.bookmarks.includes(post._id)))
         }
     }, [clientData, posts])
@@ -81,7 +83,6 @@ const Userinfo = () => {
     }
 
     useEffect(() => {
-        window.scrollTo(0, 0)
         const refetchUserData = async () => {
             await dispatch(fetchUserData(userId))
         }
@@ -89,7 +90,13 @@ const Userinfo = () => {
         if (!clientData) {
             refetchUserData()
         }
+
+        // Add scroll and focus after component mounts
+        setTimeout(() => {
+            profileHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }, 100)
     }, [])
+
 
     if (isLoading) {
         return (
@@ -115,7 +122,7 @@ const Userinfo = () => {
 
             <div className={`profile-container ${darkMode ? "dark" : ""}`}>
                 {/* Profile Header Card */}
-                <div className={`profile-header-card ${darkMode ? "dark" : ""}`}>
+                <div className={`profile-header-card ${darkMode ? "dark" : ""}`} ref={profileHeaderRef}>
                     <div className={`avatar-large ${darkMode ? "dark" : ""}`}>
                         <i className="fa-solid fa-user"></i>
                     </div>

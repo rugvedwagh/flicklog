@@ -15,7 +15,8 @@ import { fetchPost, fetchPostsBySearch } from "../../redux/actions/post.actions"
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import PostDetailsSkeleton from "../../components/Skeletons/PostDetailsSkeleton"
-import { useEffect, useState, useCallback } from "react"
+import parse from 'html-react-parser';
+import { useEffect, useState, useCallback, useRef } from "react"
 import { deletePost } from "../../redux/actions/post.actions"
 import { useParams, useNavigate } from "react-router-dom"
 import Comments from "../../components/Comments/Comments"
@@ -37,6 +38,9 @@ const PostDetails = () => {
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
     const { post, posts, isLoading } = useSelector((state) => state.postsReducer)
 
+    const heroSectionRef = useRef(null)
+    const commentsSectionRef = useRef(null)
+
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchPost(id));
@@ -46,6 +50,9 @@ const PostDetails = () => {
         if (post) {
             dispatch(fetchPostsBySearch({ search: "none", tags: post?.tags.join(",") }))
         }
+        setTimeout(() => {
+            heroSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
     }, [post, dispatch])
 
     const openPost = (_id) => navigate(`/posts/${_id}`)
@@ -59,7 +66,13 @@ const PostDetails = () => {
         dispatch(deletePost(id))
         toggleDeleteDialog()
         navigate("/posts")
-    }, [dispatch, id, toggleDeleteDialog])
+    }, [dispatch, id])
+
+    const handleIconClick = () => {
+        setTimeout(() => {
+            commentsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        },100);
+    }
 
     const recommendedPosts = posts.filter(({ _id }) => _id !== id)
 
@@ -80,7 +93,7 @@ const PostDetails = () => {
     }
 
     return (
-        <div className={`page-wrapper ${darkMode ? "dark" : ""}`}>
+        <div className={`page-wrapper ${darkMode ? "dark" : ""}`} ref={heroSectionRef}>
             <div className="header-section-postdetails">
                 <Button className={`back-button ${darkMode ? "dark" : ""}`} onClick={() => navigate(-1)} size="small">
                     <ArrowBackOutlinedIcon />
@@ -142,9 +155,11 @@ const PostDetails = () => {
                     <Typography
                         component="div"
                         className={`post-content ${darkMode ? "dark" : ""}`}
-                        dangerouslySetInnerHTML={{ __html: post.message }}
-                    />
-                    {/* </div> */}
+                        sx={{ margin: '0px !important' }}
+                    >
+                        {parse(post.message || "")}
+                    </Typography>
+
                     <div className={`post-stats-main ${darkMode ? "dark" : ""}`}>
                         <div className="stats-container">
                             <div className="stat-item-main">
@@ -155,10 +170,7 @@ const PostDetails = () => {
                                     </Typography>
                                 </div>
                             </div>
-
-                            <div className="stat-divider"></div>
-
-                            <div className="stat-item-main">
+                            <div className="stat-item-main" onClick={handleIconClick}>
                                 <CommentOutlinedIcon className="stat-icon-main" />
                                 <div className="stat-content">
                                     <Typography className={`stat-count-main ${darkMode ? "dark" : ""}`}>
@@ -170,7 +182,7 @@ const PostDetails = () => {
                     </div>
                 </div>
 
-                <div className={`comments-section ${darkMode ? "dark" : ""}`}>
+                <div className={`comments-section ${darkMode ? "dark" : ""}`} ref={commentsSectionRef}>
                     <Comments post={post} />
                 </div>
             </div>
@@ -195,7 +207,9 @@ const PostDetails = () => {
                                 </div>
                                 <div className="card-content-pd">
                                     <Typography className={`card-title ${darkMode ? "dark" : ""}`}>
-                                        {title.length > 60 ? title.slice(0, 60) + "..." : title}
+                                        {title
+                                            ? (title.length > 60 ? title.slice(0, 60) + "..." : title)
+                                            : ""}
                                     </Typography>
                                     <Typography className={`card-likes ${darkMode ? "dark" : ""}`}>
                                         {likes.length} {likes.length === 1 ? "like" : "likes"}

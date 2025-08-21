@@ -35,7 +35,7 @@ const logIn = (formData, navigate) => async (dispatch) => {
     } catch (error) {
         const message = error?.response?.data?.message;
         dispatch({ type: ERROR, payload: message });
-        console.error('Login error:', error);
+        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -48,8 +48,10 @@ const register = (formData, navigate) => async (dispatch) => {
         const { data } = await registerApi(formData);
         const { csrfToken, sessionId } = data;
 
+        localStorage.setItem('profile', JSON.stringify(data.result));
         localStorage.setItem('csrfToken', csrfToken);
         localStorage.setItem('sessionId', sessionId);
+
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {

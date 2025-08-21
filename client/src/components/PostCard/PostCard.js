@@ -1,6 +1,6 @@
 import { Card, CardActions, CardMedia, Button, Typography, Tooltip } from '@mui/material';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { likePost, bookmarkPost } from '../../redux/actions/post.actions';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
@@ -11,6 +11,7 @@ import { useDebounce } from '../../utils/debounce';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import defimg from '../../assets/defimg.jpg';
+import parse from 'html-react-parser';
 import Likes from './Likes/Likes';
 import './postcard.styles.css';
 import moment from 'moment';
@@ -42,7 +43,7 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
     };
 
     const debouncedDispatchBookmark = useDebounce((postId) => {
-        dispatch(bookmarkPost(postId, userId));        
+        dispatch(bookmarkPost(postId, userId));
     }, 1500);
 
     const debouncedDispatchLike = useDebounce((postId) => {
@@ -115,10 +116,16 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                             variant="body2"
                             component="p"
                             className={`msg-text ${darkMode ? 'dark' : ''}`}
-                            dangerouslySetInnerHTML={{ __html: post.message.slice(0, 190) + (post.message.length > 120 ? '...' : '') }}
                             sx={{ margin: '0' }}
-                        />
+                        >
+                            {parse(
+                                post.message
+                                    ? post.message.slice(0, 150) + (post.message.length > 150 ? '...' : '')
+                                    : ""
+                            )}
+                        </Typography>
                     </div>
+
                 </section>
 
                 <CardActions className="cardActions">

@@ -138,7 +138,7 @@
   background-color: var(--forrestGreen) !important;
   color: var(--antiFlashWhite) !important;
   border-radius: 25px !important;
-  padding: 0.75rem 2rem !important;
+  padding: 0.5rem 1rem !important;
   font-weight: 600 !important;
   text-transform: none !important;
   transition: all 0.3s ease !important;
