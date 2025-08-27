@@ -5,11 +5,11 @@ import mongoose from 'mongoose';
 import createHttpError from "../utils/create-error.js";
 
 // Fetch a post
-const fetchPost = async (req, res) => {
+const fetchPost = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        createHttpError("Invalid post ID", 400);
+        return next(createHttpError("Invalid post ID", 400));
     }
 
     const cacheKey = `post:${id}`;
@@ -24,7 +24,7 @@ const fetchPost = async (req, res) => {
     const post = await PostMessage.findById(id);
 
     if (!post) {
-        createHttpError("Post not found", 404);
+        return next(createHttpError("Post not found", 404));
     } 
 
     if (redisAvailable) {
@@ -36,7 +36,7 @@ const fetchPost = async (req, res) => {
 };
 
 // Fetch All Posts
-const fetchPosts = async (req, res) => {
+const fetchPosts = async (req, res, next) => {
     const pageNumber = parseInt(req.query.page, 10) || 1;
     const cacheKey = `posts:page:${pageNumber}`;
 
@@ -56,7 +56,7 @@ const fetchPosts = async (req, res) => {
         .skip(startIndex);
 
     if (!posts.length) {
-        createHttpError("No posts found", 404);
+        return next(createHttpError("No posts found", 404));
     }
 
     const response = {
@@ -74,7 +74,7 @@ const fetchPosts = async (req, res) => {
 };
 
 // Search Posts by Title or Tags
-const fetchPostsBySearch = async (req, res) => {
+const fetchPostsBySearch = async (req, res, next) => {
     const { searchQuery = "", tags = "" } = req.query;
     const cacheKey = `posts:search:${searchQuery}:tags:${tags}`;
 
@@ -93,10 +93,10 @@ const fetchPostsBySearch = async (req, res) => {
     });
 
     if (!posts.length) {
-        createHttpError(
-            `No posts found with tags: [${tagsArray.join(', ')}] or title matching: ${searchQuery}`,
+        return next(createHttpError(
+            `No posts found with tags): [${tagsArray.join(', ')}] or title matching: ${searchQuery}`,
             404
-        );
+        ));
     }
 
     const response = { data: posts };
@@ -110,7 +110,7 @@ const fetchPostsBySearch = async (req, res) => {
 };
 
 // Create a New Post
-const createPost = async (req, res) => {
+const createPost = async (req, res, next) => {
     const post = req.body;
 
     const newPost = new PostMessage({
@@ -124,12 +124,12 @@ const createPost = async (req, res) => {
 };
 
 // Update a Post
-const updatePost = async (req, res) => {
+const updatePost = async (req, res, next) => {
     const { id: _id } = req.params;
     const post = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        createHttpError("Invalid post ID", 400);
+        return next(createHttpError("Invalid post ID", 400));
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -139,7 +139,7 @@ const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-        createHttpError("Post not found", 404);
+        return next(createHttpError("Post not found", 404));
     }
 
     const cacheKey = `post:${_id}`;
@@ -156,37 +156,37 @@ const updatePost = async (req, res) => {
 };
 
 // Delete a Post
-const deletePost = async (req, res) => {
+const deletePost = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        createHttpError("Invalid post ID", 400);
+        return next(createHttpError("Invalid post ID", 400));
     }
 
     const deletedPost = await PostMessage.findByIdAndDelete(id);
 
     if (!deletedPost) {
-        createHttpError("Post not found", 404);
+        return next(createHttpError("Post not found", 404));
     }
 
     res.status(200).json({ message: "Post deleted successfully!" });
 };
 
 // Like or Unlike a Post
-const likePost = async (req, res) => {
+const likePost = async (req, res, next) => {
     const { id } = req.params;
 
     if (!req.userId) {
-        createHttpError("Unauthenticated", 401);
+        return next(createHttpError("Unauthenticated", 401));
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        createHttpError("Invalid post ID", 400);
+        return next(createHttpError("Invalid post ID", 400));
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        createHttpError("Post not found", 404);
+        return next(createHttpError("Post not found", 404));
     }
 
     const index = post.likes.findIndex((userId) => userId === String(req.userId));
@@ -202,21 +202,21 @@ const likePost = async (req, res) => {
 };
 
 // Add a Comment to a Post
-const commentPost = async (req, res) => {
+const commentPost = async (req, res, next) => {
     const { id } = req.params;
     const { value } = req.body;
 
     if (!value || !value.trim()) {
-        createHttpError("Comment cannot be empty", 400);
+        return next(createHttpError("Comment cannot be empty", 400));
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        createHttpError("Invalid post ID", 400);
+        return next(createHttpError("Invalid post ID", 400));
     }
 
     const post = await PostMessage.findById(id);
     if (!post) {
-        createHttpError("Post not found", 404);
+        return next(createHttpError("Post not found", 404));
     }
 
     post.comments.push(value);
@@ -235,13 +235,13 @@ const commentPost = async (req, res) => {
 };
 
 // Bookmark Post Controller
-const bookmarkPost = async (req, res) => {
+const bookmarkPost = async (req, res, next) => {
     const { postId, userId } = req.body;
 
     const user = await UserModel.findById(userId);
 
     if (!user) {
-        createHttpError("User not found", 404);
+        return next(createHttpError("User not found", 404));
     }
 
     const isAlreadyBookmarked = user.bookmarks.includes(postId);

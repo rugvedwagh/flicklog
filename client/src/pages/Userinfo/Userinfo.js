@@ -31,7 +31,7 @@ const Userinfo = () => {
     const { posts } = useSelector((state) => state.postsReducer)
     const [showBm, setShowBm] = useState(false)
     const [editDialogOpen, setEditDialogOpen] = useState(false)
-    const [bookmarkedPosts, setBookmarkedPosts] = useState(posts.filter((post) => clientData.bookmarks.includes(post._id)))
+    const [bookmarkedPosts, setBookmarkedPosts] = useState(posts.filter((post) => clientData?.bookmarks?.includes(post._id)))
     const [formData, setFormData] = useState({
         name: clientData?.name || "",
         email: clientData?.email || "",
@@ -42,7 +42,7 @@ const Userinfo = () => {
     useEffect(() => {
         if (clientData?.bookmarks) {
             console.log("updating bookmarked posts")
-            setBookmarkedPosts(posts.filter((post) => clientData.bookmarks.includes(post._id)))
+            setBookmarkedPosts(posts.filter((post) => clientData?.bookmarks?.includes(post._id)))
         }
     }, [clientData, posts])
 

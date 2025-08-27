@@ -24,18 +24,18 @@ router.get("/:id/:slug", asyncHandler(fetchPost));
 router  
     .route("/")
     .get(asyncHandler(fetchPosts))
-    .post(verifyAccessToken, asyncHandler(createPost));
+    .post(asyncHandler(verifyAccessToken), asyncHandler(createPost));
 
 router
     .route("/:id")
-    .patch(verifyAccessToken, asyncHandler(updatePost))
-    .delete(verifyAccessToken, asyncHandler(deletePost));
+    .patch(asyncHandler(verifyAccessToken), asyncHandler(updatePost))
+    .delete(asyncHandler(verifyAccessToken), asyncHandler(deletePost));
 
 
-router.patch("/:id/likePost", verifyAccessToken, asyncHandler(likePost));
+router.patch("/:id/likePost", asyncHandler(verifyAccessToken), asyncHandler(likePost));
 
-router.post("/:id/commentPost", verifyAccessToken, asyncHandler(commentPost));
+router.post("/:id/commentPost", asyncHandler(verifyAccessToken), asyncHandler(commentPost));
 
-router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
+router.post("/bookmarks/add", asyncHandler(verifyAccessToken), asyncHandler(bookmarkPost));
 
 export default router;

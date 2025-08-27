@@ -1,38 +1,38 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import createHttpError from '../utils/create-error.js';
 
 dotenv.config();
 
-const verifyAccessToken = (req, res, next) => {
-    const authorizationHeader = req.headers.authorization;
-
-    if (!authorizationHeader) {
-        const error = new Error("Authorization header is missing");
-        error.statusCode = 401;
-        return next(error);
+const verifyAccessToken = async (req, res, next) => {
+                                                                                                                                
+    const auth = req.headers.authorization;
+    if (!auth) {
+        return next(createHttpError('Authorization header is missing', 401));
     }
 
-    const accessToken = authorizationHeader.split(" ")[1];
-
-    if (!accessToken) {
-        const error = new Error("Access token is missing in Authorization header");
-        error.statusCode = 401;
-        return next(error);
+    const [scheme, token] = (req.headers.authorization || '').split(' ');
+    if (scheme?.toLowerCase() !== 'bearer' || !token) {
+        return next(createHttpError('Invalid Authorization header format. Use: Bearer <token>', 401));
     }
 
+    const secret = process.env.ACCESS_TOKEN_SECRET;
+    if (!secret) {
+        return next(createHttpError('Server misconfiguration: missing ACCESS_TOKEN_SECRET', 500));
+    }
+
+    let payload;
     try {
-        const isCustomAuth = accessToken.length < 500;
-        const decodedData = isCustomAuth
-            ? jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
-            : jwt.decode(accessToken);
-
-        req.userId = decodedData?.id || decodedData?.sub;
-        next();
-    } catch (error) {
-        error.statusCode = 401;
-        error.message = "Token verification failed";
-        next(error);
+        payload = jwt.verify(token, secret);
+    } catch (err) {
+        return next(createHttpError('Invalid or expired access token', 401));
     }
+
+    req.user = payload;
+    req.userId = payload?.id ?? payload?.sub ?? null;
+
+    return next();
 };
+
 
 export default verifyAccessToken;

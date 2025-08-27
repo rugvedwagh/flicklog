@@ -4,12 +4,12 @@ import mongoose from "mongoose";
 import createHttpError from "../utils/create-error.js";
 
 // Update User Controller
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
     const { id } = req.params;
     const { name, email } = req.body;
 
     if (!req.userId) {
-        createHttpError("Unauthorized action", 403);
+        return next(createHttpError("Unauthorized action", 403));
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -19,7 +19,7 @@ const updateUser = async (req, res) => {
     );
 
     if (!updatedUser) {
-        createHttpError("User not found", 404);
+        return next(createHttpError("User not found", 404));
     }
 
     const updatedUserObject = updatedUser.toObject();
@@ -32,11 +32,11 @@ const updateUser = async (req, res) => {
 };
 
 // Get User Data Controller
-const fetchUserData = async (req, res) => {
+const fetchUserData = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        createHttpError("Invalid user ID", 400);
+        return next(createHttpError("Invalid user ID", 400));
     }
 
     const cacheKey = `user:${id}`;
@@ -51,7 +51,7 @@ const fetchUserData = async (req, res) => {
     const user = await UserModel.findById(id);
 
     if (!user) {
-        createHttpError("User not found", 404);
+        return next(createHttpError("User not found", 404));
     }
 
     const userObject = user.toObject();
@@ -65,7 +65,7 @@ const fetchUserData = async (req, res) => {
         const cacheSuccess = await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(userObject));
 
         if (!cacheSuccess) {
-            createHttpError("Failed to cache user data", 500);
+            return next(createHttpError("Failed to cache user data", 500));
         }
     }
 
