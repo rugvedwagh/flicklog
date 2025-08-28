@@ -12,29 +12,36 @@ import {
 } from "../controllers/post.controllers.js";
 import verifyAccessToken from "../middleware/auth.middleware.js";
 import asyncHandler from "../middleware/async.middleware.js";
+import upload from "../middleware/upload.middleware.js";
 
 const router = express.Router();
 
-// Route definitions
-
 router.get("/search", asyncHandler(fetchPostsBySearch));
+
+router.get("/:id/:slug", asyncHandler(fetchPost));
 
 router
     .route("/")
     .get(asyncHandler(fetchPosts))
-    .post(verifyAccessToken, asyncHandler(createPost));
+    .post(
+        asyncHandler(verifyAccessToken),
+        upload.single('selectedfile'),
+        asyncHandler(createPost)
+    );
 
 router
     .route("/:id")
-    .get(asyncHandler(fetchPost))
-    .patch(verifyAccessToken, asyncHandler(updatePost))
-    .delete(verifyAccessToken, asyncHandler(deletePost));
+    .patch(
+        asyncHandler(verifyAccessToken),
+        upload.single('selectedfile'),
+        asyncHandler(updatePost)
+    )
+    .delete(asyncHandler(verifyAccessToken), asyncHandler(deletePost));
 
+router.patch("/:id/likePost", asyncHandler(verifyAccessToken), asyncHandler(likePost));
 
-router.patch("/:id/likePost", verifyAccessToken, asyncHandler(likePost));
+router.post("/:id/commentPost", asyncHandler(verifyAccessToken), asyncHandler(commentPost));
 
-router.post("/:id/commentPost", verifyAccessToken, asyncHandler(commentPost));
-
-router.post("/bookmarks/add", verifyAccessToken, asyncHandler(bookmarkPost));
+router.post("/bookmarks/add", asyncHandler(verifyAccessToken), asyncHandler(bookmarkPost));
 
 export default router;

@@ -1,291 +1,506 @@
-@keyframes blooming {
+@keyframes glowAppear {
     0% {
-        transform: translateY(-100%);
         opacity: 0;
+        transform: translateY(20px);
     }
 
     100% {
-        transform: translateY(0%);
         opacity: 1;
-    }
-}
-
-@keyframes slideImage {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    100% {
         transform: translateY(0);
-        opacity: 1;
     }
 }
 
-.main-cont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 30%;
-    margin: 2rem auto;
-    background-color: #f9f9f9;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px !important;
+.page-container {
+    min-height: 100vh;
+    background-color: var(--white);
     padding: 2rem;
-    border-radius: 3px;
+    transition: all 0.3s ease;
     font-family: 'Arial', sans-serif;
-    outline: 1px solid var(--borderColor);
+    animation: glowAppear 0.6s ease;
 }
 
-.main-cont.dark {
-    background-color: var(--cardColour) !important;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
+.page-container.dark {
+    background-color: var(--black);
 }
 
-.upper-div {
-    width: 100%;
-    text-align: center;
-    color: var(--subtextColor);
-}
-
-.upper-div.dark {
-    color: var(--black);
-}
-
-.upper-div h2 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--borderColor);
-}
-
-.upper-div.dark h2 {
-    color: var(--subtextColor);
-}
-
-.avatar {
-    width: 3em;
-    height: 3em;
+.header-section {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    font-weight: bold;
-    background-color: var(--subtextColor) !important;
-    color: var(--black);
+    margin-bottom: 2rem;
+    margin-top: 0rem;
+    gap: 1rem;
+}
+
+.back-button-userinfo {
+    color: var(--borderColor);
+    background-color: var(--antiFlashWhite);
+    background-color: var(--antiFlashWhite);
+    cursor: pointer;
+    font-size: 2rem !important;
     border-radius: 50%;
-    margin: 0.5em auto 0.8em auto;
-    user-select: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    transition: all 0.3s ease !important;
 }
 
-.avatar.dark {
-    background-color: var(--antiFlashWhite) !important;
-    color: var(--black);
-}
-
-.lower-div {
-    width: 100%;
-    text-align: left;
-}
-
-.lower-div ul {
-    list-style: none;
-    padding: 0;
-}
-
-.lower-div ul li {
-    margin: 15px 0;
-    font-size: 1.1rem;
-    color: #444;
-    display: flex;
-    justify-content: space-between;
-}
-
-.lower-div ul li button {
-    background-color: transparent;
-    padding: 0.4em;
-    border: none;
+.back-button-userinfo:hover {
+    background-color: var(--borderColor);
     color: var(--antiFlashWhite);
 }
 
-.lower-div.dark ul li strong {
-    color: var(--subtextColor)
+.back-button-userinfo.dark {
+    background-color: var(--cardColour);
+    color: var(--antiFlashWhite);
 }
 
-.lower-div.dark ul li span {
-    color: var(--subtextColor)
-}
-
-.lower-div ul li strong {
+.back-button-userinfo.dark:hover {
+    background-color: var(--antiFlashWhite);
     color: var(--black);
 }
 
-.lower-div ul li span {
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--borderColor);
+    margin: 0;
+}
+
+.page-title.dark {
+    color: var(--antiFlashWhite);
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+    grid-template-areas:
+        "header stats"
+        "info bookmarks"
+        "info bookmarks";
+}
+
+.profile-header-card {
+    grid-area: header;
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: glowAppear 0.6s ease;
+    border: 1px solid var(--borderColor);
+}
+
+.profile-header-card.dark {
+    background-color: var(--cardColour);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.avatar-large {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background-color: var(--antiFlashWhite);
+    color: var(--white);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem auto;
+}
+
+.avatar-large.dark {
+    background-color: var(--borderColor);
     color: var(--black);
-    font-weight: normal;
+}
+
+.username-large {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--borderColor);
+    margin: 0 0 0.5rem 0;
+}
+
+.username-large.dark {
+    color: var(--antiFlashWhite);
+}
+
+.user-email {
+    font-size: 1.1rem;
+    color: var(--subtextColor);
+    margin-bottom: 1.5rem;
+}
+
+.user-email.dark {
+    color: var(--subtextColor);
+}
+
+.edit-profile-btn {
+    border: 0.5px solid var(--borderColor);
+    color: var(--borderColor) !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 25px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    margin-top: 1.2rem !important;
+
+}
+
+.edit-profile-btn:hover {
+    background-color: var(--forrestGreen) !important;
+    color: var(--antiFlashWhite) !important;
+}
+
+.edit-profile-btn.dark {
+    border-color: var(--antiFlashWhite) !important;
+    color: var(--antiFlashWhite) !important;
+}
+
+.edit-profile-btn.dark:hover {
+    background-color: var(--antiFlashWhite) !important;
+    color: var(--black) !important;
+}
+
+.stats-grid {
+    grid-area: stats;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    animation: glowAppear 0.6s ease 0.2s both;
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--borderColor);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.dark {
+    background-color: var(--cardColour);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card.dark:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--borderColor);
+    margin-bottom: 0.5rem;
+}
+
+.stat-number.dark {
+    color: var(--antiFlashWhite);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--black);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-label.dark {
+    color: var(--antiFlashWhite);
+}
+
+.info-card {
+    grid-area: info;
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: glowAppear 0.6s ease 0.4s both;
+    border: 1px solid var(--borderColor);
+    height: fit-content;
+}
+
+.info-card.dark {
+    background-color: var(--cardColour);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bookmarks-card {
+    grid-area: bookmarks;
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: glowAppear 0.6s ease 0.6s both;
+    border: 1px solid var(--borderColor);
+}
+
+.bookmarks-card.dark {
+    background-color: var(--cardColour);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--borderColor);
+    margin: 0 0 1.5rem 0;
+}
+
+.card-title.dark {
+    color: var(--antiFlashWhite);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--borderColor);
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--black);
+}
+
+.info-label.dark {
+    color: var(--antiFlashWhite);
+}
+
+.info-value {
+    color: var(--black);
+    font-weight: 500;
+}
+
+.info-value.dark {
+    color: var(--antiFlashWhite);
+}
+
+.bookmarks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.toggle-btn {
+    color: var(--borderColor) !important;
+    font-weight: 600 !important;
+}
+
+.toggle-btn.dark {
+    color: var(--antiFlashWhite) !important;
+}
+
+.bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    animation: glowAppear 0.4s ease;
+}
+
+.bookmarks-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bookmarks-list::-webkit-scrollbar-track {
+    background: var(--borderColor);
+    border-radius: 3px;
+}
+
+.bookmarks-list::-webkit-scrollbar-thumb {
+    background: var(--subtextColor);
+    border-radius: 3px;
+}
+
+.bookmark-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--antiFlashWhite);
+}
+
+.bookmark-item:hover {
+    background-color: var(--antiFlashWhite);
+}
+
+.bookmark-item.dark {
+    background-color: var(--cardColour) !important;
+    border-color: var(--subtextColor);
+}
+
+.bookmark-item.dark:hover {
+    background-color: var(--borderColor) !important;
+}
+
+.bookmark-content {
+    flex: 1;
+    cursor: pointer;
+}
+
+.bookmark-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black);
+    transition: color 0.3s ease;
+}
+
+.bookmark-title:hover {
+    color: var(--forrestGreen);
+}
+
+.bookmark-title.dark {
+    color: var(--antiFlashWhite);
+}
+
+.remove-bookmark-btn {
+    color: #dc3545 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.25rem;
+    border-radius: 50%;
+}
+
+.remove-bookmark-btn:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.empty-bookmarks {
+    text-align: center;
+    padding: 2rem;
+    color: var(--subtextColor);
+    font-style: italic;
+}
+
+.empty-bookmarks.dark {
+    color: var(--subtextColor);
 }
 
 .loading {
-    color: var(--borderColor) !important;
-    transition: translate(-50%, -50%);
-    left: 0% !important;
-    top: 80% !important; 
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(0%, 0%);
+    color: var(--forrestGreen);
 }
 
 .loading.dark {
     color: var(--antiFlashWhite) !important;
 }
 
-@media (max-width: 1120px) {
-    .main-cont {
-        width: 50%;
-    }
-
-    .loading {
-        margin-top: 50%;
-    }
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-@media (max-width: 600px) {
-    .main-cont {
-        width: 50%;
+.error-text {
+    color: #666666 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "stats"
+            "info"
+            "bookmarks";
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .main-cont {
-        margin-top: 3rem;
-        width: 80%;
+    .page-container {
+        padding: 1rem;
     }
 
-    .avatar {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8rem;
+    .header-section {
+        margin-bottom: 1rem;
     }
 
-    .upper-div h2 {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .profile-header-card {
+        padding: 1.5rem;
+    }
+
+    .avatar-large {
+        width: 100px;
+        height: 100px;
+        font-size: 3rem;
+    }
+
+    .username-large {
         font-size: 1.5rem;
     }
 
-    .lower-div ul li {
-        font-size: 1rem;
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 480px) {
-    .main-cont {
-        margin-top: 3rem;
-        width: 80%;
+    .page-container {
+        padding: 0.5rem;
     }
 
-    .avatar {
-        width: 50px;
-        height: 50px;
+    .page-title {
         font-size: 1.5rem;
     }
 
-    .upper-div h2 {
-        font-size: 1.2rem;
+    .profile-header-card,
+    .info-card,
+    .bookmarks-card {
+        padding: 1rem;
     }
 
-    .lower-div ul li {
-        font-size: 0.9rem;
+    .avatar-large {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
     }
-}
 
-.bookmarked-posts {
-    margin-top: 2rem;
-}
+    .username-large {
+        font-size: 1.25rem;
+    }
 
-.bookmarked-posts h3 {
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.bookmarked-list {
-    list-style: none;
-    padding-left: 0;
-    animation: blooming 0.8s ease;
-}
-
-.bookmarked-post {
-    color: var(--black);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    margin: 8px 0;
-    background-color: var(--antiFlashWhite);
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.bookmarked-post h4 {
-    cursor: pointer;
-    max-width: 80%;
-}
-.bookmarked-post h4:hover{
-    color: var(--forrestGreen);
-}
-.bookmarked-post.dark {
-    background-color: var(--black);
-    color: var(--antiFlashWhite);
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
-}
-
-.bookmarked-post:hover {
-    background-color: var(--borderColor);
-    color: var(--antiFlashWhite);
-}
-
-.bookmarked-post.dark:hover {
-    background-color: var(--antiFlashWhite);
-    color: var(--black);
-}
-
-.bookmark-heading.dark {
-    color: var(--antiFlashWhite);
-}
-
-.bookmarked-post strong {
-    font-size: 1.1rem;
-}
-
-.bookmarked-post button {
-    opacity: 0.7;
-}
-
-.bookmarked-post button:hover {
-    transition: 0.3s ease-in;
-    opacity: 1;
-}
-
-.username {
-    font-size: 1.75rem;
-    font-weight: bold;
-    text-align: center;
-    display: block;
-    margin-top: 0.5rem;
-    color: var(--borderColor);
-    cursor: pointer;
-}
-
-.username.dark{
-    color: var(--antiFlashWhite);
-}
-
-.username:hover{
-    color: var(--forrestGreen);
-}
-
-#crossButton{
-    cursor: pointer;
-}
-
-.outer-cont{
-    width: 100%;
-    height: 150vh;
-    outline: 1px solid var(--borderColor);
-    border-radius: 3px;
-    padding-top: 1rem;
+    .card-title {
+        font-size: 1.25rem;
+    }
 }

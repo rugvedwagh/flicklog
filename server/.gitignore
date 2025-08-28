@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Build output (if using TypeScript or build tools)
+dist/
+
+certs/
+
+# Logs
+logs
+*.log
+*.out
+*.pid
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/
+*.lcov
+
+# MongoDB dumps (optional)
+dump/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE settings (optional)
+.vscode/

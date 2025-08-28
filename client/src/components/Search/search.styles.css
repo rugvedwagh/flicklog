@@ -1,73 +1,112 @@
-
-.searchlogo {
-    color: rgb(107, 107, 107);
-    cursor: pointer;
-}
-
-.searchlogo:hover {
-    color: black;
-    transition: 0.3s ease-in;
-}
-
-.appBarSearch {
-    background-color: var(--white) !important;
+.search-box {
     display: flex;
-    flex-direction: row;
-    /* padding: 1.5em; */
-    border-radius: 3px;
-    animation: flower 0.6s ease;
-    gap: 10px;
-    margin-bottom: 1em;
-    color: var(--black) !important;
-    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: var(--antiFlashWhite);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    max-width: 500px;
+    width: 100%;
+    margin: 0rem;
+    flex-wrap: nowrap;
+    height: 38px
 }
 
-.appBarSearch.dark{
-    color: var(--antiFlashWhite) !important;
-    background-color: var(--black) !important;
-}
-
-.appBarSearch input {
-    flex-grow: 1;
-    margin-right: 10px;
-}
-
-.appBarSearch > .MuiTextField-root{
-    height: 3em;
-}
-
-.appBarSearch.dark .MuiTextField-root{
-    background-color: var(--antiFlashWhite) !important;
-    border-radius: 3px;
-}
-
-.search-button{
-    color:var(--black) !important;
-    background-color: var(--white) !important;
-    padding-right: 0 !important;
+.search-input {
+    flex: 1;
     border: none;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    background-color: transparent;
+    color: var(--textColor, #333);
+    outline: none;
+    min-width: 0; /* important for flexbox shrinking */
 }
 
-.search-button.dark{
-    background-color: var(--antiFlashWhite) !important;
+/* Dark Mode input color */
+.search-box.dark .search-input {
+    color: var(--borderColor);
 }
 
-.search-button.dark .box{
-    border: 1px solid var(--borderColor) !important;
-}
-
-.appBarSearch > .box {
-    border: 1px solid var(--borderColor) !important;
-}   
-
-.appBarSearch > h4{
+.search-icon-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1rem; /* increased horizontal padding for easier tapping */
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+    min-width: 44px; /* minimum touch target for accessibility */
+    min-height: 44px;
 }
 
-.appBarSearch.dark .box{
-    background-color: var(--antiFlashWhite);
+/* Hover effect */
+.search-icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-.appBarSearch.dark .box input{
-    background-color: var(--antiFlashWhite);
+.search-icon {
+    font-size: 1.5rem;
+    color: var(--forrestGreen);
+}
+
+.search-icon.dark {
+    color: var(--forrestGreen) !important;
+}
+
+.search-box.dark .search-icon {
+    color: var(--antiFlashWhite);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .search-box {
+        margin: 0.5rem 0;
+        width: 100%;
+        /* allow wrapping in tight spaces to avoid cutoff */
+        flex-wrap: nowrap;
+        max-width: 100%;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .search-icon-btn {
+        padding: 0.5rem 0.8rem; /* maintain padding */
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .search-icon {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        flex-direction: row; /* already row, no change */
+        margin: 0.5rem;
+        max-width: 100%;
+        flex-wrap: nowrap;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .search-icon-btn {
+        padding: 0.4rem 0.6rem;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .search-icon {
+        font-size: 1.2rem;
+    }
 }

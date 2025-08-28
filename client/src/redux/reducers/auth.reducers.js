@@ -2,7 +2,10 @@ import {
     AUTH,
     LOGOUT,
     ERROR,
-    REFRESH_TOKEN
+    REFRESH_TOKEN,
+    CLEAR_ERROR,
+    CLEAR_SUCCESS,
+    SUCCESS_MESSAGE
 } from '../../constants/auth.constants';
 import {
     START_LOADING,
@@ -14,31 +17,29 @@ const initialState = {
     accessToken: null,
     clientData: null,
     isLoading: null,
+    successMessage: null,
     errorMessage: null
 }
 
 const authReducer = (state = initialState, action) => {
-
     switch (action.type) {
-
-        case AUTH:
-            const { accessToken, ...filteredData } = action?.payload;
-            localStorage.setItem('profile', JSON.stringify(filteredData.result));
+        case AUTH: {
+            const { accessToken, csrfToken, sessionId, ...otherData } = action.payload;
             return {
                 ...state,
-                authData: filteredData.result,
-                accessToken: accessToken
+                authData: otherData.result,
+                accessToken
             };
+        }
 
         case REFRESH_TOKEN:
             return {
                 ...state,
-                accessToken: action?.payload,
+                authData: 'proxyAuthData',
+                accessToken: action.payload,
             };
 
         case LOGOUT:
-            localStorage.removeItem('profile');
-            localStorage.removeItem('cachedPosts')
             return {
                 ...state,
                 authData: null,
@@ -47,10 +48,28 @@ const authReducer = (state = initialState, action) => {
                 errorMessage: ''
             };
 
+        case CLEAR_ERROR:
+            return {
+                ...state,
+                errorMessage: ''
+            };
+
         case ERROR:
             return {
                 ...state,
                 errorMessage: action.payload
+            };
+
+        case SUCCESS_MESSAGE:
+            return {
+                ...state,
+                successMessage: action.payload
+            };
+
+        case CLEAR_SUCCESS:
+            return {
+                ...state,
+                successMessage: ''
             };
 
         case START_LOADING:

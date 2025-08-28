@@ -1,83 +1,106 @@
-import { generateRefreshToken } from "../utils/generateRefreshToken.js";
-import { generateAccessToken } from "../utils/generateAccessToken.js";
-import UserModel from "../models/user.model.js";
+import { generateRefreshToken, generateAccessToken, generateCsrfToken } from "../utils/generate-tokens.js";
+import createHttpError from "../utils/create-error.js";
+import User from "../models/user.model.js";
+import crypto from 'crypto';
+import { v4 as uuidv4 } from "uuid";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 
-// Log In Controller
-const logIn = async (req, res) => {
-    const { email, password } = req.body;
+const logIn = async (req, res, next) => {
+    const { email, password: plainTextPassword } = req.body;
 
-    const oldUser = await UserModel.findOne({ email });
-
-    if (!oldUser) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+    if (!email || !plainTextPassword) {
+        return next(createHttpError("Email and password are required", 400));
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+    if (plainTextPassword.length < 4) {
+        return next(createHttpError("Password must be at least 4 characters long", 400));
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(createHttpError("User not found", 404));
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(plainTextPassword, user.password);
 
     if (!isPasswordCorrect) {
-        const error = new Error("Incorrect password");
-        error.statusCode = 400;
-        throw error;
+        return next(createHttpError("Incorrect password", 400));
     }
 
-    const accessToken = generateAccessToken(oldUser);
-    const refreshToken = generateRefreshToken(oldUser);
+    const sessionId = uuidv4();
+    const csrfToken = generateCsrfToken(32);
+    const refreshToken = generateRefreshToken(user);
+    const accessToken = generateAccessToken(user);
 
-    await oldUser.save();
+    user.sessions.push({
+        csrfToken,
+        refreshToken,
+        sessionId,
+        userAgent: req.headers["user-agent"]
+    });
+
+    await user.save();
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        path: '/',
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const userObj = oldUser.toObject();
-    const { password: pass, bookmarks, __v, updatedAt, refreshToken: _, ...filteredUserData } = userObj;
+    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...result } = user.toObject();
 
-    const authData = {
-        result: filteredUserData,
-        accessToken: accessToken
-    }
-
-    res.status(200).json(authData);
+    res.status(200).json({
+        result,
+        accessToken,
+        csrfToken,
+        sessionId
+    });
 };
 
-// Sign Up Controller
-const registerUser = async (req, res) => {
+// Register Controller
+const register = async (req, res, next) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
-    const oldUser = await UserModel.findOne({ email });
+    if (!email || !password || !confirmPassword || !firstName || !lastName) {
+        return next(createHttpError("All fields are required", 400));
+    }
 
-    if (oldUser) {
-        const error = new Error("Email is already in use");
-        error.statusCode = 400;
-        throw error;
+    if (password.length < 4) {
+        return next(createHttpError("Password must be at least 4 characters long", 400));
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return next(createHttpError("Email is already in use", 400));
     }
 
     if (password !== confirmPassword) {
-        const error = new Error("Passwords don't match");
-        error.statusCode = 400;
-        throw error;
+        return next(createHttpError("Passwords don't match", 400));
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = new UserModel({
+    const newUser = new User({
         email,
         password: hashedPassword,
         name: `${firstName} ${lastName}`,
     });
 
-    await newUser.save();
-
-    const accessToken = generateAccessToken(newUser);
+    const sessionId = uuidv4();
+    const csrfToken = generateCsrfToken(32);
     const refreshToken = generateRefreshToken(newUser);
+    const accessToken = generateAccessToken(newUser);
+
+    newUser.sessions.push({
+        csrfToken,
+        refreshToken,
+        sessionId,
+        userAgent: req.headers["user-agent"]
+    });
 
     await newUser.save();
 
@@ -85,92 +108,103 @@ const registerUser = async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        path: '/',
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    const authData = {
-        result: newUser,
-        accessToken: accessToken,
-        refreshToken
-    }
+    const { password: _, bookmarks, __v, sessions, csrfToken: __csrf, ...result } = newUser.toObject();
 
-    res.status(201).json(authData);
+    res.status(201).json({
+        result,
+        accessToken,
+        csrfToken,
+        sessionId
+    });
 };
 
 // Logout user controller
-const logoutUser = (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+const logoutUser = async (req, res, next) => {
+    const sessionId = req.body.sessionId || req.headers['x-session-id'];
 
-    if (!refreshToken) {
-        return res.status(200).json({ message: "Logged out successfully" });
+    if (!sessionId) {
+        return next(createHttpError("Session ID is required", 400));
     }
+
+    const user = await User.findOne({ "sessions.sessionId": sessionId });
+
+    if (!user) {
+        return next(createHttpError("User not found", 404));
+    }
+
+    user.sessions = user.sessions.filter(session => session.sessionId !== sessionId);
+    await user.save();
 
     res.clearCookie("refreshToken", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'None',
         path: '/',
     });
 
-    const message = { message: "Logged out successfully" }
-
-    return res.status(200).json(message);
+    return res.status(200).json({ message: "Logged out successfully" });
 };
 
 // Refresh token controller
-const refreshToken = async (req, res) => {
+const refreshToken = async (req, res, next) => {
     const refreshToken = req.cookies.refreshToken;
 
-    if (!refreshToken) {
-        const error = new Error("Refresh token not found");
-        error.statusCode = 401;
-        throw error;
+    if (!refreshToken || typeof refreshToken !== 'string') {
+        return next(createHttpError(401, 'Refresh token is missing or invalid'));
     }
 
-    if (typeof refreshToken !== "string") {
-        const error = new Error("Refresh token must be a valid string");
-        error.statusCode = 401;
-        throw error;
-    }
-
-    const decodeToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-
-    const userId = decodeToken.id;
-    const user = await UserModel.findOne({ _id: userId });
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const user = await User.findById(decoded.id);
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        return next(createHttpError(404, 'User not found'));
+    }
+
+    const session = user.sessions.find(s => s.refreshToken === refreshToken);
+
+    if (!session) {
+        return next(createHttpError(403, 'Session not found or refresh token is invalid'));
     }
 
     const newAccessToken = generateAccessToken(user);
 
-    const accessToken = {
-        accessToken: newAccessToken
-    }
-
-    res.status(200).json(accessToken);
+    res.status(200).json({ accessToken: newAccessToken });
 };
 
 // fetch Refresh token controller
-const fetchRefreshToken = (req, res) => {
+const fetchRefreshToken = (req, res, next) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        const error = new Error("Refresh token not found");
-        error.statusCode = 404;
-        throw error;
+        return next(createHttpError("Refresh token not found", 404));
     }
 
     res.status(200).json({ refreshToken });
 };
 
+const getCsrfToken = (req, res, next) => {
+    const csrfToken = crypto.randomBytes(32).toString('hex');
+
+    res.cookie('XSRF-TOKEN', csrfToken, {
+        httpOnly: false,
+        secure: true,
+        sameSite: 'None',
+        path: '/',
+        maxAge: 3600000
+    });
+
+    res.status(200).json({ csrfToken });
+};
+
 export {
     logIn,
-    registerUser,
+    register,
     refreshToken,
     fetchRefreshToken,
+    getCsrfToken,
     logoutUser
-}
+};

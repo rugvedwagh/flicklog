@@ -1,19 +1,19 @@
 import API from './index';
 
 // Auth related API calls
-const logInApi = (formData) => API.post('/auth/signin', formData);
+const logInApi = (formData) => API.post('/auth/login', formData);
 
-const registerUserApi = (formData) => API.post('/auth/registerUser', formData);
+const registerApi = (formData) => API.post('/auth/register', formData);
 
-const refreshTokenApi = () => API.post('/auth/refresh-token');
+const refreshTokenApi = () => API.post('/auth/refresh-token/secure');
 
-const getRefreshTokenApi = () => API.get('/auth/get-refresh-token');
+const getRefreshTokenApi = () => API.get('/auth/refresh-token');
 
-const logoutApi = () => API.post('/auth/logout-user')
+const logoutApi = () => API.post('/auth/logout')
 
 export {
     logInApi,
-    registerUserApi,
+    registerApi,
     refreshTokenApi,
     getRefreshTokenApi,
     logoutApi

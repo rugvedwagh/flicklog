@@ -2,14 +2,21 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import fs from 'fs';
+import https from 'https';
+
+import helmet from 'helmet';
+import compression from 'compression';
+
 import errorHandler from './middleware/error.middleware.js';
-import notFound from './middleware/notFound.middleware.js';
-import dataBaseConnection from './config/Database.js';
-import { redis } from './config/redisClient.js';
+import notFound from './middleware/not-found.middleware.js';
+import DatabaseConnection from './config/database.js';
+import { RedisConnection } from './config/redis.js';
+
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
 import authRoutes from './routes/auth.routes.js';
-import cookieParser from "cookie-parser"; 
 
 dotenv.config();
 
@@ -17,52 +24,57 @@ const app = express();
 
 app.set('trust proxy', 1); // Trust first proxy (Render)
 
-// Middleware
+// === Security & Performance Middleware ===
+app.use(helmet());
+app.use(compression());
+app.disable('x-powered-by'); // Hide Express info from headers
+
+// === CORS & Parsing Middleware ===
 app.use(
     cors({
-        origin: process.env.FRONTEND_DOMAIN, 
-        credentials: true, 
+        origin: process.env.FRONTEND_DOMAIN,
+        credentials: true,
     })
 );
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
-// Routes
+// === Routes ===
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
-app.use('/auth', authRoutes)
+app.use('/auth', authRoutes);
 
-// Global Not Found and Error Handlers
-app.use(notFound);
-
-let redisMessage = "Redis not connected";
-
-app.get('/', async (req, res) => {
-    res.send(`<h2>Server is running...</h2>`);
+// === Root Route ===
+app.get('/', (req, res) => {
+    res.send(`<h3>✅ Server is running in ${process.env.NODE_ENV || 'development'} mode</h3>`);
 });
 
+// === 404 + Error Handling Middleware ===
+app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT;
+// === Connect to DB & Redis ===
+DatabaseConnection();
+RedisConnection();
 
-app.listen(PORT, () => {
-    console.log(`\n✅ Server running on port:${PORT}`);
-});
+// === Server Startup ===
+const PORT = process.env.PORT || 5000;
 
-(async () => {
-    try {
-        await redis.ping();
-    } catch (err) {
-        console.error("⚠️ Redis connection failed:", err.message);
-    }
-})();
+if (process.env.NODE_ENV === 'development') {
+    const sslOptions = {
+        key: fs.readFileSync('./certs/key.pem'),
+        cert: fs.readFileSync('./certs/cert.pem'),
+    };
 
-(async () => {
-    try {
-        await dataBaseConnection();
-    } catch (err) {
-        console.error("⚠️ MongoDB connection failed:", err.message);
-    }
-})();
+    https.createServer(sslOptions, app).listen(443, () => {
+        console.log(`\n✅ HTTPS Dev Server running at https://localhost`);
+    });
+
+} else {
+    app.listen(PORT, () => {
+        console.log(`\n🚀 Production server running on port ${PORT}`);
+    });
+}
+

@@ -7,7 +7,7 @@
     --subtextColor: #f2f2f2bb;
     --notFoundColor: #555555;
     --forrestGreen: #2e6f40;
-    --cardColour: #2a2a2a
+    --cardColour: #2a2a2a;
 }
 
 :root {
@@ -25,10 +25,9 @@ body {
     overflow: visible;
 }
 
-.root-bg.dark .MuiContainer-maxWidthLg .scrollup{
-    background-color: var(--black);
-    color: var(--antiFlashWhite);
-    outline: 1px solid var(--borderColor);
+.root-bg.dark .MuiContainer-maxWidthLg .scrollup {
+    background-color: var(--cardColour);
+    color: var(--forrestGreen);
 }
 
 @keyframes flower {
@@ -39,6 +38,18 @@ body {
 
     100% {
         transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideErrorDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0%);
         opacity: 1;
     }
 }
@@ -70,9 +81,12 @@ body {
 }
 
 @media (max-width: 600px) {
-    .root-bg, .root-bg.dark{
+
+    .root-bg,
+    .root-bg.dark {
         width: 100vw;
     }
+
     .scrollup.show {
         height: 1.75em;
         width: 1.75em;
@@ -86,7 +100,7 @@ body {
 
 .root-bg {
     background-color: var(--white);
-    width: calc(100vw - 17px);
+    width: calc(100vw - 15px);
     padding: 0 !important;
     margin: 0 !important;
 }
@@ -102,4 +116,46 @@ body {
         font-size: 0.8rem;
         padding: 8px 18px;
     }
+}
+
+.addnewpost {
+    position: fixed !important;
+    bottom: 100px;
+    right: 25px;
+    z-index: 999;
+    transition: 0.3s ease-in;
+    background-color: var(--antiFlashWhite);
+    color: var(--forrestGreen);
+    color: var(--borderColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.addnewpost:hover {
+    opacity: 1;
+    transition: 0.3s ease-in;
+}
+
+.closeformbutton {
+    position: fixed !important;
+    bottom: 725px;
+    right: 235px;
+    z-index: 99999;
+}
+
+.MuiAlert-filledError,
+.MuiAlert-filledSuccess {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 0 !important;
+    animation: slideErrorDown 0.3s ease-in;
+    font-size: 18px !important;
+}
+
+.loading-screen{
+    color: transparent !important;
+    display: none !important;
 }

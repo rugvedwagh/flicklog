@@ -2,6 +2,7 @@ import {
     ERROR,
     USER_INFO,
     UPDATE_USER,
+    SUCCESS_MESSAGE,
 } from '../../constants/auth.constants';
 import {
     END_LOADING,
@@ -12,11 +13,10 @@ import {
     updateUserDetailsApi
 } from '../../api/user.api';
 
-const fetchUserData = (id, navigate) => async (dispatch) => {
+const fetchUserData = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        navigate(`/user/i`);
         const { data } = await userInfoApi(id);
         dispatch({ type: USER_INFO, payload: data });
     } catch (error) {
@@ -34,6 +34,7 @@ const updateUserDetails = (id, updatedData) => async (dispatch) => {
         const { data } = await updateUserDetailsApi(id, updatedData);
         const { password, __v, bookmarks, ...fileredData } = data;
 
+        dispatch({ type: SUCCESS_MESSAGE, payload : 'User updated successfully' })
         dispatch({ type: UPDATE_USER, payload: fileredData });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });

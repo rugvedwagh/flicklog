@@ -1,3 +1,13 @@
+@keyframes prakat {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .mainContainer {
     display: flex;
     align-items: center;
@@ -11,7 +21,7 @@
 }
 
 .infloader {
-    margin: 3rem 50%;
+    margin: 3rem 49%;
     color: var(--forrestGreen) !important;
 }
 
@@ -19,20 +29,22 @@
     color: var(--antiFlashWhite) !important;
 }
 
-.loading {
-    position: relative;
-    margin: 20% 50%;
+.loading-posts {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 40%;
+    left: calc(50% - 15px);
     color: var(--forrestGreen) !important;
 }
 
-.loading.dark {
+.loading-posts.dark {
     color: var(--antiFlashWhite) !important;
 }
 
 @media (max-width: 600px) {
-    .loading {
-        margin: 20% 45%;
-        margin-bottom: 400px;
+    .loading-posts {
+        left: 44.5%;
+        top: 40%;
     }
 
     .infloader {
@@ -53,6 +65,7 @@
     color: var(--subtextColor);
 }
 
-.infinite-scroll-component{
-    padding: 0 0.3rem;
+.infinite-scroll-component {
+    animation: prakat 0.7s ease-in;
+    padding: 0px;
 }

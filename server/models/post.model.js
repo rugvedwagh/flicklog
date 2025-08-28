@@ -6,7 +6,13 @@ const postSchema = mongoose.Schema({
     name: String,
     creator: String,
     tags: [String],
+    slug: { type: String, required: true },
     selectedfile: String,
+    image: {
+        url: String,
+        publicId: String,
+        originalName: String
+    },
     likes: {
         type: [String],
         default: [],
@@ -19,8 +25,7 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     }
-})
+});
 
-const Post = mongoose.model('Post', postSchema)
-
+const Post = mongoose.model('Post', postSchema);
 export default Post;

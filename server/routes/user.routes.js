@@ -11,10 +11,10 @@ const router = express.Router();
 // Route definitions
 router
     .route("/:id/update")
-    .patch(verifyAccessToken, asyncHandler(updateUser));
+    .patch(asyncHandler(verifyAccessToken), asyncHandler(updateUser));
 
 router
-    .route("/i/:id")
-    .get(verifyAccessToken, asyncHandler(fetchUserData));
+    .route("/info/:id")
+    .get(asyncHandler(verifyAccessToken), asyncHandler(fetchUserData));
 
 export default router;

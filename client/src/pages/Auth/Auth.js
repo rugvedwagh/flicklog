@@ -1,7 +1,6 @@
-import { Button, Paper, Grid, Typography, Container, Alert, CircularProgress } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Button, Paper, Grid, Typography, Container, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { logIn, registerUser } from '../../redux/actions/auth.actions';
+import { logIn, register } from '../../redux/actions/auth.actions';
 import { useTheme } from '../../context/themeContext';
 import React, { useState, useEffect } from 'react';
 import loginArt from '../../assets/loginart.PNG'
@@ -23,11 +22,11 @@ const SignUp = () => {
     const navigate = useNavigate();
     const darkMode = useTheme();
 
-    const [form, setForm] = useState(initialState);
-    const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isSignup, setIsSignup] = useState(false);
+    const [form, setForm] = useState(initialState);
 
-    const { errorMessage, isLoading } = useSelector((state) => state.authReducer);
+    const { isLoading } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -45,13 +44,13 @@ const SignUp = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        isSignup ? dispatch(registerUser(form, navigate)) : dispatch(logIn(form, navigate));
+        isSignup ? dispatch(register(form, navigate)) : dispatch(logIn(form, navigate));
     };
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     return (
-        <Container component="main" maxWidth="md" style={{ marginTop: '5%', paddingTop: '7rem' }}>
+        <Container component="main" maxWidth="lg" style={{ marginTop: '1%', paddingTop: '2rem' }}>
             <Paper className={`paper-container ${darkMode ? 'dark' : ''}`} elevation={6}>
                 <Grid container spacing={0} alignItems="center">
 
@@ -65,8 +64,6 @@ const SignUp = () => {
                             <form className={`form-auth ${darkMode ? 'dark' : ''}`} onSubmit={handleSubmit}>
                                 <div className="auth-header">
 
-                                    <LockOutlinedIcon />
-
                                     <Typography
                                         className={`typography ${darkMode ? 'dark' : ''}`}
                                         component="h1"
@@ -74,14 +71,6 @@ const SignUp = () => {
                                     >
                                         {isSignup ? 'Sign up' : 'Log in'}
                                     </Typography>
-
-                                    {errorMessage?.length ? (
-                                        <Alert severity="error" sx={{ margin: '10px 0' }}>
-                                            {errorMessage}
-                                        </Alert>
-                                    ):(
-                                        <></>
-                                    )}
                                 </div>
 
                                 <Grid container spacing={2}>
@@ -135,8 +124,9 @@ const SignUp = () => {
                                     fullWidth
                                     className={`submit ${darkMode ? 'dark' : ''}`}
                                     variant="contained"
+                                    style={{ borderRadius: '1.2rem', fontWeight: 600, letterSpacing: 0.2, padding: '0.85rem', fontSize: '1.08rem', margin: '12px 0 22px 0', boxShadow: '0 2px 10px 0 rgba(76,175,80,0.08)' }}
                                 >
-                                    {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp; {isLoading && <CircularProgress size="1.6rem" />}
+                                    {isSignup ? 'Sign Up' : 'Log In'}&nbsp;&nbsp;{isLoading && <CircularProgress size="1.6rem" />}
                                 </Button>
 
                                 <Grid style={{ margin: '16px 0' }} container justify="flex-end">

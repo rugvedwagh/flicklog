@@ -1,8 +1,11 @@
 import {
     AUTH,
+    CLEAR_ERROR,
+    CLEAR_SUCCESS,
     ERROR,
     LOGOUT,
     REFRESH_TOKEN,
+    SUCCESS_MESSAGE,
 } from '../../constants/auth.constants';
 import {
     END_LOADING,
@@ -11,32 +14,44 @@ import {
 
 import {
     refreshTokenApi,
-    registerUserApi,
+    registerApi,
     logInApi,
     logoutApi,
 } from '../../api/auth.api';
-import { getProfile } from '../../utils/storage';
 
 const logIn = (formData, navigate) => async (dispatch) => {
-    try {
-        dispatch({ type: START_LOADING });
+    dispatch({ type: START_LOADING });
 
+    try {
         const { data } = await logInApi(formData);
+        const { csrfToken, sessionId } = data;
+
+        localStorage.setItem('profile', JSON.stringify(data.result));
+        localStorage.setItem('csrfToken', csrfToken);
+        localStorage.setItem('sessionId', sessionId);
+
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
-        dispatch({ type: ERROR, payload: error?.response?.data?.message });
+        const message = error?.response?.data?.message;
+        dispatch({ type: ERROR, payload: message });
         console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
 };
 
-const registerUser = (formData, navigate) => async (dispatch) => {
+const register = (formData, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const { data } = await registerUserApi(formData);
+        const { data } = await registerApi(formData);
+        const { csrfToken, sessionId } = data;
+
+        localStorage.setItem('profile', JSON.stringify(data.result));
+        localStorage.setItem('csrfToken', csrfToken);
+        localStorage.setItem('sessionId', sessionId);
+
         dispatch({ type: AUTH, payload: data });
         navigate('/posts');
     } catch (error) {
@@ -51,7 +66,12 @@ const Logout = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         await logoutApi();
+        localStorage.removeItem('profile');
+        localStorage.removeItem('cachedPosts');
+        localStorage.removeItem('csrfToken');
+        localStorage.removeItem('sessionId');
         dispatch({ type: LOGOUT });
+        dispatch({ type: SUCCESS_MESSAGE, payload: "Logged out successfully" })
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
@@ -70,9 +90,19 @@ const refreshToken = () => async (dispatch) => {
     }
 };
 
+const clearError = () => ({
+    type: CLEAR_ERROR
+});
+
+const clearSuccess = () => ({
+    type: CLEAR_SUCCESS
+})
+
 export {
     logIn,
-    registerUser,
+    register,
     Logout,
+    clearError,
+    clearSuccess,
     refreshToken,
 }

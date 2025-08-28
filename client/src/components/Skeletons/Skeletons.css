@@ -1,0 +1,27 @@
+
+.MuiSkeleton-root {
+    background-color: var(--black);
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-mode .MuiSkeleton-root {
+    background-color: var(--black);
+}
+
+.MuiSkeleton-root::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent,
+            #696969,
+            transparent);
+}
+
+.dark-mode .MuiSkeleton-root::after {
+    background: linear-gradient(90deg,
+            transparent,
+            #696969,
+            transparent);
+}

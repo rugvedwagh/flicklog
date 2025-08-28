@@ -1,82 +1,124 @@
-import { Typography, TextField, Button } from '@mui/material';
-import { addComment } from '../../redux/actions/post.actions';
-import { useTheme } from '../../context/themeContext';
-import { getProfile } from '../../utils/storage';
-import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
-import './comments.styles.css';
+import { Typography, TextField, Button } from "@mui/material"
+import { addComment } from "../../redux/actions/post.actions"
+import { CircularProgress } from "@mui/material"
+import { useTheme } from "../../context/themeContext"
+import { fetchUserProfile } from "../../utils/storage"
+import { useDispatch, useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import "./comments.styles.css"
 
 const CommentsSection = ({ post }) => {
-
-    const dispatch = useDispatch();
-    const darkMode = useTheme();
-
-    const profile = getProfile();
+    const dispatch = useDispatch()
+    const darkMode = useTheme()
+    const profile = fetchUserProfile()
     const userId = profile._id
+    const [comment, setComment] = useState("")
+    const [isFocused, setIsFocused] = useState(false)
 
-    const [comment, setComment] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
-    const [comments, setComments] = useState(post?.comments);
+    const { isLoading, posts } = useSelector((state) => state.postsReducer)
+
+    const updatedPost = posts.find(p => p._id === post._id)
+    const comments = updatedPost?.comments || post?.comments
 
     const postComment = async () => {
-        if (!userId) return;
-        const finalComment = `${profile?.name}: ${comment}`;
-        const newComments = await dispatch(addComment(finalComment, post._id));
-        setComments(newComments);
-        setComment('');
-        setIsFocused(false);
-    };
+        if (!userId || !comment.trim()) return
+
+        try {
+            await dispatch(addComment(`${profile?.name}: ${comment}`, post._id))
+            setComment("")
+            setIsFocused(false)
+        } catch (error) {
+            console.error("Failed to post comment:", error)
+        }
+    }
 
     return (
-        <div className={`commentsOuterContainer ${darkMode ? 'dark' : ''}`}>
-            <div className={`commentsInnerContainer ${darkMode ? 'dark' : ''}`}>
-                <Typography gutterBottom variant="h6">Comments</Typography>
-                {comments.length > 0 &&
-                    comments.slice(0).reverse().map((comment, index) => (
-                        <Typography
-                            className={`comments-data ${darkMode ? 'dark' : ''}`}
-                            key={index}
-                            variant="subtitle1"
-                        >
-                            <strong className={`users-name ${darkMode ? 'dark' : ''}`}>
-                                {comment?.split(': ')[0]}:
-                            </strong>
-                            <span className={`comment-data ${darkMode ? 'dark' : ''}`}>
-                                {comment?.split(':')[1]}
-                            </span>
-                        </Typography>
-                    ))
-                }
+        <div className={`comments-container ${darkMode ? "dark" : ""}`}>
+            <div className={`comments-header ${darkMode ? "dark" : ""}`}>
+                <Typography variant="h5" className={`comments-title ${darkMode ? "dark" : ""}`}>
+                    Comments
+                </Typography>
+                <div className={`comments-count ${darkMode ? "dark" : ""}`}>
+                    {comments?.length || 0} {comments?.length === 1 ? "comment" : "comments"}
+                </div>
             </div>
 
             {userId && (
-                <div className={`write-comment ${darkMode ? 'dark' : ''}`}>
-                    <TextField
-                        fullWidth
-                        rows={1}
-                        variant="outlined"
-                        label="Add a comment..."
-                        multiline
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={() => !comment.trim() && setIsFocused(false)}
-                    />
-
-                    {isFocused &&
-                        (
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={postComment}
-                            >
-                                Comment
-                            </Button>
+                <div className={`add-comment-section ${darkMode ? "dark" : ""}`}>
+                    <div className={`user-avatar ${darkMode ? "dark" : ""}`}>
+                        <span className="avatar-text">{profile?.name?.charAt(0)?.toUpperCase()}</span>
+                    </div>
+                    <div className="comment-input-container">
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={isFocused ? 3 : 1}
+                            variant="outlined"
+                            placeholder="Add a comment..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => !comment.trim() && setIsFocused(false)}
+                            className={`comment-input ${darkMode ? "dark" : ""}`}
+                        />
+                        {isFocused && (
+                            <div className="comment-actions">
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => {
+                                        setComment("")
+                                        setIsFocused(false)
+                                    }}
+                                    className={`cancel-btn ${darkMode ? "dark" : ""}`}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={postComment}
+                                    disabled={!comment.trim() || isLoading}
+                                    className={`post-btn ${darkMode ? "dark" : ""}`}
+                                >
+                                    Post Comment &nbsp;&nbsp;
+                                    {isLoading && <CircularProgress size="1.6rem" sx={{ color: '#1a1a1a' }} />}
+                                </Button>
+                            </div>
                         )}
+                    </div>
                 </div>
             )}
-        </div>
-    );
-};
 
-export default CommentsSection;
+            <div className={`comments-list ${darkMode ? "dark" : ""}`}>
+                {comments?.length > 0 ? (
+                    comments
+                        .slice(0)
+                        .reverse()
+                        .map((comment, index) => {
+                            const [userName, ...commentParts] = comment.split(": ")
+                            const commentText = commentParts.join(": ")
+
+                            return (
+                                <div key={index} className={`comment-item ${darkMode ? "dark" : ""}`}>
+                                    <div className={`comment-avatar ${darkMode ? "dark" : ""}`}>
+                                        <span className="avatar-text">{userName?.charAt(0)?.toUpperCase()}</span>
+                                    </div>
+                                    <div className="comment-content">
+                                        <div className={`comment-author ${darkMode ? "dark" : ""}`}>{userName}</div>
+                                        <div className={`comment-text ${darkMode ? "dark" : ""}`}>{commentText}</div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                ) : (
+                    <div className={`no-comments ${darkMode ? "dark" : ""}`}>
+                        <Typography variant="body1" className={`no-comments-text ${darkMode ? "dark" : ""}`}>
+                            No comments yet. Be the first to share your thoughts!
+                        </Typography>
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
+
+export default CommentsSection

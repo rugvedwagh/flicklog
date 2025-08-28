@@ -1,110 +1,270 @@
+/* postcard.styles.css */
 .card {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--antiFlashWhite) !important;
-    color: var(--white);
-    border-radius: 3px;
-    height: 100%;   
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px ;
+    background-color: var(--white) !important;
+    border-radius: 16px !important;
+    height: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.card.dark{
+.card.dark {
     background-color: var(--cardColour) !important;
-    outline: 1px solid var(--borderColor);
+    border-color: var(--borderColor);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-.card:hover{
-    box-shadow: black 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px ;
+.card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card.dark:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+    position: relative;
+    overflow: hidden;
 }
 
 .media {
     height: 0;
-    padding-top: 56.25%;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-blend-mode: darken;
+    padding-top: 60%;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-blend-mode: overlay;
     cursor: pointer;
-    border-top-left-radius: 3px; 
-    border-top-right-radius: 3px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.media:hover {
+    transform: scale(1.05);
 }
 
 .overlay {
     position: absolute;
-    top: 0.2rem;
-    left: 0.5rem;
-    color: white;
-    font-family: 'Roboto', sans-serif;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem;
 }
 
-.overlay2 {
-    position: absolute;
-    top: 0.2rem;
-    right: 0.5rem;
-    color: white;
+.overlay-content {
+    padding: 0.5rem 0.8rem;
+    border-radius: 12px;
 }
 
-.title {
-    padding: 0.5rem 0.5rem 0 0.5rem;
-    color: var(--borderColor);
-    user-select: none;
+.author-name {
+    color: white !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 0.2rem !important;
 }
 
-.title.dark{
-    color: var(--antiFlashWhite);
+.post-time {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.7rem !important;
 }
 
-.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom.title.css-h93ljk-MuiTypography-root{
-    padding-bottom: 0px;
-    margin-bottom: 0px;
+.card-content {
+    padding: 1rem 1rem 0.5rem 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-@media (max-width: 600px) {
-    .cardActions {
-        display: flex;
-        justify-content:flex-start;
-    }
-}
-
-.msg {
-    padding: 0rem 0.5rem 0rem 0.5rem;
-    margin-top: 0;
-    user-select: none;
-}
-
-.msg-text.dark{
-    color: var(--subtextColor) !important;
-}
-
-.comment-button{
-    color: var(--borderColor);
-}
-
-.comment-button.dark{
-    color: var(--subtextColor);
-}
-
-.MuiTooltip-tooltip	.MuiButton{
-    color: var(--black);
-}
-
-section{
+.content-section {
     cursor: pointer;
 }
 
-.cardActions{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding-top: 0 !important;
-}
-
-.bookmark-button{
+.title {
     color: var(--borderColor);
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.8rem !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.bookmark-button.dark{
+.title.dark {
+    color: var(--antiFlashWhite);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.tag {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    color: var(--borderColor);
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.3rem 0.7rem !important;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tag:hover {
+    transform: translateY(-1px);
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.tag.dark {
+    color: var(--antiFlashWhite);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--borderColor);
+}
+
+.tag.dark:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.more-tag {
+    opacity: 0.7;
+}
+
+.msg {
+    margin-bottom: 1rem;
+}
+
+.msg-text {
+    color: var(--borderColor);
+    line-height: 1.6 !important;
+    font-size: 0.9rem !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.msg-text.dark {
     color: var(--subtextColor);
 }
+
+.cardActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+    margin-top: auto;
+}
+
+.actions-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    min-width: auto !important;
+    padding: 0.5rem !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+}
+
+.action-btn:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.edit-btn {
+    margin-left: auto;
+}
+
+.comment-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.comment-button {
+    color: var(--borderColor);
+    transition: color 0.3s ease;
+}
+
+.comment-button.dark {
+    color: var(--subtextColor);
+}
+
+.comment-count {
+    font-size: 0.85rem;
+    color: var(--borderColor);
+    font-weight: 500;
+}
+
+.comment-count.dark {
+    color: var(--subtextColor);
+}
+
+.bookmark-button {
+    color: var(--borderColor);
+    transition: color 0.3s ease;
+}
+
+.bookmark-button.dark {
+    color: var(--subtextColor);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        border-radius: 12px !important;
+    }
     
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .title {
+        font-size: 1rem !important;
+    }
+    
+    .msg-text {
+        font-size: 0.85rem !important;
+    }
+    
+    .tag {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        border-radius: 10px !important;
+    }
+    
+    .overlay {
+        padding: 0.8rem;
+    }
+    
+    .overlay-content {
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .author-name {
+        font-size: 0.75rem !important;
+    }
+    
+    .post-time {
+        font-size: 0.65rem !important;
+    }
+    
+    .action-btn {
+        padding: 0.4rem !important;
+    }
+}

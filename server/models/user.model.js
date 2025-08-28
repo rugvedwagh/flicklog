@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const SessionSchema = new mongoose.Schema({
+    csrfToken: String,
+    refreshToken: String,
+    sessionId: String,
+    userAgent: String,
+    createdAt: { type: Date, default: Date.now }
+});
+
 const userSchema = mongoose.Schema({
     name: {
         type: String,
@@ -19,9 +27,10 @@ const userSchema = mongoose.Schema({
     bookmarks: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Post" 
+            ref: "Post"
         }
-    ]
+    ],
+    sessions: [SessionSchema]
 });
 
 export default mongoose.model("User", userSchema);

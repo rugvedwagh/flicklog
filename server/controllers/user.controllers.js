@@ -1,17 +1,15 @@
-
-import { redis, redisAvailable } from "../config/redisClient.js";
+import { getRedis, redisAvailable } from "../config/redis.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
+import createHttpError from "../utils/create-error.js";
 
 // Update User Controller
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
     const { id } = req.params;
     const { name, email } = req.body;
 
     if (!req.userId) {
-        const error = new Error("Unauthorized action");
-        error.statusCode = 403;
-        throw error;
+        return next(createHttpError("Unauthorized action", 403));
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -21,28 +19,30 @@ const updateUser = async (req, res) => {
     );
 
     if (!updatedUser) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        return next(createHttpError("User not found", 404));
     }
 
-    res.status(200).json(updatedUser);
+    const updatedUserObject = updatedUser.toObject();
+
+    delete updatedUserObject.password;
+    delete updatedUserObject.sessions;
+    delete updatedUserObject.csrfToken;
+
+    res.status(200).json(updatedUserObject);
 };
 
 // Get User Data Controller
-const fetchUserData = async (req, res) => {
+const fetchUserData = async (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        const error = new Error("Invalid user ID");
-        error.statusCode = 400;
-        throw error;
+        return next(createHttpError("Invalid user ID", 400));
     }
 
     const cacheKey = `user:${id}`;
 
     if (redisAvailable) {
-        const cachedUser = await redis.get(cacheKey);
+        const cachedUser = await getRedis().get(cacheKey);
         if (cachedUser) {
             return res.status(200).json(JSON.parse(cachedUser));
         }
@@ -51,25 +51,25 @@ const fetchUserData = async (req, res) => {
     const user = await UserModel.findById(id);
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        return next(createHttpError("User not found", 404));
     }
+
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.sessions;
+    delete userObject.csrfToken;
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
-        const cacheSuccess = await redis.setex(cacheKey, CACHE_EXPIRY, JSON.stringify(user));
+        const cacheSuccess = await getRedis().setex(cacheKey, CACHE_EXPIRY, JSON.stringify(userObject));
 
-        if(!cacheSuccess){
-            const error = new Error("Failed to cache paginated posts");
-            error.statusCode = 500;
-            throw error;
+        if (!cacheSuccess) {
+            return next(createHttpError("Failed to cache user data", 500));
         }
     }
 
-    const { password, refreshToken, ...filteredData } = user.toObject();
-
-    res.status(200).json(filteredData);
+    return res.status(200).json(userObject);
 };
 
 export {
