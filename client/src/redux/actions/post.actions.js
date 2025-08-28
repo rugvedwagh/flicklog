@@ -115,6 +115,9 @@ const createPost = (post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await createPostApi(post);
+        
+        localStorage.removeItem('cachedPosts');
+        
         dispatch({ type: CREATE, payload: data });
         dispatch({ type: SUCCESS_MESSAGE, payload: "Post created successfully" })
     } catch (error) {
@@ -129,6 +132,9 @@ const updatePost = (id, post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await updatePostApi(id, post);
+        
+        localStorage.removeItem('cachedPosts');
+        
         dispatch({ type: UPDATE, payload: data });
         dispatch({ type: SUCCESS_MESSAGE, payload: "Post updated successfully" })
     } catch (error) {

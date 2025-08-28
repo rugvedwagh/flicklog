@@ -1,8 +1,11 @@
-import { getRedis, redisAvailable } from "../config/redis-connection.js";
+import { getRedis, redisAvailable } from "../config/redis.js";
 import PostMessage from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
 import mongoose from 'mongoose';
 import createHttpError from "../utils/create-error.js";
+import cloudinary from '../config/cloudinary.js';
+import fs from 'fs';
+
 
 // Fetch a post
 const fetchPost = async (req, res, next) => {
@@ -25,7 +28,7 @@ const fetchPost = async (req, res, next) => {
 
     if (!post) {
         return next(createHttpError("Post not found", 404));
-    } 
+    }
 
     if (redisAvailable) {
         const CACHE_EXPIRY = parseInt(process.env.CACHE_EXPIRY, 10) || 300;
@@ -111,49 +114,127 @@ const fetchPostsBySearch = async (req, res, next) => {
 
 // Create a New Post
 const createPost = async (req, res, next) => {
-    const post = req.body;
+    const { title, message, name, tags, slug } = req.body;
+    let imageData = {};
+
+    // Handle image upload to Cloudinary if file exists
+    if (req.file) {
+        console.log('Uploading file to Cloudinary:', req.file.originalname);
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'posts',
+            resource_type: 'image',
+            transformation: [
+                { width: 1000, height: 1000, crop: 'limit' },
+                { quality: 'auto' }
+            ]
+        });
+
+        imageData = {
+            url: result.secure_url,
+            publicId: result.public_id,
+            originalName: req.file.originalname
+        };
+
+        // Clean up temporary file
+        fs.unlinkSync(req.file.path);
+        console.log('Image uploaded successfully:', result.secure_url);
+    }
 
     const newPost = new PostMessage({
-        ...post,
+        title,
+        message,
+        name,
         creator: req.userId,
+        tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+        slug,
+        selectedfile: imageData.url || '',
+        image: imageData,
         createdAt: new Date().toISOString(),
     });
 
-    await newPost.save();
-    res.status(201).json(newPost);
+    const savedPost = await newPost.save();
+
+    // Clear related caches
+    if (redisAvailable) {
+        const cachePattern = 'posts:*';
+        const redis = getRedis();
+        const keys = await redis.keys(cachePattern);
+        if (keys.length > 0) {
+            await redis.del(keys);
+        }
+    }
+
+    res.status(201).json(savedPost);
 };
+
 
 // Update a Post
 const updatePost = async (req, res, next) => {
     const { id: _id } = req.params;
-    const post = req.body;
+    const { title, message, tags, slug } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return next(createHttpError("Invalid post ID", 400));
     }
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(
-        _id,
-        { ...post, _id },
-        { new: true }
-    );
+    let updateData = { title, message, tags, slug, _id };
+
+    // Handle new image upload
+    if (req.file) {
+        const existingPost = await PostMessage.findById(_id);
+        
+        // Delete old image from Cloudinary if exists
+        if (existingPost && existingPost.image?.publicId) {
+            await cloudinary.uploader.destroy(existingPost.image.publicId);
+            console.log('Old image deleted from Cloudinary:', existingPost.image.publicId);
+        }
+
+        // Upload new image
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'posts',
+            resource_type: 'image',
+            transformation: [
+                { width: 1000, height: 1000, crop: 'limit' },
+                { quality: 'auto' }
+            ]
+        });
+
+        updateData.image = {
+            url: result.secure_url,
+            publicId: result.public_id,
+            originalName: req.file.originalname
+        };
+        updateData.selectedfile = result.secure_url;
+
+        // Clean up temporary file
+        fs.unlinkSync(req.file.path);
+        console.log('New image uploaded successfully:', result.secure_url);
+    }
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, updateData, { new: true });
 
     if (!updatedPost) {
         return next(createHttpError("Post not found", 404));
     }
 
+    // Clear caches
     const cacheKey = `post:${_id}`;
-
     if (redisAvailable) {
-        try {
-            await getRedis().del(cacheKey);
-        } catch (err) {
-            console.error("⚠️ Redis delete error:", err.message);
+        const redis = getRedis();
+        await redis.del(cacheKey);
+        
+        // Clear posts list caches too
+        const cachePattern = 'posts:*';
+        const keys = await redis.keys(cachePattern);
+        if (keys.length > 0) {
+            await redis.del(keys);
         }
     }
 
     res.status(200).json(updatedPost);
 };
+
 
 // Delete a Post
 const deletePost = async (req, res, next) => {
@@ -163,14 +244,37 @@ const deletePost = async (req, res, next) => {
         return next(createHttpError("Invalid post ID", 400));
     }
 
+    const post = await PostMessage.findById(id);
+
+    if (!post) {
+        return next(createHttpError("Post not found", 404));
+    }
+
+    // Delete image from Cloudinary if exists
+    if (post.image?.publicId) {
+        await cloudinary.uploader.destroy(post.image.publicId);
+        console.log('Image deleted from Cloudinary:', post.image.publicId);
+    }
+
     const deletedPost = await PostMessage.findByIdAndDelete(id);
 
-    if (!deletedPost) {
-        return next(createHttpError("Post not found", 404));
+    // Clear caches
+    const cacheKey = `post:${id}`;
+    if (redisAvailable) {
+        const redis = getRedis();
+        await redis.del(cacheKey);
+        
+        // Clear posts list caches too
+        const cachePattern = 'posts:*';
+        const keys = await redis.keys(cachePattern);
+        if (keys.length > 0) {
+            await redis.del(keys);
+        }
     }
 
     res.status(200).json({ message: "Post deleted successfully!" });
 };
+
 
 // Like or Unlike a Post
 const likePost = async (req, res, next) => {

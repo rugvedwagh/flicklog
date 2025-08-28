@@ -42,6 +42,7 @@ const Posts = ({ setCurrentId }) => {
                     dataLength={posts.length}
                     next={fetchMorePosts}
                     hasMore={currentPage < numberOfPages}
+                    scrollThreshold={0.5}
                     loader={
                         <div style={{ padding: '16px 0' }}>
                             <PostsSkeleton darkMode={darkMode} initialCount={3} />

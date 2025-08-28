@@ -1,4 +1,4 @@
-import { getRedis, redisAvailable } from "../config/redis-connection.js";
+import { getRedis, redisAvailable } from "../config/redis.js";
 import UserModel from "../models/user.model.js";
 import mongoose from "mongoose";
 import createHttpError from "../utils/create-error.js";

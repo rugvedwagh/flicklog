@@ -11,8 +11,8 @@ import compression from 'compression';
 
 import errorHandler from './middleware/error.middleware.js';
 import notFound from './middleware/not-found.middleware.js';
-import DatabaseConnection from './config/database-config.js';
-import { RedisConnection } from './config/redis-connection.js';
+import DatabaseConnection from './config/database.js';
+import { RedisConnection } from './config/redis.js';
 
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';

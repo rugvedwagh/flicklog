@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react"
 import { fetchUserProfile } from "../../utils/storage"
 import { generateSlug } from "../../utils/create-slug"
 import "react-quill/dist/quill.snow.css"
-import FileBase from "react-file-base64"
 import ReactQuill from "react-quill"
 import "./form.styles.css"
 
@@ -15,7 +14,7 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
     const dispatch = useDispatch()
     const darkMode = useTheme()
     const profile = fetchUserProfile()
-    const userId = profile._id
+    const userId = profile?._id
     const post = useSelector((state) =>
         currentId ? state.postsReducer.posts.find((message) => message._id === currentId) : null,
     )
@@ -25,9 +24,10 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
         slug: "",
         message: "",
         tags: "",
-        selectedfile: "",
+        selectedfile: null, // Changed to store File object
     });
 
+    const [imagePreview, setImagePreview] = useState(""); 
     const titleInputRef = useRef(null)
 
     useEffect(() => {
@@ -35,9 +35,10 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
             setPostData({
                 title: post.title || "",
                 message: post.message || "",
-                tags: post.tags || "",
-                selectedfile: post.selectedfile || "",
+                tags: Array.isArray(post.tags) ? post.tags.join(", ") : (post.tags || ""),
+                selectedfile: null, 
             })
+            setImagePreview(post.selectedfile || post.image?.url || "");
         }
     }, [post])
 
@@ -53,20 +54,47 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
             title: "",
             message: "",
             tags: "",
-            selectedfile: "",
+            selectedfile: null,
         })
+        setImagePreview("");
     }
 
     const toggleForm = () => {
         setformopen(false)
     }
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPostData({ ...postData, selectedfile: file });
+            
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        // Create FormData for file upload
+        const formData = new FormData();
+        formData.append('title', postData.title);
+        formData.append('message', postData.message);
+        formData.append('name', profile.name);
+        formData.append('slug', postData.slug || generateSlug(postData.title));
+        formData.append('tags', postData.tags);
+        
+        if (postData.selectedfile) {
+            formData.append('selectedfile', postData.selectedfile);
+        }
+
         currentId === 0
-            ? dispatch(createPost({ ...postData, name: profile.name }))
-            : dispatch(updatePost(currentId, { ...postData, name: profile.name }))
+            ? dispatch(createPost(formData)) // Pass FormData instead of object
+            : dispatch(updatePost(currentId, formData))
+        
         toggleForm()
         clearForm()
     }
@@ -120,12 +148,11 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
                                 setPostData({
                                     ...postData,
                                     title: newTitle,
-                                    slug: generateSlug(newTitle) // auto-generate slug
+                                    slug: generateSlug(newTitle)
                                 });
                             }}
                             className={`title-input ${darkMode ? "dark" : ""}`}
                         />
-
                     </div>
 
                     {/* Content Editor */}
@@ -177,25 +204,43 @@ const Form = ({ currentId, setCurrentId, setformopen }) => {
                             placeholder="Enter tags separated by commas (e.g., technology, coding, tips)"
                             fullWidth
                             value={postData.tags}
-                            onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(",") })}
+                            onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
                             className={`tags-input ${darkMode ? "dark" : ""}`}
                         />
                     </div>
 
-                    {/* File Upload */}
+                    {/* File Upload - REPLACED FileBase with standard input */}
                     <div className="input-section">
                         <Typography variant="h6" className={`input-label ${darkMode ? "dark" : ""}`}>
                             Featured Image
                         </Typography>
                         <div className={`file-upload-container ${darkMode ? "dark" : ""}`}>
-                            <FileBase
+                            <input
                                 type="file"
-                                multiple={false}
-                                onDone={({ base64 }) => setPostData({ ...postData, selectedfile: base64 })}
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '2px dashed #ccc',
+                                    borderRadius: '8px',
+                                    backgroundColor: darkMode ? '#2a2a2a' : '#f5f5f5',
+                                    cursor: 'pointer'
+                                }}
                             />
-                            {postData.selectedfile && (
-                                <div className="image-preview">
-                                    <img src={postData.selectedfile || "/placeholder.svg"} alt="Preview" className="preview-image" />
+                            {imagePreview && (
+                                <div className="image-preview" style={{ marginTop: '16px' }}>
+                                    <img 
+                                        src={imagePreview} 
+                                        alt="Preview" 
+                                        className="preview-image"
+                                        style={{
+                                            maxWidth: '200px',
+                                            maxHeight: '200px',
+                                            objectFit: 'cover',
+                                            borderRadius: '8px'
+                                        }}
+                                    />
                                 </div>
                             )}
                         </div>

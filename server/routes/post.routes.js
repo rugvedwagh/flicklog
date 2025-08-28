@@ -12,25 +12,31 @@ import {
 } from "../controllers/post.controllers.js";
 import verifyAccessToken from "../middleware/auth.middleware.js";
 import asyncHandler from "../middleware/async.middleware.js";
+import upload from "../middleware/upload.middleware.js";
 
 const router = express.Router();
-
-// Route definitions
 
 router.get("/search", asyncHandler(fetchPostsBySearch));
 
 router.get("/:id/:slug", asyncHandler(fetchPost));
 
-router  
+router
     .route("/")
     .get(asyncHandler(fetchPosts))
-    .post(asyncHandler(verifyAccessToken), asyncHandler(createPost));
+    .post(
+        asyncHandler(verifyAccessToken),
+        upload.single('selectedfile'),
+        asyncHandler(createPost)
+    );
 
 router
     .route("/:id")
-    .patch(asyncHandler(verifyAccessToken), asyncHandler(updatePost))
+    .patch(
+        asyncHandler(verifyAccessToken),
+        upload.single('selectedfile'),
+        asyncHandler(updatePost)
+    )
     .delete(asyncHandler(verifyAccessToken), asyncHandler(deletePost));
-
 
 router.patch("/:id/likePost", asyncHandler(verifyAccessToken), asyncHandler(likePost));
 
