@@ -6,16 +6,17 @@ import createHttpError from "../utils/create-error.js";
 import cloudinary from '../config/cloudinary.js';
 import fs from 'fs';
 
-
 // Fetch a post
 const fetchPost = async (req, res, next) => {
-    const { id } = req.params;
+    const { slugId } = req.params;
+
+    const [slug, id] = slugId.split(/-(?=[^ -]+$)/);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return next(createHttpError("Invalid post ID", 400));
     }
 
-    const cacheKey = `post:${id}`;
+    const cacheKey = `post:${slug}-${id}`;
 
     if (redisAvailable) {
         const cachedPost = await getRedis().get(cacheKey);
@@ -117,7 +118,6 @@ const createPost = async (req, res, next) => {
     const { title, message, name, tags, slug } = req.body;
     let imageData = {};
 
-    // Handle image upload to Cloudinary if file exists
     if (req.file) {
         console.log('Uploading file to Cloudinary:', req.file.originalname);
 
@@ -126,7 +126,7 @@ const createPost = async (req, res, next) => {
             resource_type: 'image',
             transformation: [
                 { width: 1000, height: 1000, crop: 'limit' },
-                { quality: 'auto' }
+                { quality: 'auto:good' }
             ]
         });
 
@@ -136,9 +136,7 @@ const createPost = async (req, res, next) => {
             originalName: req.file.originalname
         };
 
-        // Clean up temporary file
         fs.unlinkSync(req.file.path);
-        console.log('Image uploaded successfully:', result.secure_url);
     }
 
     const newPost = new PostMessage({
@@ -155,7 +153,6 @@ const createPost = async (req, res, next) => {
 
     const savedPost = await newPost.save();
 
-    // Clear related caches
     if (redisAvailable) {
         const cachePattern = 'posts:*';
         const redis = getRedis();
@@ -180,23 +177,20 @@ const updatePost = async (req, res, next) => {
 
     let updateData = { title, message, tags, slug, _id };
 
-    // Handle new image upload
     if (req.file) {
         const existingPost = await PostMessage.findById(_id);
-        
-        // Delete old image from Cloudinary if exists
+
         if (existingPost && existingPost.image?.publicId) {
             await cloudinary.uploader.destroy(existingPost.image.publicId);
             console.log('Old image deleted from Cloudinary:', existingPost.image.publicId);
         }
 
-        // Upload new image
         const result = await cloudinary.uploader.upload(req.file.path, {
             folder: 'posts',
             resource_type: 'image',
             transformation: [
                 { width: 1000, height: 1000, crop: 'limit' },
-                { quality: 'auto' }
+                { quality: 'auto:good' }
             ]
         });
 
@@ -207,7 +201,6 @@ const updatePost = async (req, res, next) => {
         };
         updateData.selectedfile = result.secure_url;
 
-        // Clean up temporary file
         fs.unlinkSync(req.file.path);
         console.log('New image uploaded successfully:', result.secure_url);
     }
@@ -218,13 +211,11 @@ const updatePost = async (req, res, next) => {
         return next(createHttpError("Post not found", 404));
     }
 
-    // Clear caches
     const cacheKey = `post:${_id}`;
     if (redisAvailable) {
         const redis = getRedis();
         await redis.del(cacheKey);
-        
-        // Clear posts list caches too
+
         const cachePattern = 'posts:*';
         const keys = await redis.keys(cachePattern);
         if (keys.length > 0) {
@@ -263,7 +254,7 @@ const deletePost = async (req, res, next) => {
     if (redisAvailable) {
         const redis = getRedis();
         await redis.del(cacheKey);
-        
+
         // Clear posts list caches too
         const cachePattern = 'posts:*';
         const keys = await redis.keys(cachePattern);

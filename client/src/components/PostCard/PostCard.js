@@ -2,7 +2,7 @@ import { Card, CardActions, CardMedia, Button, Typography, Tooltip } from '@mui/
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { likePost, bookmarkPost } from '../../redux/actions/post.actions';
+import { likePost, bookmarkPost, fetchPost } from '../../redux/actions/post.actions';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { fetchUserProfile } from '../../utils/storage';
@@ -34,7 +34,8 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
     }, [clientData, post._id, bookmarks]);
 
     const openPost = () => {
-        navigate(`/posts/${post._id}/${post.slug}`);
+        dispatch(fetchPost(post.slug, post._id));
+        navigate(`/posts/${post.slug}-${post._id}`);
     };
 
     const handleBookmarkToggle = () => {

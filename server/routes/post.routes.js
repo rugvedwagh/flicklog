@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.get("/search", asyncHandler(fetchPostsBySearch));
 
-router.get("/:id/:slug", asyncHandler(fetchPost));
+router.get("/:slugId", asyncHandler(fetchPost));
 
 router
     .route("/")

@@ -28,10 +28,10 @@ import {
 } from '../../constants/loading.constants';
 import { ERROR, SUCCESS_MESSAGE } from '../../constants/auth.constants';
 
-const fetchPost = (id) => async (dispatch) => {
+const fetchPost = (slug,id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await fetchPostApi(id);
+        const { data } = await fetchPostApi(slug,id);
         dispatch({ type: FETCH_POST, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });

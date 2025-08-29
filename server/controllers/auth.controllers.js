@@ -186,25 +186,10 @@ const fetchRefreshToken = (req, res, next) => {
     res.status(200).json({ refreshToken });
 };
 
-const getCsrfToken = (req, res, next) => {
-    const csrfToken = crypto.randomBytes(32).toString('hex');
-
-    res.cookie('XSRF-TOKEN', csrfToken, {
-        httpOnly: false,
-        secure: true,
-        sameSite: 'None',
-        path: '/',
-        maxAge: 3600000
-    });
-
-    res.status(200).json({ csrfToken });
-};
-
 export {
     logIn,
     register,
     refreshToken,
     fetchRefreshToken,
-    getCsrfToken,
     logoutUser
 };

@@ -54,7 +54,7 @@ const Posts = ({ setCurrentId }) => {
                             variant='h5'
                             align='center'
                         >
-                            No more posts!
+                            You've reached the end of the wheel.
                         </Typography>
                     }
                     style={{ overflowX: 'hidden' }}

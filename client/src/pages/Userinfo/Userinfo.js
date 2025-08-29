@@ -49,8 +49,8 @@ const Userinfo = () => {
     const userPostsCount = posts.filter((post) => post.creator === clientData?._id).length
 
     const openPost = useCallback(
-        (postId) => {
-            navigate(`/posts/${postId}`)
+        (postId, slug) => {
+            navigate(`/posts/${slug}-${postId}`);
         },
         [navigate],
     )
@@ -176,7 +176,7 @@ const Userinfo = () => {
                         <div className="bookmarks-list">
                             {bookmarkedPosts.map((post) => (
                                 <div key={post._id} className={`bookmark-item ${darkMode ? "dark" : ""}`}>
-                                    <div className="bookmark-content" onClick={() => openPost(post._id)}>
+                                    <div className="bookmark-content" onClick={() => openPost(post._id, post.slug)}>
                                         <h4 className={`bookmark-title ${darkMode ? "dark" : ""}`}>
                                             {post.title.length > 50 ? post.title.slice(0, 50) + "..." : post.title}
                                         </h4>

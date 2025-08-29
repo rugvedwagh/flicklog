@@ -45,13 +45,12 @@ const App = () => {
         errorMessage &&
         show &&
         !errorMessage.includes("Token") &&
-        !(errorMessage.includes("Session") && location.pathname === '/auth');
+        !((errorMessage.includes("Session") || errorMessage.includes("Invalid")) && 
+        (location.pathname === '/auth' || profile));
 
     const isValidSuccessMessage =
         successMessage &&
-        showSuccess &&
-        !(successMessage.includes("Found") && location.pathname.startsWith('/posts/'));
-
+        showSuccess;    
     // --- Show alerts ---
     useEffect(() => {
         let errorTimer, successTimer;
@@ -157,10 +156,10 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Navigate to="/posts" />} />
                         <Route path="/posts/search" element={<Home />} />
-                        <Route path="/posts/:id/:slug?" element={<PostDetails />} />
+                        <Route path="/posts/:slugId" element={<PostDetails />} />
                         <Route path="/posts" element={<Home />} />
                         <Route path="/auth" element={!accessToken ? <Auth /> : <Navigate to="/posts" />} />
-                        <Route path="/user/info" element={<Userinfo />} />
+                        <Route path="/user/account/:username?" element={<Userinfo />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Suspense>

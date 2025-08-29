@@ -44,7 +44,10 @@ const Navbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const [profile, setProfile] = useState(null);
+    
     const userId = profile?._id;
+    const username = profile?.name?.split(" ")[0].toLowerCase();
+
     const { authData } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
@@ -77,7 +80,7 @@ const Navbar = () => {
     const openUser = () => {
         if (userId) {
             dispatch(fetchUserData(userId, navigate));
-            navigate("/user/info");
+            navigate(`/user/account/${username}`);
             closeMenu();
         }
     };
@@ -196,7 +199,7 @@ const Navbar = () => {
                             <span>Liked Posts</span>
                         </MenuItem>
 
-                        <MenuItem onClick={() => navigate("/user/info")} className={`menu-item ${darkMode ? "dark" : ""}`}>
+                        <MenuItem onClick={() => navigate("/user/account")} className={`menu-item ${darkMode ? "dark" : ""}`}>
                             <SettingsOutlinedIcon className="menu-icon" />
                             <span>Settings</span>
                         </MenuItem>

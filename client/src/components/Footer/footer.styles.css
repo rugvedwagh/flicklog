@@ -60,10 +60,12 @@
     transition: background 0.2s, color 0.2s, transform 0.2s;
     font-size: 1.15rem;
     border: 1.5px solid transparent;
+    text-decoration: none;
 }
 
 .footer.dark .social-icon{
     background-color: var(--cardColour);
+    color: var(--subtextColor);
 }
 
 .social-icon:focus {

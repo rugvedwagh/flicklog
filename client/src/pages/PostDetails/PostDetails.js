@@ -28,7 +28,8 @@ import { fetchUserProfile } from "../../utils/storage"
 import "./postdetails.styles.css"
 
 const PostDetails = () => {
-    const { id } = useParams()
+    const { slugId } = useParams()
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const darkMode = useTheme()
@@ -36,6 +37,8 @@ const PostDetails = () => {
     const userId = profile?._id
     const [isFullScreen, setIsFullScreen] = useState(false)
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const [slug, id] = slugId.split(/-(?=[^ -]+$)/);
+
     const { post, posts, isLoading } = useSelector((state) => state.postsReducer)
 
     const heroSectionRef = useRef(null)
@@ -43,8 +46,9 @@ const PostDetails = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchPost(id));
-    }, [id, dispatch])
+        dispatch(fetchPost(slug, id));
+    }, [slugId, dispatch]);
+
 
     useEffect(() => {
         if (post) {
@@ -55,7 +59,8 @@ const PostDetails = () => {
         }, 100)
     }, [post, dispatch])
 
-    const openPost = (_id) => navigate(`/posts/${_id}`)
+    const openPost = (post) => navigate(`/posts/${post.slug}-${post._id}`);
+
     const handleImageClick = () => setIsFullScreen((prev) => !prev)
 
     const toggleDeleteDialog = useCallback(() => {
@@ -71,7 +76,7 @@ const PostDetails = () => {
     const handleIconClick = () => {
         setTimeout(() => {
             commentsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        },100);
+        }, 100);
     }
 
     const recommendedPosts = posts.filter(({ _id }) => _id !== id)
@@ -198,7 +203,7 @@ const PostDetails = () => {
 
                     <div className="recommended-grid">
                         {recommendedPosts.slice(0, 6).map(({ title, likes, selectedfile, _id }) => (
-                            <Card key={_id} className={`recommended-card ${darkMode ? "dark" : ""}`} onClick={() => openPost(_id)}>
+                            <Card key={_id} className={`recommended-card ${darkMode ? "dark" : ""}`} onClick={() => openPost({ slug: post.slug, _id })}>
                                 <div className="card-image-container">
                                     <img src={selectedfile || "/placeholder.svg"} className="card-image" alt={title} />
                                     <div className="card-overlay">
