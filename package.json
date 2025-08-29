@@ -12,5 +12,6 @@
   },
   "scripts": {
     "start": "concurrently \"npm start --prefix client\" \"npm start --prefix server\""
-  }
+  },
+  "license": "MIT"
 }
