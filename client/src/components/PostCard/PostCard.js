@@ -63,6 +63,20 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
         debouncedDispatchLike(post._id);
     };
 
+    const getExcerpt = (htmlContent, wordLimit = 20) => {
+        if (!htmlContent) return "";
+
+        // Strip HTML tags for excerpt
+        const textContent = htmlContent.replace(/<[^>]*>/g, '');
+        const words = textContent.split(' ');
+
+        if (words.length <= wordLimit) {
+            return textContent;
+        }
+
+        return words.slice(0, wordLimit).join(' ') + '...';
+    };
+
     return (
         <Card className={`card ${darkMode ? 'dark' : ''}`} raised elevation={0}>
             <div className="card-header">
@@ -119,10 +133,11 @@ const PostCard = ({ post, setCurrentId, darkMode, bookmarks }) => {
                             className={`msg-text ${darkMode ? 'dark' : ''}`}
                             sx={{ margin: '0' }}
                         >
-                            {parse(
-                                post.message
-                                    ? post.message.slice(0, 150) + (post.message.length > 150 ? '...' : '')
-                                    : ""
+                            {getExcerpt(post.message, 25)}
+                            {post.message && post.message.split(' ').length > 25 && (
+                                <span className={`read-more-link ${darkMode ? 'dark' : ''}`}>
+                                    {" "}Read more
+                                </span>
                             )}
                         </Typography>
                     </div>

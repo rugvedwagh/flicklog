@@ -7,15 +7,15 @@ const CardSkeleton = ({ darkMode }) => {
         <div className={`postcard ${darkMode ? "dark" : ""}`} style={{ marginTop: 18, border: '1px solid #99999948', borderRadius: 8 }}>
             <Skeleton animation="wave" variant="rounded" height={250} sx={{ borderRadius: 2, borderBottom: "1px solid #99999917" }} />
             <div className={`postcard-content ${darkMode ? "dark" : ""}`} style={{ padding: 12 }}>
-                <Skeleton animation="wave" variant="text" height={28} width="70%" />
-                <Skeleton animation="wave" variant="text" height={20} width="90%" />
+                <Skeleton animation="wave" style={{ border: '1px solid #99999948', borderRadius: 8}} variant="text" height={28} width="70%" />
+                <Skeleton animation="wave" style={{ border: '1px solid #99999948', borderRadius: 8}} variant="text" height={20} width="90%" />
                 <Skeleton animation="wave" variant="text" height={20} width="85%" />
                 <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                     <Skeleton animation="wave" variant="rounded" height={24} width={72} sx={{ borderRadius: 999 }} />
                     <Skeleton animation="wave" variant="rounded" height={24} width={56} sx={{ borderRadius: 999 }} />
                     <Skeleton animation="wave" variant="rounded" height={24} width={64} sx={{ borderRadius: 999 }} />
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12 }}>
+                <div style={{ display: "flex",  border: '1px solid #99999948', borderRadius: 8, justifyContent: "space-between", marginTop: 12 }}>
                     <Skeleton animation="wave" variant="circular" width={28} height={28} />
                     <Skeleton animation="wave" variant="circular" width={28} height={28} />
                     <Skeleton animation="wave" variant="circular" width={28} height={28} />

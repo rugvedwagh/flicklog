@@ -10,8 +10,13 @@
   "devDependencies": {
     "concurrently": "^9.2.0"
   },
+  "license": "MIT",
+  "name": "reminisce",
+  "version": "1.0.0",
+  "description": "A modern, full-stack movie logging platform built with React, Node.js, Express, and MongoDB. Track the movies you watch, share reviews, and connect with other film enthusiasts.",
+  "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm start --prefix client\" \"npm start --prefix server\""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT"
+  "author": "Rugved"
 }
