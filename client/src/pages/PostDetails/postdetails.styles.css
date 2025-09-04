@@ -28,7 +28,7 @@
 }
 
 .page-wrapper.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
 }
 
 .loader {
@@ -88,7 +88,7 @@
 
 .back-button.dark:hover {
     background-color: var(--antiFlashWhite) !important;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
 }
 
 .main-content {
@@ -263,7 +263,7 @@
     font-family: "EB Garamond", serif !important;
     font-optical-sizing: auto;
     font-style: normal;
-    color: var(--black);
+    color: var(--charcoalBlack);
     font-weight: 700 !important;
     font-size: 3rem !important;
     line-height: 1.2;
@@ -290,7 +290,7 @@
 }
 
 .post-author {
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
     font-size: 1.1rem !important;
     font-weight: 500 !important;
 }
@@ -332,7 +332,7 @@
 
 .tag-postdetails.dark {
     background-color: var(--subtextColor);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .tag-postdetails.dark:hover {
@@ -353,7 +353,7 @@
     font-optical-sizing: auto;
     font-size: 1.43rem !important;
     line-height: 1.8;
-    color: var(--black);
+    color: var(--charcoalBlack);
     overflow-x: hidden;
 }
 
@@ -486,7 +486,7 @@
 }
 
 .card-title {
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
     font-weight: 600 !important;
     font-size: 1.1rem !important;
     line-height: 1.4;

@@ -97,7 +97,7 @@
 }
 
 .user-avatar.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
 }
 
 .avatar-text {
@@ -178,7 +178,7 @@
 
 .cancel-btn.dark:hover {
     background-color: var(--antiFlashWhite) !important;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
 }
 
 .post-btn {
@@ -203,7 +203,7 @@
 
 .post-btn.dark {
     background-color: var(--antiFlashWhite) !important;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
 }
 
 .post-btn.dark:hover {
@@ -299,9 +299,9 @@
 }
 
 .comment-text {
-    color: var(--black);
+    color: var(--charcoalBlack);
     line-height: 1.5;
-    color: var(--black);
+    color: var(--charcoalBlack);
     line-height: 1.6;
     font-size: 1rem;
     font-family: 'Arial', sans-serif;

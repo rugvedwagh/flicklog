@@ -162,7 +162,7 @@
 
 .title-input.dark .MuiOutlinedInput-root {
     background-color: var(--white);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .title-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
@@ -215,7 +215,7 @@
 
 .content-editor.dark .ql-container {
     background-color: var(--white);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .tags-input{
@@ -230,7 +230,7 @@
 
 .tags-input.dark .MuiOutlinedInput-root {
     background-color: var(--white);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .tags-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
@@ -257,7 +257,7 @@
 }
 
 .file-upload-container.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
     border-color: var(--subtextColor);
 }
 
@@ -310,7 +310,7 @@
 
 .clear-button.dark:hover {
     background-color: var(--antiFlashWhite) !important;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
 }
 
 .submit-button {

@@ -20,7 +20,7 @@
 }
 
 .page-container.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
 }
 
 .header-section {
@@ -55,7 +55,7 @@
 
 .back-button-userinfo.dark:hover {
     background-color: var(--antiFlashWhite);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .page-title {
@@ -113,7 +113,7 @@
 
 .avatar-large.dark {
     background-color: var(--borderColor);
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .username-large {
@@ -160,7 +160,7 @@
 
 .edit-profile-btn.dark:hover {
     background-color: var(--antiFlashWhite) !important;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
 }
 
 .stats-grid {
@@ -208,7 +208,7 @@
 
 .stat-label {
     font-size: 0.9rem;
-    color: var(--black);
+    color: var(--charcoalBlack);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -270,7 +270,7 @@
 
 .info-label {
     font-weight: 600;
-    color: var(--black);
+    color: var(--charcoalBlack);
 }
 
 .info-label.dark {
@@ -278,7 +278,7 @@
 }
 
 .info-value {
-    color: var(--black);
+    color: var(--charcoalBlack);
     font-weight: 500;
 }
 
@@ -359,7 +359,7 @@
     margin: 0;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--black);
+    color: var(--charcoalBlack);
     transition: color 0.3s ease;
 }
 

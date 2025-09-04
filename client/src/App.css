@@ -1,6 +1,6 @@
 :root {
     --white: white;
-    --black: #1a1a1a;
+    --charcoalBlack: #1a1a1a;
     --loadingvar: white;
     --borderColor: #404040;
     --antiFlashWhite: #e7e9ea;
@@ -106,7 +106,7 @@ body {
 }
 
 .root-bg.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
 }
 
 @media (max-width: 600px) {

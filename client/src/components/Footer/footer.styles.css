@@ -2,13 +2,13 @@
     font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
     padding: 48px 0 24px 0;
     background-color: var(--white);
-    color: var(--black);
+    color: var(--charcoalBlack);
     border-top: 1px solid var(--borderColor);
     margin-top: 100vh;
 }
 
 .footer.dark {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
     color: var(--antiFlashWhite);
 }
 

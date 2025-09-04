@@ -1,12 +1,12 @@
 
 .MuiSkeleton-root {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
     position: relative;
     overflow: hidden;
 }
 
 .dark-mode .MuiSkeleton-root {
-    background-color: var(--black);
+    background-color: var(--charcoalBlack);
 }
 
 .MuiSkeleton-root::after {

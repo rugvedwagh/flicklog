@@ -42,14 +42,14 @@
     text-align: center;
     border-radius: 3px;
     margin-bottom: 1em;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
     font-family: 'Roboto', sans-serif;
     width: 12% !important;
 }
 
 .appBarSearch.dark {
     color: var(--antiFlashWhite) !important;
-    background-color: var(--black) !important;
+    background-color: var(--charcoalBlack) !important;
     outline: 1px solid var(--borderColor);
 }
 
@@ -61,7 +61,7 @@
     border-radius: 3px;
     gap: 10px;
     margin-bottom: 1em;
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
     font-family: 'Roboto', sans-serif;
     height: 20vw;
     text-align: center;
@@ -69,7 +69,7 @@
 
 .coming-soon.dark {
     color: var(--antiFlashWhite) !important;
-    background-color: var(--black) !important;
+    background-color: var(--charcoalBlack) !important;
     outline: 1px solid var(--borderColor);
 }
 
@@ -98,7 +98,7 @@
 }
 
 .search-button {
-    color: var(--black) !important;
+    color: var(--charcoalBlack) !important;
     background-color: var(--white) !important;
     border: none;
     padding-right: 0 !important;
