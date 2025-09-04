@@ -46,7 +46,8 @@ const App = () => {
         show &&
         !errorMessage.includes("Token") &&
         !((errorMessage.includes("Session") || errorMessage.includes("Invalid")) && 
-        (location.pathname === '/auth' || profile));
+        (location.pathname === '/auth' || profile)) &&
+        ((errorMessage.includes("No posts found") && location.pathname === '/posts/:slug'));
 
     const isValidSuccessMessage =
         successMessage &&

@@ -91,7 +91,6 @@ const Userinfo = () => {
             refetchUserData()
         }
 
-        // Add scroll and focus after component mounts
         setTimeout(() => {
             profileHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }, 100)

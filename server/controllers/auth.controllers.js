@@ -157,7 +157,20 @@ const refreshToken = async (req, res, next) => {
         return next(createHttpError(401, 'Refresh token is missing or invalid'));
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const secret = process.env.REFRESH_TOKEN_SECRET;
+
+    if (!secret) {
+        return next(createHttpError(500, 'Server misconfiguration: missing REFRESH_TOKEN_SECRET'));
+    }
+
+    let decoded;
+
+    try {
+        decoded = jwt.verify(refreshToken, secret);
+    } catch (error) {   
+        return next(createHttpError(401, 'Invalid or expired refresh token'));
+    }
+
     const user = await User.findById(decoded.id);
 
     if (!user) {

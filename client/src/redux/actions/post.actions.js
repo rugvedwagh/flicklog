@@ -28,14 +28,13 @@ import {
 } from '../../constants/loading.constants';
 import { ERROR, SUCCESS_MESSAGE } from '../../constants/auth.constants';
 
-const fetchPost = (slug,id) => async (dispatch) => {
+const fetchPost = (slug, id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await fetchPostApi(slug,id);
+        const { data } = await fetchPostApi(slug, id);
         dispatch({ type: FETCH_POST, payload: data });
     } catch (error) {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
-        console.error(error);
     } finally {
         dispatch({ type: END_LOADING });
     }
@@ -115,9 +114,9 @@ const createPost = (post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await createPostApi(post);
-        
+
         localStorage.removeItem('cachedPosts');
-        
+
         dispatch({ type: CREATE, payload: data });
         dispatch({ type: SUCCESS_MESSAGE, payload: "Post created successfully" })
     } catch (error) {
@@ -132,9 +131,9 @@ const updatePost = (id, post) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await updatePostApi(id, post);
-        
+
         localStorage.removeItem('cachedPosts');
-        
+
         dispatch({ type: UPDATE, payload: data });
         dispatch({ type: SUCCESS_MESSAGE, payload: "Post updated successfully" })
     } catch (error) {
@@ -179,7 +178,7 @@ const addComment = (value, id) => async (dispatch) => {
         dispatch({ type: ERROR, payload: error?.response?.data?.message });
         console.error(error);
     }
-    finally{
+    finally {
         dispatch({ type: END_LOADING });
     }
 };
@@ -203,6 +202,7 @@ const likedPosts = (data) => async (dispatch) => {
         console.error(error);
     }
 };
+
 
 const userPosts = (data) => async (dispatch) => {
     try {
